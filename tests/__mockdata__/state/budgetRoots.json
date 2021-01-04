@@ -1,0 +1,16 @@
+[
+  {
+    "id": "budget_5a98dc44-7982-4ecc-aa50-146fc4dc4e16",
+    "key": "budget_5a98dc44-7982-4ecc-aa50-146fc4dc4e16",
+    "value": { "rev": "1-66817c6dff9a4628988dd80d22a6b4a5" },
+    "doc": {
+      "name": "TestBudget",
+      "currency": "USD",
+      "created": "2020-12-29T01:30:14.886Z",
+      "checkNumber": false,
+      "_id": "budget_5a98dc44-7982-4ecc-aa50-146fc4dc4e16",
+      "_rev": "1-66817c6dff9a4628988dd80d22a6b4a5",
+      "short_id": "5a98dc44-7982-4ecc-aa50-146fc4dc4e16"
+    }
+  }
+]

@@ -1,0 +1,31 @@
+.DS_Store
+node_modules
+/dist
+/public
+/dist_electron
+/cloud_functions
+docs/
+/docs
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+#Electron-builder output
+/dist_electron
+tests/e2e/screenshots/test.js/Test transactions -- enter text into memo field (failed).png
+*.mp4

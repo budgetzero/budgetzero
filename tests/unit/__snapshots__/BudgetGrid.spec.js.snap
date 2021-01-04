@@ -1,0 +1,935 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`budgetgrid component renders correct snapshot 1`] = `
+<div class="container pa-0 container--fluid">
+  <div role="dialog" class="v-dialog__container">
+    <!---->
+  </div>
+  <div role="dialog" class="v-dialog__container">
+    <!---->
+  </div>
+  <div role="dialog" class="v-dialog__container">
+    <!---->
+  </div>
+  <div elevation="4" class="row grey lighten-4 ma-0">
+    <div align="center" justify="center" class="col"><button type="button" class="grey lighten-2 v-btn v-btn--contained v-btn--is-elevated v-btn--has-bg theme--light elevation-0 v-size--small"><span class="v-btn__content"><i aria-hidden="true" medium="" class="v-icon notranslate mdi mdi-chevron-left theme--light"></i>Previous month
+      </span></button> <button type="button" class="grey lighten-2 ml-4 v-btn v-btn--contained v-btn--is-elevated v-btn--has-bg theme--light elevation-0 v-size--default" id="btn-today" medium=""><span class="v-btn__content">
+        Today
+      </span></button> <button type="button" class="grey lighten-2 ml-4 v-btn v-btn--contained v-btn--is-elevated v-btn--has-bg theme--light elevation-0 v-size--small"><span class="v-btn__content">
+        Next month
+        <i aria-hidden="true" medium="" class="v-icon notranslate mdi mdi-chevron-right theme--light"></i></span></button></div>
+  </div>
+  <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
+  <div class="row ma-0 pt-2 justify-space-between">
+    <div class="col-sm-auto col"></div>
+    <div class="col-sm-auto col">
+      <div>
+        <div cols="12" class="row pr-4">
+          <div class="v-card v-sheet v-sheet--outlined theme--light" style="width: 300px;">
+            <div id="selected-month" class="v-card__title headline grey lighten-4 py-2">
+              2020-12
+            </div>
+            <div id="data-doesnt-exist-msg" class="v-card__subtitle grey lighten-4 pt-2 pb-1"><span>Data does not exist for this month</span></div>
+            <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
+            <div class="v-card__text pa-0">
+              <div class="px-2 pt-2">
+                <p class="subtitle-2 mb-0" style="text-align: left;">
+                  Leftover Last Month
+                  <span id="leftover-amount" style="float: right;">
+              0
+            </span>
+                </p>
+                <p class="subtitle-2 mb-0" style="text-align: left;">
+                  Income This Month
+                  <span id="income-amount" style="float: right;">
+              0
+            </span>
+                </p>
+                <p class="subtitle-2 mb-0" style="text-align: left;">
+                  Overspent Last Month
+                  <span id="overspent-amount" style="float: right;">
+              0
+            </span>
+                </p>
+                <p class="subtitle-2 mb-2" style="text-align: left;">
+                  Budgeted This Month
+                  <span id="budgeted-amount" style="float: right;">
+              0
+            </span>
+                </p>
+              </div>
+              <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
+              <div id="available-to-budget-text" class="text-center primary--text title grey lighten-4">
+                Available To Budget
+                <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
+              </div>
+              <div id="available-to-budget-amount" class="title text-center mb-0">
+                0
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mx-2 mt-0 mb-1 align-end justify-end">
+    <div class="pa-0 col"><button type="button" class="mb-2 mr-2 v-btn v-btn--contained v-btn--is-elevated v-btn--has-bg theme--light elevation-0 v-size--small grey lighten-2" id="btn-add-category-group"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate v-icon--left mdi mdi-plus theme--light"></i>Category Group
+      </span></button> <button type="button" class="mb-2 v-btn v-btn--contained v-btn--is-elevated v-btn--has-bg theme--light elevation-0 v-size--small grey lighten-2" id="btn-modify"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate v-icon--left mdi mdi-drag-horizontal-variant theme--light"></i> <span> Modify </span></span></button></div>
+    <div id="budgeted-header" class="money-amount subtitle font-weight-medium col">
+      Budgeted
+    </div>
+    <div id="spent-header" class="money-amount subtitle font-weight-medium col">
+      Spent
+    </div>
+    <div id="balance-header" class="money-amount subtitle font-weight-medium col">
+      Balance
+    </div>
+  </div>
+  <!---->
+  <div class="row pt-0">
+    <div class="pa-0 col">
+      <div class="row primary lighten-2 elevation-0 ma-0 pa-0">
+        <div class="master-category-row col">
+          <!---->
+          <!----> <button type="button" class="v-icon notranslate mr-2 v-icon--link mdi mdi-chevron-down theme--light white--text"></button> <span class="subtitle font-weight-medium white--text">Giving </span>
+          <!---->
+          <!---->
+        </div>
+      </div>
+      <div class="fe1be5ed-b4f6-4d9c-9a49-9a7a44f9339b">
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Tithing
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_c9a2045d-c298-4006-93f3-71729deddb7c" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Charitable
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_3562c56a-9c3a-4ed1-b4b7-4fc452b20fee" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pa-0 col">
+      <div class="row primary lighten-2 elevation-0 ma-0 pa-0">
+        <div class="master-category-row col">
+          <!---->
+          <!----> <button type="button" class="v-icon notranslate mr-2 v-icon--link mdi mdi-chevron-down theme--light white--text"></button> <span class="subtitle font-weight-medium white--text">Monthly Bills </span>
+          <!---->
+          <!---->
+        </div>
+      </div>
+      <div class="aca2bd8b-476c-44f3-8ce6-d76c6eb90901">
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Medical/Dental
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_2df7e41f-ae2b-4ba4-bedf-c33efa51f641" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Internet
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_96ab5c01-8f16-47da-904d-b94c69202a10" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Rent/Mortgage
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_1ecd58b9-29bb-4f8d-9582-9520978640cb" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Clothing
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_8dfd44ca-6d62-45ce-9105-6552a0642690" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Water
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_61499dc4-f385-4814-99f2-c01f94fe34c1" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Renters Insurance
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_d22f8c65-f608-4946-adbc-445f98ee39e2" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Car Insurance
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_363cae5a-ca64-4bc1-a319-e830fdaf6f41" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Phone
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_10ff08aa-956a-46af-b021-a02244772ba2" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Fuel
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_e652b7b1-6377-4b24-a22c-e6ae4ef1a981" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Car Maintenance
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_326e087a-8d2b-4c36-b5b3-4442de7e13f4" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Electricity
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_6c850efb-8c2c-4b23-8229-ae3e516bf8a5" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Cable TV
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_bc03bb3d-7a94-4428-9d1c-b36d179f6931" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pa-0 col">
+      <div class="row primary lighten-2 elevation-0 ma-0 pa-0">
+        <div class="master-category-row col">
+          <!---->
+          <!----> <button type="button" class="v-icon notranslate mr-2 v-icon--link mdi mdi-chevron-down theme--light white--text"></button> <span class="subtitle font-weight-medium white--text">Savings Goals </span>
+          <!---->
+          <!---->
+        </div>
+      </div>
+      <div class="2b8b142a-588f-407d-a54d-88d7d30e3564">
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Rainy Day Funds
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_9a2e8705-9a52-4083-ac14-c0252058f6d3" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Christmas
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_866c20c7-17f1-4c8a-b058-dfa402277e9e" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Birthdays
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_6d41d936-b0d0-49ca-a9dc-a2c073115dcb" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Emergency Fund
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_48bba46b-ffea-448d-95bc-d5a0a78decba" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Car Replacement
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_02340aa2-e22d-4b0f-93b9-938801a33edb" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Retirement
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_e702b7b1-78e6-47a5-a636-0533a5530937" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Vacation
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_1b022af2-5e42-47ee-a764-a7348bde3d91" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pa-0 col">
+      <div class="row primary lighten-2 elevation-0 ma-0 pa-0">
+        <div class="master-category-row col">
+          <!---->
+          <!----> <button type="button" class="v-icon notranslate mr-2 v-icon--link mdi mdi-chevron-down theme--light white--text"></button> <span class="subtitle font-weight-medium white--text">Debt </span>
+          <!---->
+          <!---->
+        </div>
+      </div>
+      <div class="28cb60fc-f8c7-4201-9f46-7377f60dfdc4">
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Student Loan Payment
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_e34755f2-21e7-4002-9d97-9d043eb0010d" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Car Payment
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_72949291-4bb6-4d18-b1af-10d64603580f" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pa-0 col">
+      <div class="row primary lighten-2 elevation-0 ma-0 pa-0">
+        <div class="master-category-row col">
+          <!---->
+          <!----> <button type="button" class="v-icon notranslate mr-2 v-icon--link mdi mdi-chevron-down theme--light white--text"></button> <span class="subtitle font-weight-medium white--text">Everyday Expenses </span>
+          <!---->
+          <!---->
+        </div>
+      </div>
+      <div class="24b7dd4b-7449-4a91-932a-0ce14b54d159">
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Restaurants
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_02ec642d-25c6-4f4b-a21f-3b4a5b4025c1" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Groceries
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_d1423368-4db2-4d11-8fdb-3ac999f151e4" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Household Goods
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_25f8ec51-3b13-423a-bcfb-2250293b9a68" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row category-row ma-0 align-center">
+          <div class="py-0 pt-0 col">
+            <!---->
+            Spending Money
+            <!---->
+          </div>
+          <div align="top" class="pa-0 black--text budget-input-col col-sm-auto col">
+            <div class="v-input budgeted-amount subtitle-2 grey--text v-input--hide-details v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--prefix budgeted-amount-zero">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-text-field__slot">
+                    <div class="v-text-field__prefix">$</div><input id="budget-input" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div class="spent-amount subtitle-2 grey--text">
+              0
+            </div>
+          </div>
+          <div class="px-0 py-1 col-sm-auto col">
+            <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_d60d7c95-41c4-46af-b617-5ddd11dd58f8" class="balance-amount subtitle-2 grey--text">
+              0
+              <button type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

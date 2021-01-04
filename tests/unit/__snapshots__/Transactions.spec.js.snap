@@ -1,0 +1,224 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transaction table renders correct snapshot 1`] = `
+<v-container-stub tag="div" fluid="true" fill-height="" class="py-0">
+  <transactionheader-stub selected_account="[object Object]"></transactionheader-stub>
+  <!---->
+  <v-divider-stub></v-divider-stub>
+  <v-row-stub tag="div" class="transaction-toolbar">
+    <v-col-stub tag="div" class="pt-2 pb-0">
+      <v-btn-stub color="accent darken-1" dark="true" outlined="true" tag="button" activeclass="" small="true" type="button" id="addTransactionBtn" class="mb-2">
+        <v-icon-stub color="accent" left="" medium="">
+          mdi-plus
+        </v-icon-stub>
+        Transaction
+      </v-btn-stub>
+    </v-col-stub>
+    <v-col-stub tag="div" class="py-1 body-1 font-weight-bold">
+      <v-menu-stub opendelay="0" closedelay="0" contentclass="" bottom="true" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" openonclick="true" closeonclick="true" closeoncontentclick="true" maxheight="auto" offsetx="true" origin="top left" transition="v-menu-transition">
+        <v-list-stub tag="div">
+          <v-list-item-stub activeclass="" tag="div">
+            <v-icon-stub dark="" color="primary" left="">
+              mdi-check-circle
+            </v-icon-stub>
+            <v-list-item-title-stub>Approve</v-list-item-title-stub>
+          </v-list-item-stub>
+          <v-list-item-stub activeclass="" tag="div">
+            <v-icon-stub dark="" color="primary" left="">
+              mdi-alpha-c-circle
+            </v-icon-stub>
+            <v-list-item-title-stub>Clear</v-list-item-title-stub>
+          </v-list-item-stub>
+          <v-list-item-stub activeclass="" tag="div">
+            <v-icon-stub dark="" color="red" left="">
+              mdi-delete
+            </v-icon-stub>
+            <v-list-item-title-stub>Delete</v-list-item-title-stub>
+          </v-list-item-stub>
+          <v-menu-stub opendelay="0" closedelay="0" contentclass="" bottom="true" openonhover="true" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" openonclick="true" closeonclick="true" closeoncontentclick="true" maxheight="auto" offsetx="true" origin="top left" transition="v-menu-transition">
+            <v-list-stub tag="div">
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Birthdays </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Cable TV </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Car Insurance </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Car Maintenance </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Car Payment </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Car Replacement </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Charitable </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Christmas </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Clothing </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Electricity </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Emergency Fund </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Fuel </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Groceries </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Household Goods </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Income Next Month </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Income This Month </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Internet </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Medical/Dental </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Phone </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Rainy Day Funds </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Rent/Mortgage </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Renters Insurance </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Restaurants </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Retirement </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Spending Money </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Student Loan Payment </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Tithing </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Uncategorized </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Vacation </v-list-item-title-stub>
+              </v-list-item-stub>
+              <v-list-item-stub activeclass="" tag="div">
+                <v-list-item-title-stub> Water </v-list-item-title-stub>
+              </v-list-item-stub>
+            </v-list-stub>
+          </v-menu-stub>
+        </v-list-stub>
+      </v-menu-stub>
+      <v-tooltip-stub opendelay="0" closedelay="0" contentclass="" bottom="true" fixed="true" openonhover="true" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" tag="span"> <span>Delete</span></v-tooltip-stub>
+      <v-btn-stub color="grey darken-1" tag="button" activeclass="" icon="true" type="button" class="white--text">
+        <v-icon-stub>
+          mdi-refresh
+        </v-icon-stub>
+      </v-btn-stub>
+    </v-col-stub>
+    <v-col-stub tag="div" class="pt-2 pb-0">
+      <v-btn-stub color="grey lighten-2" elevation="0" tag="button" activeclass="" small="true" type="button" class="mb-2 ml-2">
+        <v-icon-stub left="">
+          mdi-cloud-upload
+        </v-icon-stub> <span>Import</span>
+      </v-btn-stub>
+    </v-col-stub>
+    <v-col-stub tag="div" class="pt-0 pb-0">
+      <v-text-field-stub errorcount="1" errormessages="" messages="" rules="" successmessages="" value="" appendicon="search" backgroundcolor="" hidedetails="true" label="Search" loaderheight="2" clearable="true" clearicon="$clear" singleline="true" type="text" class="pt-0"></v-text-field-stub>
+    </v-col-stub>
+  </v-row-stub>
+  <v-divider-stub></v-divider-stub>
+  <v-row-stub tag="div">
+    <v-col-stub tag="div" class="pa-0 ma-0">
+      <importmodalcomponent-stub account="38e690f8-198f-4735-96fb-3a2ab15081c2"></importmodalcomponent-stub>
+      <v-data-table-stub mobilebreakpoint="600" items="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]" options="[object Object]" sortby="date" sortdesc="true" customsort="function sortItems(items, sortBy, sortDesc, locale, customSorters) {
+  if (sortBy === null || !sortBy.length) return items;
+  var stringCollator = new Intl.Collator(locale, {
+    sensitivity: 'accent',
+    usage: 'sort'
+  });
+  return items.sort(function (a, b) {
+    var _a, _b;
+
+    for (var i = 0; i < sortBy.length; i++) {
+      var sortKey = sortBy[i];
+      var sortA = getObjectValueByPath(a, sortKey);
+      var sortB = getObjectValueByPath(b, sortKey);
+
+      if (sortDesc[i]) {
+        _a = __read([sortB, sortA], 2), sortA = _a[0], sortB = _a[1];
+      }
+
+      if (customSorters &amp;&amp; customSorters[sortKey]) {
+        var customResult = customSorters[sortKey](sortA, sortB);
+        if (!customResult) continue;
+        return customResult;
+      } // Check if both cannot be evaluated
+
+
+      if (sortA === null &amp;&amp; sortB === null) {
+        continue;
+      }
+
+      _b = __read([sortA, sortB].map(function (s) {
+        return (s || '').toString().toLocaleLowerCase();
+      }), 2), sortA = _b[0], sortB = _b[1];
+
+      if (sortA !== sortB) {
+        if (!isNaN(sortA) &amp;&amp; !isNaN(sortB)) return Number(sortA) - Number(sortB);
+        return stringCollator.compare(sortA, sortB);
+      }
+    }
+
+    return 0;
+  });
+}" page="1" itemsperpage="13" groupby="" groupdesc="" customgroup="function groupItems(items, groupBy, groupDesc) {
+  var key = groupBy[0];
+  var groups = [];
+  var current;
+
+  for (var i = 0; i < items.length; i++) {
+    var item = items[i];
+    var val = getObjectValueByPath(item, key, null);
+
+    if (current !== val) {
+      current = val;
+      groups.push({
+        name: val !== null &amp;&amp; val !== void 0 ? val : '',
+        items: []
+      });
+    }
+
+    groups[groups.length - 1].items.push(item);
+  }
+
+  return groups;
+}" locale="en-US" customfilter="function defaultFilter(value, search, item) {
+  return value != null &amp;&amp; search != null &amp;&amp; typeof value !== 'boolean' &amp;&amp; value.toString().toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) !== -1;
+}" serveritemslength="-1" itemkey="_id" value="" expanded="" singleexpand="true" noresultstext="$vuetify.dataIterator.noResultsText" nodatatext="$vuetify.noDataText" loadingtext="$vuetify.dataIterator.loadingText" selectablekey="isSelectable" loaderheight="4" headers="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]" showselect="true" height="573" fixedheader="true" expandicon="$expand" itemclass="" class="elevation-1 transaction-table"></v-data-table-stub>
+    </v-col-stub>
+  </v-row-stub>
+</v-container-stub>
+`;

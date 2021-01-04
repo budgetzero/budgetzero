@@ -1,0 +1,54 @@
+{
+  "2020-11": {
+    "a937afd4-17f0-48a8-b5a9-2a21e5ec2869": {
+      "budget": 400,
+      "overspending": null,
+      "note": "",
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_m_category_2020-11-01_a937afd4-17f0-48a8-b5a9-2a21e5ec2869",
+      "_rev": "1-a9fc4e802838b6c070984497af48a4fd",
+      "date": "2020-11-01"
+    },
+    "c9e90c28-3b20-4740-bcd3-f6314431ab60": {
+      "budget": 44400,
+      "overspending": null,
+      "note": "",
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_m_category_2020-11-01_c9e90c28-3b20-4740-bcd3-f6314431ab60",
+      "_rev": "2-8b4e896bd67629f9c54006db162e4728",
+      "date": "2020-11-01"
+    },
+    "ed80b865-fbc2-4c42-8bb7-f044ac30dece": {
+      "budget": 50000,
+      "overspending": null,
+      "note": "",
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_m_category_2020-11-01_ed80b865-fbc2-4c42-8bb7-f044ac30dece",
+      "_rev": "2-2f92259a50c62677c5f2d1ebd973a899",
+      "date": "2020-11-01"
+    }
+  },
+  "2020-12": {
+    "ed80b865-fbc2-4c42-8bb7-f044ac30dece": {
+      "budget": 4400,
+      "overspending": null,
+      "note": "",
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_m_category_2020-12-01_ed80b865-fbc2-4c42-8bb7-f044ac30dece",
+      "_rev": "1-9b064f614cc0cfd661dd9bb0991e9ef3",
+      "date": "2020-12-01"
+    },
+    "a937afd4-17f0-48a8-b5a9-2a21e5ec2869": {
+      "budget": 4400,
+      "overspending": null,
+      "note": "",
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_m_category_2020-12-01_a937afd4-17f0-48a8-b5a9-2a21e5ec2869",
+      "_rev": "2-30c16c9cf6446e71ca31111dda0e966e",
+      "date": "2020-12-01"
+    },
+    "c9e90c28-3b20-4740-bcd3-f6314431ab60": {
+      "budget": 66600,
+      "overspending": null,
+      "note": "",
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_m_category_2020-12-01_c9e90c28-3b20-4740-bcd3-f6314431ab60",
+      "_rev": "1-5a7e2835618c81eb695ce4d8be480b71",
+      "date": "2020-12-01"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "type": "CHECKING",
+    "checkNumber": true,
+    "closed": false,
+    "name": "Savings",
+    "note": "Savings account",
+    "sort": 0,
+    "onBudget": true,
+    "balanceIsNegative": false,
+    "_id": "b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_account_38e690f8-198f-4735-96fb-3a2ab15081c2",
+    "_rev": "1-64ee150cb6d40e4e2c7b4d4a5b1dcaa9"
+  },
+  {
+    "type": "CREDIT",
+    "checkNumber": true,
+    "closed": false,
+    "name": "Chase",
+    "note": null,
+    "sort": 0,
+    "onBudget": true,
+    "balanceIsNegative": true,
+    "_id": "b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_account_84c4446c-f250-4d7e-ac09-02a8cfff2583",
+    "_rev": "1-89e4c852856e013450e7efc165059fff"
+  },
+  {
+    "type": "INVESTMENT",
+    "checkNumber": true,
+    "closed": false,
+    "name": "Vanguard",
+    "note": null,
+    "sort": 0,
+    "onBudget": false,
+    "balanceIsNegative": false,
+    "_id": "b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_account_8aa582e2-e54c-4f28-a5e9-77e5c52f6231",
+    "_rev": "1-c2455d0959c3f218d1d909c744566195"
+  }
+]

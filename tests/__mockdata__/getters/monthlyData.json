@@ -1,0 +1,882 @@
+{
+  "2011-11": {
+    "null": { "budgeted": 0, "spent": 0, "balance": 0, "overspending": false },
+    "1bf14699-3e2f-49cd-8ea5-09d0379a60dd": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "26b24b3c-cca4-4479-b754-d10aaabe473e": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "309e2a29-6b7f-44ac-afab-b172df4ebe64": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "33ab6c57-8b63-457b-b049-8dbf8fec67d9": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "36b6aec0-fef9-4dd2-b070-4ff7137d09a2": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "41fc86f8-b37b-45ae-aedd-07bf9bd8875b": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "46e4c95b-b149-40cc-a356-8ee9ebcd25b0": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "4d0b887b-ebff-413d-b509-76396766f800": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "5fc51b91-c2d4-4c94-a72d-59dd49992862": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "601b3bcd-374e-418c-8de1-4a63d4f2ebfd": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "6b7b3569-08bc-4185-8e4a-3ac4b3d727f5": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "896f49aa-4e11-48b5-b452-8886858a3243": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "8fc3c5c1-31c7-4c2a-9341-c09dd5808992": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "954e98cc-979a-4b15-a0dd-097e934f800d": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "97820da0-52d8-45f4-b56e-0f431494751c": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "a1512211-efb6-430b-8295-5291ecd51a50": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "a937afd4-17f0-48a8-b5a9-2a21e5ec2869": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "b5f7e3b6-7082-4bf5-b182-1a56fc4b846d": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "c9e90c28-3b20-4740-bcd3-f6314431ab60": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "cb0ac9fb-6bca-4060-bff9-a17deef30059": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "d516c325-70a2-45b3-81dd-384ac9b2dd4c": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "da4103a6-bb20-4fa6-93af-a922a63f319d": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "dfb9be71-f2c9-474f-be19-6db8a59a95df": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "e0cbc98f-a5b3-4a9e-9478-69fa564e7dc2": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "ed80b865-fbc2-4c42-8bb7-f044ac30dece": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "f7a8d665-bd09-4039-88ee-ffa2cdb982d9": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "fc009435-a2f3-490b-a86a-dbf6313e4198": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "summary_data": {
+      "income_this_month": 0,
+      "overspent": 0,
+      "last_month_overspent": 0,
+      "balance_this_month": 0,
+      "budgeted_this_month": 0,
+      "available_to_budget_this_month": 0,
+      "available_to_budget_last_month": 0
+    }
+  },
+  "2020-11": {
+    "null": {
+      "budgeted": 0,
+      "spent": -9793,
+      "balance": -9793,
+      "overspending": false
+    },
+    "1bf14699-3e2f-49cd-8ea5-09d0379a60dd": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "26b24b3c-cca4-4479-b754-d10aaabe473e": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "309e2a29-6b7f-44ac-afab-b172df4ebe64": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "33ab6c57-8b63-457b-b049-8dbf8fec67d9": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "36b6aec0-fef9-4dd2-b070-4ff7137d09a2": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "41fc86f8-b37b-45ae-aedd-07bf9bd8875b": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "46e4c95b-b149-40cc-a356-8ee9ebcd25b0": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "4d0b887b-ebff-413d-b509-76396766f800": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "5fc51b91-c2d4-4c94-a72d-59dd49992862": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "601b3bcd-374e-418c-8de1-4a63d4f2ebfd": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "6b7b3569-08bc-4185-8e4a-3ac4b3d727f5": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "896f49aa-4e11-48b5-b452-8886858a3243": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "8fc3c5c1-31c7-4c2a-9341-c09dd5808992": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "954e98cc-979a-4b15-a0dd-097e934f800d": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "97820da0-52d8-45f4-b56e-0f431494751c": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "a1512211-efb6-430b-8295-5291ecd51a50": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "a937afd4-17f0-48a8-b5a9-2a21e5ec2869": {
+      "budgeted": 400,
+      "spent": 0,
+      "balance": 400,
+      "overspending": null
+    },
+    "b5f7e3b6-7082-4bf5-b182-1a56fc4b846d": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "c9e90c28-3b20-4740-bcd3-f6314431ab60": {
+      "budgeted": 44400,
+      "spent": 0,
+      "balance": 44400,
+      "overspending": null
+    },
+    "cb0ac9fb-6bca-4060-bff9-a17deef30059": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "d516c325-70a2-45b3-81dd-384ac9b2dd4c": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "da4103a6-bb20-4fa6-93af-a922a63f319d": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "dfb9be71-f2c9-474f-be19-6db8a59a95df": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "e0cbc98f-a5b3-4a9e-9478-69fa564e7dc2": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "ed80b865-fbc2-4c42-8bb7-f044ac30dece": {
+      "budgeted": 50000,
+      "spent": 0,
+      "balance": 50000,
+      "overspending": null
+    },
+    "f7a8d665-bd09-4039-88ee-ffa2cdb982d9": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "fc009435-a2f3-490b-a86a-dbf6313e4198": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "summary_data": {
+      "income_this_month": 3707631,
+      "overspent": -9793,
+      "last_month_overspent": 0,
+      "balance_this_month": 0,
+      "budgeted_this_month": 94800,
+      "available_to_budget_this_month": 3612831,
+      "available_to_budget_last_month": 0
+    }
+  },
+  "2020-12": {
+    "null": {
+      "budgeted": 0,
+      "spent": -206268,
+      "balance": -206268,
+      "overspending": false
+    },
+    "1bf14699-3e2f-49cd-8ea5-09d0379a60dd": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "26b24b3c-cca4-4479-b754-d10aaabe473e": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "309e2a29-6b7f-44ac-afab-b172df4ebe64": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "33ab6c57-8b63-457b-b049-8dbf8fec67d9": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "36b6aec0-fef9-4dd2-b070-4ff7137d09a2": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "41fc86f8-b37b-45ae-aedd-07bf9bd8875b": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "46e4c95b-b149-40cc-a356-8ee9ebcd25b0": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "4d0b887b-ebff-413d-b509-76396766f800": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "5fc51b91-c2d4-4c94-a72d-59dd49992862": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "601b3bcd-374e-418c-8de1-4a63d4f2ebfd": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "6b7b3569-08bc-4185-8e4a-3ac4b3d727f5": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "896f49aa-4e11-48b5-b452-8886858a3243": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "8fc3c5c1-31c7-4c2a-9341-c09dd5808992": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "954e98cc-979a-4b15-a0dd-097e934f800d": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "97820da0-52d8-45f4-b56e-0f431494751c": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "a1512211-efb6-430b-8295-5291ecd51a50": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "a937afd4-17f0-48a8-b5a9-2a21e5ec2869": {
+      "budgeted": 4400,
+      "spent": 0,
+      "balance": 4800,
+      "overspending": null
+    },
+    "b5f7e3b6-7082-4bf5-b182-1a56fc4b846d": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "c9e90c28-3b20-4740-bcd3-f6314431ab60": {
+      "budgeted": 66600,
+      "spent": 0,
+      "balance": 111000,
+      "overspending": null
+    },
+    "cb0ac9fb-6bca-4060-bff9-a17deef30059": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "d516c325-70a2-45b3-81dd-384ac9b2dd4c": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "da4103a6-bb20-4fa6-93af-a922a63f319d": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "dfb9be71-f2c9-474f-be19-6db8a59a95df": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "e0cbc98f-a5b3-4a9e-9478-69fa564e7dc2": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "ed80b865-fbc2-4c42-8bb7-f044ac30dece": {
+      "budgeted": 4400,
+      "spent": 0,
+      "balance": 54400,
+      "overspending": null
+    },
+    "f7a8d665-bd09-4039-88ee-ffa2cdb982d9": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "fc009435-a2f3-490b-a86a-dbf6313e4198": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "summary_data": {
+      "income_this_month": 0,
+      "overspent": -206268,
+      "last_month_overspent": -9793,
+      "balance_this_month": 0,
+      "budgeted_this_month": 75400,
+      "available_to_budget_this_month": 3527638,
+      "available_to_budget_last_month": 3612831
+    }
+  },
+  "2021-01": {
+    "null": { "budgeted": 0, "spent": 0, "balance": 0, "overspending": false },
+    "1bf14699-3e2f-49cd-8ea5-09d0379a60dd": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "26b24b3c-cca4-4479-b754-d10aaabe473e": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "309e2a29-6b7f-44ac-afab-b172df4ebe64": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "33ab6c57-8b63-457b-b049-8dbf8fec67d9": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "36b6aec0-fef9-4dd2-b070-4ff7137d09a2": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "41fc86f8-b37b-45ae-aedd-07bf9bd8875b": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "46e4c95b-b149-40cc-a356-8ee9ebcd25b0": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "4d0b887b-ebff-413d-b509-76396766f800": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "5fc51b91-c2d4-4c94-a72d-59dd49992862": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "601b3bcd-374e-418c-8de1-4a63d4f2ebfd": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "6b7b3569-08bc-4185-8e4a-3ac4b3d727f5": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "896f49aa-4e11-48b5-b452-8886858a3243": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "8fc3c5c1-31c7-4c2a-9341-c09dd5808992": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "954e98cc-979a-4b15-a0dd-097e934f800d": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "97820da0-52d8-45f4-b56e-0f431494751c": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "a1512211-efb6-430b-8295-5291ecd51a50": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "a937afd4-17f0-48a8-b5a9-2a21e5ec2869": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 4800,
+      "overspending": false
+    },
+    "b5f7e3b6-7082-4bf5-b182-1a56fc4b846d": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "c9e90c28-3b20-4740-bcd3-f6314431ab60": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 111000,
+      "overspending": false
+    },
+    "cb0ac9fb-6bca-4060-bff9-a17deef30059": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "d516c325-70a2-45b3-81dd-384ac9b2dd4c": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "da4103a6-bb20-4fa6-93af-a922a63f319d": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "dfb9be71-f2c9-474f-be19-6db8a59a95df": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "e0cbc98f-a5b3-4a9e-9478-69fa564e7dc2": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "ed80b865-fbc2-4c42-8bb7-f044ac30dece": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 54400,
+      "overspending": false
+    },
+    "f7a8d665-bd09-4039-88ee-ffa2cdb982d9": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "fc009435-a2f3-490b-a86a-dbf6313e4198": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "summary_data": {
+      "income_this_month": 0,
+      "overspent": 0,
+      "last_month_overspent": -206268,
+      "balance_this_month": 0,
+      "budgeted_this_month": 0,
+      "available_to_budget_this_month": 3321370,
+      "available_to_budget_last_month": 3527638
+    }
+  },
+  "2021-02": {
+    "null": { "budgeted": 0, "spent": 0, "balance": 0, "overspending": false },
+    "1bf14699-3e2f-49cd-8ea5-09d0379a60dd": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "26b24b3c-cca4-4479-b754-d10aaabe473e": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "309e2a29-6b7f-44ac-afab-b172df4ebe64": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "33ab6c57-8b63-457b-b049-8dbf8fec67d9": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "36b6aec0-fef9-4dd2-b070-4ff7137d09a2": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "41fc86f8-b37b-45ae-aedd-07bf9bd8875b": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "46e4c95b-b149-40cc-a356-8ee9ebcd25b0": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "4d0b887b-ebff-413d-b509-76396766f800": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "5fc51b91-c2d4-4c94-a72d-59dd49992862": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "601b3bcd-374e-418c-8de1-4a63d4f2ebfd": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "6b7b3569-08bc-4185-8e4a-3ac4b3d727f5": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "896f49aa-4e11-48b5-b452-8886858a3243": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "8fc3c5c1-31c7-4c2a-9341-c09dd5808992": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "954e98cc-979a-4b15-a0dd-097e934f800d": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "97820da0-52d8-45f4-b56e-0f431494751c": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "a1512211-efb6-430b-8295-5291ecd51a50": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "a937afd4-17f0-48a8-b5a9-2a21e5ec2869": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 4800,
+      "overspending": false
+    },
+    "b5f7e3b6-7082-4bf5-b182-1a56fc4b846d": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "c9e90c28-3b20-4740-bcd3-f6314431ab60": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 111000,
+      "overspending": false
+    },
+    "cb0ac9fb-6bca-4060-bff9-a17deef30059": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "d516c325-70a2-45b3-81dd-384ac9b2dd4c": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "da4103a6-bb20-4fa6-93af-a922a63f319d": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "dfb9be71-f2c9-474f-be19-6db8a59a95df": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "e0cbc98f-a5b3-4a9e-9478-69fa564e7dc2": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "ed80b865-fbc2-4c42-8bb7-f044ac30dece": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 54400,
+      "overspending": false
+    },
+    "f7a8d665-bd09-4039-88ee-ffa2cdb982d9": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "fc009435-a2f3-490b-a86a-dbf6313e4198": {
+      "budgeted": 0,
+      "spent": 0,
+      "balance": 0,
+      "overspending": false
+    },
+    "summary_data": {
+      "income_this_month": 0,
+      "overspent": 0,
+      "last_month_overspent": 0,
+      "balance_this_month": 0,
+      "budgeted_this_month": 0,
+      "available_to_budget_this_month": 3321370,
+      "available_to_budget_last_month": 3321370
+    }
+  }
+}

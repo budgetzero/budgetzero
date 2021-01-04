@@ -1,0 +1,264 @@
+{
+  "undefined": [
+    { "_id": null, "name": "Uncategorized", "truncated_id": null },
+    { "_id": "income", "name": "Income This Month", "truncated_id": "income" },
+    {
+      "_id": "incomeNextMonth",
+      "name": "Income Next Month",
+      "truncated_id": "incomeNextMonth"
+    }
+  ],
+  "f751fe89-efbb-4bea-998f-3cf7c3c7086c": [
+    {
+      "name": "Rainy Day Funds",
+      "hidden": false,
+      "masterCategory": "f751fe89-efbb-4bea-998f-3cf7c3c7086c",
+      "sort": 0,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_fc009435-a2f3-490b-a86a-dbf6313e4198",
+      "_rev": "1-b42a0b261cccebad3a196302065426dd",
+      "truncated_id": "fc009435-a2f3-490b-a86a-dbf6313e4198"
+    },
+    {
+      "name": "Emergency Fund",
+      "hidden": false,
+      "masterCategory": "f751fe89-efbb-4bea-998f-3cf7c3c7086c",
+      "sort": 1,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_e0cbc98f-a5b3-4a9e-9478-69fa564e7dc2",
+      "_rev": "2-82141300d183f748c06f8ffa529e0e1d",
+      "truncated_id": "e0cbc98f-a5b3-4a9e-9478-69fa564e7dc2"
+    },
+    {
+      "name": "Vacation",
+      "hidden": false,
+      "masterCategory": "f751fe89-efbb-4bea-998f-3cf7c3c7086c",
+      "sort": 2,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_97820da0-52d8-45f4-b56e-0f431494751c",
+      "_rev": "2-cc7a1d7be3ef08b53b8d76e09dfaa8f6",
+      "truncated_id": "97820da0-52d8-45f4-b56e-0f431494751c"
+    },
+    {
+      "name": "Car Replacement",
+      "hidden": false,
+      "masterCategory": "f751fe89-efbb-4bea-998f-3cf7c3c7086c",
+      "sort": 3,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_954e98cc-979a-4b15-a0dd-097e934f800d",
+      "_rev": "2-b71c5ddfd94c76f2f7cdbd7a5d7b3054",
+      "truncated_id": "954e98cc-979a-4b15-a0dd-097e934f800d"
+    },
+    {
+      "name": "Retirement",
+      "hidden": false,
+      "masterCategory": "f751fe89-efbb-4bea-998f-3cf7c3c7086c",
+      "sort": 4,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_36b6aec0-fef9-4dd2-b070-4ff7137d09a2",
+      "_rev": "2-5cffc791879f07a8ddf45b2f386b8d92",
+      "truncated_id": "36b6aec0-fef9-4dd2-b070-4ff7137d09a2"
+    },
+    {
+      "name": "Christmas",
+      "hidden": false,
+      "masterCategory": "f751fe89-efbb-4bea-998f-3cf7c3c7086c",
+      "sort": 5,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_26b24b3c-cca4-4479-b754-d10aaabe473e",
+      "_rev": "2-730e69b59f4e437b5e2dd2748b0520d9",
+      "truncated_id": "26b24b3c-cca4-4479-b754-d10aaabe473e"
+    },
+    {
+      "name": "Birthdays",
+      "hidden": false,
+      "masterCategory": "f751fe89-efbb-4bea-998f-3cf7c3c7086c",
+      "sort": 6,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_1bf14699-3e2f-49cd-8ea5-09d0379a60dd",
+      "_rev": "2-823b58130d3bee7c1ccf49a2e8cdf809",
+      "truncated_id": "1bf14699-3e2f-49cd-8ea5-09d0379a60dd"
+    }
+  ],
+  "fb41ed36-32df-4234-9a76-6580d5a52393": [
+    {
+      "name": "Water",
+      "hidden": false,
+      "masterCategory": "fb41ed36-32df-4234-9a76-6580d5a52393",
+      "sort": 0,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_ed80b865-fbc2-4c42-8bb7-f044ac30dece",
+      "_rev": "1-f7384ac7f7f68b5df58a71787f13e2a0",
+      "truncated_id": "ed80b865-fbc2-4c42-8bb7-f044ac30dece"
+    },
+    {
+      "name": "Fuel",
+      "hidden": false,
+      "masterCategory": "fb41ed36-32df-4234-9a76-6580d5a52393",
+      "sort": 1,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_c9e90c28-3b20-4740-bcd3-f6314431ab60",
+      "_rev": "2-e11b085971bf4c76ef4c69b8d04e23df",
+      "truncated_id": "c9e90c28-3b20-4740-bcd3-f6314431ab60"
+    },
+    {
+      "name": "Car Maintenance",
+      "hidden": false,
+      "masterCategory": "fb41ed36-32df-4234-9a76-6580d5a52393",
+      "sort": 2,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_b5f7e3b6-7082-4bf5-b182-1a56fc4b846d",
+      "_rev": "2-8dbba24a72f0c4c443f82e5db30f7ead",
+      "truncated_id": "b5f7e3b6-7082-4bf5-b182-1a56fc4b846d"
+    },
+    {
+      "name": "Rent/Mortgage",
+      "hidden": false,
+      "masterCategory": "fb41ed36-32df-4234-9a76-6580d5a52393",
+      "sort": 3,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_a937afd4-17f0-48a8-b5a9-2a21e5ec2869",
+      "_rev": "2-8042fd9eb6ff3e0b033baf769cb93cc2",
+      "truncated_id": "a937afd4-17f0-48a8-b5a9-2a21e5ec2869"
+    },
+    {
+      "name": "Clothing",
+      "hidden": false,
+      "masterCategory": "fb41ed36-32df-4234-9a76-6580d5a52393",
+      "sort": 4,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_8fc3c5c1-31c7-4c2a-9341-c09dd5808992",
+      "_rev": "2-1ecc2a93c295f8814426b14e83af5c4e",
+      "truncated_id": "8fc3c5c1-31c7-4c2a-9341-c09dd5808992"
+    },
+    {
+      "name": "Cable TV",
+      "hidden": false,
+      "masterCategory": "fb41ed36-32df-4234-9a76-6580d5a52393",
+      "sort": 5,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_896f49aa-4e11-48b5-b452-8886858a3243",
+      "_rev": "2-4f0d25122cca7ee5b497634d7a0483e3",
+      "truncated_id": "896f49aa-4e11-48b5-b452-8886858a3243"
+    },
+    {
+      "name": "Renters Insurance",
+      "hidden": false,
+      "masterCategory": "fb41ed36-32df-4234-9a76-6580d5a52393",
+      "sort": 6,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_601b3bcd-374e-418c-8de1-4a63d4f2ebfd",
+      "_rev": "2-568997482344c22d2e8d737eaf001584",
+      "truncated_id": "601b3bcd-374e-418c-8de1-4a63d4f2ebfd"
+    },
+    {
+      "name": "Car Insurance",
+      "hidden": false,
+      "masterCategory": "fb41ed36-32df-4234-9a76-6580d5a52393",
+      "sort": 7,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_4d0b887b-ebff-413d-b509-76396766f800",
+      "_rev": "2-495610da6b56546fa74b0db31b53f2fc",
+      "truncated_id": "4d0b887b-ebff-413d-b509-76396766f800"
+    },
+    {
+      "name": "Medical/Dental",
+      "hidden": false,
+      "masterCategory": "fb41ed36-32df-4234-9a76-6580d5a52393",
+      "sort": 8,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_46e4c95b-b149-40cc-a356-8ee9ebcd25b0",
+      "_rev": "2-98bc400c1e54cb9ce1a1548cf47388cf",
+      "truncated_id": "46e4c95b-b149-40cc-a356-8ee9ebcd25b0"
+    },
+    {
+      "name": "Internet",
+      "hidden": false,
+      "masterCategory": "fb41ed36-32df-4234-9a76-6580d5a52393",
+      "sort": 9,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_33ab6c57-8b63-457b-b049-8dbf8fec67d9",
+      "_rev": "2-9c516fa394ee9e2b63217caa5d3b30e5",
+      "truncated_id": "33ab6c57-8b63-457b-b049-8dbf8fec67d9"
+    },
+    {
+      "name": "Phone",
+      "hidden": false,
+      "masterCategory": "fb41ed36-32df-4234-9a76-6580d5a52393",
+      "sort": 10,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_309e2a29-6b7f-44ac-afab-b172df4ebe64",
+      "_rev": "2-b4cf590edc05cd9dd38caa09e9f97df7",
+      "truncated_id": "309e2a29-6b7f-44ac-afab-b172df4ebe64"
+    },
+    {
+      "name": "Electricity",
+      "hidden": false,
+      "masterCategory": "fb41ed36-32df-4234-9a76-6580d5a52393",
+      "sort": 11,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_d516c325-70a2-45b3-81dd-384ac9b2dd4c",
+      "_rev": "3-fd75e6529fdbf8ab7bf469bef73bfa87",
+      "truncated_id": "d516c325-70a2-45b3-81dd-384ac9b2dd4c"
+    }
+  ],
+  "5ea916ab-81db-44a4-be31-eb8683677a69": [
+    {
+      "name": "Student Loan Payment",
+      "hidden": false,
+      "masterCategory": "5ea916ab-81db-44a4-be31-eb8683677a69",
+      "sort": 0,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_6b7b3569-08bc-4185-8e4a-3ac4b3d727f5",
+      "_rev": "1-8f09443dd92b4d411a3078d8c5ab9d13",
+      "truncated_id": "6b7b3569-08bc-4185-8e4a-3ac4b3d727f5"
+    },
+    {
+      "name": "Car Payment",
+      "hidden": false,
+      "masterCategory": "5ea916ab-81db-44a4-be31-eb8683677a69",
+      "sort": 1,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_41fc86f8-b37b-45ae-aedd-07bf9bd8875b",
+      "_rev": "2-c7750322d09b396c70ab146543db2f41",
+      "truncated_id": "41fc86f8-b37b-45ae-aedd-07bf9bd8875b"
+    }
+  ],
+  "6c0190bf-406d-40b0-a3ce-1adb6e0c663b": [
+    {
+      "name": "Tithing",
+      "hidden": false,
+      "masterCategory": "6c0190bf-406d-40b0-a3ce-1adb6e0c663b",
+      "sort": 0,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_f7a8d665-bd09-4039-88ee-ffa2cdb982d9",
+      "_rev": "1-a64e5d1e6c5b4bfc0ecd90815c6ccd4c",
+      "truncated_id": "f7a8d665-bd09-4039-88ee-ffa2cdb982d9"
+    },
+    {
+      "name": "Charitable",
+      "hidden": false,
+      "masterCategory": "6c0190bf-406d-40b0-a3ce-1adb6e0c663b",
+      "sort": 1,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_5fc51b91-c2d4-4c94-a72d-59dd49992862",
+      "_rev": "2-86a87aea53c9412fc1707dcb10f125b6",
+      "truncated_id": "5fc51b91-c2d4-4c94-a72d-59dd49992862"
+    }
+  ],
+  "14fc4b06-25fa-4656-ac40-6989f61febbc": [
+    {
+      "name": "Household Goods",
+      "hidden": false,
+      "masterCategory": "14fc4b06-25fa-4656-ac40-6989f61febbc",
+      "sort": 0,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_dfb9be71-f2c9-474f-be19-6db8a59a95df",
+      "_rev": "1-b048ada8c4da769b1de9955e10857f69",
+      "truncated_id": "dfb9be71-f2c9-474f-be19-6db8a59a95df"
+    },
+    {
+      "name": "Groceries",
+      "hidden": false,
+      "masterCategory": "14fc4b06-25fa-4656-ac40-6989f61febbc",
+      "sort": 1,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_da4103a6-bb20-4fa6-93af-a922a63f319d",
+      "_rev": "2-e4a844dcc0c11ef6db1c88cc10f7129f",
+      "truncated_id": "da4103a6-bb20-4fa6-93af-a922a63f319d"
+    },
+    {
+      "name": "Restaurants",
+      "hidden": false,
+      "masterCategory": "14fc4b06-25fa-4656-ac40-6989f61febbc",
+      "sort": 2,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_cb0ac9fb-6bca-4060-bff9-a17deef30059",
+      "_rev": "2-8656c05e1dc3733c79d30c9c0df3ed73",
+      "truncated_id": "cb0ac9fb-6bca-4060-bff9-a17deef30059"
+    },
+    {
+      "name": "Spending Money",
+      "hidden": false,
+      "masterCategory": "14fc4b06-25fa-4656-ac40-6989f61febbc",
+      "sort": 3,
+      "_id": "b_79de488f-448e-4b4d-97ad-61e5e4f5df31_category_a1512211-efb6-430b-8295-5291ecd51a50",
+      "_rev": "2-620ddda6a6a4775e58da868c7d705466",
+      "truncated_id": "a1512211-efb6-430b-8295-5291ecd51a50"
+    }
+  ]
+}
