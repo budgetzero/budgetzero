@@ -39,7 +39,7 @@ No need to deploy if you want to use it at [app.budgetzero.io](https://app.budge
 
 ## Docker
 ```
-docker pull ...
+docker pull budgetzero/budgetzero:latest
 docker build -t budgetzero .
 ```
 Then run with 
