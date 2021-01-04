@@ -12,7 +12,7 @@ Use it now at [BudgetZero.io](https://app.budgetzero.io) or self-host on your ow
 :warning: BudgetZero is under active development and considered an alpha version. You may encounter significant bugs and breaking changes. Feel free to file an issue! :warning:
 
 # Features
-:heavy_check_mark: Zero-based 'envelope' budgeting  
+:heavy_check_mark: Zero-based 'envelope' budgeting   
 :heavy_check_mark: Privacy focused offline-first storage. NOTE: All data is stored in the browser and may be lost if you clear the browser's data.  
 :heavy_check_mark: Import Transactions (OFX, QFX, CSV)  
 :heavy_check_mark: Carry negative balances into next month  
