@@ -267,30 +267,6 @@ export default {
       });
     },
     
-    loadLocalBudgetRoot(context) {
-      return Vue.prototype.$vm.$pouch
-        .allDocs({
-          include_docs: true,
-          attachments: true,
-          startkey: "budget_",
-          endkey: "budget_\ufff0"
-        })
-        .then(result => {
-          context.commit("GET_BUDGET_ROOTS", result.rows);
-
-          if (localStorage.budgetID) {
-            context.commit("UPDATE_SELECTED_BUDGET", localStorage.budgetID);
-          } else {
-            // Select first budget ID on initial load if nothing found in localstorage
-            context.commit("UPDATE_SELECTED_BUDGET", result.rows[0].id.slice(-36));
-          }
-          context.dispatch("getAllDocsFromPouchDB");
-        })
-        .catch(err => {
-          console.log(err);
-          context.commit("API_FAILURE", err);
-        });
-    },
     getBudgetOpened(context) {
       return Vue.prototype.$vm.$pouch
         .allDocs({
