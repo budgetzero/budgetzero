@@ -1,7 +1,7 @@
 
 
-import budget from "@/store/modules/budget/budget-module";
-import pouchdb from "@/store/modules/vuex-pouchdb-module";
+import budget from "@/store/modules/budget-module";
+import pouchdb from "@/store/modules/pouchdb-module";
 
 import { cloneDeep } from 'lodash'
 

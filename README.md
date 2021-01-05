@@ -40,15 +40,14 @@ No need to deploy if you want to use it at [app.budgetzero.io](https://app.budge
 ## Docker
 ```
 docker pull budgetzero/budgetzero:latest
-docker build -t budgetzero .
 ```
 Then run with 
 ```
-docker run -d -p <desired_port>:8080 budgetzero
+docker run -d -p <desired_port>:8080 --name budgetzero budgetzero/budgetzero
 ```
 Example:
 ```
-docker run -d -p 8888:8080 budgetzero
+docker run -d -p 8080:8080 --name budgetzero budgetzero/budgetzero
 ```
 Your budgetzero instance is now running at <docker_IP>:<desired_port>
 
