@@ -1,5 +1,30 @@
 <template>
   <v-app id="inspire">
+    <!-- Modal to input reconcile amount  -->
+    <BaseDialogModalComponent v-model="isModalVisibleCreateBudget">
+      <template #title>
+        Let's get started!
+      </template>
+      <template #body>
+        <v-text-field
+          v-model="budgetName"
+          data-cy="budget-name"
+          label="Enter a name for your budget"
+          required
+        />
+      </template>
+      <template #actions>
+        <v-spacer />
+        <v-btn
+          id="btn-createBudget"
+          color="accent"
+          @click="createBudget()"
+        >
+          Create Budget
+        </v-btn>
+      </template>
+    </BaseDialogModalComponent>
+
     <sidebar />
 
     <v-main>
@@ -10,7 +35,7 @@
       color="accent"
     >
       {{ error_msg }}
-  
+
       <template #action="{ attrs }">
         <v-btn
           color="white"
@@ -27,19 +52,25 @@
 
 <script>
 import Sidebar from "./components/Sidebar.vue";
+import BaseDialogModalComponent from "./components/Modals/BaseDialogModalComponent.vue";
 
 export default {
   name: "App",
   components: {
-    Sidebar
+    Sidebar,
+    BaseDialogModalComponent
   },
   data() {
     return {
       drawer: null,
-      mini: false
+      mini: false,
+      budgetName: null
     };
   },
   computed: {
+    isModalVisibleCreateBudget() {
+      return !this.$store.getters.budgetExists;
+    },
     error_msg() {
       return this.$store.getters.error_msg;
     },
@@ -50,10 +81,24 @@ export default {
       set(value) {
         this.$store.dispatch("setSnackBarBoolean", value);
       }
-    },
+    }
   },
   mounted() {
     this.$store.dispatch("AUTH_CHECK");
+  },
+  methods: {
+    createBudget() {
+      this.$swal({
+        title: "Budget Created",
+        text: `A budget named ${this.budgetName} has been created.`,
+        icon: "success",
+        confirmButtonText: "Ok"
+      });
+
+      this.$store.dispatch("loadLocalBudgetRoot");
+      this.$store.dispatch("createBudget", this.budgetName);
+      this.$router.push({ path: `/budget` });
+    }
   }
 };
 </script>
@@ -78,6 +123,5 @@ export default {
   color: var(--v-primary-base) !important;
   font-weight: 500;
   padding-right: 5px !important;
-
 }
 </style>

@@ -9,7 +9,7 @@
       lazy-validation
     >
       <v-card>
-        <v-card-title class="primary white--text pb-4">
+        <v-card-title class="primary lighten-1 white--text pb-4">
           <span class="title"><slot name="title" /></span>
         </v-card-title>
 

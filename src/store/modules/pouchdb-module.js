@@ -14,7 +14,6 @@ import _ from "lodash";
 
 var FileSaver = require("file-saver");
 
-
 /**
  * This pouchdb vuex module contains code that interacts with the pouchdb database.
  */
@@ -28,7 +27,8 @@ export default {
     payees: [],
     accounts: [],
     budgetRoots: [],
-    budgetOpened: null
+    budgetOpened: null,
+    budgetExists: true // This opens the create budget modal when 'false'
   },
   getters: {
     //Plain getters for main doc types
@@ -117,6 +117,8 @@ export default {
         map[id] = obj;
         return map;
       }, {}),
+    budgetExists: state => state.budgetExists,
+
     transactions_by_account: (state, getters) => _.groupBy(getters.transactions, "account"),
     category_map: (state, getters) =>
       getters.categories.reduce((map, obj) => {
@@ -131,7 +133,7 @@ export default {
         map[obj._id.slice(-36)] = obj.name;
         return map;
       }, {}),
-    
+
     accountsOnBudget: (state, getters) => {
       return getters.accounts.filter(acc => acc.onBudget);
     },
@@ -267,6 +269,11 @@ export default {
       state.pouch_db_rows = [];
     },
     GET_BUDGET_ROOTS(state, payload) {
+      if (payload.length == 0) {
+        state.budgetExists = false
+      } else {
+        state.budgetExists = true
+      }
       state.budgetRoots = payload;
     },
     GET_BUDGET_OPENED(state, payload) {
@@ -407,7 +414,7 @@ export default {
      * @param {doc} payload The document to commit to pouchdb
      */
     deleteDocFromPouchAndVuex(context, payload) {
-      console.log('deleteDocFromPouchAndVuex', payload);
+      console.log("deleteDocFromPouchAndVuex", payload);
       Vue.prototype.$vm.$pouch
         .remove(payload)
         .then(result => {
@@ -431,7 +438,7 @@ export default {
 
     /**
      * Delete the entire pouchdb database. If there's a remote, then the database will just re-sync.
-     * 
+     *
      */
     eraseAllDocs(context) {
       Vue.prototype.$vm.$pouch.erase().then(function(resp) {
@@ -441,7 +448,7 @@ export default {
 
     /**
      * Deletes all docs (transactions, accounts, budget amounts, etc). This will replicate deletion to remote databases.
-     * 
+     *
      */
     deleteAllDocs(context) {
       Vue.prototype.$vm.$pouch
@@ -512,6 +519,31 @@ export default {
         });
       context.commit("DELETE_LOCAL_DB");
       context.commit("UPDATE_SELECTED_BUDGET", null);
+    },
+
+    loadLocalBudgetRoot(context) {
+      return Vue.prototype.$vm.$pouch
+        .allDocs({
+          include_docs: true,
+          attachments: true,
+          startkey: "budget_",
+          endkey: "budget_\ufff0"
+        })
+        .then(result => {
+          context.commit("GET_BUDGET_ROOTS", result.rows);
+
+          if (localStorage.budgetID) {
+            context.commit("UPDATE_SELECTED_BUDGET", localStorage.budgetID);
+          } else {
+            // Select first budget ID on initial load if nothing found in localstorage
+            context.commit("UPDATE_SELECTED_BUDGET", result.rows[0].id.slice(-36));
+          }
+          context.dispatch("getAllDocsFromPouchDB");
+        })
+        .catch(err => {
+          console.log(err);
+          context.commit("API_FAILURE", err);
+        });
     }
   }
 };
