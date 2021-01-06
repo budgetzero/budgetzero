@@ -16,12 +16,6 @@
       <template #actions>
         <v-spacer />
         <v-btn
-          color="grey"
-          @click.stop="isModalVisibleCreateBudget = false"
-        >
-          Cancel
-        </v-btn>
-        <v-btn
           id="btn-createBudget"
           color="accent"
           @click="createBudget()"
