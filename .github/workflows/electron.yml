@@ -11,17 +11,14 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
-        if: ${{ always() }}
-
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
-        if: ${{ always() }}
         with:
           node-version: 14
 
