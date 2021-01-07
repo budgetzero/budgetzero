@@ -14,7 +14,7 @@ Use it now at [BudgetZero.io](https://app.budgetzero.io) or self-host on your ow
 
 # Features
 :heavy_check_mark: Zero-based 'envelope' budgeting   
-:heavy_check_mark: Privacy focused offline-first storage. NOTE: All data is stored in the browser and may be lost if you clear the browser's data.  
+:heavy_check_mark: Offline-first storage. NOTE: All data is stored in the browser and may be lost if you clear the browser's data.  
 :heavy_check_mark: Import Transactions (OFX, QFX, CSV)  
 :heavy_check_mark: Carry negative balances into next month  
 
