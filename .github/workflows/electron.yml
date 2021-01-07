@@ -20,7 +20,10 @@ jobs:
         uses: actions/setup-node@v1
         if: ${{ always() }}
         with:
-          node-version: 10
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm i
 
       - name: Build Electron release
         run: npm run electron:build
