@@ -13,14 +13,18 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
+        if: ${{ always() }}
+
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
+        if: ${{ always() }}
         with:
           node-version: 10
 
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
+        if: ${{ always() }}
         with:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
