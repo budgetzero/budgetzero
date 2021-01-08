@@ -1,7 +1,6 @@
 {
   "name": "budgetzero",
-  "version": "0.2.2",
-  "private": true,
+  "version": "0.1.7",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -10,7 +9,7 @@
     "test:debug": "node --inspect-brk node_modules/.bin/vue-cli-service test:unit --runInBand --watchAll",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
-    "electron:build": "vue-cli-service electron:build",
+    "electron:build": "vue-cli-service electron:build --publish always",
     "electron:generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
@@ -73,8 +72,8 @@
     "@vue/test-utils": "^1.1.2",
     "babel-eslint": "^10.1.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
-    "cypress": "^6.2.0",
     "electron": "^11.1.1",
+    "electron-builder": "^22.9.1",
     "electron-icon-builder": "^2.0.1",
     "eslint": "^7.16.0",
     "eslint-plugin-import": "^2.22.1",
@@ -132,5 +131,9 @@
       "vue-cli-service lint",
       "git add"
     ]
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/BudgetZero/BudgetZero"
   }
 }

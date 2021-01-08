@@ -38,7 +38,7 @@ Use it now at [BudgetZero.io](https://app.budgetzero.io) or self-host on your ow
 ## Use at budgetzero.io
 No need to deploy if you want to use it at [app.budgetzero.io](https://app.budgetzero.io)
 
-## Docker
+## Docker 
 ```
 docker pull budgetzero/budgetzero:latest
 ```
