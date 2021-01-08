@@ -192,7 +192,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["transactions", "accounts", "monthlyData", "payees", "selectedBudgetID"])
+    ...mapGetters(["transactions", "accounts", "monthlyData", "payees", "selectedBudgetID"]),
+    packageVersion() {
+      return process.env.PACKAGE_VERSION || '0'
+    } ,
   },
   methods: {
     ...mapActions([
