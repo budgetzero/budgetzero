@@ -60,10 +60,9 @@
      
       <br>
 
-
+      <!-- v-if="!isProd" -->
       <v-expansion-panels>
         <v-expansion-panel
-          v-if="!isProd"
           class="grey lighten-3"
         >
           <v-expansion-panel-header>
