@@ -51,7 +51,7 @@
           class="mb-2"
           small
           :disabled="!backupFileParsed"
-          @click="$store.dispatch('commitBulkDocsToPouchAndVuex', backupFileParsed.rows)"
+          @click="$store.dispatch('commitBulkDocsToPouchAndVuex', backupFileParsed)"
         >
           Restore From File
         </v-btn>
