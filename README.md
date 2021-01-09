@@ -4,13 +4,13 @@
 ![master](https://github.com/BudgetZero/BudgetZero/workflows/master/badge.svg)
 ![dev](https://github.com/BudgetZero/BudgetZero/workflows/dev/badge.svg)
   
-BudgetZero is a free, open-source, privacy-friendly, offline-first budgeting system.  
+budgetzero is a free, open-source, privacy-friendly, offline-first budgeting system.  
 
-Use it now at [BudgetZero.io](https://app.budgetzero.io) or self-host on your own server. Zero ads, zero trackers, just budgeting.
+Use it now at [budgetzero.io](https://app.budgetzero.io) or self-host on your own server. Zero ads, zero trackers, just budgeting.
 
 ![](public/screenshot2__nopadding.png)
 
-:warning: BudgetZero is under active development and considered an alpha version. You may encounter significant bugs and breaking changes. Feel free to file an issue! :warning:
+:warning: budgetzero is under active development and considered an alpha version. You may encounter significant bugs and breaking changes. Feel free to file an issue! :warning:
 
 # Features
 :heavy_check_mark: Zero-based 'envelope' budgeting   
@@ -27,17 +27,20 @@ Use it now at [BudgetZero.io](https://app.budgetzero.io) or self-host on your ow
 
 # Roadmap
 - [ ] Reports
-- [ ] Cloud Sync through Budgetzero.io (coming soon)
+- [ ] Cloud Sync through budgetzero.io (coming soon)
   - **_Interested in Cloud Sync?_** [Sign up to be notified when available!](https://app.budgetzero.io/login)
 - [ ] Self-hosted sync server (coming soon)
 - [ ] Cross-platform desktop applications (Windows, Mac, Linux)
 - [ ] Multi-month view
 - [ ] Payee management
 
-# Deployment
-## Use at budgetzero.io
-No need to deploy if you want to use it at [app.budgetzero.io](https://app.budgetzero.io)
+# Getting Started
+There's multiple ways to use budgetzero.
+1. On the official [app.budgetzero.io](https://app.budgetzero.io/login) page.
+2. Installing the desktop app (Windows or Mac). [Download here](https://github.com/budgetzero/budgetzero/releases/latest)
+3. Self host the web app. You can either deploy the docker image (recommended) or build and host the static files on your own webserver. See deployment section below for more details. 
 
+# Deployment
 ## Docker 
 ```
 docker pull budgetzero/budgetzero:latest
