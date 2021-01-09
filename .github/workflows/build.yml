@@ -1,8 +1,10 @@
-name: master
+name: run unit tests
 on: 
+  pull_request:
   push:
     branches:
       - master
+      - dev
 jobs:
   test:
     runs-on: ubuntu-latest
