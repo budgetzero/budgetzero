@@ -500,7 +500,12 @@ export default {
           console.log("exportBudgetAsJSON", JSON.stringify(result));
           const export_date = new Date();
 
-          var blob = new Blob([JSON.stringify(result)], { type: "text/plain;charset=utf-8" });
+          const reformattedExport = result.rows.map(row => row.doc).map(row => {
+            delete row['_rev'] //Delete rev field to prevent conflicts on restore
+            return row
+          });
+          
+          var blob = new Blob([JSON.stringify(reformattedExport)], { type: "text/plain;charset=utf-8" });
           FileSaver.saveAs(blob, `BudgetZero_Export_${export_date.toISOString()}.txt`);
         })
         .catch(err => {

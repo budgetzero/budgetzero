@@ -208,18 +208,15 @@ export default {
     onFileChange() {
       console.log(this.backupFile)
 
-            const reader = new FileReader();
+      const reader = new FileReader();
       this.accountsForImport = [];
       this.selectedAccount = {};
 
       reader.onload = e => {
         const vm = this;
         let data = JSON.parse(e.target.result)
-        let rowsForImport = data.rows.map(row => row.doc).map(row => {
-          row._rev = null
-          return row
-        });
-        vm.backupFileParsed = rowsForImport
+
+        vm.backupFileParsed = data
       };
       reader.readAsText(this.backupFile);
     },
