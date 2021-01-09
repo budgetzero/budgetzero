@@ -17,13 +17,19 @@ Use it now at [budgetzero.io](https://app.budgetzero.io) or self-host on your ow
 :heavy_check_mark: Offline-first storage. NOTE: All data is stored in the browser and may be lost if you clear the browser's data.  
 :heavy_check_mark: Import Transactions (OFX, QFX, CSV)  
 :heavy_check_mark: Carry negative balances into next month  
+:heavy_check_mark: Privacy-focused. Zero trackers & zero analytics.
+
+# Getting Started
+There's multiple ways to use budgetzero.
+1. On the official [app.budgetzero.io](https://app.budgetzero.io) page.
+2. Installing the desktop app (Windows or Mac). [Download here](https://github.com/budgetzero/budgetzero/releases/latest)
+3. Self host the web app. You can either deploy the docker image (recommended) or build and host the static files on your own webserver. See deployment section below for more details. 
 
 # :warning: Known Issues (being worked on)
 - UI Inconsistencies (pop-up boxes, colors, etc)
 - Performance not tested for extremely large budgets (thousands of transactions)
 - Transfer transactions work but may be a bit buggy
 - Find a bug? Please [file an issue!](../../issues)
-
 
 # Roadmap
 - [ ] Reports
@@ -33,12 +39,6 @@ Use it now at [budgetzero.io](https://app.budgetzero.io) or self-host on your ow
 - [ ] Cross-platform desktop applications (Windows, Mac, Linux)
 - [ ] Multi-month view
 - [ ] Payee management
-
-# Getting Started
-There's multiple ways to use budgetzero.
-1. On the official [app.budgetzero.io](https://app.budgetzero.io) page.
-2. Installing the desktop app (Windows or Mac). [Download here](https://github.com/budgetzero/budgetzero/releases/latest)
-3. Self host the web app. You can either deploy the docker image (recommended) or build and host the static files on your own webserver. See deployment section below for more details. 
 
 # Deployment
 ## Docker 
