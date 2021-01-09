@@ -36,7 +36,7 @@ Use it now at [budgetzero.io](https://app.budgetzero.io) or self-host on your ow
 
 # Getting Started
 There's multiple ways to use budgetzero.
-1. On the official [app.budgetzero.io](https://app.budgetzero.io/login) page.
+1. On the official [app.budgetzero.io](https://app.budgetzero.io) page.
 2. Installing the desktop app (Windows or Mac). [Download here](https://github.com/budgetzero/budgetzero/releases/latest)
 3. Self host the web app. You can either deploy the docker image (recommended) or build and host the static files on your own webserver. See deployment section below for more details. 
 
