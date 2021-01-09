@@ -20,7 +20,7 @@ Use it now at [budgetzero.io](https://app.budgetzero.io) or self-host on your ow
 
 # :warning: Known Issues (being worked on)
 - UI Inconsistencies (pop-up boxes, colors, etc)
-- Performance not optimized for large budgets (thousands of transactions)
+- Performance not tested for extremely large budgets (thousands of transactions)
 - Transfer transactions work but may be a bit buggy
 - Find a bug? Please [file an issue!](../../issues)
 
