@@ -24,7 +24,7 @@
         Restore
       </h3>
       
-      <v-sheet
+      <!-- <v-sheet
         
         class="ma-2 mr-4 pa-2"
         color="grey lighten-2"
@@ -39,23 +39,23 @@
           type="info"
         >
           Before restoring, delete your database or all documents
-        </v-alert>
-        <v-file-input
-          v-model="backupFile"
-          label="Restore Backup File"
-          @change="onFileChange"
-        />
-        <v-btn
-          color="accent"
-          dark
-          class="mb-2"
-          small
-          :disabled="!backupFileParsed"
-          @click="$store.dispatch('commitBulkDocsToPouchAndVuex', backupFileParsed)"
-        >
-          Restore From File
-        </v-btn>
-      </v-sheet>
+        </v-alert> -->
+      <v-file-input
+        v-model="backupFile"
+        label="Restore Backup File"
+        @change="onFileChange"
+      />
+      <v-btn
+        color="accent"
+        dark
+        class="mb-4"
+        small
+        :disabled="!backupFileParsed"
+        @click="$store.dispatch('commitBulkDocsToPouchAndVuex', backupFileParsed)"
+      >
+        Restore From File
+      </v-btn>
+      <!-- </v-sheet> -->
 
      
       <br>
