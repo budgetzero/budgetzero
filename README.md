@@ -6,7 +6,7 @@
   
 budgetzero is a free, open-source, privacy-friendly, offline-first budgeting system.  
 
-Use it now at [budgetzero.io](https://app.budgetzero.io) or self-host on your own server. Zero ads, zero trackers, just budgeting.
+Use at [budgetzero.io](https://app.budgetzero.io), [download the desktop apps](https://github.com/budgetzero/budgetzero/releases/latest) or self-host on your own server. Zero ads, zero trackers, just budgeting.
 
 ![](public/screenshot2__nopadding.png)
 
