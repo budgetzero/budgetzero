@@ -32,6 +32,7 @@ There's multiple ways to use budgetzero.
 - Find a bug? Please [file an issue!](../../issues)
 
 # Roadmap
+[Current development board](https://github.com/budgetzero/budgetzero/projects/1)
 - [ ] Reports
 - [ ] Cloud Sync through budgetzero.io (coming soon)
   - **_Interested in Cloud Sync?_** [Sign up to be notified when available!](https://app.budgetzero.io/login)
