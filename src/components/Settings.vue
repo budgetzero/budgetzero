@@ -15,10 +15,23 @@
         small
         @click="$store.dispatch('exportBudgetAsJSON')"
       >
-        Backup Budget Data
+        Backup Entire Database
       </v-btn>
 
       <span class="pl-2">Export data for backup.</span>
+      <br>
+
+      <v-btn
+        color="grey darken-2"
+        dark
+        class="mb-2"
+        small
+        @click="$store.dispatch('exportSelectedBudgetAsJSON')"
+      >
+        Backup Current Budget
+      </v-btn>
+
+      <span class="pl-2">Backup current budget: {{ this.$store.getters.selectedBudgetID }} </span> 
 
       <h3 class="mx-2 pt-2">
         Restore
@@ -203,7 +216,6 @@ export default {
       "eraseAllDocs",
       "deleteLocalDatabase",
       "loadMockData",
-      "createNewBudget"
     ]),
     onFileChange() {
       console.log(this.backupFile)

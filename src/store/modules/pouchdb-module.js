@@ -117,6 +117,18 @@ export default {
         map[id] = obj;
         return map;
       }, {}),
+    budgetOpened: state =>
+      state.budgetOpened.map(row => {
+        var obj = row.doc;
+        obj.short_id = obj._id.slice(-36);
+        return obj;
+      }),
+    budgetOpenedMap: (state, getters) =>
+      getters.budgetOpened.reduce((map, obj) => {
+        const id = obj._id ? obj._id.slice(-36) : null;
+        map[id] = obj;
+        return map;
+      }, {}),
     budgetExists: state => state.budgetExists,
 
     transactions_by_account: (state, getters) => _.groupBy(getters.transactions, "account"),
@@ -270,13 +282,13 @@ export default {
     },
     GET_BUDGET_ROOTS(state, payload) {
       if (payload.length == 0) {
-        state.budgetExists = false
+        state.budgetExists = false;
       } else {
-        state.budgetExists = true
+        state.budgetExists = true;
       }
       state.budgetRoots = payload;
     },
-    GET_BUDGET_OPENED(state, payload) {
+    SET_BUDGET_OPENED(state, payload) {
       state.budgetOpened = payload;
     }
   },
@@ -398,7 +410,7 @@ export default {
             resolve(response);
             // payload._rev = response.rev; //Response is an array for bulk updates
             console.log("ACTION: commitBulkDocsToPouchAndVuex succeeded", response);
-            context.dispatch('loadLocalBudgetRoot')
+            context.dispatch("loadLocalBudgetRoot");
             // context.dispatch("getAllDocsFromPouchDB"); //Refresh all data so we don't have to manually update vuex store with what was changed.
           },
           error => {
@@ -501,12 +513,56 @@ export default {
           console.log("exportBudgetAsJSON", JSON.stringify(result));
           const export_date = new Date();
 
-          const reformattedExport = result.rows.map(row => row.doc).map(row => {
-            delete row['_rev'] //Delete rev field to prevent conflicts on restore
-            return row
+          const reformattedExport = result.rows
+            .map(row => row.doc)
+            .map(row => {
+              delete row["_rev"]; //Delete rev field to prevent conflicts on restore
+              return row;
+            });
+
+          var blob = new Blob([JSON.stringify(reformattedExport)], {
+            type: "text/plain;charset=utf-8"
           });
+          FileSaver.saveAs(blob, `BudgetZero_Export_${export_date.toISOString()}.txt`);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
+    exportSelectedBudgetAsJSON(context) {
+      return Vue.prototype.$vm.$pouch
+        .allDocs({
+          include_docs: true,
+          attachments: true,
+          startkey: `b_${context.rootState.selectedBudgetID}`,
+          endkey: `b_${context.rootState.selectedBudgetID}\ufff0`
+        })
+        .then(result => {
+          //Add in the budget object. TODO: add in budget_opened object?
+          var b_object = context.rootGetters.budgetRootsMap[context.rootState.selectedBudgetID];
+          delete b_object["_rev"];
           
-          var blob = new Blob([JSON.stringify(reformattedExport)], { type: "text/plain;charset=utf-8" });
+          var b_opened_object = context.rootGetters.budgetOpenedMap[context.rootState.selectedBudgetID];
+          delete b_opened_object["_rev"];
+
+
+          console.log("exportBudgetAsJSON", JSON.stringify(result.push(b_object)));
+          const export_date = new Date();
+
+          const reformattedExport = result.rows
+            .map(row => row.doc)
+            .map(row => {
+              delete row["_rev"]; //Delete rev field to prevent conflicts on restore
+              return row;
+            });
+
+          reformattedExport.push(b_object)
+          reformattedExport.push(b_opened_object);
+
+          var blob = new Blob([JSON.stringify(reformattedExport)], {
+            type: "text/plain;charset=utf-8"
+          });
           FileSaver.saveAs(blob, `BudgetZero_Export_${export_date.toISOString()}.txt`);
         })
         .catch(err => {
@@ -545,6 +601,24 @@ export default {
             context.commit("UPDATE_SELECTED_BUDGET", result.rows[0].id.slice(-36));
           }
           context.dispatch("getAllDocsFromPouchDB");
+          context.dispatch("loadBudgetOpened");
+        })
+        .catch(err => {
+          console.log(err);
+          context.commit("API_FAILURE", err);
+        });
+    },
+
+    loadBudgetOpened(context) {
+      return Vue.prototype.$vm.$pouch
+        .allDocs({
+          include_docs: true,
+          attachments: true,
+          startkey: "budget-opened_",
+          endkey: "budget-opened_\ufff0"
+        })
+        .then(result => {
+          context.commit("SET_BUDGET_OPENED", result.rows);
         })
         .catch(err => {
           console.log(err);

@@ -248,23 +248,27 @@ export default {
      * @param {*} context
      * @param {string} budgetName The name of the budget to be created
      */
-    createNewBudget(context, budgetName) {
-      const id = Vue.prototype.$vm.$uuid.v4();
-
+    createBudget(context, payload) {
+      const budget_id = Vue.prototype.$vm.$uuid.v4();
       const budget = {
-        hints: {
-          outflow: true
-        },
-        name: budgetName,
+        name: payload,
         currency: "USD",
         created: new Date().toISOString(),
         checkNumber: false,
-        _id: `budget_${id}`
+        _id: `budget_${budget_id}`
       };
 
-      context.dispatch("commitDocToPouchAndVuex", budget).then(response => {
-        return context.dispatch("setSelectedBudgetID", response.id.slice(-36));
+      var budget_opened = {
+        opened: new Date().toISOString(),
+        _id: `budget-opened_${budget_id}`
+      };
+
+      context.dispatch("commitDocToPouchAndVuex", budget).then(result => {
+        context
+          .dispatch("setSelectedBudgetID", result.id.slice(-36))
+          .then(context.dispatch("initializeBudgetCategories"));
       });
+      context.dispatch("commitDocToPouchAndVuex", budget_opened);
     },
     
     getBudgetOpened(context) {
@@ -586,28 +590,7 @@ export default {
       });
     },
 
-    createBudget(context, payload) {
-      const budget_id = Vue.prototype.$vm.$uuid.v4();
-      const budget = {
-        name: payload,
-        currency: "USD",
-        created: new Date().toISOString(),
-        checkNumber: false,
-        _id: `budget_${budget_id}`
-      };
 
-      var budget_opened = {
-        opened: new Date().toISOString(),
-        _id: `budget-opened_${budget_id}`
-      };
-
-      context.dispatch("commitDocToPouchAndVuex", budget).then(result => {
-        context
-          .dispatch("setSelectedBudgetID", result.id.slice(-36))
-          .then(context.dispatch("initializeBudgetCategories"));
-      });
-      context.dispatch("commitDocToPouchAndVuex", budget_opened);
-    },
 
     /**
      * Initialize categories in a new budget
