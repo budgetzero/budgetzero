@@ -26,6 +26,6 @@ jobs:
         run: npm i
 
       - name: Build Electron release
-        run: npm run electron:build
+        run: npm run electron:build -c.snap.publish=github
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
