@@ -129,7 +129,7 @@
               dark
               class="mb-2"
               small
-              @click="eraseAllDocs"
+              @click="deleteAllDocs"
             >
               Delete All Docs from db
             </v-btn>
