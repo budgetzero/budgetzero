@@ -948,12 +948,20 @@ export default {
 
       if (!this.search) return trans;
 
+ console.log('payee is', trans)
       return trans.filter(
-        row =>
-          this.payee_map[row.payee].toUpperCase().includes(this.search.toUpperCase()) ||
-          JSON.stringify(row)
-            .toUpperCase()
-            .includes(this.search.toUpperCase())
+        row => {
+          if (this.payee_map[row.payee] !== undefined) {
+            return this.payee_map[row.payee].toUpperCase().includes(this.search.toUpperCase()) ||
+                      JSON.stringify(row)
+                        .toUpperCase()
+                        .includes(this.search.toUpperCase())
+          } else {
+            return false
+          }
+          
+
+        }
       );
     },
 
