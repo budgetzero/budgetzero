@@ -95,6 +95,42 @@ export default {
 
       getters.syncHandler.cancel();
     },
+    startRemoteSyncToCustomURL(context, url) {
+      
+      var remoteDB = new PouchDB(url);
+
+      context.getters.syncHandler = Vue.prototype.$vm.$pouch
+        .sync(remoteDB, {
+          live: true,
+          retry: true
+        })
+        .on("change", function(change) {
+          // yo, something changed!
+          context.commit("SET_STATUS_MESSAGE", `Syncing ${moment().fromNow()}`);
+          console.log("change detected");
+          context.dispatch("getAllDocsFromPouchDB");
+        })
+        .on("complete", change => {
+          context.commit("SET_STATUS_MESSAGE", `Sync'd ${moment().fromNow()}`);
+          console.log("pouch sync complete", Vue.prototype.$vm.$pouch);
+        })
+        .on("paused", function(info) {
+          context.commit("SET_STATUS_MESSAGE", `Last sync ${moment().format("MMM D, h:mm a")}`);
+          console.log("paused:", info);
+          // replication was paused, usually because of a lost connection
+        })
+        .on("active", function(info) {
+          context.commit("SET_STATUS_MESSAGE", `active`);
+          // replication was resumed
+        })
+        .on("error", function(err) {
+          context.commit("SET_STATUS_MESSAGE", err);
+          console.error("Sync error", err);
+        });
+    },
+    clearRemoteSync(context) {
+      context.getters.syncHandler.cancel(); 
+    },
     startSync(context) {
       // Only start sync if user account is verified
       if (!context.state.user.emailVerified) {

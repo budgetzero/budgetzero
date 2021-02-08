@@ -61,7 +61,7 @@
       <v-btn
         color="accent"
         dark
-        class="mb-4"
+        class="mb-1"
         small
         :disabled="!backupFileParsed"
         @click="$store.dispatch('commitBulkDocsToPouchAndVuex', backupFileParsed)"
@@ -75,12 +75,42 @@
         color="primary"
         outlined
         dark
-        class="mb-3 mt-2"
+        class="mb-3 "
         small
         @click="$store.dispatch('loadLocalBudgetRoot')"
       >
         Refresh Database
       </v-btn>
+
+      <v-row align="center">
+        <v-col cols="7">
+          <v-text-field
+            v-model="remoteURL"
+            label="Remote CouchDB URL"
+            required
+          />
+        </v-col>
+        <v-col cols="5">
+          <v-btn
+            color="primary"
+            dark
+            small
+            @click="startRemoteSync()"
+          >
+            Set Custom Sync URL
+          </v-btn>
+          <v-btn
+            color="primary"
+            outlined
+            dark
+            class="ml-2"
+            small
+            @click="clearRemoteSync()"
+          >
+            Clear
+          </v-btn>
+        </v-col>
+      </v-row>
 
       <!-- v-if="!isProd" -->
       <v-expansion-panels>
@@ -201,6 +231,7 @@ export default {
   },
   data() {
     return {
+      remoteURL: null,
       backupFile: null,
       backupFileParsed: null,
       newBudgetModal: false,
@@ -226,6 +257,12 @@ export default {
       "deleteLocalDatabase",
       "loadMockData",
     ]),
+    startRemoteSync() {
+      this.$store.dispatch('startRemoteSyncToCustomURL', this.remoteURL)
+    },
+    clearRemoteSync() {
+      this.$store.dispatch('clearRemoteSync')
+    },
     onFileChange() {
       console.log(this.backupFile)
 
