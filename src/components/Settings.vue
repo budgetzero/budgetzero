@@ -31,12 +31,12 @@
         Backup Current Budget
       </v-btn>
 
-      <span class="pl-2">Backup current budget: {{ this.$store.getters.selectedBudgetID }} </span> 
+      <span class="pl-2">Backup current budget: {{ this.$store.getters.selectedBudgetID }} </span>
 
       <h3 class="mx-2 pt-2">
         Restore
       </h3>
-      
+
       <!-- <v-sheet
         
         class="ma-2 mr-4 pa-2"
@@ -69,7 +69,7 @@
         Restore From File
       </v-btn>
       <!-- </v-sheet> -->
-     
+
       <br>
       <v-btn
         color="primary"
@@ -82,42 +82,54 @@
         Refresh Database
       </v-btn>
 
-      <v-row align="center">
-        <v-col cols="7">
-          <v-text-field
-            label="Remote CouchDB URL"
-            :value="remoteSyncURL"
-            required
-            @input="updateRemoteSyncURL"
-          />
-        </v-col>
-        <v-col cols="5">
-          <v-btn
-            color="primary"
-            dark
-            small
-            @click="startRemoteSync()"
-          >
-            Set Custom Sync URL
-          </v-btn>
-          <v-btn
-            color="primary"
-            outlined
-            dark
-            class="ml-2"
-            small
-            @click="clearRemoteSync()"
-          >
-            Clear
-          </v-btn>
-        </v-col>
-      </v-row>
+      <v-expansion-panels class="mb-4">
+        <v-expansion-panel class="grey lighten-3">
+          <v-expansion-panel-header>
+            <h3>
+              Advanced Sync
+            </h3>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <span>Specify a remote CouchDB database to sync. Example: <code>http://192.168.1.10:5984/mybudget</code> or <code>https://username:password@192.168.1.10:5984/mybudget</code></span>
+            <v-row align="center">
+              <v-col cols="7">
+                <v-text-field
+                  label="Remote CouchDB URL"
+                  :value="remoteSyncURL"
+                  required
+                  @input="updateRemoteSyncURL"
+                />
+              </v-col>
+              <v-col cols="5">
+                <v-btn
+                  color="primary"
+                  dark
+                  small
+                  @click="startRemoteSync()"
+                >
+                  Set Custom Sync URL
+                </v-btn>
+                <v-btn
+                  color="primary"
+                  outlined
+                  dark
+                  class="ml-2"
+                  small
+                  @click="clearRemoteSync()"
+                >
+                  Clear
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+
+
 
       <!-- v-if="!isProd" -->
       <v-expansion-panels>
-        <v-expansion-panel
-          class="grey lighten-3"
-        >
+        <v-expansion-panel class="grey lighten-3">
           <v-expansion-panel-header>
             <h3>
               Debugging
@@ -126,19 +138,17 @@
           <v-expansion-panel-content>
             <tree-view
               :data="transactions"
-              :options="{maxDepth: 0}"
+              :options="{ maxDepth: 0 }"
             />
             <tree-view
               :data="accounts"
-              :options="{maxDepth: 0}"
+              :options="{ maxDepth: 0 }"
             />
             <tree-view
               :data="monthlyData"
-              :options="{maxDepth: 0}"
+              :options="{ maxDepth: 0 }"
             />
-            <v-alert
-              type="warning"
-            >
+            <v-alert type="warning">
               Warning: Do not use these unless you know what you're doing.
             </v-alert>
             <v-btn
@@ -188,7 +198,7 @@
               small
               @click="loadMockData"
             >
-              Load Mock Data 
+              Load Mock Data
             </v-btn>
             <span class="pl-2">Loads fake data for testing purposes.</span>
             <br>
@@ -242,33 +252,35 @@ export default {
         { text: "Name", value: "name" },
         { text: "id", value: "_id" }
       ],
-      isProd: process.env.NODE_ENV === 'production',
+      isProd: process.env.NODE_ENV === "production"
     };
   },
   computed: {
-    ...mapGetters(["transactions", "accounts", "monthlyData", "payees", "selectedBudgetID", 'remoteSyncURL']),
+    ...mapGetters([
+      "transactions",
+      "accounts",
+      "monthlyData",
+      "payees",
+      "selectedBudgetID",
+      "remoteSyncURL"
+    ]),
     packageVersion() {
-      return process.env.PACKAGE_VERSION || '0'
-    } ,
+      return process.env.PACKAGE_VERSION || "0";
+    }
   },
   methods: {
-    ...mapActions([
-      "deleteAllDocs",
-      "eraseAllDocs",
-      "deleteLocalDatabase",
-      "loadMockData",
-    ]),
+    ...mapActions(["deleteAllDocs", "eraseAllDocs", "deleteLocalDatabase", "loadMockData"]),
     updateRemoteSyncURL(url) {
-      this._remoteSyncURL = url
+      this._remoteSyncURL = url;
     },
     startRemoteSync() {
-      this.$store.dispatch('startRemoteSyncToCustomURL', this._remoteSyncURL)
+      this.$store.dispatch("startRemoteSyncToCustomURL", this._remoteSyncURL);
     },
     clearRemoteSync() {
-      this.$store.dispatch('clearRemoteSync')
+      this.$store.dispatch("clearRemoteSync");
     },
     onFileChange() {
-      console.log(this.backupFile)
+      console.log(this.backupFile);
 
       const reader = new FileReader();
       this.accountsForImport = [];
@@ -276,9 +288,9 @@ export default {
 
       reader.onload = e => {
         const vm = this;
-        let data = JSON.parse(e.target.result)
+        let data = JSON.parse(e.target.result);
 
-        vm.backupFileParsed = data
+        vm.backupFileParsed = data;
       };
       reader.readAsText(this.backupFile);
     },

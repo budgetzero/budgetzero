@@ -96,7 +96,6 @@ export default {
       getters.syncHandler.cancel();
     },
     startRemoteSyncToCustomURL(context, url) {
-      
       var remoteDB = new PouchDB(url);
 
       context.commit('SET_REMOTE_SYNC_URL', url)
@@ -131,8 +130,8 @@ export default {
         });
     },
     clearRemoteSync(context) {
-      context.getters.syncHandler.cancel(); 
       context.commit('CLEAR_REMOTE_SYNC_URL')
+      context.getters.syncHandler.cancel(); 
     },
     startSync(context) {
       // Only start sync if user account is verified
