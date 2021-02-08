@@ -85,9 +85,10 @@
       <v-row align="center">
         <v-col cols="7">
           <v-text-field
-            v-model="remoteURL"
             label="Remote CouchDB URL"
+            :value="remoteSyncURL"
             required
+            @input="updateRemoteSyncURL"
           />
         </v-col>
         <v-col cols="5">
@@ -231,7 +232,7 @@ export default {
   },
   data() {
     return {
-      remoteURL: null,
+      _remoteSyncURL: null,
       backupFile: null,
       backupFileParsed: null,
       newBudgetModal: false,
@@ -245,7 +246,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["transactions", "accounts", "monthlyData", "payees", "selectedBudgetID"]),
+    ...mapGetters(["transactions", "accounts", "monthlyData", "payees", "selectedBudgetID", 'remoteSyncURL']),
     packageVersion() {
       return process.env.PACKAGE_VERSION || '0'
     } ,
@@ -257,8 +258,11 @@ export default {
       "deleteLocalDatabase",
       "loadMockData",
     ]),
+    updateRemoteSyncURL(url) {
+      this._remoteSyncURL = url
+    },
     startRemoteSync() {
-      this.$store.dispatch('startRemoteSyncToCustomURL', this.remoteURL)
+      this.$store.dispatch('startRemoteSyncToCustomURL', this._remoteSyncURL)
     },
     clearRemoteSync() {
       this.$store.dispatch('clearRemoteSync')

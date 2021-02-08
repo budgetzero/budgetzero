@@ -132,6 +132,7 @@ export default {
     },
     clearRemoteSync(context) {
       context.getters.syncHandler.cancel(); 
+      context.commit('CLEAR_REMOTE_SYNC_URL')
     },
     startSync(context) {
       // Only start sync if user account is verified
