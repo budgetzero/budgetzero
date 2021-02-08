@@ -99,6 +99,8 @@ export default {
       
       var remoteDB = new PouchDB(url);
 
+      context.commit('SET_REMOTE_SYNC_URL', url)
+
       context.getters.syncHandler = Vue.prototype.$vm.$pouch
         .sync(remoteDB, {
           live: true,
