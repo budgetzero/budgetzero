@@ -2,7 +2,7 @@ import Vue from "vue";
 import moment from "moment";
 
 import { db, auth } from "../../firebaseConfig";
-var PouchDB = require('pouchdb');
+import PouchDB from 'pouchdb'
 
 export default {
   state: {
