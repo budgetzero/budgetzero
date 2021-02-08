@@ -29,7 +29,7 @@
         @click="$store.dispatch('exportSelectedBudgetAsJSON')"
       >
         Backup Current Budget
-      </v-btn>loadLocalBudgetRoot
+      </v-btn>
 
       <span class="pl-2">Backup current budget: {{ this.$store.getters.selectedBudgetID }} </span> 
 
