@@ -7,6 +7,7 @@
       ref="form"
       v-model="valid"
       lazy-validation
+      @submit.prevent
     >
       <v-card>
         <v-card-title class="primary lighten-1 white--text pb-4">

@@ -17,6 +17,7 @@
           prefix="$"
           label="Account balance"
           required
+          @keyup.enter="startReconcile()"
         />
       </template>
       <template #actions>

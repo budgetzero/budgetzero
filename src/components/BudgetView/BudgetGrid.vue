@@ -14,6 +14,8 @@
           v-model="category_name"
           label="New category group"
           required
+          tabindex="0"
+          @keyup.enter="createMasterCategory(category_name)"
         />
       </template>
       <template #actions>
@@ -47,6 +49,8 @@
           v-model="editedCategory.name"
           label="Category name"
           required
+          tabindex="0"
+          @keyup.enter="saveCategory()"
         />
       </template>
       <template #actions>
@@ -79,6 +83,8 @@
           v-model="category_name"
           label="Category"
           required
+          tabindex="0"
+          @keyup.enter="createCategory(category_name)"
         />
       </template>
       <template #actions>
