@@ -32,7 +32,7 @@ export default {
     budgetOpened: null,
     budgetExists: true, // This opens the create budget modal when 'false'
     remoteSyncURL: null,
-    syncHandler: null,
+    syncHandle: null,
   },
   getters: {
     remoteSyncURL: state => state.remoteSyncURL,
@@ -228,9 +228,11 @@ export default {
     CLEAR_REMOTE_SYNC_URL(state) {
       localStorage.removeItem('remoteSyncURL')
       this.state.pouchdb.remoteSyncURL = ''
+
+      Vue.prototype.$pouchSyncHandler.cancel()
     },
     SET_SYNC_HANDLER(state, syncHandler) {
-      this.state.pouchdb.syncHandler = syncHandler
+      this.state.pouchdb.syncHandle = syncHandler
     },
     UPDATE_DOCUMENT(state, { payload, index, docType }) {
       switch (docType) {
@@ -323,7 +325,7 @@ export default {
 
       context.commit('SET_REMOTE_SYNC_URL', url)
 
-      var syncHandler = Vue.prototype.$vm.$pouch
+      const sync = Vue.prototype.$vm.$pouch
         .sync(remoteDB, {
           live: true,
           retry: true
@@ -334,7 +336,7 @@ export default {
           console.log("change detected");
           context.dispatch("getAllDocsFromPouchDB");
         })
-        .on("complete", change => {
+        .on("complete", function (change) {
           context.commit("SET_STATUS_MESSAGE", `Last sync ${moment().format("MMM D, h:mm a")}`);
           console.log("pouch sync complete", Vue.prototype.$vm.$pouch);
         })
@@ -352,11 +354,11 @@ export default {
           console.error("Sync error", err);
         });
       
-      // context.commit('SET_SYNC_HANDLER', syncHandler)
+      Vue.prototype.$pouchSyncHandler = sync
     },
     clearRemoteSync(context) {
       context.commit('CLEAR_REMOTE_SYNC_URL')
-      context.state.pouchdb.syncHandler.cancel(); 
+
     },
     getAllDocsFromPouchDB(context) {
       return Vue.prototype.$vm.$pouch
