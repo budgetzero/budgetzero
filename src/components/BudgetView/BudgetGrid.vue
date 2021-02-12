@@ -530,7 +530,7 @@ export default {
       console.log("budget change", event);
       var payload = {};
       payload.doc = {
-        budget: parseInt(event * 100),
+        budget: Math.round(event * 100),
         overspending: null,
         note: "",
         _id: `b_${this.selectedBudgetID}_m_category_${this.month_selected}-01_${item._id.slice(
