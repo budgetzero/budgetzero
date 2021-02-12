@@ -28,9 +28,11 @@ export default {
     accounts: [],
     budgetRoots: [],
     budgetOpened: null,
-    budgetExists: true // This opens the create budget modal when 'false'
+    budgetExists: true, // This opens the create budget modal when 'false'
+    remoteSyncURL: null,
   },
   getters: {
+    remoteSyncURL: state => state.remoteSyncURL,
     //Plain getters for main doc types
     transactions: state => state.transactions,
     accounts: state => state.accounts,
@@ -209,6 +211,19 @@ export default {
       state.categories = data
         .filter(row => row._id.includes("_category_"))
         .filter(row => !row._id.includes("m_category")); //Don't include budget docs
+    },
+    GET_REMOTE_SYNC_URL(state) {
+      if (localStorage.remoteSyncURL) {
+        this.state.pouchdb.remoteSyncURL = localStorage.remoteSyncURL
+      }
+    },
+    SET_REMOTE_SYNC_URL(state, url) {
+      this.state.pouchdb.remoteSyncURL = url
+      localStorage.remoteSyncURL = url
+    },
+    CLEAR_REMOTE_SYNC_URL(state) {
+      localStorage.removeItem('remoteSyncURL')
+      this.state.pouchdb.remoteSyncURL = null
     },
     UPDATE_DOCUMENT(state, { payload, index, docType }) {
       switch (docType) {
@@ -593,6 +608,10 @@ export default {
         })
         .then(result => {
           context.commit("GET_BUDGET_ROOTS", result.rows);
+
+          if (localStorage.remoteSyncURL) {
+            context.commit("GET_REMOTE_SYNC_URL");
+          }
 
           if (localStorage.budgetID) {
             context.commit("UPDATE_SELECTED_BUDGET", localStorage.budgetID);
