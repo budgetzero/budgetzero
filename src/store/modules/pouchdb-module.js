@@ -228,8 +228,6 @@ export default {
     CLEAR_REMOTE_SYNC_URL(state) {
       localStorage.removeItem('remoteSyncURL')
       this.state.pouchdb.remoteSyncURL = ''
-
-      Vue.prototype.$pouchSyncHandler.cancel()
     },
     SET_SYNC_HANDLER(state, syncHandler) {
       this.state.pouchdb.syncHandle = syncHandler
@@ -332,16 +330,16 @@ export default {
         })
         .on("change", function(change) {
           // yo, something changed!
-          context.commit("SET_STATUS_MESSAGE", `Last sync ${moment().format("MMM D, h:mm a")}`);
+          context.commit("SET_STATUS_MESSAGE", `Last sync [change] ${moment().format("MMM D, h:mm a")}`);
           console.log("change detected");
           context.dispatch("getAllDocsFromPouchDB");
         })
         .on("complete", function (change) {
-          context.commit("SET_STATUS_MESSAGE", `Last sync ${moment().format("MMM D, h:mm a")}`);
+          context.commit("SET_STATUS_MESSAGE", `Last sync [complete] ${moment().format("MMM D, h:mm a")}`);
           console.log("pouch sync complete", Vue.prototype.$vm.$pouch);
         })
         .on("paused", function(info) {
-          context.commit("SET_STATUS_MESSAGE", `Last sync ${moment().format("MMM D, h:mm a")}`);
+          context.commit("SET_STATUS_MESSAGE", `Last sync activity ${moment().format("MMM D, h:mm a")}`);
           console.log("paused:", info);
           // replication was paused, usually because of a lost connection
         })
@@ -357,7 +355,16 @@ export default {
       Vue.prototype.$pouchSyncHandler = sync
     },
     clearRemoteSync(context) {
-      context.commit('CLEAR_REMOTE_SYNC_URL')
+      
+      if (Vue.prototype.$pouchSyncHandler) {
+        Vue.prototype.$pouchSyncHandler.on('complete', function (info) {
+          // replication was canceled!
+          context.commit('CLEAR_REMOTE_SYNC_URL')
+          context.commit("SET_STATUS_MESSAGE", 'Sync disabled')
+        });
+
+        Vue.prototype.$pouchSyncHandler.cancel()
+      }
 
     },
     getAllDocsFromPouchDB(context) {
