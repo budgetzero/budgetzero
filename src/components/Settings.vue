@@ -86,18 +86,22 @@
         <v-expansion-panel class="grey lighten-3">
           <v-expansion-panel-header>
             <h3>
-              Advanced Sync
+              Advanced Sync <span class="subtitle-1 ml-3">{{ sync_state }}</span>
             </h3>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <span>Specify a remote CouchDB database to sync. Example: <code>http://192.168.1.10:5984/mybudget</code> or <code>https://username:password@192.168.1.10:5984/mybudget</code></span>
-            <v-row align="center">
+            <span>Specify a remote CouchDB database to sync. Example:
+              <code>http://192.168.1.10:5984/mybudget</code> or
+              <code>https://username:password@192.168.1.10:5984/mybudget</code></span>
+            <v-row
+              align="center"
+              class="mt-2"
+            >
               <v-col cols="7">
                 <v-text-field
+                  v-model="remoteSyncURLInput"
                   label="Remote CouchDB URL"
-                  :value="remoteSyncURL"
                   required
-                  @input="updateRemoteSyncURL"
                 />
               </v-col>
               <v-col cols="5">
@@ -124,8 +128,6 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
-
-
 
       <!-- v-if="!isProd" -->
       <v-expansion-panels>
@@ -233,16 +235,13 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import BaseDialogModalComponent from "./Modals/BaseDialogModalComponent.vue";
 
 export default {
   name: "Settings",
-  components: {
-    BaseDialogModalComponent
-  },
+  components: {},
   data() {
     return {
-      _remoteSyncURL: null,
+      remoteSyncURLInput: null,
       backupFile: null,
       backupFileParsed: null,
       newBudgetModal: false,
@@ -262,21 +261,29 @@ export default {
       "monthlyData",
       "payees",
       "selectedBudgetID",
-      "remoteSyncURL"
+      "remoteSyncURL",
+      "sync_state"
     ]),
     packageVersion() {
       return process.env.PACKAGE_VERSION || "0";
     }
   },
+  watch: {
+    // whenever question changes, this function will run
+    remoteSyncURL: function(newQuestion, oldQuestion) {
+      this.remoteSyncURLInput = newQuestion;
+    }
+  },
+  mounted() {
+    this.remoteSyncURLInput = this.remoteSyncURL;
+  },
   methods: {
     ...mapActions(["deleteAllDocs", "eraseAllDocs", "deleteLocalDatabase", "loadMockData"]),
-    updateRemoteSyncURL(url) {
-      this._remoteSyncURL = url;
-    },
     startRemoteSync() {
-      this.$store.dispatch("startRemoteSyncToCustomURL", this._remoteSyncURL);
+      this.$store.dispatch("startRemoteSyncToCustomURL", this.remoteSyncURLInput);
     },
     clearRemoteSync() {
+      this.remoteSyncURLInput = "";
       this.$store.dispatch("clearRemoteSync");
     },
     onFileChange() {

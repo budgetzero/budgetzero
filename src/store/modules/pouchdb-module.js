@@ -11,6 +11,8 @@ import {
   validateSchema
 } from "../validation";
 import _ from "lodash";
+import moment from "moment";
+import PouchDB from 'pouchdb'
 
 var FileSaver = require("file-saver");
 
@@ -30,6 +32,7 @@ export default {
     budgetOpened: null,
     budgetExists: true, // This opens the create budget modal when 'false'
     remoteSyncURL: null,
+    syncHandle: null,
   },
   getters: {
     remoteSyncURL: state => state.remoteSyncURL,
@@ -215,6 +218,7 @@ export default {
     GET_REMOTE_SYNC_URL(state) {
       if (localStorage.remoteSyncURL) {
         this.state.pouchdb.remoteSyncURL = localStorage.remoteSyncURL
+        this.dispatch('startRemoteSyncToCustomURL', localStorage.remoteSyncURL)
       }
     },
     SET_REMOTE_SYNC_URL(state, url) {
@@ -223,7 +227,10 @@ export default {
     },
     CLEAR_REMOTE_SYNC_URL(state) {
       localStorage.removeItem('remoteSyncURL')
-      this.state.pouchdb.remoteSyncURL = null
+      this.state.pouchdb.remoteSyncURL = ''
+    },
+    SET_SYNC_HANDLER(state, syncHandler) {
+      this.state.pouchdb.syncHandle = syncHandler
     },
     UPDATE_DOCUMENT(state, { payload, index, docType }) {
       switch (docType) {
@@ -308,6 +315,58 @@ export default {
     }
   },
   actions: {
+    initiateSync(context) {
+      context.dispatch('GET_REMOTE_SYNC_URL')
+    },
+    startRemoteSyncToCustomURL(context, url) {
+      var remoteDB = new PouchDB(url);
+
+      context.commit('SET_REMOTE_SYNC_URL', url)
+
+      const sync = Vue.prototype.$vm.$pouch
+        .sync(remoteDB, {
+          live: true,
+          retry: true
+        })
+        .on("change", function(change) {
+          // yo, something changed!
+          context.commit("SET_STATUS_MESSAGE", `Last sync [change] ${moment().format("MMM D, h:mm a")}`);
+          console.log("change detected");
+          context.dispatch("getAllDocsFromPouchDB");
+        })
+        .on("complete", function (change) {
+          context.commit("SET_STATUS_MESSAGE", `Last sync [complete] ${moment().format("MMM D, h:mm a")}`);
+          console.log("pouch sync complete", Vue.prototype.$vm.$pouch);
+        })
+        .on("paused", function(info) {
+          context.commit("SET_STATUS_MESSAGE", `Last sync activity ${moment().format("MMM D, h:mm a")}`);
+          console.log("paused:", info);
+          // replication was paused, usually because of a lost connection
+        })
+        .on("active", function(info) {
+          context.commit("SET_STATUS_MESSAGE", `active`);
+          // replication was resumed
+        })
+        .on("error", function(err) {
+          context.commit("SET_STATUS_MESSAGE", err);
+          console.error("Sync error", err);
+        });
+      
+      Vue.prototype.$pouchSyncHandler = sync
+    },
+    clearRemoteSync(context) {
+      
+      if (Vue.prototype.$pouchSyncHandler) {
+        Vue.prototype.$pouchSyncHandler.on('complete', function (info) {
+          // replication was canceled!
+          context.commit('CLEAR_REMOTE_SYNC_URL')
+          context.commit("SET_STATUS_MESSAGE", 'Sync disabled')
+        });
+
+        Vue.prototype.$pouchSyncHandler.cancel()
+      }
+
+    },
     getAllDocsFromPouchDB(context) {
       return Vue.prototype.$vm.$pouch
         .allDocs({
