@@ -86,14 +86,17 @@
         <v-expansion-panel class="grey lighten-3">
           <v-expansion-panel-header>
             <h3>
-              Advanced Sync <span class="subtitle-1 ml-3">Status: {{ sync_state }}</span>
+              Advanced Sync <span class="subtitle-1 ml-3">{{ sync_state }}</span>
             </h3>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <span>Specify a remote CouchDB database to sync. Example:
               <code>http://192.168.1.10:5984/mybudget</code> or
               <code>https://username:password@192.168.1.10:5984/mybudget</code></span>
-            <v-row align="center">
+            <v-row
+              align="center"
+              class="mt-2"
+            >
               <v-col cols="7">
                 <v-text-field
                   v-model="remoteSyncURLInput"
