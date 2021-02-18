@@ -66,6 +66,29 @@ npm run build
 ```
 The files will be built into the dist/ folder and can be hosted anywhere.
 
+## Sync Server Setup
+Budgetzero uses [PouchDB](https://pouchdb.com/) to store the all data client-side in the browser. In order to enable sync across multiple browsers and/or devices, you'll need to set up a [CouchDB](https://couchdb.apache.org/) server accessible from the desired devices. This setup guide is a general overview, feel free to adapt as needed.
+
+<details>
+  <summary markdown="span">Manual Setup Instructions for Advanced Users</summary>  
+    
+  1. Install CouchDB on a server: [Manually](https://docs.couchdb.org/en/stable/install/index.html) or with the [official docker couchdb](https://github.com/apache/couchdb-docker) image.  
+
+  If you're using docker, start CouchDB using the provided instructions. Example:  
+  ```
+  docker run -d --name my-couchdb -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=password %%IMAGE%%:latest
+  ```
+  Replace <code>admin</code> and <code>password</code> with desired user/password.  
+  
+  2. Then go to http://[server_IP]:5984/_utils, which opens the Fauxton web interface. 
+   
+  4. Go to 'Configuration' and enable CORS for all domains.  
+  5. Create a database with whatever name you desire.
+  6. 
+  
+  
+  
+</details>
 
 # Development
 ## Pull Requests
