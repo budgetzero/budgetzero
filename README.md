@@ -71,14 +71,16 @@ Budgetzero uses [PouchDB](https://pouchdb.com/) to store the all data client-sid
 
 <details>
   <summary markdown="span">Manual Setup Instructions for Advanced Users</summary>  
-    
+  </br>  
   1. Install CouchDB on a server: [Manually](https://docs.couchdb.org/en/stable/install/index.html) or with the [official docker couchdb](https://github.com/apache/couchdb-docker) image.  
 
-  If you're using docker, start CouchDB using the provided instructions. Example:  
-  ```
-  docker run -d --name my-couchdb -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=password %%IMAGE%%:latest
-  ```
-  Replace <code>admin</code> and <code>password</code> with desired user/password.  
+    If you're using docker, start CouchDB using the provided instructions. 
+    
+    Example:  
+    ```
+    docker run -d --name my-couchdb -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=password %%IMAGE%%:latest
+    ```
+    Replace <code>admin</code> and <code>password</code> with desired user/password.  
   
   2. Then go to http://[server_IP]:5984/_utils, which opens the Fauxton web interface. 
    
