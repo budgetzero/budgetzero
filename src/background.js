@@ -5,6 +5,7 @@ import path from "path";
 import url from "url";
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 
+
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -26,11 +27,10 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true
     },
+    frame: true, 
     icon: path.join(__static, "icon.png")
   });
   win.removeMenu();
-
-  console.log("app path", app.getAppPath());
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
