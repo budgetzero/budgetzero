@@ -83,9 +83,7 @@
     <v-row elevation="4" class="grey lighten-4 ma-0">
       <v-col align="center" justify="center">
         <v-btn small elevation="0" class="grey lighten-2" @click="PREVIOUS_MONTH()">
-          <v-icon medium>
-            mdi-chevron-left </v-icon
-          >Previous month
+          <v-icon medium> mdi-chevron-left </v-icon>Previous month
         </v-btn>
         <v-btn
           id="btn-today"
@@ -123,9 +121,7 @@
           class="mb-2 mr-2"
           @click.stop="isModalVisibleMasterCat = true"
         >
-          <v-icon left>
-            mdi-plus </v-icon
-          >Category Group
+          <v-icon left> mdi-plus </v-icon>Category Group
         </v-btn>
 
         <v-btn
@@ -183,7 +179,11 @@
       handle=".handle"
       :group="{ name: 'people', pull: 'false', put: false }"
     >
-      <v-col v-for="cat in masterCategories" :key="cat._id" class="pa-0">
+      <v-col
+        v-for="cat in masterCategories.filter(cat => !cat.hidden || isReorderingCategories)"
+        :key="cat._id"
+        class="pa-0"
+      >
         <v-row class="primary lighten-2 elevation-0 ma-0 pa-0">
           <v-col class="master-category-row">
             <v-icon v-if="isReorderingCategories" class="handle pr-2" color="white">
@@ -205,7 +205,11 @@
             >
               mdi-chevron-down
             </v-icon>
-            <span class="subtitle font-weight-medium white--text" v-bind:class="{ 'text-decoration-line-through': item.hidden }">{{ cat.name }} </span>
+            <span
+              class="subtitle font-weight-medium white--text"
+              v-bind:class="{ 'text-decoration-line-through': cat.hidden }"
+              >{{ cat.name }}
+            </span>
             <v-btn
               v-if="isReorderingCategories"
               id="btn-editCategoryGroup"
@@ -235,8 +239,8 @@
               color="white"
               @click="hideCategory(cat)"
             >
-              <v-icon>mdi-eye</v-icon> </v-btn
-            >
+              <v-icon>mdi-eye</v-icon>
+            </v-btn>
           </v-col>
         </v-row>
 
@@ -252,9 +256,9 @@
         >
           <!-- Each individual category row -->
           <v-row
-            v-for="item in categoriesGroupedByMaster[cat._id.slice(-36)].sort((a, b) =>
-              a.sort > b.sort ? 1 : -1
-            )"
+            v-for="item in categoriesGroupedByMaster[cat._id.slice(-36)]
+              .sort((a, b) => (a.sort > b.sort ? 1 : -1))
+              .filter(cat => !cat.hidden || isReorderingCategories)"
             :key="item._id"
             class="category-row ma-0"
             align="center"
@@ -263,7 +267,9 @@
               <v-icon v-if="isReorderingCategories" class="handle pr-1">
                 mdi-drag-horizontal-variant
               </v-icon>
-              <span v-bind:class="{ 'text-decoration-line-through': item.hidden }">{{ item.name }}</span>
+              <span v-bind:class="{ 'text-decoration-line-through': item.hidden }">{{
+                item.name
+              }}</span>
               <v-btn
                 v-if="isReorderingCategories"
                 id="btn-editCategory"
