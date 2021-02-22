@@ -239,7 +239,8 @@
               color="white"
               @click="hideCategory(cat)"
             >
-              <v-icon>mdi-eye</v-icon>
+              <v-icon v-if="!cat.hidden">mdi-eye</v-icon>
+              <v-icon v-if="cat.hidden">mdi-eye-off</v-icon>
             </v-btn>
           </v-col>
         </v-row>
@@ -290,7 +291,8 @@
                 color="grey darken-4"
                 @click="hideCategory(item)"
               >
-                <v-icon>mdi-eye</v-icon>
+              <v-icon v-if="!item.hidden">mdi-eye</v-icon>
+              <v-icon v-if="item.hidden">mdi-eye-off</v-icon>
               </v-btn>
             </v-col>
             <!-- <v-col>{{ item.name }}</v-col> -->
