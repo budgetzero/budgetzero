@@ -121,6 +121,9 @@ const schema_m_category = {
     },
     overspending: {
       type: ["boolean", "null"]
+    },
+    hidden: {
+      type: ["boolean", "null"]
     }
   },
   required: ["_id", "budget", "overspending"]
@@ -139,9 +142,15 @@ const schema_masterCategory = {
     },
     sort: {
       type: ["integer", "number"]
-    }
+    },
+    collapsed: {
+      type: ["boolean", "null"]
+    },
+    hidden: {
+      type: ["boolean", "null"]
+    },
   },
-  required: ["_id", "name", "sort"]
+  required: ["_id", "name", "sort", "collapsed"]
 };
 
 const schema_payee = {
