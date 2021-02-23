@@ -711,6 +711,11 @@ export default {
           console.log(err);
           context.commit("API_FAILURE", err);
         });
+    },
+    createLocalPouchDB(context) {
+      const pouch = new PouchDB("budgetzero_local_db");
+      Vue.prototype.$pouch = pouch;
+      context.dispatch("loadLocalBudgetRoot");
     }
   }
 };

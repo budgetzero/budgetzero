@@ -4,7 +4,6 @@ import user from "./modules/user-module";
 import budget from "./modules/budget-module"
 import pouchdb from "./modules/pouchdb-module";
 import moment from "moment";
-import PouchDB from "pouchdb-browser";
 
 Vue.use(Vuex);
 
@@ -67,10 +66,5 @@ export default new Vuex.Store({
     setSnackBarBoolean(context, snackbar) {
       context.commit('SET_SNACKBAR', snackbar)
     },
-    createLocalPouchDB(context) {
-      const pouch = new PouchDB("budgetzero_local_db");
-      Vue.prototype.$pouch = pouch;
-      context.dispatch("loadLocalBudgetRoot");
-    }
   }
 });
