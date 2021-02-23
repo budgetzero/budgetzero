@@ -153,10 +153,7 @@ const vm = new Vue({
   render: h => h(App)
 }).$mount("#app");
 
-const pouch = new PouchDB("budget_zero_local_db");
-Vue.prototype.$pouch = pouch;
-
 //TODO: Allows access to vm within Vuex store. May want to research alternative ways... this._vm may work within store?
 Vue.prototype.$vm = vm; 
 
-vm.$store.dispatch("loadLocalBudgetRoot");
+vm.$store.dispatch("createLocalPouchDB");
