@@ -132,12 +132,12 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.username, this.password)
         .then(data => {
-          this.$store.commit('SET_ERROR_MESSAGE', 'Successfully logged in!')
+          this.$store.commit('SET_SNACKBAR_MESSAGE', 'Successfully logged in!')
           this.username = ''
           this.password = ''
         })
         .catch(err => {
-          this.$store.commit('SET_ERROR_MESSAGE', err.message)
+          this.$store.commit('SET_SNACKBAR_MESSAGE', err.message)
           this.password = ''
         });
     },

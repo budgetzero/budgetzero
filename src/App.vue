@@ -32,9 +32,9 @@
     </v-main>
     <v-snackbar
       v-model="snackbar"
-      color="accent"
+      :color="snackBarColor"
     >
-      {{ error_msg }}
+      {{ snackbarMessage }}
 
       <template #action="{ attrs }">
         <v-btn
@@ -71,8 +71,11 @@ export default {
     isModalVisibleCreateBudget() {
       return !this.$store.getters.budgetExists;
     },
-    error_msg() {
-      return this.$store.getters.error_msg;
+    snackbarMessage() {
+      return this.$store.getters.snackbarMessage;
+    },
+    snackBarColor() {
+      return this.$store.getters.snackbarColor
     },
     snackbar: {
       get() {
