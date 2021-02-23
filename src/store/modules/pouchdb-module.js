@@ -323,6 +323,15 @@ export default {
 
       context.commit('SET_REMOTE_SYNC_URL', url)
 
+      remoteDB.info().then(info => {
+        context.commit('SET_SNACKBAR_MESSAGE', {snackbarMessage: 'Connection to remote database success!', snackbarColor: "primary"})
+        console.log("You connected", info);
+      }).catch(err => {
+        context.commit('SET_SNACKBAR_MESSAGE', {snackbarMessage: err, snackbarColor: "error"})
+        console.log("Failed to connect");
+        console.log(err);
+      });
+
       const sync = Vue.prototype.$vm.$pouch
         .sync(remoteDB, {
           live: true,
@@ -339,7 +348,7 @@ export default {
           console.log("pouch sync complete", Vue.prototype.$vm.$pouch);
         })
         .on("paused", function(info) {
-          context.commit("SET_STATUS_MESSAGE", `Last sync activity ${moment().format("MMM D, h:mm a")}`);
+          context.commit("SET_STATUS_MESSAGE", `Last sync ${moment().format("MMM D, h:mm a")}`);
           console.log("paused:", info);
           // replication was paused, usually because of a lost connection
         })
@@ -448,7 +457,7 @@ export default {
       }
 
       if (validationResult.errors.length > 0) {
-        this.commit("SET_ERROR_MESSAGE", validationResult.errors.toString());
+        this.commit("SET_SNACKBAR_MESSAGE", validationResult.errors.toString());
         console.log("failed validation:", payload);
         return;
       }
