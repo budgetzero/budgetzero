@@ -327,6 +327,11 @@ export default {
       cat.collapsed = !cat.collapsed;
       context.dispatch("commitDocToPouchAndVuex", cat);
     },
+    flipCategoryHidden(context, payload) {
+      const cat = Object.assign({}, payload);
+      cat.hidden = !cat.hidden;
+      context.dispatch("commitDocToPouchAndVuex", cat);
+    },
     ///
     /// Budget
     ///

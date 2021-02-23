@@ -15,14 +15,16 @@ export default new Vuex.Store({
     pouchdb,
   },
   state: {
-    error_msg: "",
+    snackbarMessage: "",
+    snackbarColor: "",
     snackbar: false,
     sync_state: "",
     selectedBudgetID: null,
     month_selected: moment(new Date()).format("YYYY-MM"),
   },
   getters: {
-    error_msg: state => state.error_msg,
+    snackbarMessage: state => state.snackbarMessage,
+    snackbarColor: state => state.snackbarColor,
     sync_state: state => state.sync_state,
     snackbar: state => state.snackbar,
     selectedBudgetID: state => state.selectedBudgetID,
@@ -33,8 +35,10 @@ export default new Vuex.Store({
       // console.log('failure');
       state.sync_state = `${message}`;
     },
-    SET_ERROR_MESSAGE(state, error) {
-      state.error_msg = error
+    SET_SNACKBAR_MESSAGE(state, payload) {
+      state.snackbarMessage = payload.snackbarMessage
+      state.snackbarColor = payload.snackbarColor
+
       state.snackbar = true
     },
     SET_SNACKBAR(state, snackbar) {
