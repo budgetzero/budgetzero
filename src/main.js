@@ -31,6 +31,7 @@ import Login from "./components/Auth/Login.vue";
 import Profile from "./components/Auth/Profile.vue";
 import CreateBudget from "./components/CreateBudget.vue";
 import Manage from "./components/Manage.vue";
+import Reports from "./components/Reports.vue";
 
 /**
  * Sweet Alert
@@ -101,6 +102,11 @@ export var router = new VueRouter({
     {
       path: "/accounts",
       component: Accounts,
+      // beforeEnter: ifAnyBudgetExists,
+    },
+    {
+      path: "/reports",
+      component: Reports,
       // beforeEnter: ifAnyBudgetExists,
     },
     {

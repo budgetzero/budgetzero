@@ -111,9 +111,7 @@
         max-width="400"
         color="grey lighten-4"
       >
-        <v-list-item
-          :to="{ path: '/manage' }"
-        >
+        <v-list-item :to="{ path: '/manage' }">
           <v-list-item-avatar>
             <v-icon
               left
@@ -126,9 +124,7 @@
             <v-list-item-title>Manage Budgets</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item
-          :to="{ path: '/settings' }"
-        >
+        <v-list-item :to="{ path: '/settings' }">
           <v-list-item-avatar>
             <v-icon
               left
@@ -188,6 +184,17 @@
         <v-list-item-content>
           <v-list-item-title class="subtitle-1">
             Accounts
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item :to="{ path: '/reports' }">
+        <v-list-item-icon>
+          <v-icon>mdi-bank</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title class="subtitle-1">
+            Reports
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -412,7 +419,6 @@ export default {
     }
   },
   methods: {
-
     createBudget() {
       this.$router.push({ path: `/create` });
     },
