@@ -1,9 +1,11 @@
 <template>
   <v-row class="px-3 pt-2">
-    Reports
-    <div class="small">
-      <line-chart />
-    </div>
+    <v-col>
+      <span class="text-h3 pt-4">Reports</span>
+      <div class="pa-5">
+        <line-chart />
+      </div>
+    </v-col>
   </v-row>
 </template>
 
@@ -17,18 +19,14 @@ export default {
     LineChart
   },
   data() {
-    return {
-    };
+    return {};
   },
-    computed: {
+  computed: {
     ...mapGetters(["monthlyData"])
   },
   watch: {},
-  mounted() {
-  },
+  mounted() {},
 
-  methods: {
-  
-  }
+  methods: {}
 };
 </script>
