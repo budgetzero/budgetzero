@@ -1,27 +1,43 @@
 <template>
   <div>
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <canvas
+      id="myChart"
+      width="400"
+      height="400"
+    />
   </div>
 </template>
 
 <script>
-import Chart from "chart.js";
+import Chart from "chart.js/auto";
+import { mapGetters } from "vuex";
 
 export default {
   name: "LineChart",
   data() {
     return {};
   },
+  computed: {
+    ...mapGetters(["monthlyData"]),
+    monthlyDataToArrayForChart() {
+      var arr = []
+      for (const [key, value] of Object.entries(this.monthlyData)) {
+        value.x = key
+        arr.push(value)
+      }
+      return arr
+    }
+  },
   mounted() {
     var ctx = document.getElementById("myChart").getContext("2d");
-    new Chart(ctx, {
+    var myChart = new Chart(ctx, {
       type: "bar",
       data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: Object.keys(this.monthlyData),
         datasets: [
           {
             label: "# of Votes",
-            data: [12, 19, 3, 5, 2, 3],
+            data: this.monthlyDataToArrayForChart,
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",
@@ -38,16 +54,17 @@ export default {
               "rgba(153, 102, 255, 1)",
               "rgba(255, 159, 64, 1)"
             ],
-            borderWidth: 1
+            borderWidth: 1,
+          
           }
         ]
       },
       options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
+         parsing: {
+              xAxisKey: "x",
+              yAxisKey: "summmary_data.available_to_budget_last_month"
+            }
+         
       }
     });
   }

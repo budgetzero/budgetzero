@@ -2,7 +2,7 @@
   <v-row class="px-3 pt-2">
     Reports
     <div class="small">
-      <line-chart/>
+      <line-chart />
     </div>
   </v-row>
 </template>
