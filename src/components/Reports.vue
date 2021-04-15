@@ -3,7 +3,7 @@
     <v-col>
       <span class="text-h3 pt-4">Reports</span>
       <div class="pa-5">
-        <line-chart />
+        <line-chart :chart-data.sync="monthlyData" />
       </div>
     </v-col>
   </v-row>
@@ -19,7 +19,8 @@ export default {
     LineChart
   },
   data() {
-    return {};
+    return {
+    };
   },
   computed: {
     ...mapGetters(["monthlyData"])

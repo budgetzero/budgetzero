@@ -8,18 +8,17 @@
 
 <script>
 import Chart from "chart.js/auto";
-import { mapGetters } from "vuex";
 
 export default {
   name: "LineChart",
+  props: ['chartData'],
   data() {
     return {};
   },
   computed: {
-    ...mapGetters(["monthlyData"]),
     monthlyDataToArrayForChart() {
       var arr = []
-      for (const [key, value] of Object.entries(this.monthlyData)) {
+      for (const [key, value] of Object.entries(this.chartData)) {
         value.x = key
         arr.push(value)
       }
@@ -31,7 +30,7 @@ export default {
     var myChart = new Chart(ctx, {
       type: "bar",
       data: {
-        labels: Object.keys(this.monthlyData),
+        labels: Object.keys(this.chartData),
         datasets: [
           {
             label: "ATB this Month",
@@ -81,6 +80,6 @@ export default {
   position: relative;
   margin: auto;
   height: 90vh;
-  width: 80vw;
+  width: 80vw -250px;
 }
 </style>
