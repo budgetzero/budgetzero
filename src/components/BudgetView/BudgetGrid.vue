@@ -1,5 +1,8 @@
 <template>
-  <v-container fluid class="pa-0">
+  <v-container
+    fluid
+    class="pa-0"
+  >
     <!-- Modal to create category group  -->
     <BaseDialogModalComponent v-model="isModalVisibleMasterCat">
       <template #title>
@@ -17,7 +20,11 @@
       </template>
       <template #actions>
         <v-spacer />
-        <v-btn color="grey" text @click.stop="isModalVisibleMasterCat = false">
+        <v-btn
+          color="grey"
+          text
+          @click.stop="isModalVisibleMasterCat = false"
+        >
           Cancel
         </v-btn>
         <v-btn
@@ -48,10 +55,19 @@
       </template>
       <template #actions>
         <v-spacer />
-        <v-btn color="grey" text @click.stop="isModalVisibleEditCategory = false">
+        <v-btn
+          color="grey"
+          text
+          @click.stop="isModalVisibleEditCategory = false"
+        >
           Cancel
         </v-btn>
-        <v-btn id="btn-save" color="accent" text @click="saveCategory()">
+        <v-btn
+          id="btn-save"
+          color="accent"
+          text
+          @click="saveCategory()"
+        >
           Save
         </v-btn>
       </template>
@@ -59,7 +75,9 @@
 
     <!-- Modal to add sub category  -->
     <BaseDialogModalComponent v-model="isModalVisibleCreateSubCategory">
-      <template #title> Create Category for {{ editedCategory.name }}: </template>
+      <template #title>
+        Create Category for {{ editedCategory.name }}:
+      </template>
       <template #body>
         <v-text-field
           v-model="category_name"
@@ -71,19 +89,40 @@
       </template>
       <template #actions>
         <v-spacer />
-        <v-btn color="grey" text @click.stop="isModalVisibleCreateSubCategory = false">
+        <v-btn
+          color="grey"
+          text
+          @click.stop="isModalVisibleCreateSubCategory = false"
+        >
           Cancel
         </v-btn>
-        <v-btn color="accent" text @click="createCategory(category_name)">
+        <v-btn
+          color="accent"
+          text
+          @click="createCategory(category_name)"
+        >
           Create
         </v-btn>
       </template>
     </BaseDialogModalComponent>
 
-    <v-row elevation="4" class="grey lighten-4 ma-0">
-      <v-col align="center" justify="center">
-        <v-btn small elevation="0" class="grey lighten-2" @click="PREVIOUS_MONTH()">
-          <v-icon medium> mdi-chevron-left </v-icon>Previous month
+    <v-row
+      elevation="4"
+      class="grey lighten-4 ma-0"
+    >
+      <v-col
+        align="center"
+        justify="center"
+      >
+        <v-btn
+          small
+          elevation="0"
+          class="grey lighten-2"
+          @click="PREVIOUS_MONTH()"
+        >
+          <v-icon medium>
+            mdi-chevron-left
+          </v-icon>Previous month
         </v-btn>
         <v-btn
           id="btn-today"
@@ -94,7 +133,12 @@
         >
           Today
         </v-btn>
-        <v-btn small elevation="0" class="grey lighten-2 ml-4" @click="ADD_MONTH()">
+        <v-btn
+          small
+          elevation="0"
+          class="grey lighten-2 ml-4"
+          @click="ADD_MONTH()"
+        >
           Next month
           <v-icon medium>
             mdi-chevron-right
@@ -104,14 +148,21 @@
     </v-row>
     <v-divider />
 
-    <v-row justify="space-between" class="ma-0 pt-2">
+    <v-row
+      justify="space-between"
+      class="ma-0 pt-2"
+    >
       <v-col sm="auto" />
       <v-col sm="auto">
         <BudgetHeader />
       </v-col>
     </v-row>
 
-    <v-row class="mx-2 mt-0 mb-1" justify="end" align="end">
+    <v-row
+      class="mx-2 mt-0 mb-1"
+      justify="end"
+      align="end"
+    >
       <v-col class="pa-0">
         <v-btn
           id="btn-add-category-group"
@@ -121,7 +172,9 @@
           class="mb-2 mr-2"
           @click.stop="isModalVisibleMasterCat = true"
         >
-          <v-icon left> mdi-plus </v-icon>Category Group
+          <v-icon left>
+            mdi-plus
+          </v-icon>Category Group
         </v-btn>
 
         <v-btn
@@ -139,13 +192,22 @@
           <span v-else> Done </span>
         </v-btn>
       </v-col>
-      <v-col id="budgeted-header" class="money-amount subtitle font-weight-medium">
+      <v-col
+        id="budgeted-header"
+        class="money-amount subtitle font-weight-medium"
+      >
         Budgeted
       </v-col>
-      <v-col id="spent-header" class="money-amount subtitle font-weight-medium">
+      <v-col
+        id="spent-header"
+        class="money-amount subtitle font-weight-medium"
+      >
         Spent
       </v-col>
-      <v-col id="balance-header" class="money-amount subtitle font-weight-medium">
+      <v-col
+        id="balance-header"
+        class="money-amount subtitle font-weight-medium"
+      >
         Balance
       </v-col>
     </v-row>
@@ -153,19 +215,31 @@
     <!-- 
       Display row for uncategorized if they exist for this month
      -->
-    <v-row v-if="getBalanceValue(null) !== 0" class="elevation-0 ma-0 pa-0 yellow lighten-2">
+    <v-row
+      v-if="getBalanceValue(null) !== 0"
+      class="elevation-0 ma-0 pa-0 yellow lighten-2"
+    >
       <v-col class="master-category-row ">
         <v-chip class="py-0">
           <span class="subtitle font-weight-medium primary--text">Uncategorized</span>
         </v-chip>
       </v-col>
-      <v-col sm="auto" class="px-0 py-1" />
-      <v-col sm="auto" class="px-0 py-1">
+      <v-col
+        sm="auto"
+        class="px-0 py-1"
+      />
+      <v-col
+        sm="auto"
+        class="px-0 py-1"
+      >
         <div class="money-amount subtitle-2 pt-1">
           {{ getSpentValue(null) | currency }}
         </div>
       </v-col>
-      <v-col sm="auto" class="px-0 py-1">
+      <v-col
+        sm="auto"
+        class="px-0 py-1"
+      >
         <div class="money-amount subtitle-2 red--text pt-1">
           {{ getBalanceValue(null) | currency }}
         </div>
@@ -186,7 +260,11 @@
       >
         <v-row class="primary lighten-2 elevation-0 ma-0 pa-0">
           <v-col class="master-category-row">
-            <v-icon v-if="isReorderingCategories" class="handle pr-2" color="white">
+            <v-icon
+              v-if="isReorderingCategories"
+              class="handle pr-2"
+              color="white"
+            >
               mdi-drag-horizontal-variant
             </v-icon>
             <v-icon
@@ -207,8 +285,8 @@
             </v-icon>
             <span
               class="subtitle font-weight-medium white--text"
-              v-bind:class="{ 'text-decoration-line-through': cat.hidden }"
-              >{{ cat.name }}
+              :class="{ 'text-decoration-line-through': cat.hidden }"
+            >{{ cat.name }}
             </span>
             <v-btn
               v-if="isReorderingCategories"
@@ -239,8 +317,12 @@
               color="white"
               @click="hideCategory(cat)"
             >
-              <v-icon v-if="!cat.hidden">mdi-eye</v-icon>
-              <v-icon v-if="cat.hidden">mdi-eye-off</v-icon>
+              <v-icon v-if="!cat.hidden">
+                mdi-eye
+              </v-icon>
+              <v-icon v-if="cat.hidden">
+                mdi-eye-off
+              </v-icon>
             </v-btn>
           </v-col>
         </v-row>
@@ -248,7 +330,6 @@
         <!-- Container under each master category containing all individual categories -->
         <draggable
           v-if="categoriesGroupedByMaster[cat._id.slice(-36)] && !cat.collapsed"
-          v-model="test"
           tag="div"
           :class="cat._id.slice(-36)"
           :group="{ name: cat._id.slice(-36), put: true }"
@@ -265,10 +346,13 @@
             align="center"
           >
             <v-col class="py-0 pt-0">
-              <v-icon v-if="isReorderingCategories" class="handle pr-1">
+              <v-icon
+                v-if="isReorderingCategories"
+                class="handle pr-1"
+              >
                 mdi-drag-horizontal-variant
               </v-icon>
-              <span v-bind:class="{ 'text-decoration-line-through': item.hidden }">{{
+              <span :class="{ 'text-decoration-line-through': item.hidden }">{{
                 item.name
               }}</span>
               <v-btn
@@ -291,8 +375,12 @@
                 color="grey darken-4"
                 @click="hideCategory(item)"
               >
-              <v-icon v-if="!item.hidden">mdi-eye</v-icon>
-              <v-icon v-if="item.hidden">mdi-eye-off</v-icon>
+                <v-icon v-if="!item.hidden">
+                  mdi-eye
+                </v-icon>
+                <v-icon v-if="item.hidden">
+                  mdi-eye-off
+                </v-icon>
               </v-btn>
             </v-col>
             <!-- <v-col>{{ item.name }}</v-col> -->
@@ -301,7 +389,11 @@
               {{ item.sort }}
             </v-col> -->
 
-            <v-col sm="auto" class="pa-0 black--text budget-input-col" align="top">
+            <v-col
+              sm="auto"
+              class="pa-0 black--text budget-input-col"
+              align="top"
+            >
               <v-text-field
                 id="budget-input"
                 dense
@@ -323,7 +415,10 @@
               > -->
             </v-col>
 
-            <v-col sm="auto" class="px-0 py-1">
+            <v-col
+              sm="auto"
+              class="px-0 py-1"
+            >
               <div
                 class="spent-amount subtitle-2"
                 :class="{
@@ -335,7 +430,10 @@
               </div>
             </v-col>
 
-            <v-col sm="auto" class="px-0 py-1">
+            <v-col
+              sm="auto"
+              class="px-0 py-1"
+            >
               <div
                 class="balance-amount subtitle-2"
                 :class="{
@@ -345,8 +443,15 @@
                 :category_uid="item._id"
               >
                 {{ getBalanceValue(item._id) | currency }}
-                <v-btn icon x-small @click.stop="flipOverspending(item)">
-                  <v-icon v-if="getOverspendingProperty(item)" color="red">
+                <v-btn
+                  icon
+                  x-small
+                  @click.stop="flipOverspending(item)"
+                >
+                  <v-icon
+                    v-if="getOverspendingProperty(item)"
+                    color="red"
+                  >
                     mdi-arrow-right
                   </v-icon>
                   <v-icon v-else>
@@ -496,17 +601,17 @@ export default {
     getBudgetedValue(full_id) {
       const id = full_id ? full_id.slice(-36) : null;
 
-      return (_.get(this.monthlyData, `${this.month_selected}.${id}.budgeted`, 0) / 100).toFixed(2);
+      return (_.get(this.monthlyData, `${this.month_selected}.categories.${id}.budgeted`, 0) / 100).toFixed(2);
     },
     getSpentValue(full_id) {
       const id = full_id ? full_id.slice(-36) : null;
 
-      return _.get(this.monthlyData, `${this.month_selected}.${id}.spent`, 0) / 100;
+      return _.get(this.monthlyData, `${this.month_selected}.categories.${id}.spent`, 0) / 100;
     },
     getBalanceValue(full_id) {
       const id = full_id ? full_id.slice(-36) : null;
 
-      return _.get(this.monthlyData, `${this.month_selected}.${id}.balance`, 0) / 100;
+      return _.get(this.monthlyData, `${this.month_selected}.categories.${id}.balance`, 0) / 100;
     },
     getOverspendingProperty(item) {
       const id = item._id ? item._id.slice(-36) : null;

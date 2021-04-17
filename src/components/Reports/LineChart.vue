@@ -11,18 +11,18 @@ import Chart from "chart.js/auto";
 
 export default {
   name: "LineChart",
-  props: ['chartData'],
+  props: ["chartData"],
   data() {
     return {};
   },
   computed: {
     monthlyDataToArrayForChart() {
-      var arr = []
+      var arr = [];
       for (const [key, value] of Object.entries(this.chartData)) {
-        value.x = key
-        arr.push(value)
+        value.x = key;
+        arr.push(value);
       }
-      return arr
+      return arr;
     }
   },
   mounted() {
@@ -35,47 +35,34 @@ export default {
           {
             label: "ATB this Month",
             data: this.monthlyDataToArrayForChart,
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
-            ],
-            borderColor: [
-              "rgba(255, 99, 132, 1)",
-            ],
-            borderWidth: 1,
+            backgroundColor: "#455A64",
+            borderColor: "#263238",
+            borderWidth: 3,
             parsing: {
-                xAxisKey: "x",
-                yAxisKey: "summary_data.available_to_budget_this_month"
-              }
-          }
-          ,
-           {
+              xAxisKey: "x",
+              yAxisKey: "summaryData.available_to_budget_this_month"
+            }
+          },
+          {
             label: "ATB this Month",
             data: this.monthlyDataToArrayForChart,
-            backgroundColor: [
-              "rgba(54, 162, 235, 0.2)",
-            ],
-            borderColor: [
-              "rgba(54, 162, 235, 1)",
-            ],
-            borderWidth: 1,
+            backgroundColor: "#8E292F",
+            borderColor: "#8E292F",
+            borderWidth: 3,
             parsing: {
-                xAxisKey: "x",
-                yAxisKey: "summary_data.income_this_month"
-              }
+              xAxisKey: "x",
+              yAxisKey: "summaryData.income_this_month"
+            }
           }
         ]
       },
-      options: {
-         
-         
-      }
+      options: {}
     });
   }
 };
 </script>
 
 <style scoped>
-
 .chart-container {
   position: relative;
   margin: auto;
