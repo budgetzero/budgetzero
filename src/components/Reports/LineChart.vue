@@ -23,17 +23,6 @@ export default {
       data: {
         datasets: [
           {
-            label: "Spent",
-            data: this.chartData,
-            backgroundColor: "#8E292F",
-            borderColor: "#8E292F",
-            borderWidth: 3,
-            parsing: {
-              xAxisKey: "month",
-              yAxisKey: "spent"
-            }
-          },
-          {
             label: "Income",
             data: this.chartData,
             backgroundColor: "#455A64",
@@ -42,6 +31,17 @@ export default {
             parsing: {
               xAxisKey: "month",
               yAxisKey: "income"
+            }
+          },
+          {
+            label: "Spent",
+            data: this.chartData,
+            backgroundColor: "#8E292F",
+            borderColor: "#8E292F",
+            borderWidth: 3,
+            parsing: {
+              xAxisKey: "month",
+              yAxisKey: "spent"
             }
           }
         ]

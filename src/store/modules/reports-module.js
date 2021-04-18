@@ -9,7 +9,6 @@ export default {
   },
   getters: {
     /**
-     * Dict of on-budget transactions grouped by YYYY-MM
      * Used to graph net worth report
      */
       netWorth: (state, getters) => {
@@ -37,3 +36,4 @@ export default {
     actions: {
     }
 }
+

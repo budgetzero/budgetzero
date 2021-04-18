@@ -88,7 +88,7 @@ export default {
           return rv;
         }, {});
       }
-      return final;
+      return sortDict(final);
     },
 
     /**
@@ -704,3 +704,13 @@ export default {
     }
   }
 };
+
+/**
+ * Sort helper function
+ */
+function sortDict(obj) {
+  return Object.keys(obj).sort().reduce(function (result, key) {
+    result[key] = obj[key];
+    return result;
+  }, {});
+}
