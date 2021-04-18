@@ -19,8 +19,10 @@ export default {
     monthlyDataToArrayForChart() {
       var arr = [];
       for (const [key, value] of Object.entries(this.chartData)) {
-        value.x = key;
-        arr.push(value);
+        var month = {}
+        month.x = key;
+        month.y = value
+        arr.push(month)
       }
       return arr;
     }
@@ -33,14 +35,13 @@ export default {
         labels: Object.keys(this.chartData),
         datasets: [
           {
-            label: "ATB this Month",
+            label: "Spent",
             data: this.monthlyDataToArrayForChart,
             backgroundColor: "#455A64",
             borderColor: "#263238",
             borderWidth: 3,
             parsing: {
               xAxisKey: "x",
-              yAxisKey: "summaryData.available_to_budget_this_month"
             }
           },
           {
@@ -51,7 +52,6 @@ export default {
             borderWidth: 3,
             parsing: {
               xAxisKey: "x",
-              yAxisKey: "summaryData.income_this_month"
             }
           }
         ]

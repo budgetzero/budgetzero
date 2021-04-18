@@ -5,7 +5,7 @@
       <v-divider class="pb-4" />
 
       <div class="pa-5">
-        <line-chart :chart-data.sync="monthlyData" />
+        <line-chart :chart-data.sync="netWorth" />
       </div>
     </v-col>
   </v-row>
@@ -25,7 +25,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["monthlyData"])
+    ...mapGetters(["netWorth"])
   },
   watch: {},
   mounted() {},
