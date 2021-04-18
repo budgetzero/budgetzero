@@ -15,43 +15,33 @@ export default {
   data() {
     return {};
   },
-  computed: {
-    monthlyDataToArrayForChart() {
-      var arr = [];
-      for (const [key, value] of Object.entries(this.chartData)) {
-        var month = {}
-        month.x = key;
-        month.y = value
-        arr.push(month)
-      }
-      return arr;
-    }
-  },
+  computed: {},
   mounted() {
     var ctx = document.getElementById("chart").getContext("2d");
-    var myChart = new Chart(ctx, {
+    new Chart(ctx, {
       type: "bar",
       data: {
-        labels: Object.keys(this.chartData),
         datasets: [
           {
             label: "Spent",
-            data: this.monthlyDataToArrayForChart,
-            backgroundColor: "#455A64",
-            borderColor: "#263238",
-            borderWidth: 3,
-            parsing: {
-              xAxisKey: "x",
-            }
-          },
-          {
-            label: "ATB this Month",
-            data: this.monthlyDataToArrayForChart,
+            data: this.chartData,
             backgroundColor: "#8E292F",
             borderColor: "#8E292F",
             borderWidth: 3,
             parsing: {
-              xAxisKey: "x",
+              xAxisKey: "month",
+              yAxisKey: "spent"
+            }
+          },
+          {
+            label: "Income",
+            data: this.chartData,
+            backgroundColor: "#455A64",
+            borderColor: "#263238",
+            borderWidth: 3,
+            parsing: {
+              xAxisKey: "month",
+              yAxisKey: "income"
             }
           }
         ]

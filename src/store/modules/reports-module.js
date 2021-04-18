@@ -12,18 +12,23 @@ export default {
      * Dict of on-budget transactions grouped by YYYY-MM
      * Used to graph net worth report
      */
-    netWorth: (state, getters) => {
-      return getters.transactionsOnBudget.reduce(function(rv, item) {
-          var date_key = "date" in item ? item.date.slice(0, 7) : null;
+      netWorth: (state, getters) => {
+          var networth = []
+          var incomeNextMonth = 0
+          Object.entries(getters.transaction_lookup).forEach(entry => {
+              const [key, month] = entry;
+              var monthItem = {}
 
-          if (date_key) {
-              rv[date_key] = rv[date_key] || 0
-              rv[date_key] += item.value / 100
-          }
-        return rv;
-      }, {});
-    },
+              monthItem.month = key
+              monthItem.income = (month.income + incomeNextMonth)/100
+              monthItem.spent = month.value/100
+              networth.push(monthItem)
 
+              incomeNextMonth = month.incomeNextMonth
+          });
+
+          return networth
+      }
   
   },
   mutations: {
