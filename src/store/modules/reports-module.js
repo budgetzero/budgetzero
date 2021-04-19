@@ -11,9 +11,11 @@ export default {
     /**
      * Used to graph net worth report
      */
-      netWorth: (state, getters) => {
-          var networth = []
+      incomeAndSpentByMonth: (state, getters) => {
+          var incomeAndSpentByMonth = []
           var incomeNextMonth = 0
+          var netWorth = 0
+
           Object.entries(getters.transaction_lookup).forEach(entry => {
               const [key, month] = entry;
               var monthItem = {}
@@ -21,12 +23,15 @@ export default {
               monthItem.month = key
               monthItem.income = (month.income + incomeNextMonth)/100
               monthItem.spent = month.value/100
-              networth.push(monthItem)
+              incomeAndSpentByMonth.push(monthItem)
 
+              netWorth = netWorth + monthItem.income - monthItem.spent
+              monthItem.netWorth = netWorth
+              
               incomeNextMonth = month.incomeNextMonth
           });
 
-          return networth
+          return incomeAndSpentByMonth
       }
   
   },

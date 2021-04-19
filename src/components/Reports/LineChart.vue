@@ -19,10 +19,10 @@ export default {
   mounted() {
     var ctx = document.getElementById("chart").getContext("2d");
     new Chart(ctx, {
-      type: "bar",
       data: {
         datasets: [
           {
+                        type: "bar",
             label: "Income",
             data: this.chartData,
             backgroundColor: "#455A64",
@@ -34,6 +34,7 @@ export default {
             }
           },
           {
+                        type: "bar",
             label: "Spent",
             data: this.chartData,
             backgroundColor: "#8E292F",
@@ -42,6 +43,18 @@ export default {
             parsing: {
               xAxisKey: "month",
               yAxisKey: "spent"
+            }
+          },
+          {
+            type: "line",
+            label: "Networth",
+            data: this.chartData,
+            backgroundColor: "#c2c2c2",
+            borderColor: "#c4c4c4",
+            borderWidth: 3,
+            parsing: {
+              xAxisKey: "month",
+              yAxisKey: "netWorth"
             }
           }
         ]
