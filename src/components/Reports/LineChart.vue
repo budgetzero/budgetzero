@@ -22,7 +22,7 @@ export default {
       data: {
         datasets: [
           {
-                        type: "bar",
+            type: "bar",
             label: "Income",
             data: this.chartData,
             backgroundColor: "#455A64",
@@ -34,7 +34,7 @@ export default {
             }
           },
           {
-                        type: "bar",
+            type: "bar",
             label: "Spent",
             data: this.chartData,
             backgroundColor: "#8E292F",
@@ -59,7 +59,38 @@ export default {
           }
         ]
       },
-      options: {}
+      options: {
+        scales: {
+          y: {
+            ticks: {
+              // Include a dollar sign in the ticks
+              callback: function(value, index, values) {
+                return "$" + value;
+              }
+            }
+          }
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                var label = context.dataset.label || "";
+
+                if (label) {
+                  label += ": ";
+                }
+                if (context.parsed.y !== null) {
+                  label += new Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: "USD"
+                  }).format(context.parsed.y);
+                }
+                return label;
+              }
+            }
+          }
+        }
+      }
     });
   }
 };
