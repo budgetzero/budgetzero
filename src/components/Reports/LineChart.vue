@@ -13,85 +13,98 @@ export default {
   name: "LineChart",
   props: ["chartData"],
   data() {
-    return {};
+    return {
+      chart: null,
+    };
   },
   computed: {},
+  watch: {
+    chartData: function() {
+      this.chart.destroy();
+      this.renderLineChart();
+    }
+  },
   mounted() {
-    var ctx = document.getElementById("chart").getContext("2d");
-    new Chart(ctx, {
-      data: {
-        datasets: [
-          {
-            type: "bar",
-            label: "Income",
-            data: this.chartData,
-            backgroundColor: "#455A64",
-            borderColor: "#263238",
-            borderWidth: 3,
-            parsing: {
-              xAxisKey: "month",
-              yAxisKey: "income"
-            }
-          },
-          {
-            type: "bar",
-            label: "Spent",
-            data: this.chartData,
-            backgroundColor: "#8E292F",
-            borderColor: "#8E292F",
-            borderWidth: 3,
-            parsing: {
-              xAxisKey: "month",
-              yAxisKey: "spent"
-            }
-          },
-          {
-            type: "line",
-            label: "Networth",
-            data: this.chartData,
-            backgroundColor: "#c2c2c2",
-            borderColor: "#c4c4c4",
-            borderWidth: 3,
-            parsing: {
-              xAxisKey: "month",
-              yAxisKey: "netWorth"
-            }
-          }
-        ]
-      },
-      options: {
-        scales: {
-          y: {
-            ticks: {
-              // Include a dollar sign in the ticks
-              callback: function(value, index, values) {
-                return "$" + value;
+    this.renderLineChart()
+  },
+  methods: {
+    renderLineChart: function() {
+      var ctx = document.getElementById("chart").getContext("2d");
+      this.chart = new Chart(ctx, {
+        data: {
+          datasets: [
+            {
+              type: "bar",
+              label: "Income",
+              data: this.chartData,
+              backgroundColor: "#455A64",
+              borderColor: "#263238",
+              borderWidth: 3,
+              parsing: {
+                xAxisKey: "month",
+                yAxisKey: "income"
+              }
+            },
+            {
+              type: "bar",
+              label: "Spent",
+              data: this.chartData,
+              backgroundColor: "#8E292F",
+              borderColor: "#8E292F",
+              borderWidth: 3,
+              parsing: {
+                xAxisKey: "month",
+                yAxisKey: "spent"
+              }
+            },
+            {
+              type: "line",
+              label: "Networth",
+              data: this.chartData,
+              backgroundColor: "#c2c2c2",
+              borderColor: "#c4c4c4",
+              borderWidth: 3,
+              parsing: {
+                xAxisKey: "month",
+                yAxisKey: "netWorth"
               }
             }
-          }
+          ]
         },
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                var label = context.dataset.label || "";
+        options: {
+          scales: {
+            y: {
+              ticks: {
+                // Include a dollar sign in the ticks
+                callback: function(value, index, values) {
+                  return "$" + value;
+                }
+              }
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  var label = context.dataset.label || "";
 
-                if (label) {
-                  label += ": ";
+                  if (label) {
+                    label += ": ";
+                  }
+                  if (context.parsed.y !== null) {
+                    label += new Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: "USD"
+                    }).format(context.parsed.y);
+                  }
+                  return label;
                 }
-                if (context.parsed.y !== null) {
-                  label += new Intl.NumberFormat("en-US", {
-                    style: "currency",
-                    currency: "USD"
-                  }).format(context.parsed.y);
-                }
-                return label;
               }
             }
           }
         }
-      }
-    });
+      });
+    }
   }
 };
 </script>

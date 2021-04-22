@@ -17,10 +17,10 @@
             <template #activator="{ on, attrs }">
               <v-text-field
                 v-model="dateRange"
+                clearable
                 class="pt-1"
                 label="Date Range"
                 :rules="[v => v.length == 2 || 'Must select date range']"
-
                 prepend-icon="mdi-calendar"
                 readonly
                 v-bind="attrs"
@@ -29,7 +29,6 @@
             </template>
             <v-date-picker
               v-model="dateRange"
-
               range
               type="month"
               @input="dateMenu = false"
@@ -38,15 +37,15 @@
         </v-col>
       </v-row>
 
-      <div class="pa-5">
-        <line-chart :chart-data.sync="incomeAndSpentByMonth" />
+      <div class="px-5">
+        <line-chart :chart-data.sync="filteredChartData" />
       </div>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import LineChart from "./Reports/LineChart.vue";
 
 export default {
@@ -64,6 +63,20 @@ export default {
     ...mapGetters(["incomeAndSpentByMonth"]),
     dateRangeText() {
       return this.dateRange.join(" - ");
+    },
+    filteredChartData() {
+        var startDate = new Date(this.dateRange[0]);
+        var endDate = new Date(this.dateRange[1]);
+
+        if (this.dateRange.length < 2) {
+          return this.incomeAndSpentByMonth
+        }
+
+        var filteredData = this.incomeAndSpentByMonth.filter(function (month) {
+          var d = new Date(month.month);
+           return d >= startDate && d <= endDate
+        })
+        return filteredData
     }
   },
   watch: {},
