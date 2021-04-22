@@ -5,31 +5,38 @@
       <v-divider class="pb-4" />
 
       <v-row>
-        <v-col>
+        <v-col cols="3">
           <v-menu
-          v-model="menu2"
-          :close-on-content-click="false"
-          :nudge-right="40"
-          transition="scale-transition"
-          offset-y
-          min-width="auto"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              v-model="date"
-              :label=dateRangeText
-              prepend-icon="mdi-calendar"
-              readonly
-              v-bind="attrs"
-              v-on="on"
-            ></v-text-field>
-          </template>
-                    <v-date-picker v-model="dateRange" range @input="dateMenu = false" type="month" /> 
+            v-model="menu"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            transition="scale-transition"
+            offset-y
+            min-width="auto"
+          >
+            <template #activator="{ on, attrs }">
+              <v-text-field
+                v-model="dateRange"
+                class="pt-1"
+                label="Date Range"
+                :rules="[v => v.length == 2 || 'Must select date range']"
 
-        </v-menu>
+                prepend-icon="mdi-calendar"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+              />
+            </template>
+            <v-date-picker
+              v-model="dateRange"
 
-          </v-col
-      ></v-row>
+              range
+              type="month"
+              @input="dateMenu = false"
+            />
+          </v-menu>
+        </v-col>
+      </v-row>
 
       <div class="pa-5">
         <line-chart :chart-data.sync="incomeAndSpentByMonth" />
@@ -49,13 +56,14 @@ export default {
   },
   data() {
     return {
+      menu: false,
       dateRange: []
     };
   },
   computed: {
     ...mapGetters(["incomeAndSpentByMonth"]),
     dateRangeText() {
-      return this.dateRange.join(' - ')
+      return this.dateRange.join(" - ");
     }
   },
   watch: {},
