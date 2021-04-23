@@ -20,6 +20,7 @@
   "dependencies": {
     "@sweetalert2/theme-borderless": "^4.0.1",
     "banking": "^1.2.0",
+    "chart.js": "^3.1.1",
     "core-js": "^3.8.1",
     "electron-updater": "^4.3.5",
     "file-saver": "^2.0.5",

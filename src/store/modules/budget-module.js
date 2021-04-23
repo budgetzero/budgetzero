@@ -88,7 +88,7 @@ export default {
           return rv;
         }, {});
       }
-      return final;
+      return sortDict(final);
     },
 
     /**
@@ -151,6 +151,7 @@ export default {
         //Iterate each month
         getters.all_months.forEach(month => {
           final_data[month] = {};
+          final_data[month].categories = {}
           var summary_data = {
             income_this_month: 0,
             overspent: 0,
@@ -203,7 +204,7 @@ export default {
                 //Need to carry over overspent balance to next month
               }
 
-              final_data[month][cat_id] = {
+              final_data[month]['categories'][cat_id] = {
                 budgeted: budgeted,
                 spent: spent,
                 balance: category_balance,
@@ -227,8 +228,8 @@ export default {
             summary_data.budgeted_this_month +
             summary_data.last_month_overspent;
 
-          previous_month = final_data[month];
-          final_data[month].summary_data = summary_data;
+          previous_month = final_data[month]['categories'];
+          final_data[month].summaryData = summary_data;
         });
 
         const t8 = performance.now();
@@ -703,3 +704,13 @@ export default {
     }
   }
 };
+
+/**
+ * Sort helper function
+ */
+function sortDict(obj) {
+  return Object.keys(obj).sort().reduce(function (result, key) {
+    result[key] = obj[key];
+    return result;
+  }, {});
+}

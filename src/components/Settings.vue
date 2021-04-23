@@ -20,7 +20,7 @@
       </v-btn>
 
       <span class="pl-2">Export data for backup.</span>
-      <br />
+      <br>
 
       <v-btn
         color="grey darken-2"
@@ -54,7 +54,11 @@
         >
           Before restoring, delete your database or all documents
         </v-alert> -->
-      <v-file-input v-model="backupFile" label="Restore Backup File" @change="onFileChange" />
+      <v-file-input
+        v-model="backupFile"
+        label="Restore Backup File"
+        @change="onFileChange"
+      />
       <v-btn
         color="accent"
         dark
@@ -67,7 +71,7 @@
       </v-btn>
       <!-- </v-sheet> -->
 
-      <br />
+      <br>
       <v-btn
         color="primary"
         outlined
@@ -101,16 +105,31 @@
                 </span>
               </v-tooltip>
             </span>
-
             <v-row align="center" class="mt-2">
               <v-col cols="7">
-                <v-text-field v-model="remoteSyncURLInput" label="Remote CouchDB URL" required />
+                <v-text-field
+                  v-model="remoteSyncURLInput"
+                  label="Remote CouchDB URL"
+                  required
+                />
               </v-col>
               <v-col cols="5">
-                <v-btn color="primary" dark small @click="startRemoteSync()">
+                <v-btn
+                  color="primary"
+                  dark
+                  small
+                  @click="startRemoteSync()"
+                >
                   Set Custom Sync URL
                 </v-btn>
-                <v-btn color="primary" outlined dark class="ml-2" small @click="clearRemoteSync()">
+                <v-btn
+                  color="primary"
+                  outlined
+                  dark
+                  class="ml-2"
+                  small
+                  @click="clearRemoteSync()"
+                >
                   Clear
                 </v-btn>
               </v-col>
@@ -128,9 +147,18 @@
             </h3>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <tree-view :data="transactions" :options="{ maxDepth: 0 }" />
-            <tree-view :data="accounts" :options="{ maxDepth: 0 }" />
-            <tree-view :data="monthlyData" :options="{ maxDepth: 0 }" />
+            <tree-view
+              :data="transactions"
+              :options="{ maxDepth: 0 }"
+            />
+            <tree-view
+              :data="accounts"
+              :options="{ maxDepth: 0 }"
+            />
+            <tree-view
+              :data="monthlyData"
+              :options="{ maxDepth: 0 }"
+            />
             <v-alert type="warning">
               Warning: Do not use these unless you know what you're doing.
             </v-alert>
@@ -164,11 +192,22 @@
             <v-btn color="red" dark class="mb-2" small @click="deleteAllDocs">
               Delete All Docs from db
             </v-btn>
-            <span class="pl-2"
-              >Deletes all docs (transactions, accounts, budget amounts, etc). This will replicate
-              deletion to remote databases.</span
+
+            <br>
+            <v-btn
+              color="red"
+              dark
+              class="mb-2"
+              small
+              @click="deleteAllDocs"
             >
-            <br />
+              Delete All Docs from db
+            </v-btn>
+            <span
+              class="pl-2"
+            >Deletes all docs (transactions, accounts, budget amounts, etc). This will replicate
+              deletion to remote databases.</span>
+            <br>
             <v-btn
               color="grey darken-2"
               dark
@@ -179,13 +218,19 @@
               Reload Budget
             </v-btn>
             <span class="pl-2">Reload Budget Root (for debugging purposes)</span>
-            <br />
+            <br>
 
-            <v-btn color="purple" dark class="mb-2" small @click="loadMockData">
+            <v-btn
+              color="purple"
+              dark
+              class="mb-2"
+              small
+              @click="loadMockData"
+            >
               Load Mock Data
             </v-btn>
             <span class="pl-2">Loads fake data for testing purposes.</span>
-            <br />
+            <br>
 
             <v-btn
               color="purple"

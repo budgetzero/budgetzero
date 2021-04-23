@@ -16,10 +16,7 @@
           flat
           color="white"
         >
-          <v-toolbar-title class="display-1 font-weight-medium">
-            Accounts
-          </v-toolbar-title>
-           
+          <span class="text-h3">Accounts</span>
           <v-spacer />
 
           <AccountAddModal
@@ -38,6 +35,7 @@
             Add Account
           </v-btn>
         </v-toolbar>
+        <v-divider class="pb-4" />
       </template>
 
       <template #item.action="{ item }">
