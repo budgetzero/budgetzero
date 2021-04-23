@@ -22,7 +22,7 @@ export default {
 
               monthItem.month = key
               monthItem.income = (month.income + incomeNextMonth)/100
-              monthItem.spent = month.value/100
+              monthItem.spent = monthItem.income - (month.value/100)
               incomeAndSpentByMonth.push(monthItem)
 
               netWorth = netWorth + (month.value/100) 
