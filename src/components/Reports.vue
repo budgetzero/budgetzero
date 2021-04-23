@@ -65,21 +65,38 @@ export default {
     dateRangeText() {
       return this.dateRange.join(" - ");
     },
-    accountBalancesByMonth() {
+    /**
+     * Returns dict of months -> accounts: sum-of-activity
+     */
+    accountActivityByMonth() {
       var grouped = _.groupBy(this.transactionsOnBudget, function(item) {
         return item.date.substring(0, 7);
-      })
+      });
 
+      var final = [];
+
+      //Iterate over each month
       Object.keys(grouped).forEach(month => {
-          grouped[month] =_.groupBy(grouped[month], 'account')
-        }
-      )
-  return grouped
+        var monthgroup = _.groupBy(grouped[month], "account");
 
-      //For each month, group by account balances and sum...
+        var item = {};
 
-      
-      
+        //Iterate over each account
+        Object.keys(monthgroup).forEach(acct => {
+          //Iterate over each account within each month
+          const val = monthgroup[acct].reduce((val, trans) => {
+            //Sum the transactions
+            return val + trans.value;
+          }, 0);
+
+          item.activity = val;
+          item.account = acct;
+          item.month = month;
+
+          final.push(item);
+        });
+      });
+      return final;
     },
     filteredChartData() {
       var startDate = new Date(this.dateRange[0]);
