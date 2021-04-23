@@ -11,7 +11,7 @@ import Chart from "chart.js/auto";
 
 export default {
   name: "LineChart",
-  props: ["chartData"],
+  props: ["chartData", "activityData"],
   data() {
     return {
       chart: null,
@@ -20,9 +20,10 @@ export default {
   computed: {},
   watch: {
     chartData: function() {
+      console.log('changed')
       this.chart.destroy();
       this.renderLineChart();
-    }
+    },
   },
   mounted() {
     this.renderLineChart()
@@ -61,8 +62,8 @@ export default {
               type: "line",
               label: "Networth",
               data: this.chartData,
-              backgroundColor: "#c2c2c2",
-              borderColor: "#c4c4c4",
+              backgroundColor: "#6e479e",
+              borderColor: "#6e479e",
               borderWidth: 3,
               parsing: {
                 xAxisKey: "month",

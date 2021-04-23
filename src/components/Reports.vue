@@ -20,7 +20,6 @@
                 clearable
                 class="pt-1"
                 label="Date Range"
-                :rules="[v => v.length == 2 || 'Must select date range']"
                 prepend-icon="mdi-calendar"
                 readonly
                 v-bind="attrs"
@@ -38,7 +37,10 @@
       </v-row>
 
       <div class="px-5">
-        <line-chart :chart-data.sync="filteredChartData" />
+        <line-chart
+          :chart-data.sync="filteredChartData"
+          :activity-data.sync="accountActivityByMonth"
+        />
       </div>
     </v-col>
   </v-row>
@@ -66,7 +68,7 @@ export default {
       return this.dateRange.join(" - ");
     },
     /**
-     * Returns dict of months -> accounts: sum-of-activity
+     * Returns array of months -> accounts: sum-of-activity
      */
     accountActivityByMonth() {
       var grouped = _.groupBy(this.transactionsOnBudget, function(item) {
@@ -99,13 +101,14 @@ export default {
       return final;
     },
     filteredChartData() {
-      var startDate = new Date(this.dateRange[0]);
-      var endDate = new Date(this.dateRange[1]);
+      if (!this.dateRange || this.dateRange.length < 2) {
 
-      if (this.dateRange.length < 2) {
         return this.incomeAndSpentByMonth;
       }
 
+        var startDate = new Date(this.dateRange[0]);
+        var endDate = new Date(this.dateRange[1]);
+        
       var filteredData = this.incomeAndSpentByMonth.filter(function(month) {
         var d = new Date(month.month);
         return d >= startDate && d <= endDate;
