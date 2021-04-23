@@ -177,6 +177,7 @@ export default {
 
         return map;
       }, {});
+      
       getters.accounts.forEach(account => {
         // Add in missing account keys
         if (!(account._id.slice(-36) in accountBalances)) {
