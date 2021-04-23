@@ -47,6 +47,7 @@
 <script>
 import { mapGetters } from "vuex";
 import LineChart from "./Reports/LineChart.vue";
+import _ from "lodash";
 
 export default {
   name: "Reports",
@@ -60,23 +61,39 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["incomeAndSpentByMonth"]),
+    ...mapGetters(["incomeAndSpentByMonth", "transactionsOnBudget"]),
     dateRangeText() {
       return this.dateRange.join(" - ");
     },
-    filteredChartData() {
-        var startDate = new Date(this.dateRange[0]);
-        var endDate = new Date(this.dateRange[1]);
+    accountBalancesByMonth() {
+      var grouped = _.groupBy(this.transactionsOnBudget, function(item) {
+        return item.date.substring(0, 7);
+      })
 
-        if (this.dateRange.length < 2) {
-          return this.incomeAndSpentByMonth
+      Object.keys(grouped).forEach(month => {
+          grouped[month] =_.groupBy(grouped[month], 'account')
         }
+      )
+  return grouped
 
-        var filteredData = this.incomeAndSpentByMonth.filter(function (month) {
-          var d = new Date(month.month);
-           return d >= startDate && d <= endDate
-        })
-        return filteredData
+      //For each month, group by account balances and sum...
+
+      
+      
+    },
+    filteredChartData() {
+      var startDate = new Date(this.dateRange[0]);
+      var endDate = new Date(this.dateRange[1]);
+
+      if (this.dateRange.length < 2) {
+        return this.incomeAndSpentByMonth;
+      }
+
+      var filteredData = this.incomeAndSpentByMonth.filter(function(month) {
+        var d = new Date(month.month);
+        return d >= startDate && d <= endDate;
+      });
+      return filteredData;
     }
   },
   watch: {},
