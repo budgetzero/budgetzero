@@ -279,6 +279,7 @@
               v-if="!isReorderingCategories && !cat.collapsed"
               class="mr-2"
               color="white"
+              tabindex="-1"
               @click="collapseMasterCategory(cat)"
             >
               mdi-chevron-down
@@ -445,15 +446,20 @@
                 <v-btn
                   icon
                   x-small
+                  tabindex="-1"
                   @click.stop="flipOverspending(item)"
                 >
                   <v-icon
                     v-if="getOverspendingProperty(item)"
                     color="red"
+                    tabindex="-1"
                   >
                     mdi-arrow-right
                   </v-icon>
-                  <v-icon v-else>
+                  <v-icon
+                    v-else
+                    tabindex="-1"
+                  >
                     mdi-arrow-right
                   </v-icon>
                 </v-btn>
@@ -541,7 +547,7 @@ export default {
     onFocus(param) {
       this.$nextTick(() => {
         param.target.select();
-      })
+      });
     },
     collapseMasterCategory(cat) {
       this.$store.dispatch("flipMasterCategoryCollapsed", cat);
