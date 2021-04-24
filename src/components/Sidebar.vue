@@ -190,7 +190,7 @@
 
       <v-list-item :to="{ path: '/reports' }">
         <v-list-item-icon>
-          <v-icon>mdi-bank</v-icon>
+          <v-icon>mdi-chart-line</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title class="subtitle-1">
