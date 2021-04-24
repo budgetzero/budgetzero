@@ -404,6 +404,7 @@
                 prefix="$"
                 hide-details
                 @change="budgetValueChanged(item, $event)"
+                @focus="onFocus"
               />
               <!-- <input
                 data-cy="budget-input"
@@ -537,6 +538,11 @@ export default {
   methods: {
     ...mapActions(["updateBudgetAmount", "deleteDocFromPouchAndVuex"]),
     ...mapMutations(["PREVIOUS_MONTH", "ADD_MONTH", "GO_TO_CURRENT_MONTH"]),
+    onFocus(param) {
+      this.$nextTick(() => {
+        param.target.select();
+      })
+    },
     collapseMasterCategory(cat) {
       this.$store.dispatch("flipMasterCategoryCollapsed", cat);
     },
