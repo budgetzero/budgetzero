@@ -352,9 +352,7 @@
               >
                 mdi-drag-horizontal-variant
               </v-icon>
-              <span :class="{ 'text-decoration-line-through': item.hidden }">{{
-                item.name
-              }}</span>
+              <span :class="{ 'text-decoration-line-through': item.hidden }">{{ item.name }}</span>
               <v-btn
                 v-if="isReorderingCategories"
                 id="btn-editCategory"
@@ -601,7 +599,9 @@ export default {
     getBudgetedValue(full_id) {
       const id = full_id ? full_id.slice(-36) : null;
 
-      return (_.get(this.monthlyData, `${this.month_selected}.categories.${id}.budgeted`, 0) / 100).toFixed(2);
+      return (
+        _.get(this.monthlyData, `${this.month_selected}.categories.${id}.budgeted`, 0) / 100
+      ).toFixed(2);
     },
     getSpentValue(full_id) {
       const id = full_id ? full_id.slice(-36) : null;
