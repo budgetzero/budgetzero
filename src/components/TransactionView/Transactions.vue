@@ -885,18 +885,22 @@ export default {
     ]),
     inflowAmount: {
       get() {
-        return this.editedItem.value > 0 ? Math.round(this.parseInflowOutflow(this.editedItem.value)/100) : "";
+        return this.editedItem.value > 0
+          ? Math.round(this.parseInflowOutflow(this.editedItem.value)) / 100
+          : "";
       },
       set(newValue) {
-        this.editedItem.value = Math.round(this.parseInflowOutflow(newValue) * 100)
+        this.editedItem.value = Math.round(this.parseInflowOutflow(newValue) * 100);
       }
     },
     outflowAmount: {
       get() {
-        return this.editedItem.value < 0 ? -Math.round(this.parseInflowOutflow(this.editedItem.value)/100) : "";
+        return this.editedItem.value < 0
+          ? -Math.round(this.parseInflowOutflow(this.editedItem.value)) / 100
+          : "";
       },
       set(newValue) {
-        this.editedItem.value = -Math.round(this.parseInflowOutflow(newValue) * 100)
+        this.editedItem.value = -Math.round(this.parseInflowOutflow(newValue) * 100);
       }
     },
     payee() {
@@ -997,7 +1001,7 @@ export default {
   methods: {
     parseInflowOutflow(inputCurrency) {
       //Remove all non=digit chars except for period
-      return inputCurrency.toString().replace(/[^0-9.]/g, '');
+      return inputCurrency.toString().replace(/[^0-9.]/g, "");
     },
     getBalance(item) {
       const id = item.truncated_id;

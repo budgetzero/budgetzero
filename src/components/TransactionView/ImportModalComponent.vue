@@ -390,13 +390,18 @@ export default {
       const transactionListToImport = [];
 
       this.parseCsv.forEach(trn => {
+        
+        //This should probably go somewhere else. 
+        //Necessary to ensure we strip commas from soon-to-be imported transactions
+        const val = trn.amount.toString().replace(/[^0-9.-]/g, '');
+
         //Create a custom importID that appends account to the FITID
         const jsonData = {
             account: this.account,
             category: null,
             cleared: false,
             approved: false,
-            value: Math.round(trn.amount * 100),
+            value: Math.round(val * 100),
             date: moment(trn.date).format('YYYY-MM-DD'),
             memo: trn.memo,
             reconciled: false,
@@ -406,7 +411,6 @@ export default {
             splits: [],
             _id: `b_${this.selectedBudgetID}_transaction_${this.$uuid.v4()}`
           };
-
           this.importCount.imported++;
           transactionListToImport.push(jsonData);
         }
@@ -433,6 +437,7 @@ export default {
 
       for (const transaction of transactionListToImport) {
         console.log("import transaction", transaction);
+        
         await this.$store.dispatch("updateTransaction", transaction);
       }
 
