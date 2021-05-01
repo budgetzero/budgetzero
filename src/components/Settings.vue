@@ -91,21 +91,25 @@
             </h3>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <span
-              >Sync to remote CouchDB server:
+            <span>Sync to remote CouchDB server:
               <v-tooltip bottom>
                 <template #activator="{ on }">
-                  <v-icon color="grey" v-on="on">
+                  <v-icon
+                    color="grey"
+                    v-on="on"
+                  >
                     mdi-information
                   </v-icon>
                 </template>
-                <span
-                  >Examples: <code>http://localhost:5984/mybudget</code> or
+                <span>Examples: <code>http://localhost:5984/mybudget</code> or
                   <code>http://username:password@192.168.1.10:5984/mybudget</code>
                 </span>
               </v-tooltip>
             </span>
-            <v-row align="center" class="mt-2">
+            <v-row
+              align="center"
+              class="mt-2"
+            >
               <v-col cols="7">
                 <v-text-field
                   v-model="remoteSyncURLInput"
@@ -172,12 +176,13 @@
             >
               Erase Local Database
             </v-btn>
-            <span class="pl-2"
-              >Deletes local PouchDB database. If connected to a remote database it will re-sync all
+            <span
+              class="pl-2"
+            >Deletes local PouchDB database. If connected to a remote database it will re-sync all
               the data.
             </span>
 
-            <br />
+            <br>
             <v-btn
               color="primary"
               dark
@@ -188,8 +193,14 @@
               Create Local Database
             </v-btn>
 
-            <br />
-            <v-btn color="red" dark class="mb-2" small @click="deleteAllDocs">
+            <br>
+            <v-btn
+              color="red"
+              dark
+              class="mb-2"
+              small
+              @click="deleteAllDocs"
+            >
               Delete All Docs from db
             </v-btn>
 
