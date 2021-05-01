@@ -86,8 +86,12 @@ Budgetzero uses [PouchDB](https://pouchdb.com/) to store the all data client-sid
 
 4. Go to 'Configuration' and enable CORS for all domains.  
 5. Create a database with whatever name you desire.
-6.  
-  
+6. In BudgetZero, go to Settings and set the couchdb URL to start syncing. This will need to be set up for each client/browser/computer/etc.  
+   Examples:  
+   ```http://localhost:5984/mybudget```  
+   ```http://username:password@192.168.1.10:5984/mybudget``` 
+      
+  ![](public/sync.png)
   
   
 </details>  
