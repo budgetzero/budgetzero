@@ -896,7 +896,7 @@ export default {
     outflowAmount: {
       get() {
         return this.editedItem.value < 0
-          ? -Math.round(this.parseInflowOutflow(this.editedItem.value)) / 100
+          ? Math.round(this.parseInflowOutflow(this.editedItem.value)) / 100
           : "";
       },
       set(newValue) {
