@@ -1007,9 +1007,8 @@ export default {
       const id = item.truncated_id;
       const transaction_month = this.editedItem.date.substring(0, 7);
 
-      return this.monthlyData[transaction_month][id]
-        ? this.monthlyData[transaction_month][id].balance
-        : id;
+      const balance = _.get(this.monthlyData, `${transaction_month}.categories.${id}.balance`, 0)
+      return balance
     },
     addTransaction() {
       this.creatingNewTransaction = true;
