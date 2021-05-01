@@ -49,9 +49,7 @@
     />
 
     <v-divider />
-    <v-row
-      class="transaction-toolbar ma-0"
-    >
+    <v-row class="transaction-toolbar ma-0">
       <v-col class="pt-2 pb-0">
         <v-btn
           id="addTransactionBtn"
@@ -163,7 +161,7 @@
               </v-list>
             </v-menu>
           </v-list>
-        </v-menu> 
+        </v-menu>
 
         <v-tooltip bottom>
           <template #activator="{ on }">
@@ -182,7 +180,7 @@
             </v-btn>
           </template>
           <span>Delete</span>
-        </v-tooltip> 
+        </v-tooltip>
 
         <v-btn
           icon
@@ -571,6 +569,7 @@
                     class="pa-0 pb-1 editing-cell-element"
                     color="green"
                     data-cy="inflow-input"
+                    :rules="currencyRule"
                   />
                 </div>
               </td>
@@ -595,6 +594,7 @@
                     class="pa-0 pb-1 editing-cell-element"
                     color="red"
                     data-cy="outflow-input"
+                    :rules="currencyRule"
                   />
                 </div>
               </td>
@@ -861,6 +861,12 @@ export default {
       reconcileAmount: null,
       isReconciling: false,
       isModalVisibleForReconcile: false,
+      currencyRule: [
+        v => {
+          if (isNaN(parseFloat(v)) && v.length > 0) return "Numbers only";
+          return true;
+        }
+      ]
     };
   },
   computed: {
@@ -879,20 +885,22 @@ export default {
     ]),
     inflowAmount: {
       get() {
-        return this.editedItem.value > 0 ? Math.round(this.editedItem.value) / 100 : "";
+        return this.editedItem.value > 0
+          ? Math.round(this.parseInflowOutflow(this.editedItem.value)) / 100
+          : "";
       },
-      // setter
       set(newValue) {
-        this.editedItem.value = Math.round(newValue * 100);
+        this.editedItem.value = Math.round(this.parseInflowOutflow(newValue) * 100);
       }
     },
     outflowAmount: {
       get() {
-        return this.editedItem.value < 0 ? -Math.round(this.editedItem.value) / 100 : "";
+        return this.editedItem.value < 0
+          ? Math.round(this.parseInflowOutflow(this.editedItem.value)) / 100
+          : "";
       },
-      // setter
       set(newValue) {
-        this.editedItem.value = -Math.round(newValue * 100);
+        this.editedItem.value = -Math.round(this.parseInflowOutflow(newValue) * 100);
       }
     },
     payee() {
@@ -932,7 +940,6 @@ export default {
         })
         .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
     },
-
     transactionListForTable() {
       var trans = [];
       if (this.isSingleAccount) {
@@ -949,23 +956,20 @@ export default {
 
       if (!this.search) return trans;
 
- console.log('payee is', trans)
-      return trans.filter(
-        row => {
-          if (this.payee_map[row.payee] !== undefined) {
-            return this.payee_map[row.payee].toUpperCase().includes(this.search.toUpperCase()) ||
-                      JSON.stringify(row)
-                        .toUpperCase()
-                        .includes(this.search.toUpperCase())
-          } else {
-            return false
-          }
-          
-
+      console.log("payee is", trans);
+      return trans.filter(row => {
+        if (this.payee_map[row.payee] !== undefined) {
+          return (
+            this.payee_map[row.payee].toUpperCase().includes(this.search.toUpperCase()) ||
+            JSON.stringify(row)
+              .toUpperCase()
+              .includes(this.search.toUpperCase())
+          );
+        } else {
+          return false;
         }
-      );
+      });
     },
-
     selected_account() {
       if (this.isSingleAccount) {
         const find = this.accounts.find(
@@ -995,13 +999,16 @@ export default {
     window.removeEventListener("resize", this.onResize);
   },
   methods: {
+    parseInflowOutflow(inputCurrency) {
+      //Remove all non=digit chars except for period
+      return inputCurrency.toString().replace(/[^0-9.]/g, "");
+    },
     getBalance(item) {
       const id = item.truncated_id;
       const transaction_month = this.editedItem.date.substring(0, 7);
 
-      return this.monthlyData[transaction_month][id]
-        ? this.monthlyData[transaction_month][id].balance
-        : id;
+      const balance = _.get(this.monthlyData, `${transaction_month}.categories.${id}.balance`, 0)
+      return balance
     },
     addTransaction() {
       this.creatingNewTransaction = true;
@@ -1052,10 +1059,7 @@ export default {
         cancelButtonColor: "#263238"
       }).then(continueDelete => {
         if (continueDelete.value) {
-          this.$store.dispatch(
-            "deleteDocFromPouchAndVuex",
-            JSON.parse(JSON.stringify(item))
-          );
+          this.$store.dispatch("deleteDocFromPouchAndVuex", JSON.parse(JSON.stringify(item)));
           this.expanded = [];
           this.cancel();
           return;
@@ -1152,24 +1156,23 @@ export default {
       this.reconcileModal = false;
     },
     showReconcileModal() {
-      this.isModalVisibleForReconcile = true
+      this.isModalVisibleForReconcile = true;
     },
     startReconcile() {
       this.$refs.txt_field_reconcileAmt.focus();
 
       this.isReconciling = true;
-      this.isModalVisibleForReconcile = false
-
+      this.isModalVisibleForReconcile = false;
     },
     reconcileComplete() {
       this.isReconciling = false;
     },
     cancel() {
-      this.isModalVisibleForReconcile = false
+      this.isModalVisibleForReconcile = false;
       this.editedItem = JSON.parse(JSON.stringify(this.defaultItem)); // Reset row data
       this.editedIndex = -1;
       this.creatingNewTransaction = false;
-      this.reconcileComplete()
+      this.reconcileComplete();
       this.expanded = [];
     }
   }

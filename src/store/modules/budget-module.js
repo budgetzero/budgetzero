@@ -88,7 +88,7 @@ export default {
           return rv;
         }, {});
       }
-      return final;
+      return sortDict(final);
     },
 
     /**
@@ -151,16 +151,17 @@ export default {
         //Iterate each month
         getters.all_months.forEach(month => {
           final_data[month] = {};
-          var summary_data = {
+          final_data[month].categories = {}
+          var summaryData = {
             income_this_month: 0,
             overspent: 0,
-            last_month_overspent: _.get(previous_month, `summary_data.overspent`, 0),
+            last_month_overspent: _.get(previous_month, `summaryData.overspent`, 0),
             balance_this_month: 0,
             budgeted_this_month: 0,
             available_to_budget_this_month: 0, //_.get(getters.transaction_lookup, `${month}.income`, 0)
             available_to_budget_last_month: _.get(
               previous_month,
-              `summary_data.available_to_budget_this_month`,
+              `summaryData.available_to_budget_this_month`,
               0
             )
           };
@@ -181,7 +182,7 @@ export default {
               const spent = _.get(getters.transaction_lookup, `${month}.${cat_id}`, 0);
               const budgeted = _.get(getters.month_category_lookup, `${month}.${cat_id}.budget`, 0);
               const activity = spent + budgeted;
-              const prev_month = _.get(previous_month, `${cat_id}.overspending`, false);
+              const prev_month = _.get(previous_month, `categories.${cat_id}.overspending`, false);
 
               // const category_balance =
               //   prev_month && (prev_month.balance > 0 || prev_month.overspending)
@@ -194,41 +195,49 @@ export default {
               );
               const t1 = performance.now();
 
-              const category_balance =
-                (previous_month[cat_id] && previous_month[cat_id].balance > 0) || prev_month
-                  ? activity + previous_month[cat_id].balance
-                  : activity;
+              var category_balance
+              var category_balance_raw = _.get(previous_month, `categories.${cat_id}.balance`, 0);
+              if (category_balance_raw > 0 || prev_month) {
+                category_balance = activity + category_balance_raw
+              } else {
+                category_balance = activity
+              }
+
+              // const category_balance =
+              //   (previous_month.categories[cat_id] && previous_month.categories[cat_id] && previous_month.categories[cat_id].balance > 0) || prev_month
+              //     ? activity + previous_month.categories[cat_id].balance
+              //     : activity;
 
               if (isOverspending) {
                 //Need to carry over overspent balance to next month
               }
 
-              final_data[month][cat_id] = {
+              final_data[month]['categories'][cat_id] = {
                 budgeted: budgeted,
                 spent: spent,
                 balance: category_balance,
                 overspending: isOverspending
               };
 
-              summary_data.overspent +=
+              summaryData.overspent +=
                 category_balance < 0 && !isOverspending ? category_balance : 0;
-              summary_data.budgeted_this_month += budgeted;
+              summaryData.budgeted_this_month += budgeted;
 
               // console.log("Call to SECTION took " + (t1 - t0) + " milliseconds.");
             }
           );
 
-          summary_data.income_this_month =
+          summaryData.income_this_month =
             _.get(getters.transaction_lookup, `${month}.income`, 0) +
             _.get(getters.transaction_lookup, `${previousMonth}.incomeNextMonth`, 0);
-          summary_data.available_to_budget_this_month =
-            summary_data.available_to_budget_last_month +
-            summary_data.income_this_month -
-            summary_data.budgeted_this_month +
-            summary_data.last_month_overspent;
+          summaryData.available_to_budget_this_month =
+            summaryData.available_to_budget_last_month +
+            summaryData.income_this_month -
+            summaryData.budgeted_this_month +
+            summaryData.last_month_overspent;
 
-          previous_month = final_data[month];
-          final_data[month].summary_data = summary_data;
+          previous_month = final_data[month]
+          final_data[month].summaryData = summaryData;
         });
 
         const t8 = performance.now();
@@ -703,3 +712,13 @@ export default {
     }
   }
 };
+
+/**
+ * Sort helper function
+ */
+function sortDict(obj) {
+  return Object.keys(obj).sort().reduce(function (result, key) {
+    result[key] = obj[key];
+    return result;
+  }, {});
+}

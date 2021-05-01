@@ -67,13 +67,13 @@ describe("NumberRenderer", () => {
   it("renders the correct budget amounts", async () => {
     store.state.month_selected = "2020-12";
     await localVue.nextTick()
-    const available_to_budget_last_month = (store.getters.monthlyData[store.state.month_selected].summary_data.available_to_budget_last_month / 100).toFixed(2)
-    const available_to_budget_this_month = (store.getters.monthlyData[store.state.month_selected].summary_data.available_to_budget_this_month / 100).toFixed(2)
-    const balance_this_month = (store.getters.monthlyData[store.state.month_selected].summary_data.balance_this_month / 100).toFixed(2)
-    const budgeted_this_month = (store.getters.monthlyData[store.state.month_selected].summary_data.budgeted_this_month / 100).toFixed(2)
-    let income_this_month = financial(store.getters.monthlyData[store.state.month_selected].summary_data.income_this_month / 100)
-    const last_month_overspent = (store.getters.monthlyData[store.state.month_selected].summary_data.last_month_overspent / 100).toFixed(2)
-    const overspent = (store.getters.monthlyData[store.state.month_selected].summary_data.overspent / 100).toFixed(2)
+    const available_to_budget_last_month = (store.getters.monthlyData[store.state.month_selected].summaryData.available_to_budget_last_month / 100).toFixed(2)
+    const available_to_budget_this_month = (store.getters.monthlyData[store.state.month_selected].summaryData.available_to_budget_this_month / 100).toFixed(2)
+    const balance_this_month = (store.getters.monthlyData[store.state.month_selected].summaryData.balance_this_month / 100).toFixed(2)
+    const budgeted_this_month = (store.getters.monthlyData[store.state.month_selected].summaryData.budgeted_this_month / 100).toFixed(2)
+    let income_this_month = financial(store.getters.monthlyData[store.state.month_selected].summaryData.income_this_month / 100)
+    const last_month_overspent = (store.getters.monthlyData[store.state.month_selected].summaryData.last_month_overspent / 100).toFixed(2)
+    const overspent = (store.getters.monthlyData[store.state.month_selected].summaryData.overspent / 100).toFixed(2)
  
     expect(wrapper.find("#available-to-budget-amount").text()).toBe(available_to_budget_this_month);
     // expect(wrapper.find("#leftover-amount").text()).toBe("37076.31");
@@ -86,7 +86,7 @@ describe("NumberRenderer", () => {
   // it("renders the correct budgeted amount", () => {
   //   expect(wrapper.find("#budgeted-amount").text()).toBe("36216");
   //   expect(wrapper.find("#budgeted-amount").text() * 100).toBe(
-  //     store.getters.monthlyData[store.getters.month_selected]["summary_data"]["budgeted_this_month"]
+  //     store.getters.monthlyData[store.getters.month_selected]["summaryData"]["budgeted_this_month"]
   //   );
   // });
 

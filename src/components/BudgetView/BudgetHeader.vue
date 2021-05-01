@@ -36,7 +36,7 @@
               >
                 {{
                   monthlyData[month_selected]
-                    ? monthlyData[month_selected].summary_data.available_to_budget_last_month / 100
+                    ? monthlyData[month_selected].summaryData.available_to_budget_last_month / 100
                     : 0 | currency
                 }}
               </span>
@@ -53,7 +53,7 @@
               >
                 {{
                   monthlyData[month_selected]
-                    ? monthlyData[month_selected].summary_data.income_this_month / 100
+                    ? monthlyData[month_selected].summaryData.income_this_month / 100
                     : 0 | currency
                 }}
               </span>
@@ -70,7 +70,7 @@
               >
                 {{
                   monthlyData[month_selected]
-                    ? monthlyData[month_selected].summary_data.last_month_overspent / 100
+                    ? monthlyData[month_selected].summaryData.last_month_overspent / 100
                     : 0 | currency
                 }}
               </span>
@@ -87,7 +87,7 @@
               >
                 {{
                   monthlyData[month_selected]
-                    ? monthlyData[month_selected].summary_data.budgeted_this_month / 100
+                    ? monthlyData[month_selected].summaryData.budgeted_this_month / 100
                     : 0 | currency
                 }}
               </span>
@@ -108,7 +108,7 @@
           >
             {{
               monthlyData[month_selected]
-                ? monthlyData[month_selected].summary_data.available_to_budget_this_month / 100
+                ? monthlyData[month_selected].summaryData.available_to_budget_this_month / 100
                 : 0 | currency
             }}
           </div>
