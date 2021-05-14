@@ -11,9 +11,7 @@
     hide-overlay
   >
     <BaseDialogModalComponent v-model="manageBudgetsModalVisible">
-      <template #title>
-        Budgets
-      </template>
+      <template #title> Budgets </template>
       <template #body>
         <v-select
           v-model="selectedBudget"
@@ -25,26 +23,17 @@
         />
       </template>
       <template #actions>
-        <v-btn
-          color="grey"
-          @click.stop="manageBudgetsModalVisible = false"
-        >
+        <v-btn color="grey" @click.stop="manageBudgetsModalVisible = false">
           Cancel
         </v-btn>
-        <v-btn
-          color="accent"
-          @click="loadSelectedBudget()"
-        >
+        <v-btn color="accent" @click="loadSelectedBudget()">
           Load Budget
         </v-btn>
       </template>
     </BaseDialogModalComponent>
 
     <v-list-item class="pl-0">
-      <v-list-item-content
-        v-if="!mini"
-        class="py-1"
-      >
+      <v-list-item-content v-if="!mini" class="py-1">
         <v-list-item-title class="title pl-4">
           <v-img
             max-height="120"
@@ -53,32 +42,14 @@
           />
         </v-list-item-title>
       </v-list-item-content>
-      <v-list-item-icon
-        v-if="mini"
-        class="my-1 pb-2 ml-2"
-      >
-        <v-btn
-          class="mt-1"
-          icon
-          @click.stop="mini = !mini"
-        >
-          <v-icon>
-            mdi-chevron-right
-          </v-icon>
+      <v-list-item-icon v-if="mini" class="my-1 pb-2 ml-2">
+        <v-btn class="mt-1" icon @click.stop="mini = !mini">
+          <v-icon> mdi-chevron-right </v-icon>
         </v-btn>
       </v-list-item-icon>
-      <v-list-item-icon
-        v-if="!mini"
-        class="my-1 pb-2"
-      >
-        <v-btn
-          class="mt-1"
-          icon
-          @click.stop="mini = !mini"
-        >
-          <v-icon>
-            mdi-chevron-left
-          </v-icon>
+      <v-list-item-icon v-if="!mini" class="my-1 pb-2">
+        <v-btn class="mt-1" icon @click.stop="mini = !mini">
+          <v-icon> mdi-chevron-left </v-icon>
         </v-btn>
       </v-list-item-icon>
     </v-list-item>
@@ -89,36 +60,20 @@
         <v-list-item dense>
           <v-list-item-content v-if="!mini">
             <v-list-item-title>
-              <v-chip
-                small
-                label
-              >
+              <v-chip small label>
                 {{ budgetName ? budgetName : "No budget loaded." }}
               </v-chip>
             </v-list-item-title>
           </v-list-item-content>
           <v-list-item-icon>
-            <v-icon
-              color="grey lighten-1"
-              v-on="on"
-            >
-              mdi-cog
-            </v-icon>
+            <v-icon color="grey lighten-1" v-on="on"> mdi-cog </v-icon>
           </v-list-item-icon>
         </v-list-item>
       </template>
-      <v-list
-        max-width="400"
-        color="grey lighten-4"
-      >
+      <v-list max-width="400" color="grey lighten-4">
         <v-list-item :to="{ path: '/manage' }">
           <v-list-item-avatar>
-            <v-icon
-              left
-              color="primary"
-            >
-              mdi-swap-horizontal
-            </v-icon>
+            <v-icon left color="primary"> mdi-swap-horizontal </v-icon>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>Manage Budgets</v-list-item-title>
@@ -126,13 +81,7 @@
         </v-list-item>
         <v-list-item :to="{ path: '/settings' }">
           <v-list-item-avatar>
-            <v-icon
-              left
-              medium
-              color="primary"
-            >
-              mdi-cog-outline
-            </v-icon>
+            <v-icon left medium color="primary"> mdi-cog-outline </v-icon>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>Settings</v-list-item-title>
@@ -140,16 +89,8 @@
         </v-list-item>
         <v-list-item>
           <v-list-item-content>
-            <v-btn
-              class="accent"
-              @click="createBudget()"
-            >
-              <v-icon
-                left
-                color="white"
-              >
-                mdi-pencil
-              </v-icon>
+            <v-btn class="accent" @click="createBudget()">
+              <v-icon left color="white"> mdi-pencil </v-icon>
               <span class="white--text">Create Budget</span>
             </v-btn>
           </v-list-item-content>
@@ -159,21 +100,13 @@
 
     <v-divider />
 
-    <v-list
-      dark
-      dense
-      class="text-left pt-0 sidebar"
-    >
+    <v-list dark dense class="text-left pt-0 sidebar">
       <v-list-item :to="{ path: '/budget' }">
         <v-list-item-icon>
-          <v-icon>
-            mdi-cash-multiple
-          </v-icon>
+          <v-icon> mdi-cash-multiple </v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title class="subtitle-1">
-            Budget
-          </v-list-item-title>
+          <v-list-item-title class="subtitle-1"> Budget </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -182,9 +115,7 @@
           <v-icon>mdi-bank</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title class="subtitle-1">
-            Accounts
-          </v-list-item-title>
+          <v-list-item-title class="subtitle-1"> Accounts </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -193,9 +124,7 @@
           <v-icon>mdi-chart-line</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title class="subtitle-1">
-            Reports
-          </v-list-item-title>
+          <v-list-item-title class="subtitle-1"> Reports </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -237,6 +166,20 @@
           {{ (account_balances[item._id.slice(-36)].working / 100) | currency }}
         </v-list-item-icon>
       </v-list-item>
+
+      <v-list-item>
+        <v-list-item-content
+          class="font-weight-medium subtitle-2 blue-grey--text text--lighten-3"
+        >
+          On Budget Total
+        </v-list-item-content>
+        <v-list-item-icon class="subtitle-2">
+          {{ sumOfOnBudgetAccounts | currency }}
+        </v-list-item-icon>
+      </v-list-item>
+
+      <v-divider />
+
       <!-- </v-list-group> -->
       <v-divider />
 
@@ -265,6 +208,17 @@
           {{ (account_balances[item._id.slice(-36)].working / 100) | currency }}
         </v-list-item-icon>
       </v-list-item>
+      <v-list-item>
+        <v-list-item-content
+          class="font-weight-medium subtitle-2 blue-grey--text text--lighten-3"
+        >
+          Off Budget Total
+        </v-list-item-content>
+        <v-list-item-icon class="subtitle-2">
+          {{ sumOfOffBudgetAccounts | currency }}
+        </v-list-item-icon>
+      </v-list-item>
+
       <v-divider />
 
       <!-- </v-list-group> -->
@@ -272,53 +226,25 @@
 
     <template #append>
       <v-list dense>
-        <v-list-item
-          v-if="mini && !user.loggedIn"
-          class="pl-2"
-        >
-          <v-btn
-            icon
-            class="accent"
-            :to="{ path: '/login' }"
-          >
-            <v-icon color="white">
-              mdi-login
-            </v-icon>
+        <v-list-item v-if="mini && !user.loggedIn" class="pl-2">
+          <v-btn icon class="accent" :to="{ path: '/login' }">
+            <v-icon color="white"> mdi-login </v-icon>
           </v-btn>
         </v-list-item>
         <v-list-item v-if="!mini && !user.loggedIn">
-          <v-btn
-            block
-            class="accent"
-            :to="{ path: '/login' }"
-          >
-            <v-icon
-              left
-              color="white"
-            >
-              mdi-login
-            </v-icon>
+          <v-btn block class="accent" :to="{ path: '/login' }">
+            <v-icon left color="white"> mdi-login </v-icon>
             <span>Login</span>
           </v-btn>
         </v-list-item>
       </v-list>
 
-      <v-menu
-        v-if="user.loggedIn"
-        offset-x
-        max-width="150"
-      >
+      <v-menu v-if="user.loggedIn" offset-x max-width="150">
         <template #activator="{ on }">
           <v-list-item>
             <v-list-item-icon class="mr-3">
-              <v-btn
-                icon
-                class="primary lighten-2"
-                v-on="on"
-              >
-                <v-icon color="grey lighten-1">
-                  mdi-account
-                </v-icon>
+              <v-btn icon class="primary lighten-2" v-on="on">
+                <v-icon color="grey lighten-1"> mdi-account </v-icon>
               </v-btn>
             </v-list-item-icon>
             <v-list-item-content>
@@ -332,39 +258,19 @@
           </v-list-item>
         </template>
 
-        <v-list
-          dense
-          color="grey lighten-4"
-        >
+        <v-list dense color="grey lighten-4">
           <v-list-item>
             <v-list-item-content>
-              <v-btn
-                class="blue-grey darken-5"
-                :to="{ path: '/profile' }"
-              >
-                <v-icon
-                  left
-                  color="white"
-                >
-                  mdi-account
-                </v-icon>
+              <v-btn class="blue-grey darken-5" :to="{ path: '/profile' }">
+                <v-icon left color="white"> mdi-account </v-icon>
                 <span class="white--text">Profile</span>
               </v-btn>
             </v-list-item-content>
           </v-list-item>
 
           <v-list-item v-if="user.loggedIn">
-            <v-btn
-              block
-              class="accent"
-              @click="$store.dispatch('LOGOUT')"
-            >
-              <v-icon
-                left
-                color="white"
-              >
-                mdi-logout
-              </v-icon>Logout
+            <v-btn block class="accent" @click="$store.dispatch('LOGOUT')">
+              <v-icon left color="white"> mdi-logout </v-icon>Logout
             </v-btn>
           </v-list-item>
         </v-list>
@@ -380,7 +286,7 @@ import BaseDialogModalComponent from "./Modals/BaseDialogModalComponent";
 export default {
   name: "Sidebar",
   components: {
-    BaseDialogModalComponent
+    BaseDialogModalComponent,
   },
   data() {
     return {
@@ -388,7 +294,7 @@ export default {
       links: "",
       drawer: null,
       mini: false,
-      manageBudgetsModalVisible: false
+      manageBudgetsModalVisible: false,
     };
   },
   computed: {
@@ -401,7 +307,7 @@ export default {
       "selectedBudgetID",
       "budgetRoots",
       "budgetRootsMap",
-      "user"
+      "user",
     ]),
     budgetName() {
       if (this.selectedBudget) {
@@ -411,12 +317,26 @@ export default {
       } else {
         return "";
       }
-    }
+    },
+    sumOfOnBudgetAccounts() {
+      return this.accountsOnBudget.reduce(
+        (acct_sum, b) =>
+          acct_sum + this.account_balances[b._id.slice(-36)].working / 100,
+        0
+      );
+    },
+    sumOfOffBudgetAccounts() {
+      return this.accountsOffBudget.reduce(
+        (acct_sum, b) =>
+          acct_sum + this.account_balances[b._id.slice(-36)].working / 100,
+        0
+      );
+    },
   },
   watch: {
-    selectedBudgetID: function(newBudget, oldBudget) {
+    selectedBudgetID: function (newBudget, oldBudget) {
       this.selectedBudget = newBudget; //Assign value from vuex to local var when loads/updates
-    }
+    },
   },
   methods: {
     createBudget() {
@@ -441,7 +361,7 @@ export default {
           const dicttosend2 = {
             name: "Account name - autoadded",
             type: "Plaid",
-            public_token
+            public_token,
           };
 
           fetch("http://192.168.1.4:8000/accounts/", {
@@ -449,17 +369,17 @@ export default {
             body: JSON.stringify(dicttosend2),
             headers: {
               "Content-Type": "application/json",
-              Accept: "application/json"
-            }
+              Accept: "application/json",
+            },
           }).then(
-            response => {
+            (response) => {
               response.status; //= > number 100–599
               response.statusText; //= > String
               response.headers; //= > Headers
               response.url; //= > String
               return response.text();
             },
-            error => {
+            (error) => {
               error.message; //= > String
               console.log("Put failed");
             }
@@ -475,12 +395,12 @@ export default {
           // institution that the user selected and the
           // most recent API request IDs. Storing this
           // information can be helpful for support.
-        }
+        },
       });
 
       linkHandler.open();
-    }
-  }
+    },
+  },
 };
 </script>
 
