@@ -85,6 +85,31 @@ describe("transaction table", () => {
 
   });
 
+  it("monthlyData getter matches snapshot", async () => {
+    const numOfAccounts = wrapper.vm.$store.getters.accounts.length
+
+    const accountDoc = {
+      type: "CHECKING",
+      checkNumber: true,
+      closed: false,
+      name: "123123",
+      note: null,
+      sort: 0,
+      onBudget: true,
+      balanceIsNegative: false,
+      _id: "b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_account_b0b022db-b5f0-4eed-bda4-a8b926cfb5bb"
+    };
+
+    wrapper.vm.$store.dispatch("createUpdateAccount", {
+      account: accountDoc,
+      initialBalance: false
+    });
+
+    await localVue.nextTick();
+
+    expect(wrapper.vm.$store.getters.accounts.length).toBe(numOfAccounts);
+  });
+
   // it("submitting add account form", async () => {
   //   // Open modal
   //   wrapper.find("#addAccountBtn").trigger("click");

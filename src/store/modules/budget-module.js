@@ -247,7 +247,6 @@ export default {
       });
     },
 
-
     /**
      * Creates new budget and commits to pouchdb
      * @param {*} context
@@ -402,8 +401,7 @@ export default {
             splits: [],
             _id: `b_${context.getters.selectedBudgetID}_transaction_${Vue.prototype.$vm.$uuid.v4()}`
           };
-          //Don't go through normal updateTransaction action since we don't worry about the payee
-          context.dispatch("commitDocToPouchAndVuex", initTransaction);
+          context.dispatch("createOrUpdateTransaction", initTransaction);
         }
       });
     },
@@ -430,13 +428,13 @@ export default {
         });
     },
 
-   /**
-    * Create payee doc.
-    * This should only be called from getPayeeID() action.
-    * @param {*} context 
-    * @param {String} payload Plaintext payee name
-    * @returns 
-    */
+    /**
+     * Create payee doc.
+     * This should only be called from getPayeeID() action.
+     * @param {*} context
+     * @param {String} payload Plaintext payee name
+     * @returns
+     */
     createPayee(context, payload) {
       var payee = {
         _id: `b_${context.rootState.selectedBudgetID}_payee_${Vue.prototype.$vm.$uuid.v4()}`,
@@ -462,6 +460,9 @@ export default {
         return payeeLookup;
       } else if (validator.isUUID(`${payload}`)) {
         // If the payload is already UUID then return.
+        return payload;
+      } else if (payload === "---------------------initial-balance") {
+        //If it's initial balance then return
         return payload;
       } else if (typeof payload === "undefined" || payload === null || payload === "") {
         // If payload is an object, then it's an existing payee. Otherwise we need to create the payee.
@@ -516,7 +517,7 @@ export default {
      * Create or update transaction
      * @param {doc} payload The transaction to create or update
      */
-    async updateTransaction(context, payload) {
+    async createOrUpdateTransaction(context, payload) {
       //Check if this is a transfer transaction. if so, get the account ID
       //TODO: only let this be a transfer if the account actually exists?
       if (payload.payee && payload.payee.includes("Transfer: ")) {
@@ -548,7 +549,7 @@ export default {
      */
     completeReconciliation(context, payload) {
       if (payload.adjustmentTransaction) {
-        context.dispatch("updateTransaction", payload.adjustmentTransaction);
+        context.dispatch("createOrUpdateTransaction", payload.adjustmentTransaction);
       }
 
       //Search for transactions to lock
