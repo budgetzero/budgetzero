@@ -127,20 +127,20 @@ export default {
   mutations: {
     GET_MONTHLY_DATA(state, payload) {
       state.monthlyData = payload;
-    },
+    }
   },
   actions: {
     /**
-     * Dict of final budget data calculations. 
-     * 
+     * Recalculates entire budget. Returns dict of final budget data calculations. 
      * Example:
-     * monthly_data: Object
-        2020-01: Object
-          06831c46-ac34-43a9-b0c7-be672d3059ab: Object
-            balance:0
-            budgeted:0
-            spent:0
-     */
+         monthly_data: Object
+            2020-01: Object
+              06831c46-ac34-43a9-b0c7-be672d3059ab: Object
+                balance:0
+                budgeted:0
+                spent:0
+    * @returns 
+    */
     calculateMonthlyData({ state, getters, dispatch, commit }) {
       var final_data = {};
       var previous_month = {};
@@ -151,7 +151,7 @@ export default {
         //Iterate each month
         getters.all_months.forEach(month => {
           final_data[month] = {};
-          final_data[month].categories = {}
+          final_data[month].categories = {};
           var summaryData = {
             income_this_month: 0,
             overspent: 0,
@@ -195,12 +195,12 @@ export default {
               );
               const t1 = performance.now();
 
-              var category_balance
+              var category_balance;
               var category_balance_raw = _.get(previous_month, `categories.${cat_id}.balance`, 0);
               if (category_balance_raw > 0 || prev_month) {
-                category_balance = activity + category_balance_raw
+                category_balance = activity + category_balance_raw;
               } else {
-                category_balance = activity
+                category_balance = activity;
               }
 
               // const category_balance =
@@ -212,7 +212,7 @@ export default {
                 //Need to carry over overspent balance to next month
               }
 
-              final_data[month]['categories'][cat_id] = {
+              final_data[month]["categories"][cat_id] = {
                 budgeted: budgeted,
                 spent: spent,
                 balance: category_balance,
@@ -236,7 +236,7 @@ export default {
             summaryData.budgeted_this_month +
             summaryData.last_month_overspent;
 
-          previous_month = final_data[month]
+          previous_month = final_data[month];
           final_data[month].summaryData = summaryData;
         });
 
@@ -247,10 +247,6 @@ export default {
       });
     },
 
-    setSelectedBudgetID(context, payload) {
-      context.commit("UPDATE_SELECTED_BUDGET", payload);
-      context.dispatch("loadLocalBudgetRoot");
-    },
 
     /**
      * Creates new budget and commits to pouchdb
@@ -279,7 +275,7 @@ export default {
       });
       context.dispatch("commitDocToPouchAndVuex", budget_opened);
     },
-    
+
     getBudgetOpened(context) {
       return Vue.prototype.$vm.$pouch
         .allDocs({
@@ -302,7 +298,9 @@ export default {
     ///
     createMasterCategory(context, category_name) {
       const payload = {
-        _id: `b_${context.rootState.selectedBudgetID}_master-category_${Vue.prototype.$vm.$uuid.v4()}`,
+        _id: `b_${
+          context.rootState.selectedBudgetID
+        }_master-category_${Vue.prototype.$vm.$uuid.v4()}`,
         name: category_name,
         sort: 1,
         collapsed: false
@@ -432,9 +430,13 @@ export default {
         });
     },
 
-    ///
-    /// Transaction/Payee
-    ///
+   /**
+    * Create payee doc.
+    * This should only be called from getPayeeID() action.
+    * @param {*} context 
+    * @param {String} payload Plaintext payee name
+    * @returns 
+    */
     createPayee(context, payload) {
       var payee = {
         _id: `b_${context.rootState.selectedBudgetID}_payee_${Vue.prototype.$vm.$uuid.v4()}`,
@@ -444,6 +446,12 @@ export default {
       return context.dispatch("commitDocToPouchAndVuex", payee);
     },
 
+    /**
+     * Returns the payee UUID for any payee name. Dispatches action to create the payee if it doesn't exist yet.
+     * @param {*} context
+     * @param {String} payload Plaintext payee name. e.g. 'Grocery Store'
+     * @returns Payee UUID
+     */
     async getPayeeID(context, payload) {
       //First, check if this payee has already been created
       const payeeLookup = Object.keys(context.getters.payee_map).find(
@@ -453,6 +461,7 @@ export default {
       if (payeeLookup) {
         return payeeLookup;
       } else if (validator.isUUID(`${payload}`)) {
+        // If the payload is already UUID then return.
         return payload;
       } else if (typeof payload === "undefined" || payload === null || payload === "") {
         // If payload is an object, then it's an existing payee. Otherwise we need to create the payee.
@@ -604,8 +613,6 @@ export default {
       });
     },
 
-
-
     /**
      * Initialize categories in a new budget
      */
@@ -717,8 +724,10 @@ export default {
  * Sort helper function
  */
 function sortDict(obj) {
-  return Object.keys(obj).sort().reduce(function (result, key) {
-    result[key] = obj[key];
-    return result;
-  }, {});
+  return Object.keys(obj)
+    .sort()
+    .reduce(function(result, key) {
+      result[key] = obj[key];
+      return result;
+    }, {});
 }
