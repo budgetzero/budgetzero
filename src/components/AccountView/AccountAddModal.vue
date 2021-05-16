@@ -86,7 +86,7 @@
         </v-btn>
         <v-btn
           color="accent"
-          data-cy="account-save"
+          id="saveAccountBtn"
           @click="save"
         >
           Save

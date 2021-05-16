@@ -10,6 +10,7 @@
       class="elevation-1 account-table"
       hide-default-footer
       disable-pagination
+      id="accountsTable"
     >
       <template #top>
         <v-toolbar
@@ -29,7 +30,7 @@
             color="accent"
             dark
             class="mb-2"
-            data-cy="new-account"
+            id="addAccountBtn"
             @click="create()"
           >
             Add Account
