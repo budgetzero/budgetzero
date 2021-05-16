@@ -458,10 +458,12 @@ export default {
       }
 
       if (validationResult.errors.length > 0) {
-        this.commit("SET_SNACKBAR_MESSAGE", validationResult.errors.toString());
+        this.commit("SET_SNACKBAR_MESSAGE", {snackbarMessage: 'Validation failed: ' + validationResult.errors.toString(), snackbarColor: "error"});
         console.log("failed validation:", payload);
         return;
       }
+
+      // this.commit("SET_SNACKBAR_MESSAGE", {snackbarMessage: `${docType} updated.`, snackbarColor: "primary"});
 
       //Commit to Pouchdb
       return new Promise((resolve, reject) => {
