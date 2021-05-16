@@ -2,6 +2,7 @@ import moment from "moment";
 import Vue from "vue";
 import validator from "validator";
 import _ from "lodash";
+import { sanitizeValueInput } from '../../helper.js';
 
 export default {
   state: {
@@ -391,7 +392,7 @@ export default {
             category: null,
             cleared: true,
             approved: true,
-            value: payload.initialBalance * 100,
+            value: sanitizeValueInput(payload.initialBalance) * 100,
             date: "2011-11-11", //TODO: current date
             memo: null,
             reconciled: true,
@@ -401,6 +402,7 @@ export default {
             splits: [],
             _id: `b_${context.getters.selectedBudgetID}_transaction_${Vue.prototype.$vm.$uuid.v4()}`
           };
+          console.log('initTransaction', initTransaction)
           context.dispatch("createOrUpdateTransaction", initTransaction);
         }
       });
@@ -536,6 +538,8 @@ export default {
       } else {
         payload.transfer = null;
       }
+
+      payload.value = sanitizeValueInput(payload.value)
 
       await context.dispatch("getPayeeID", payload.payee).then(response => {
         payload.payee = response;
