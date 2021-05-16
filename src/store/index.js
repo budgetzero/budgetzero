@@ -68,5 +68,9 @@ export default new Vuex.Store({
     setSnackBarBoolean(context, snackbar) {
       context.commit('SET_SNACKBAR', snackbar)
     },
+    setSelectedBudgetID(context, payload) {
+      context.commit("UPDATE_SELECTED_BUDGET", payload);
+      context.dispatch("loadLocalBudgetRoot");
+    },
   }
 });
