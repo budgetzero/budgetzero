@@ -4,12 +4,9 @@ import Accounts from "@/components/AccountView/Accounts.vue";
 import Vuetify from "vuetify";
 import mock_budget from "@/../tests/__mockdata__/mock_budget.json";
 import store from "@/store";
-import uuid from 'uuid';
-
-
+import uuid from "uuid";
 import Vue from "vue";
 Vue.use(Vuetify);
-Vue.config.productionTip = false;
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -21,10 +18,12 @@ const $route = {
   }
 };
 
+const $uuid = uuid;
+
 const data = mock_budget.rows.map(row => row.doc);
 let numberOfAccounts = null;
 
-describe("transaction table", () => {
+describe("accounts table", () => {
   let vuetify;
   let wrapper;
 
@@ -40,10 +39,9 @@ describe("transaction table", () => {
     store.state.pouchdb.categories = data
       .filter(row => row._id.includes("_category_"))
       .filter(row => !row._id.includes("m_category"));
-    store.state.pouchdb.month_selected = "2020-12",
-    store.state.pouchdb.selectedBudgetID = "79de488f-448e-4b4d-97ad-61e5e4f5df31",
-
-    numberOfAccounts = data.filter(row => row._id.includes("_account_")).length; 
+    store.state.pouchdb.month_selected = "2020-12";
+    store.state.selectedBudgetID = "cc28ac0b-19fe-4735-a2e7-9bb91d54b6cc";
+    numberOfAccounts = data.filter(row => row._id.includes("_account_")).length;
   });
 
   beforeEach(() => {
@@ -79,73 +77,39 @@ describe("transaction table", () => {
 
   it("clicking Add Account button shows modal", async () => {
     // Open modal
-    wrapper.find("#addAccountBtn").trigger("click");
-    await localVue.nextTick();
+    await wrapper.find("#addAccountBtn").trigger("click");
 
     // Verify modal is open
     expect(wrapper.find(".v-dialog .title").text()).toEqual("Edit Account");
-
   });
 
-  // it("monthlyData getter matches snapshot", async () => {
-  //   const numOfAccounts = wrapper.vm.$store.getters.accounts.length
-
-  //   const accountDoc = {
-  //     type: "CHECKING",
-  //     checkNumber: true,
-  //     closed: false,
-  //     name: "123123",
-  //     note: null,
-  //     sort: 0,
-  //     onBudget: true,
-  //     balanceIsNegative: false,
-  //     _id: "b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_account_b0b022db-b5f0-4eed-bda4-a8b926cfb5bb"
-  //   };
-
-  //   wrapper.vm.$store.dispatch("createUpdateAccount", {
-  //     account: accountDoc,
-  //     initialBalance: false
-  //   });
-
-  //   await localVue.nextTick();
-
-  //   expect(wrapper.vm.$store.getters.accounts.length).toBe(numOfAccounts);
-  // });
-
-  it("submitting add account form", async () => {
+  it("create new account", async () => {
     // Open modal
-    wrapper.find("#addAccountBtn").trigger("click");
-    await localVue.nextTick();
+    await wrapper.find("#addAccountBtn").trigger("click");
 
-    wrapper.vm.editedItem = {
-      type: "CHECKING",
-      checkNumber: true,
-      closed: false,
-      name: "test",
-      note: "123",
-      sort: 0,
-      onBudget: true,
-      balanceIsNegative: false,
-      initialBalance: 0
-    }; 
-    wrapper.vm.editedIndex = -1;
-
-    // Trigger save
+    //Mocks & setup
     wrapper.vm.$store.dispatch = jest.fn();
+    jest.spyOn(wrapper.vm.$uuid, "v4").mockReturnValueOnce("3528ac0b-19fe-4735-a2e7-9bb91d54b6ba");
 
-    // const anonymousId = 'testid';
-    // const v1Spy = jest.spyOn(localVue.prototype, '$uuid.v4()').mockReturnValue(anonymousId);
+    await wrapper.find("#nameField").setValue("nameofnewAccount");
+    await wrapper.find("#typeField").setValue("CHECKING");
+    await wrapper.find("#noteField").setValue("test note");
 
-    
-    expect(wrapper.find(".v-dialog .title").text()).toEqual("Edit Account");
+    await wrapper.find("#saveAccountBtn").trigger("click");
 
-    // jest.spyOn(wrapper.vm.$uuid, 'v4').mockReturnValueOnce('fake uuid');
-    wrapper.find("#saveAccountBtn").trigger("click"); 
-    wrapper.vm.save()
-
-    expect(wrapper.vm.$store.dispatch).not.toBeCalled();
-
+    expect(wrapper.vm.$store.dispatch).toBeCalledWith("createUpdateAccount", {
+      account: {
+        _id: "b_cc28ac0b-19fe-4735-a2e7-9bb91d54b6cc_account_3528ac0b-19fe-4735-a2e7-9bb91d54b6ba",
+        type: "CHECKING",
+        checkNumber: true,
+        closed: false,
+        name: "nameofnewAccount",
+        note: "test note",
+        sort: 0,
+        onBudget: true,
+        balanceIsNegative: false
+      },
+      initialBalance: 0
+    });
   });
-
-
 });

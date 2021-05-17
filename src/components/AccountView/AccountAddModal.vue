@@ -19,6 +19,7 @@
           <v-row>
             <v-col cols="12">
               <v-text-field
+                id="nameField"
                 v-model="editeditem.name"
                 label="Account Name"
                 :rules="nameRules"
@@ -27,6 +28,7 @@
             </v-col>
             <v-col cols="4">
               <v-select
+                id="typeField"
                 v-model="editeditem.type"
                 :items="['CHECKING', 'CREDIT', 'SAVING', 'MORTGAGE', 'CASH', 'INVESTMENT', 'OTHER']"
                 label="Type"
@@ -37,6 +39,7 @@
             </v-col>
             <v-col cols="4">
               <v-switch
+                id="onBudgetSwitch"
                 v-model="editeditem.onBudget"
                 label="On Budget?"
                 data-cy="account-on-budget"
@@ -44,6 +47,7 @@
             </v-col>
             <v-col cols="4">
               <v-switch
+                id="balanceIsNegativeSwitch"
                 v-model="editeditem.balanceIsNegative"
                 label="Invert Balance"
               />
@@ -52,6 +56,7 @@
 
             <v-col cols="12">
               <v-textarea
+                id="noteField"
                 v-model="editeditem.note"
                 auto-grow
                 dense
@@ -67,6 +72,7 @@
             >
               <v-text-field
                 v-if="!editeditem.hasOwnProperty('_id')"
+                id="startingBalanceField"
                 v-model="editeditem.initialBalance"
                 label="Starting Balance"
                 prefix="$"
@@ -80,14 +86,14 @@
         <v-btn
           text
           data-cy="account-cancel"
-          @click="close"
+          @click="close()"
         >
           Cancel
         </v-btn>
         <v-btn
-          color="accent"
           id="saveAccountBtn"
-          @click="save"
+          color="accent"
+          @click="save()"
         >
           Save
         </v-btn>
