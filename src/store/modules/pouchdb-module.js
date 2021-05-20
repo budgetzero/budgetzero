@@ -120,6 +120,7 @@ export default {
     budgetRootsMap: (state, getters) =>
       getters.budgetRoots.reduce((map, obj) => {
         const id = obj._id ? obj._id.slice(-36) : null;
+        obj.short_id = obj._id.slice(-36);
         map[id] = obj;
         return map;
       }, {}),
