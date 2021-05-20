@@ -30,35 +30,20 @@
       </template>
     </BaseDialogModalComponent>
 
-    <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="600px"
-    >
-      <template #activator="{ on, attrs }">
-        <v-btn
-          color="primary"
-          dark
-          v-bind="attrs"
-          v-on="on"
-        >
-          Open Dialog
-        </v-btn>
+    <BaseDialogModalComponent v-model="dialog">
+      <template #title>
+        Manage Budget
       </template>
-      <v-card>
-        <v-card-title>
-          <span class="headline">Manage Budget</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="item.name"
-                  label="Budget name"
-                />
-              </v-col>
-              <!-- <v-col cols="12">
+      <template #body>
+        <v-container>
+          <v-row>
+            <v-col cols="12">
+              <v-text-field
+                v-model="item.name"
+                label="Budget name"
+              />
+            </v-col>
+            <!-- <v-col cols="12">
                 <v-text-field
                   label="Email*"
                   required
@@ -71,43 +56,43 @@
                   required
                 />
               </v-col> -->
-              <v-col
-                cols="12"
-                sm="6"
-              >
-                <v-select
-                  v-model="item.currency"
-                  :items="currencies"
-                  label="Currency"
-                  required
-                />
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
+            <v-col
+              cols="12"
+              sm="6"
+            >
+              <v-select
+                v-model="item.currency"
+                :items="currencies"
+                label="Currency"
+                required
               />
-            </v-row>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="dialog = false"
-          >
-            Close
-          </v-btn>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="saveBudget()"
-          >
-            Save
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+            </v-col>
+            <v-col
+              cols="12"
+              sm="6"
+            />
+          </v-row>
+        </v-container>
+      </template>
+         
+      <template #actions>
+        <v-spacer />
+        <v-btn
+          color="blue darken-1"
+          text
+          @click="dialog = false"
+        >
+          Close
+        </v-btn>
+        <v-btn
+          color="blue darken-1"
+          text
+          @click="saveBudget()"
+        >
+          Save
+        </v-btn>
+      </template>
+    </BaseDialogModalComponent>
 
     <v-col>
       <h1>Manage Budgets</h1>
