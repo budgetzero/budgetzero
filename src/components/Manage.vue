@@ -208,6 +208,10 @@ export default {
       this.item = JSON.parse(JSON.stringify(item));
       this.dialog = true;
     },
+    deleteItem(item) {
+      this.item = JSON.parse(JSON.stringify(item));
+      this.$store.dispatch('deleteEntireBudget', item)
+    },
     createBudget(budgetName) {
       console.log("create called", budgetName);
       this.$store.dispatch("createBudget", budgetName);

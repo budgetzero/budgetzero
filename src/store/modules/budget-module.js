@@ -2,7 +2,7 @@ import moment from "moment";
 import Vue from "vue";
 import validator from "validator";
 import _ from "lodash";
-import { sanitizeValueInput } from '../../helper.js';
+import { sanitizeValueInput } from "../../helper.js";
 
 export default {
   state: {
@@ -293,6 +293,46 @@ export default {
         });
     },
 
+    /**
+     * Deletes entire budget
+     * @param {*} context
+     * @param {*} payload budget_ document
+     */
+    deleteEntireBudget(context, payload) {
+      const budget_id = payload._id.slice(-36);
+
+      Vue.prototype.$vm.$pouch
+        .allDocs({
+          include_docs: true,
+          attachments: true,
+          startkey: `b_${budget_id}_`,
+          endkey: `b_${budget_id}_\ufff0`
+        })
+        .then(result => {
+          //Add deleted key to each
+          const rowsToDelete = {};
+          rowsToDelete.docs = result.rows.map(v => ({ ...v, _deleted: true }));
+          console.log("going to delete..", rowsToDelete);
+          //Bulk delete
+          context.dispatch("commitBulkDocsToPouchAndVuex", rowsToDelete);
+        })
+        .catch(err => {
+          console.log(err);
+          context.commit("API_FAILURE", err);
+        });
+
+        Vue.prototype.$vm.$pouch.get(`budget-opened_${budget_id}`)
+        .then(function(doc) {
+          context.dispatch("deleteDocFromPouchAndVuex", doc);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+
+      // Finally, delete the budget_ doc
+      context.dispatch("deleteDocFromPouchAndVuex", payload);
+    },
+
     ///
     /// Categories
     ///
@@ -402,7 +442,7 @@ export default {
             splits: [],
             _id: `b_${context.getters.selectedBudgetID}_transaction_${Vue.prototype.$vm.$uuid.v4()}`
           };
-          console.log('initTransaction', initTransaction)
+          console.log("initTransaction", initTransaction);
           context.dispatch("createOrUpdateTransaction", initTransaction);
         }
       });
@@ -539,7 +579,7 @@ export default {
         payload.transfer = null;
       }
 
-      payload.value = sanitizeValueInput(payload.value)
+      payload.value = sanitizeValueInput(payload.value);
 
       await context.dispatch("getPayeeID", payload.payee).then(response => {
         payload.payee = response;
