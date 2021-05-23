@@ -1,7 +1,7 @@
 const fs = require('fs')
 const packageJson = fs.readFileSync('./package.json')
 const version = JSON.parse(packageJson).version || 0
-const webpack = require('webpack');
+const webpack = require('webpack')
 
 module.exports = {
   pluginOptions: {
@@ -18,21 +18,19 @@ module.exports = {
       }
     }
   },
-  transpileDependencies: [
-    'vuetify',
-  ],
+  transpileDependencies: ['vuetify'],
 
   configureWebpack: {
     devtool: 'source-map',
     plugins: [
       new webpack.DefinePlugin({
-          'process.env': {
-              PACKAGE_VERSION: '"' + version + '"'
-          }
+        'process.env': {
+          PACKAGE_VERSION: '"' + version + '"'
+        }
       })
-  ]
+    ]
   },
 
   runtimeCompiler: true,
-  lintOnSave: false,
-};
+  lintOnSave: false
+}

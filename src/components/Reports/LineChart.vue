@@ -7,67 +7,67 @@
 </template>
 
 <script>
-import Chart from "chart.js/auto";
+import Chart from 'chart.js/auto'
 
 export default {
-  name: "LineChart",
-  props: ["chartData", "activityData"],
+  name: 'LineChart',
+  props: ['chartData', 'activityData'],
   data() {
     return {
-      chart: null,
-    };
+      chart: null
+    }
   },
   computed: {},
   watch: {
     chartData: function() {
       console.log('changed')
-      this.chart.destroy();
-      this.renderLineChart();
-    },
+      this.chart.destroy()
+      this.renderLineChart()
+    }
   },
   mounted() {
     this.renderLineChart()
   },
   methods: {
     renderLineChart: function() {
-      var ctx = document.getElementById("chart").getContext("2d");
+      var ctx = document.getElementById('chart').getContext('2d')
       this.chart = new Chart(ctx, {
         data: {
           datasets: [
             {
-              type: "bar",
-              label: "Income",
+              type: 'bar',
+              label: 'Income',
               data: this.chartData,
-              backgroundColor: "#455A64",
-              borderColor: "#263238",
+              backgroundColor: '#455A64',
+              borderColor: '#263238',
               borderWidth: 3,
               parsing: {
-                xAxisKey: "month",
-                yAxisKey: "income"
+                xAxisKey: 'month',
+                yAxisKey: 'income'
               }
             },
             {
-              type: "bar",
-              label: "Spent",
+              type: 'bar',
+              label: 'Spent',
               data: this.chartData,
-              backgroundColor: "#8E292F",
-              borderColor: "#8E292F",
+              backgroundColor: '#8E292F',
+              borderColor: '#8E292F',
               borderWidth: 3,
               parsing: {
-                xAxisKey: "month",
-                yAxisKey: "spent"
+                xAxisKey: 'month',
+                yAxisKey: 'spent'
               }
             },
             {
-              type: "line",
-              label: "Networth",
+              type: 'line',
+              label: 'Networth',
               data: this.chartData,
-              backgroundColor: "#6e479e",
-              borderColor: "#6e479e",
+              backgroundColor: '#6e479e',
+              borderColor: '#6e479e',
               borderWidth: 3,
               parsing: {
-                xAxisKey: "month",
-                yAxisKey: "netWorth"
+                xAxisKey: 'month',
+                yAxisKey: 'netWorth'
               }
             }
           ]
@@ -78,7 +78,7 @@ export default {
               ticks: {
                 // Include a dollar sign in the ticks
                 callback: function(value, index, values) {
-                  return "$" + value;
+                  return '$' + value
                 }
               }
             }
@@ -87,27 +87,27 @@ export default {
             tooltip: {
               callbacks: {
                 label: function(context) {
-                  var label = context.dataset.label || "";
+                  var label = context.dataset.label || ''
 
                   if (label) {
-                    label += ": ";
+                    label += ': '
                   }
                   if (context.parsed.y !== null) {
-                    label += new Intl.NumberFormat("en-US", {
-                      style: "currency",
-                      currency: "USD"
-                    }).format(context.parsed.y);
+                    label += new Intl.NumberFormat('en-US', {
+                      style: 'currency',
+                      currency: 'USD'
+                    }).format(context.parsed.y)
                   }
-                  return label;
+                  return label
                 }
               }
             }
           }
         }
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped>

@@ -15,16 +15,10 @@
         />
       </template>
       <template #actions>
-        <v-btn
-          color="grey"
-          @click.stop="manageBudgetsModalVisible = false"
-        >
+        <v-btn color="grey" @click.stop="manageBudgetsModalVisible = false">
           Cancel
         </v-btn>
-        <v-btn
-          color="accent"
-          @click="loadSelectedBudget()"
-        >
+        <v-btn color="accent" @click="loadSelectedBudget()">
           Load Budget
         </v-btn>
       </template>
@@ -38,10 +32,7 @@
         <v-container>
           <v-row>
             <v-col cols="12">
-              <v-text-field
-                v-model="item.name"
-                label="Budget name"
-              />
+              <v-text-field v-model="item.name" label="Budget name" />
             </v-col>
             <!-- <v-col cols="12">
                 <v-text-field
@@ -56,39 +47,20 @@
                   required
                 />
               </v-col> -->
-            <v-col
-              cols="12"
-              sm="6"
-            >
-              <v-select
-                v-model="item.currency"
-                :items="currencies"
-                label="Currency"
-                required
-              />
+            <v-col cols="12" sm="6">
+              <v-select v-model="item.currency" :items="currencies" label="Currency" required />
             </v-col>
-            <v-col
-              cols="12"
-              sm="6"
-            />
+            <v-col cols="12" sm="6" />
           </v-row>
         </v-container>
       </template>
-         
+
       <template #actions>
         <v-spacer />
-        <v-btn
-          color="blue darken-1"
-          text
-          @click="dialog = false"
-        >
+        <v-btn color="blue darken-1" text @click="dialog = false">
           Close
         </v-btn>
-        <v-btn
-          color="blue darken-1"
-          text
-          @click="saveBudget()"
-        >
+        <v-btn color="blue darken-1" text @click="saveBudget()">
           Save
         </v-btn>
       </template>
@@ -98,13 +70,7 @@
       <h1>Manage Budgets</h1>
       <v-divider class="pb-4" />
 
-      <v-btn
-        color="accent"
-        dark
-        class="mb-2"
-        small
-        @click.stop="manageBudgetsModalVisible = true"
-      >
+      <v-btn color="accent" dark class="mb-2" small @click.stop="manageBudgetsModalVisible = true">
         Switch Budgets
       </v-btn>
     </v-col>
@@ -114,10 +80,7 @@
         <template #default>
           <thead>
             <tr>
-              <th
-                class="text-left"
-                width="50px"
-              >
+              <th class="text-left" width="50px">
                 Selected
               </th>
               <th class="text-left">
@@ -133,10 +96,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="budget in budgetRoots"
-              :key="budget._id"
-            >
+            <tr v-for="budget in budgetRoots" :key="budget._id">
               <td v-if="budget._id.slice(-36) == selectedBudgetID">
                 <v-icon color="accent">
                   mdi-check-bold
@@ -147,22 +107,10 @@
               <td>{{ budget.name }}</td>
               <td>{{ budget.currency }}</td>
               <td>
-                <v-icon
-                  icon
-                  dark
-                  class=""
-                  color="primary"
-                  @click="editItem(budget)"
-                >
+                <v-icon icon dark class="" color="primary" @click="editItem(budget)">
                   edit
                 </v-icon>
-                <v-icon
-                  icon
-                  dark
-                  class="ml-1"
-                  color="accent"
-                  @click="deleteItem(budget)"
-                >
+                <v-icon icon dark class="ml-1" color="accent" @click="deleteItem(budget)">
                   delete
                 </v-icon>
               </td>
@@ -175,11 +123,11 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import BaseDialogModalComponent from "./Modals/BaseDialogModalComponent.vue";
+import { mapGetters, mapActions } from 'vuex'
+import BaseDialogModalComponent from './Modals/BaseDialogModalComponent.vue'
 
 export default {
-  name: "Settings",
+  name: 'Settings',
   components: {
     BaseDialogModalComponent
   },
@@ -190,42 +138,42 @@ export default {
       dialog: false,
       item: {},
       currencies: [
-        { value: "USD", text: "$" },
+        { value: 'USD', text: '$' }
         // { value: "USD2", text: "$2" }
       ]
-    };
+    }
   },
   computed: {
-    ...mapGetters(["budgetRoots", "payees", "selectedBudgetID"])
+    ...mapGetters(['budgetRoots', 'payees', 'selectedBudgetID'])
   },
   watch: {
     selectedBudgetID: function(newBudget, oldBudget) {
-      this.selectedBudget = newBudget; //Assign value from vuex to local var when loads/updates
+      this.selectedBudget = newBudget //Assign value from vuex to local var when loads/updates
     }
   },
   methods: {
     editItem(item) {
-      this.item = JSON.parse(JSON.stringify(item));
-      this.dialog = true;
+      this.item = JSON.parse(JSON.stringify(item))
+      this.dialog = true
     },
     deleteItem(item) {
-      this.item = JSON.parse(JSON.stringify(item));
+      this.item = JSON.parse(JSON.stringify(item))
       this.$store.dispatch('deleteEntireBudget', item)
     },
     createBudget(budgetName) {
-      console.log("create called", budgetName);
-      this.$store.dispatch("createBudget", budgetName);
+      console.log('create called', budgetName)
+      this.$store.dispatch('createBudget', budgetName)
     },
     loadSelectedBudget() {
-      this.$store.dispatch("setSelectedBudgetID", this.selectedBudget);
-      this.manageBudgetsModalVisible = false;
+      this.$store.dispatch('setSelectedBudgetID', this.selectedBudget)
+      this.manageBudgetsModalVisible = false
     },
     saveBudget() {
       this.dialog = false
-      this.$store.dispatch("commitDocToPouchAndVuex", this.item);
+      this.$store.dispatch('commitDocToPouchAndVuex', this.item)
     }
   }
-};
+}
 </script>
 
 <style></style>

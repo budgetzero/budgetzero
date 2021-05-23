@@ -7,16 +7,7 @@
       <h3 class="mx-2 pt-2">
         Username
       </h3>
-      <v-sheet
-        
-        class="ma-2 mr-4 pa-2"
-        color="grey lighten-2"
-        elevation="2"
-        outlined
-        rounded
-        shaped
-        justify="center"
-      >
+      <v-sheet class="ma-2 mr-4 pa-2" color="grey lighten-2" elevation="2" outlined rounded shaped justify="center">
         <span>{{ user.email }}</span>
       </v-sheet>
 
@@ -34,7 +25,7 @@
         justify="center"
       >
         <span>{{ user.userData.pouchdb_url }}</span>
-      </v-sheet> 
+      </v-sheet>
 
       <v-sheet
         v-if="!pouchdb_url"
@@ -53,30 +44,23 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import _ from "lodash";
+import { mapGetters } from 'vuex'
+import _ from 'lodash'
 
 export default {
-  name: "Profile",
-  components: {
-  },
+  name: 'Profile',
+  components: {},
   data() {
-    return {
-    
-    };
+    return {}
   },
   computed: {
-    ...mapGetters(["user"]),
+    ...mapGetters(['user']),
     pouchdb_url() {
       return _.get(this.user, 'userData.pouchdb_url', null)
     }
   },
-  methods: {
-   
-  }
-};
+  methods: {}
+}
 </script>
 
-<style>
-
-</style>
+<style></style>

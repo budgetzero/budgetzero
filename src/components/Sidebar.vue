@@ -35,11 +35,7 @@
     <v-list-item class="pl-0">
       <v-list-item-content v-if="!mini" class="py-1">
         <v-list-item-title class="title pl-4">
-          <v-img
-            max-height="120"
-            max-width="250"
-            src="../../public/logo3.png"
-          />
+          <v-img max-height="120" max-width="250" src="../../public/logo3.png" />
         </v-list-item-title>
       </v-list-item-content>
       <v-list-item-icon v-if="mini" class="my-1 pb-2 ml-2">
@@ -61,7 +57,7 @@
           <v-list-item-content v-if="!mini">
             <v-list-item-title>
               <v-chip small label>
-                {{ budgetName ? budgetName : "No budget loaded." }}
+                {{ budgetName ? budgetName : 'No budget loaded.' }}
               </v-chip>
             </v-list-item-title>
           </v-list-item-content>
@@ -143,12 +139,10 @@
 
       <!-- <v-list-group value="true">
         <template v-slot:activator> -->
-      <v-list-item-title
-        class="pl-2 pt-1 pb-1 font-weight-medium subtitle-2 blue-grey--text text--lighten-3"
-      >
+      <v-list-item-title class="pl-2 pt-1 pb-1 font-weight-medium subtitle-2 blue-grey--text text--lighten-3">
         ON BUDGET <span class="float-right pr-4">{{ sumOfOnBudgetAccounts | currency }}</span>
       </v-list-item-title>
-   
+
       <!-- </template> -->
 
       <v-list-item
@@ -172,9 +166,7 @@
 
       <!-- <v-list-group value="true">
         <template v-slot:activator> -->
-      <v-list-item-title
-        class="pl-2 pt-1 pb-1 font-weight-medium subtitle-2 blue-grey--text text--lighten-3"
-      >
+      <v-list-item-title class="pl-2 pt-1 pb-1 font-weight-medium subtitle-2 blue-grey--text text--lighten-3">
         OFF BUDGET <span class="float-right pr-4">{{ sumOfOffBudgetAccounts | currency }}</span>
       </v-list-item-title>
       <!-- </template> -->
@@ -257,110 +249,106 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import BaseDialogModalComponent from "./Modals/BaseDialogModalComponent";
+import { mapGetters } from 'vuex'
+import BaseDialogModalComponent from './Modals/BaseDialogModalComponent'
 
 export default {
-  name: "Sidebar",
+  name: 'Sidebar',
   components: {
-    BaseDialogModalComponent,
+    BaseDialogModalComponent
   },
   data() {
     return {
       selectedBudget: null,
-      links: "",
+      links: '',
       drawer: null,
       mini: false,
-      manageBudgetsModalVisible: false,
-    };
+      manageBudgetsModalVisible: false
+    }
   },
   computed: {
     ...mapGetters([
-      "account_balances",
-      "accounts",
-      "sync_state",
-      "accountsOnBudget",
-      "accountsOffBudget",
-      "selectedBudgetID",
-      "budgetRoots",
-      "budgetRootsMap",
-      "user",
+      'account_balances',
+      'accounts',
+      'sync_state',
+      'accountsOnBudget',
+      'accountsOffBudget',
+      'selectedBudgetID',
+      'budgetRoots',
+      'budgetRootsMap',
+      'user'
     ]),
     budgetName() {
       if (this.selectedBudget) {
-        return this.budgetRootsMap[this.selectedBudget]
-          ? this.budgetRootsMap[this.selectedBudget].name
-          : "None";
+        return this.budgetRootsMap[this.selectedBudget] ? this.budgetRootsMap[this.selectedBudget].name : 'None'
       } else {
-        return "";
+        return ''
       }
     },
     sumOfOnBudgetAccounts() {
       return this.accountsOnBudget.reduce(
-        (acct_sum, b) =>
-          acct_sum + this.account_balances[b._id.slice(-36)].working / 100,
+        (acct_sum, b) => acct_sum + this.account_balances[b._id.slice(-36)].working / 100,
         0
-      );
+      )
     },
     sumOfOffBudgetAccounts() {
       return this.accountsOffBudget.reduce(
-        (acct_sum, b) =>
-          acct_sum + this.account_balances[b._id.slice(-36)].working / 100,
+        (acct_sum, b) => acct_sum + this.account_balances[b._id.slice(-36)].working / 100,
         0
-      );
-    },
+      )
+    }
   },
   watch: {
-    selectedBudgetID: function (newBudget, oldBudget) {
-      this.selectedBudget = newBudget; //Assign value from vuex to local var when loads/updates
-    },
+    selectedBudgetID: function(newBudget, oldBudget) {
+      this.selectedBudget = newBudget //Assign value from vuex to local var when loads/updates
+    }
   },
   methods: {
     createBudget() {
-      this.$router.push({ path: `/create` });
+      this.$router.push({ path: `/create` })
     },
     plaid_link() {
       const linkHandler = Plaid.create({
-        env: "sandbox",
-        clientName: "Plaid Sandbox",
+        env: 'sandbox',
+        clientName: 'Plaid Sandbox',
         // Replace '<PUBLIC_KEY>' with your own `public_key`
-        key: "1313814b396f2092dfda37b0697f4f",
-        product: ["auth"],
-        apiVersion: "v2",
+        key: '1313814b396f2092dfda37b0697f4f',
+        product: ['auth'],
+        apiVersion: 'v2',
         onSuccess(public_token, metadata) {
           // Send the public_token to your app server here.
           // The metadata object contains info about the
           // institution the user selected and the
           // account_id, if selectAccount is enabled.
-          console.log(public_token);
-          this.public_token = public_token;
+          console.log(public_token)
+          this.public_token = public_token
 
           const dicttosend2 = {
-            name: "Account name - autoadded",
-            type: "Plaid",
-            public_token,
-          };
+            name: 'Account name - autoadded',
+            type: 'Plaid',
+            public_token
+          }
 
-          fetch("http://192.168.1.4:8000/accounts/", {
-            method: "POST",
+          fetch('http://192.168.1.4:8000/accounts/', {
+            method: 'POST',
             body: JSON.stringify(dicttosend2),
             headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-          }).then(
-            (response) => {
-              response.status; //= > number 100–599
-              response.statusText; //= > String
-              response.headers; //= > Headers
-              response.url; //= > String
-              return response.text();
-            },
-            (error) => {
-              error.message; //= > String
-              console.log("Put failed");
+              'Content-Type': 'application/json',
+              Accept: 'application/json'
             }
-          );
+          }).then(
+            response => {
+              response.status //= > number 100–599
+              response.statusText //= > String
+              response.headers //= > Headers
+              response.url //= > String
+              return response.text()
+            },
+            error => {
+              error.message //= > String
+              console.log('Put failed')
+            }
+          )
         },
         onExit(err, metadata) {
           // The user exited the Link flow.
@@ -372,13 +360,13 @@ export default {
           // institution that the user selected and the
           // most recent API request IDs. Storing this
           // information can be helpful for support.
-        },
-      });
+        }
+      })
 
-      linkHandler.open();
-    },
-  },
-};
+      linkHandler.open()
+    }
+  }
+}
 </script>
 
 <style scoped>
