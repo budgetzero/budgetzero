@@ -277,7 +277,7 @@ export default {
     },
 
     getBudgetOpened(context) {
-      return Vue.prototype.$vm.$pouch
+      return this._vm.$pouch
         .allDocs({
           include_docs: true,
           attachments: true,
@@ -301,7 +301,7 @@ export default {
     deleteEntireBudget(context, payload) {
       const budget_id = payload._id.slice(-36);
 
-      Vue.prototype.$vm.$pouch
+      this._vm.$pouch
         .allDocs({
           include_docs: true,
           attachments: true,
@@ -321,7 +321,7 @@ export default {
           context.commit("API_FAILURE", err);
         });
 
-        Vue.prototype.$vm.$pouch.get(`budget-opened_${budget_id}`)
+        this._vm.$pouch.get(`budget-opened_${budget_id}`)
         .then(function(doc) {
           context.dispatch("deleteDocFromPouchAndVuex", doc);
         })
@@ -449,7 +449,7 @@ export default {
     },
     deleteAccount(context, payload) {
       const myId = payload._id.slice(-36);
-      Vue.prototype.$vm.$pouch
+      this._vm.$pouch
         .query((doc, emit) => {
           if (doc.account === myId) {
             emit(doc);

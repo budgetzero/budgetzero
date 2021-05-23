@@ -343,7 +343,7 @@ export default {
           console.log(err);
         });
 
-      const sync = Vue.prototype.$vm.$pouch
+      const sync =this._vm.$pouch
         .sync(remoteDB, {
           live: true,
           retry: true
@@ -362,7 +362,7 @@ export default {
             "SET_STATUS_MESSAGE",
             `Last sync [complete] ${moment().format("MMM D, h:mm a")}`
           );
-          console.log("pouch sync complete", Vue.prototype.$vm.$pouch);
+          console.log("pouch sync complete",this._vm.$pouch);
         })
         .on("paused", function(info) {
           context.commit("SET_STATUS_MESSAGE", `Last sync ${moment().format("MMM D, h:mm a")}`);
@@ -486,7 +486,7 @@ export default {
 
       //Commit to Pouchdb
       return new Promise((resolve, reject) => {
-        Vue.prototype.$vm.$pouch.put(payload).then(
+       this._vm.$pouch.put(payload).then(
           response => {
             payload._rev = response.rev;
 
@@ -510,13 +510,12 @@ export default {
      */
     commitBulkDocsToPouchAndVuex(context, payload) {
       return new Promise((resolve, reject) => {
-        Vue.prototype.$vm.$pouch.bulkDocs(payload).then(
+       this._vm.$pouch.bulkDocs(payload).then(
           response => {
             resolve(response);
             // payload._rev = response.rev; //Response is an array for bulk updates
             console.log("ACTION: commitBulkDocsToPouchAndVuex succeeded", response);
             context.dispatch("loadLocalBudgetRoot");
-            debugger
             // context.dispatch("getAllDocsFromPouchDB"); //Refresh all data so we don't have to manually update vuex store with what was changed.
           },
           error => {
@@ -534,7 +533,7 @@ export default {
      */
     deleteDocFromPouchAndVuex(context, payload) {
       console.log("deleteDocFromPouchAndVuex", payload);
-      Vue.prototype.$vm.$pouch
+     this._vm.$pouch
         .remove(payload)
         .then(result => {
           context.commit("DELETE_DOCUMENT", result);
@@ -560,7 +559,7 @@ export default {
      *
      */
     eraseAllDocs(context) {
-      Vue.prototype.$vm.$pouch.erase().then(function(resp) {
+     this._vm.$pouch.erase().then(function(resp) {
         console.log(resp); //{ok: true}
       });
     },
@@ -570,13 +569,13 @@ export default {
      *
      */
     deleteAllDocs(context) {
-      Vue.prototype.$vm.$pouch
+     this._vm.$pouch
         .allDocs()
         .then(function(result) {
           // Promise isn't supported by all browsers; you may want to use bluebird
           return Promise.all(
             result.rows.map(function(row) {
-              return Vue.prototype.$vm.$pouch.remove(row.id, row.value.rev);
+              return this._vm.$pouch.remove(row.id, row.value.rev);
             })
           );
         })
@@ -584,7 +583,7 @@ export default {
           console.log("all docs deleted");
           context.dispatch("getAllDocsFromPouchDB");
 
-          Vue.prototype.$vm.$pouch
+          this._vm.$pouch
             .compact()
             .then(function(info) {
               // compaction complete
@@ -604,13 +603,13 @@ export default {
     loadMockData(context) {
       // context.dispatch('deleteAllDocs')
       console.log("loading mock data", mock_data_from_ynab4);
-      Vue.prototype.$vm.$pouch.bulkDocs(mock_data_from_ynab4.docs).then(result => {
+      this._vm.$pouch.bulkDocs(mock_data_from_ynab4.docs).then(result => {
         context.dispatch("loadLocalBudgetRoot");
       });
     },
 
     exportBudgetAsJSON(context) {
-      return Vue.prototype.$vm.$pouch
+      return this._vm.$pouch
         .allDocs({
           include_docs: true,
           attachments: true
@@ -637,7 +636,7 @@ export default {
     },
 
     exportSelectedBudgetAsJSON(context) {
-      return Vue.prototype.$vm.$pouch
+      return this._vm.$pouch
         .allDocs({
           include_docs: true,
           attachments: true,
@@ -677,7 +676,7 @@ export default {
     },
 
     deleteLocalDatabase(context) {
-      Vue.prototype.$vm.$pouch
+     this._vm.$pouch
         .destroy()
         .then(() => {
           context.dispatch("loadLocalBudgetRoot");
