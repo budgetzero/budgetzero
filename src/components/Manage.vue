@@ -156,9 +156,13 @@ export default {
       this.item = JSON.parse(JSON.stringify(item))
       this.dialog = true
     },
-    deleteItem(item) {
-      this.item = JSON.parse(JSON.stringify(item))
-      this.$store.dispatch('deleteEntireBudget', item)
+    async deleteItem(item) {
+      if (await this.$root.$confirm('Delete', 'Are you sure you want to delete this Budget? It will permanently delete all transactions and data related to this Budget. It will also replicate deletion to any remote sync servers.', { color: 'red' })) {
+        this.item = JSON.parse(JSON.stringify(item))
+        this.$store.dispatch('deleteEntireBudget', item)
+      } else {
+        // cancel
+      }
     },
     createBudget(budgetName) {
       console.log('create called', budgetName)
