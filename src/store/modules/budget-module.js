@@ -311,7 +311,7 @@ export default {
         .then(result => {
           //Add deleted key to each
           const rowsToDelete = {};
-          rowsToDelete.docs = result.rows.map(v => ({ ...v, _deleted: true }));
+          rowsToDelete.docs = result.rows.map(v => ({ ...v.doc, _deleted: true }));
           console.log("going to delete..", rowsToDelete);
           //Bulk delete
           context.dispatch("commitBulkDocsToPouchAndVuex", rowsToDelete);
