@@ -4,10 +4,10 @@
       {{ title }}
     </template>
     <template #body>
-      <div class="mb-4">{{ message }}</div>
+      <div class="mb-4 subtitle-1 font-weight-medium">{{ message }}</div>
     </template>
     <template #actions>
-      <v-btn :color="options.cancelBtnColor" @click.native="cancel">
+      <v-btn v-if="!options.onlyShowAgreeBtn" :color="options.cancelBtnColor" @click.native="cancel">
         Cancel
       </v-btn>
       <v-btn :color="options.agreeBtnColor" @click.native="agree">
@@ -34,6 +34,7 @@ export default {
     message: null,
     title: null,
     options: {
+      onlyShowAgreeBtn: false,
       agreeBtnText: 'Agree',
       agreeBtnColor: 'primary',
       cancelBtnColor: 'red',

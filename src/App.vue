@@ -79,17 +79,19 @@ export default {
     this.$root.$confirm = this.$refs.confirm.open
   },
   methods: {
-    createBudget() {
-      this.$swal({
-        title: 'Budget Created',
-        text: `A budget named ${this.budgetName} has been created.`,
-        icon: 'success',
-        confirmButtonText: 'Ok'
-      })
-
+    async createBudget() {
       this.$store.dispatch('loadLocalBudgetRoot')
       this.$store.dispatch('createBudget', this.budgetName)
-      this.$router.push({ path: `/budget` })
+
+      if (
+        await this.$root.$confirm('Budget Created!', `A budget named ${this.budgetName} has been created!`, {
+          onlyShowAgreeBtn: true,
+          agreeBtnColor: 'accent',
+          agreeBtnText: 'Ok'
+        })
+      ) {
+        this.$router.push({ path: `/budget` })
+      }
     }
   }
 }

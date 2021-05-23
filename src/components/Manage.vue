@@ -165,7 +165,9 @@ export default {
         )
       ) {
         this.item = JSON.parse(JSON.stringify(item))
-        this.$store.dispatch('deleteEntireBudget', item)
+        await this.$store.dispatch('deleteEntireBudget', item)
+        this.$store.dispatch('loadLocalBudgetRoot')
+        
       } else {
         // cancel
       }
