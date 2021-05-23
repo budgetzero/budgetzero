@@ -1,5 +1,8 @@
 <template>
   <v-app id="inspire">
+    <!-- Global confirm dialog -->
+    <confirm-dialog ref="confirm"></confirm-dialog>
+
     <!-- Modal to input reconcile amount  -->
     <BaseDialogModalComponent v-model="isModalVisibleCreateBudget">
       <template #title>
@@ -36,12 +39,14 @@
 <script>
 import Sidebar from './components/Sidebar.vue'
 import BaseDialogModalComponent from './components/Modals/BaseDialogModalComponent.vue'
+import ConfirmDialog from './components/Modals/ConfirmDialog.vue'
 
 export default {
   name: 'App',
   components: {
     Sidebar,
-    BaseDialogModalComponent
+    BaseDialogModalComponent,
+    ConfirmDialog
   },
   data() {
     return {
@@ -71,19 +76,22 @@ export default {
   },
   mounted() {
     this.$store.dispatch('AUTH_CHECK')
+    this.$root.$confirm = this.$refs.confirm.open
   },
   methods: {
-    createBudget() {
-      this.$swal({
-        title: 'Budget Created',
-        text: `A budget named ${this.budgetName} has been created.`,
-        icon: 'success',
-        confirmButtonText: 'Ok'
-      })
-
+    async createBudget() {
       this.$store.dispatch('loadLocalBudgetRoot')
       this.$store.dispatch('createBudget', this.budgetName)
-      this.$router.push({ path: `/budget` })
+
+      if (
+        await this.$root.$confirm('Budget Created!', `A budget named ${this.budgetName} has been created!`, {
+          onlyShowAgreeBtn: true,
+          agreeBtnColor: 'accent',
+          agreeBtnText: 'Ok'
+        })
+      ) {
+        this.$router.push({ path: `/budget` })
+      }
     }
   }
 }
