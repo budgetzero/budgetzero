@@ -301,36 +301,44 @@ export default {
     deleteEntireBudget(context, payload) {
       const budget_id = payload._id.slice(-36);
 
-      this._vm.$pouch
-        .allDocs({
-          include_docs: true,
-          attachments: true,
-          startkey: `b_${budget_id}_`,
-          endkey: `b_${budget_id}_\ufff0`
-        })
-        .then(result => {
-          //Add deleted key to each
-          const rowsToDelete = {};
-          rowsToDelete.docs = result.rows.map(v => ({ ...v.doc, _deleted: true }));
-          console.log("going to delete..", rowsToDelete);
-          //Bulk delete
-          context.dispatch("commitBulkDocsToPouchAndVuex", rowsToDelete);
-        })
-        .catch(err => {
-          console.log(err);
-          context.commit("API_FAILURE", err);
-        });
+      return new Promise((resolve, reject) => {
+        this._vm.$pouch
+          .allDocs({
+            include_docs: true,
+            attachments: true,
+            startkey: `b_${budget_id}_`,
+            endkey: `b_${budget_id}_\ufff0`
+          })
+          .then(result => {
+            //Add deleted key to each
+            const rowsToDelete = {};
+            rowsToDelete.docs = result.rows.map(v => ({ ...v.doc, _deleted: true }));
+            console.log("going to delete..", rowsToDelete);
+            //Bulk delete
+            context.dispatch("commitBulkDocsToPouchAndVuex", rowsToDelete).then(
+              response => {
+                this._vm.$pouch
+                  .get(`budget-opened_${budget_id}`)
+                  .then(function(doc) {
+                    context.dispatch("deleteDocFromPouchAndVuex", doc);
+                  })
+                  .catch(function(err) {
+                    console.log(err);
+                  });
 
-        this._vm.$pouch.get(`budget-opened_${budget_id}`)
-        .then(function(doc) {
-          context.dispatch("deleteDocFromPouchAndVuex", doc);
-        })
-        .catch(function(err) {
-          console.log(err);
-        });
+                // Finally, delete the budget_ doc
+                //TODO: Put this inside .then() above?
+                context.dispatch("deleteDocFromPouchAndVuex", payload);
 
-      // Finally, delete the budget_ doc
-      context.dispatch("deleteDocFromPouchAndVuex", payload);
+                resolve(response);
+              },
+              error => {
+                reject(error);
+                context.commit("API_FAILURE", error);
+              }
+            );
+          });
+      });
     },
 
     ///

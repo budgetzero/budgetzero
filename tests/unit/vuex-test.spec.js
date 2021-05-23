@@ -37,8 +37,8 @@ describe("vuex budget module", () => {
   });
 
   it("deleteEntireBudget", async () => {
-    store.dispatch('deleteEntireBudget', store.state.pouchdb.budgetRoots[0])
-    expect(store.state.pouchdb.transactions.length).toBe(10)
+    await store.dispatch('deleteEntireBudget', store.state.pouchdb.budgetRoots[0])
+    expect(store.getters.transactions.length).toBe(563)
   
   });
   
