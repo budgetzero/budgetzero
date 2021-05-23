@@ -392,7 +392,7 @@ export default {
       }
     },
     getAllDocsFromPouchDB(context) {
-      return Vue.prototype.$vm.$pouch
+      return this._vm.$pouch
         .allDocs({
           include_docs: true,
           attachments: true,
@@ -516,6 +516,7 @@ export default {
             // payload._rev = response.rev; //Response is an array for bulk updates
             console.log("ACTION: commitBulkDocsToPouchAndVuex succeeded", response);
             context.dispatch("loadLocalBudgetRoot");
+            debugger
             // context.dispatch("getAllDocsFromPouchDB"); //Refresh all data so we don't have to manually update vuex store with what was changed.
           },
           error => {
@@ -689,7 +690,7 @@ export default {
     },
 
     loadLocalBudgetRoot(context) {
-      return Vue.prototype.$vm.$pouch
+      return this._vm.$pouch
         .allDocs({
           include_docs: true,
           attachments: true,
@@ -719,7 +720,7 @@ export default {
     },
 
     loadBudgetOpened(context) {
-      return Vue.prototype.$vm.$pouch
+      return this._vm.$pouch
         .allDocs({
           include_docs: true,
           attachments: true,

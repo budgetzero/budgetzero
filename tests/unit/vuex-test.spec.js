@@ -1,30 +1,34 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import PouchDB from "pouchdb";
+
 import { createLocalVue } from "@vue/test-utils";
 import store_config from "@/store";
 import mock_budget2 from "@/../tests/__mockdata__/mock_budget2.json";
+import { config } from '@vue/test-utils'
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 
 describe("vuex budget module", () => {
-  let store
-  let actions
+  let store;
 
   beforeAll(() => {
 
-    const store = store_config
-    Vue.prototype.$vm = localVue;
+    // const pouch = new PouchDB("budgetzero_local_db");
+    // Vue.prototype.$pouch = pouch;
+    // config.mocks['$pouch'] = pouch
+
+    store = store_config
 
     store.dispatch("createLocalPouchDB");
-    store.dispatch('commitBulkDocsToPouchAndVuex', mock_budget2)
 
 
   });
 
   it("monthlyData getter matches snapshot", async () => {
-    console.log(localVue)
-    localVue.prototype.$vm.$store.dispatch("calculateMonthlyData");
+    store.dispatch("calculateMonthlyData");
+
     expect(store.getters.monthlyData).toMatchSnapshot();
   });
 
