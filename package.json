@@ -5,8 +5,6 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit --silent",
-    "test-watch:unit": "vue-cli-service test:unit --watch --silent",
-    "test:debug": "node --inspect-brk node_modules/.bin/vue-cli-service test:unit --runInBand --watchAll",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "electron:build": "vue-cli-service electron:build --publish always",
@@ -14,7 +12,9 @@
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
-    "test:cypress": "cypress run"
+    "test-watch:unit": "vue-cli-service test:unit --watch --silent",
+    "test:cypress": "cypress run",
+    "test:debug": "node --inspect-brk node_modules/.bin/vue-cli-service test:unit --runInBand --watchAll"
   },
   "main": "background.js",
   "dependencies": {
@@ -63,7 +63,8 @@
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.9",
+    "@vue/cli-plugin-babel": "^4.5.13",
+    "@vue/cli-plugin-e2e-cypress": "^4.5.13",
     "@vue/cli-plugin-eslint": "^4.5.9",
     "@vue/cli-plugin-router": "^4.5.9",
     "@vue/cli-plugin-unit-jest": "^4.5.9",

@@ -79,7 +79,6 @@ export default {
               rv[id] = rv[id] ? rv[id] : 0
             }
           })
-
           ;(rv['docs'] = rv['docs'] || []).push(item)
           rv['value'] = rv['value'] ? rv['value'] + item.value : item.value
           return rv
