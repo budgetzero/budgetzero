@@ -4,14 +4,14 @@
       {{ title }}
     </template>
     <template #body>
-      {{ message }}
+      <div class="mb-4">{{ message }}</div>
     </template>
     <template #actions>
-      <v-btn color="grey" @click.native="cancel">
+      <v-btn :color="options.cancelBtnColor" @click.native="cancel">
         Cancel
       </v-btn>
-      <v-btn color="accent" @click.native="agree">
-        Load Budget
+      <v-btn :color="options.agreeBtnColor" @click.native="agree">
+        {{ options.agreeBtnText }}
       </v-btn>
     </template>
   </BaseDialogModalComponent>
@@ -21,7 +21,7 @@
 import BaseDialogModalComponent from './BaseDialogModalComponent'
 
 /**
-  Yoinked from https://gist.github.com/eolant/ba0f8a5c9135d1a146e1db575276177d
+  Yoinked/adapted from https://gist.github.com/eolant/ba0f8a5c9135d1a146e1db575276177d
  */
 export default {
   components: {
@@ -34,6 +34,9 @@ export default {
     message: null,
     title: null,
     options: {
+      agreeBtnText: 'Agree',
+      agreeBtnColor: 'primary',
+      cancelBtnColor: 'red',
       color: 'primary',
       width: 290,
       zIndex: 200

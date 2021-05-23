@@ -159,9 +159,9 @@ export default {
     async deleteItem(item) {
       if (
         await this.$root.$confirm(
-          'Delete',
-          'Are you sure you want to delete this Budget? It will permanently delete all transactions and data related to this Budget. It will also replicate deletion to any remote sync servers.',
-          { color: 'red' }
+          'Delete Entire Budget?',
+          'Are you sure you want to delete this Budget? It will permanently delete all transactions, categories, and budget amounts and replicate deletion to any remote sync servers.',
+          { cancelBtnColor: 'grey', agreeBtnColor: 'accent', agreeBtnText: 'Delete Entire Budget'}
         )
       ) {
         this.item = JSON.parse(JSON.stringify(item))
