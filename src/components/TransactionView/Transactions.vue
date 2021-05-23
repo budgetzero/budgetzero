@@ -1083,7 +1083,7 @@ export default {
       }
       this.editedItem.approved = true;
 
-      this.$store.dispatch("updateTransaction", this.editedItem);
+      this.$store.dispatch("createOrUpdateTransaction", this.editedItem);
 
       this.cancel();
     },

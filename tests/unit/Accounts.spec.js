@@ -4,11 +4,9 @@ import Accounts from "@/components/AccountView/Accounts.vue";
 import Vuetify from "vuetify";
 import mock_budget from "@/../tests/__mockdata__/mock_budget.json";
 import store from "@/store";
-
-
+import uuid from "uuid";
 import Vue from "vue";
 Vue.use(Vuetify);
-Vue.config.productionTip = false;
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -20,10 +18,12 @@ const $route = {
   }
 };
 
+const $uuid = uuid;
+
 const data = mock_budget.rows.map(row => row.doc);
 let numberOfAccounts = null;
 
-describe("transaction table", () => {
+describe("accounts table", () => {
   let vuetify;
   let wrapper;
 
@@ -39,10 +39,9 @@ describe("transaction table", () => {
     store.state.pouchdb.categories = data
       .filter(row => row._id.includes("_category_"))
       .filter(row => !row._id.includes("m_category"));
-    store.state.pouchdb.month_selected = "2020-12",
-    store.state.pouchdb.selectedBudgetID = "79de488f-448e-4b4d-97ad-61e5e4f5df31",
-
-    numberOfAccounts = data.filter(row => row._id.includes("_account_")).length; 
+    store.state.pouchdb.month_selected = "2020-12";
+    store.state.selectedBudgetID = "cc28ac0b-19fe-4735-a2e7-9bb91d54b6cc";
+    numberOfAccounts = data.filter(row => row._id.includes("_account_")).length;
   });
 
   beforeEach(() => {
@@ -55,7 +54,8 @@ describe("transaction table", () => {
       localVue,
       vuetify,
       mocks: {
-        $route
+        $route,
+        $uuid
       },
       stubs: {
         ImportModalComponent: true
@@ -77,45 +77,39 @@ describe("transaction table", () => {
 
   it("clicking Add Account button shows modal", async () => {
     // Open modal
-    wrapper.find("#addAccountBtn").trigger("click");
-    await localVue.nextTick();
+    await wrapper.find("#addAccountBtn").trigger("click");
 
     // Verify modal is open
     expect(wrapper.find(".v-dialog .title").text()).toEqual("Edit Account");
-
   });
 
-  // it("submitting add account form", async () => {
-  //   // Open modal
-  //   wrapper.find("#addAccountBtn").trigger("click");
-  //   await localVue.nextTick();
+  it("create new account", async () => {
+    // Open modal
+    await wrapper.find("#addAccountBtn").trigger("click");
 
-  //   wrapper.vm.editedItem = {
-  //     type: "CHECKING",
-  //     checkNumber: true,
-  //     closed: false,
-  //     name: "test",
-  //     note: "123",
-  //     sort: 0,
-  //     onBudget: true,
-  //     balanceIsNegative: false,
-  //     initialBalance: 0
-  //   }; 
-  //   wrapper.vm.editedIndex = -1;
+    //Mocks & setup
+    wrapper.vm.$store.dispatch = jest.fn();
+    jest.spyOn(wrapper.vm.$uuid, "v4").mockReturnValueOnce("3528ac0b-19fe-4735-a2e7-9bb91d54b6ba");
 
-  //   // Trigger save
-  //   wrapper.vm.$store.dispatch = jest.fn();
-    
-  //   // wrapper.vm.$uuid.v4() = jest.mockReturnValue('test123123123');
-  //   spyOn(wrapper.vm, "v4").mockReturnValue('123123123')
+    await wrapper.find("#nameField").setValue("nameofnewAccount");
+    await wrapper.find("#typeField").setValue("CHECKING");
+    await wrapper.find("#noteField").setValue("test note");
 
-  //   // jest.spyOn(wrapper.vm.$uuid, 'v4').mockReturnValueOnce('fake uuid');
-  //   wrapper.find("#saveAccountBtn").trigger("click"); 
-  //   wrapper.vm.save()
+    await wrapper.find("#saveAccountBtn").trigger("click");
 
-  //   expect(wrapper.vm.$store.dispatch).not.toBeCalled();
-
-  // });
-
-
+    expect(wrapper.vm.$store.dispatch).toBeCalledWith("createUpdateAccount", {
+      account: {
+        _id: "b_cc28ac0b-19fe-4735-a2e7-9bb91d54b6cc_account_3528ac0b-19fe-4735-a2e7-9bb91d54b6ba",
+        type: "CHECKING",
+        checkNumber: true,
+        closed: false,
+        name: "nameofnewAccount",
+        note: "test note",
+        sort: 0,
+        onBudget: true,
+        balanceIsNegative: false
+      },
+      initialBalance: 0
+    });
+  });
 });

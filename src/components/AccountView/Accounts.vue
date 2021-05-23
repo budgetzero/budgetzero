@@ -4,13 +4,13 @@
     class="mx-auto"
   >
     <v-data-table
+      id="accountsTable"
       :headers="headers"
       :items="accounts"
       sort-by="calories"
       class="elevation-1 account-table"
       hide-default-footer
       disable-pagination
-      id="accountsTable"
     >
       <template #top>
         <v-toolbar
@@ -23,14 +23,14 @@
           <AccountAddModal
             v-model="showModal"
             :editeditem="editedItem"
-            @save="save"
+            @save="save()"
           />
 
           <v-btn
+            id="addAccountBtn"
             color="accent"
             dark
             class="mb-2"
-            id="addAccountBtn"
             @click="create()"
           >
             Add Account

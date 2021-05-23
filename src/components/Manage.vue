@@ -30,6 +30,70 @@
       </template>
     </BaseDialogModalComponent>
 
+    <BaseDialogModalComponent v-model="dialog">
+      <template #title>
+        Manage Budget
+      </template>
+      <template #body>
+        <v-container>
+          <v-row>
+            <v-col cols="12">
+              <v-text-field
+                v-model="item.name"
+                label="Budget name"
+              />
+            </v-col>
+            <!-- <v-col cols="12">
+                <v-text-field
+                  label="Email*"
+                  required
+                />
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  label="Password*"
+                  type="password"
+                  required
+                />
+              </v-col> -->
+            <v-col
+              cols="12"
+              sm="6"
+            >
+              <v-select
+                v-model="item.currency"
+                :items="currencies"
+                label="Currency"
+                required
+              />
+            </v-col>
+            <v-col
+              cols="12"
+              sm="6"
+            />
+          </v-row>
+        </v-container>
+      </template>
+         
+      <template #actions>
+        <v-spacer />
+        <v-btn
+          color="blue darken-1"
+          text
+          @click="dialog = false"
+        >
+          Close
+        </v-btn>
+        <v-btn
+          color="blue darken-1"
+          text
+          @click="saveBudget()"
+        >
+          Save
+        </v-btn>
+      </template>
+    </BaseDialogModalComponent>
+
     <v-col>
       <h1>Manage Budgets</h1>
       <v-divider class="pb-4" />
@@ -65,6 +129,7 @@
               <th class="text-left">
                 Currency
               </th>
+              <th />
             </tr>
           </thead>
           <tbody>
@@ -81,6 +146,26 @@
               <td>{{ budget.created }}</td>
               <td>{{ budget.name }}</td>
               <td>{{ budget.currency }}</td>
+              <td>
+                <v-icon
+                  icon
+                  dark
+                  class=""
+                  color="primary"
+                  @click="editItem(budget)"
+                >
+                  edit
+                </v-icon>
+                <v-icon
+                  icon
+                  dark
+                  class="ml-1"
+                  color="accent"
+                  @click="deleteItem(budget)"
+                >
+                  delete
+                </v-icon>
+              </td>
             </tr>
           </tbody>
         </template>
@@ -101,7 +186,13 @@ export default {
   data() {
     return {
       selectedBudget: null,
-      manageBudgetsModalVisible: false
+      manageBudgetsModalVisible: false,
+      dialog: false,
+      item: {},
+      currencies: [
+        { value: "USD", text: "$" },
+        // { value: "USD2", text: "$2" }
+      ]
     };
   },
   computed: {
@@ -113,6 +204,14 @@ export default {
     }
   },
   methods: {
+    editItem(item) {
+      this.item = JSON.parse(JSON.stringify(item));
+      this.dialog = true;
+    },
+    deleteItem(item) {
+      this.item = JSON.parse(JSON.stringify(item));
+      this.$store.dispatch('deleteEntireBudget', item)
+    },
     createBudget(budgetName) {
       console.log("create called", budgetName);
       this.$store.dispatch("createBudget", budgetName);
@@ -120,6 +219,10 @@ export default {
     loadSelectedBudget() {
       this.$store.dispatch("setSelectedBudgetID", this.selectedBudget);
       this.manageBudgetsModalVisible = false;
+    },
+    saveBudget() {
+      this.dialog = false
+      this.$store.dispatch("commitDocToPouchAndVuex", this.item);
     }
   }
 };

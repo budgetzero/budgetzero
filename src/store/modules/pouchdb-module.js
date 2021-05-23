@@ -12,7 +12,7 @@ import {
 } from "../validation";
 import _ from "lodash";
 import moment from "moment";
-import PouchDB from 'pouchdb'
+import PouchDB from "pouchdb";
 
 var FileSaver = require("file-saver");
 
@@ -32,7 +32,7 @@ export default {
     budgetOpened: null,
     budgetExists: true, // This opens the create budget modal when 'false'
     remoteSyncURL: null,
-    syncHandle: null,
+    syncHandle: null
   },
   getters: {
     remoteSyncURL: state => state.remoteSyncURL,
@@ -72,6 +72,12 @@ export default {
     },
 
     //Lookups for main doc types
+    budgetRootLookupByID: (state, getters) => {
+      return getters.budgetRoots.reduce((map, obj, i) => {
+        map[obj._id] = i;
+        return map;
+      }, {});
+    },
     monthCategoryBudgetLookupByID: (state, getters) => {
       return getters.monthCategoryBudgets.reduce((map, obj, i) => {
         map[obj._id] = i;
@@ -110,15 +116,11 @@ export default {
     },
 
     listOfImportIDs: state => state.transactions.map(trn => _.get(trn, "importID", "")),
-    budgetRoots: state =>
-      state.budgetRoots.map(row => {
-        var obj = row.doc;
-        obj.short_id = obj._id.slice(-36);
-        return obj;
-      }),
+    budgetRoots: state => state.budgetRoots,
     budgetRootsMap: (state, getters) =>
       getters.budgetRoots.reduce((map, obj) => {
         const id = obj._id ? obj._id.slice(-36) : null;
+        obj.short_id = obj._id.slice(-36);
         map[id] = obj;
         return map;
       }, {}),
@@ -177,7 +179,7 @@ export default {
 
         return map;
       }, {});
-      
+
       getters.accounts.forEach(account => {
         // Add in missing account keys
         if (!(account._id.slice(-36) in accountBalances)) {
@@ -218,20 +220,20 @@ export default {
     },
     GET_REMOTE_SYNC_URL(state) {
       if (localStorage.remoteSyncURL) {
-        this.state.pouchdb.remoteSyncURL = localStorage.remoteSyncURL
-        this.dispatch('startRemoteSyncToCustomURL', localStorage.remoteSyncURL)
+        this.state.pouchdb.remoteSyncURL = localStorage.remoteSyncURL;
+        this.dispatch("startRemoteSyncToCustomURL", localStorage.remoteSyncURL);
       }
     },
     SET_REMOTE_SYNC_URL(state, url) {
-      this.state.pouchdb.remoteSyncURL = url
-      localStorage.remoteSyncURL = url
+      this.state.pouchdb.remoteSyncURL = url;
+      localStorage.remoteSyncURL = url;
     },
     CLEAR_REMOTE_SYNC_URL(state) {
-      localStorage.removeItem('remoteSyncURL')
-      this.state.pouchdb.remoteSyncURL = ''
+      localStorage.removeItem("remoteSyncURL");
+      this.state.pouchdb.remoteSyncURL = "";
     },
     SET_SYNC_HANDLER(state, syncHandler) {
-      this.state.pouchdb.syncHandle = syncHandler
+      this.state.pouchdb.syncHandle = syncHandler;
     },
     UPDATE_DOCUMENT(state, { payload, index, docType }) {
       switch (docType) {
@@ -282,7 +284,9 @@ export default {
         case "budget":
           //TODO: validate
           if (isNaN(index)) {
+            state.budgetRoots.push(payload);
           } else {
+            Object.assign(state.budgetRoots[index], payload);
           }
           break;
         case "budget-opened":
@@ -309,7 +313,7 @@ export default {
       } else {
         state.budgetExists = true;
       }
-      state.budgetRoots = payload;
+      state.budgetRoots = payload.map(budget => budget.doc);
     },
     SET_BUDGET_OPENED(state, payload) {
       state.budgetOpened = payload;
@@ -317,36 +321,48 @@ export default {
   },
   actions: {
     initiateSync(context) {
-      context.dispatch('GET_REMOTE_SYNC_URL')
+      context.dispatch("GET_REMOTE_SYNC_URL");
     },
     startRemoteSyncToCustomURL(context, url) {
       var remoteDB = new PouchDB(url);
 
-      context.commit('SET_REMOTE_SYNC_URL', url)
+      context.commit("SET_REMOTE_SYNC_URL", url);
 
-      remoteDB.info().then(info => {
-        context.commit('SET_SNACKBAR_MESSAGE', {snackbarMessage: 'Connection to remote database success!', snackbarColor: "primary"})
-        console.log("You connected", info);
-      }).catch(err => {
-        context.commit('SET_SNACKBAR_MESSAGE', {snackbarMessage: err, snackbarColor: "error"})
-        console.log("Failed to connect");
-        console.log(err);
-      });
+      remoteDB
+        .info()
+        .then(info => {
+          context.commit("SET_SNACKBAR_MESSAGE", {
+            snackbarMessage: "Connection to remote database success!",
+            snackbarColor: "primary"
+          });
+          console.log("You connected", info);
+        })
+        .catch(err => {
+          context.commit("SET_SNACKBAR_MESSAGE", { snackbarMessage: err, snackbarColor: "error" });
+          console.log("Failed to connect");
+          console.log(err);
+        });
 
-      const sync = Vue.prototype.$vm.$pouch
+      const sync =this._vm.$pouch
         .sync(remoteDB, {
           live: true,
           retry: true
         })
         .on("change", function(change) {
           // yo, something changed!
-          context.commit("SET_STATUS_MESSAGE", `Last sync [change] ${moment().format("MMM D, h:mm a")}`);
+          context.commit(
+            "SET_STATUS_MESSAGE",
+            `Last sync [change] ${moment().format("MMM D, h:mm a")}`
+          );
           console.log("change detected");
           context.dispatch("getAllDocsFromPouchDB");
         })
-        .on("complete", function (change) {
-          context.commit("SET_STATUS_MESSAGE", `Last sync [complete] ${moment().format("MMM D, h:mm a")}`);
-          console.log("pouch sync complete", Vue.prototype.$vm.$pouch);
+        .on("complete", function(change) {
+          context.commit(
+            "SET_STATUS_MESSAGE",
+            `Last sync [complete] ${moment().format("MMM D, h:mm a")}`
+          );
+          console.log("pouch sync complete",this._vm.$pouch);
         })
         .on("paused", function(info) {
           context.commit("SET_STATUS_MESSAGE", `Last sync ${moment().format("MMM D, h:mm a")}`);
@@ -361,24 +377,22 @@ export default {
           context.commit("SET_STATUS_MESSAGE", err);
           console.error("Sync error", err);
         });
-      
-      Vue.prototype.$pouchSyncHandler = sync
+
+      Vue.prototype.$pouchSyncHandler = sync;
     },
     clearRemoteSync(context) {
-      
       if (Vue.prototype.$pouchSyncHandler) {
-        Vue.prototype.$pouchSyncHandler.on('complete', function (info) {
+        Vue.prototype.$pouchSyncHandler.on("complete", function(info) {
           // replication was canceled!
-          context.commit('CLEAR_REMOTE_SYNC_URL')
-          context.commit("SET_STATUS_MESSAGE", 'Sync disabled')
+          context.commit("CLEAR_REMOTE_SYNC_URL");
+          context.commit("SET_STATUS_MESSAGE", "Sync disabled");
         });
 
-        Vue.prototype.$pouchSyncHandler.cancel()
+        Vue.prototype.$pouchSyncHandler.cancel();
       }
-
     },
     getAllDocsFromPouchDB(context) {
-      return Vue.prototype.$vm.$pouch
+      return this._vm.$pouch
         .allDocs({
           include_docs: true,
           attachments: true,
@@ -400,11 +414,13 @@ export default {
      */
     commitDocToPouchAndVuex(context, payload) {
       var docType = null;
+      var _id = null;
 
       //Validation
       var index = null;
       if (payload._id.startsWith("budget_")) {
         docType = "budget";
+        _id = payload._id.substring(7);
       } else if (payload._id.startsWith("budget-opened_")) {
         docType = "budget-opened";
       } else {
@@ -447,7 +463,7 @@ export default {
           break;
         case "budget":
           validationResult = validateSchema.validate(payload, schema_budget);
-          //TODO: validate
+          index = context.getters.budgetRootLookupByID[payload._id];
           break;
         case "budget-opened":
           //TODO: validate
@@ -458,7 +474,10 @@ export default {
       }
 
       if (validationResult.errors.length > 0) {
-        this.commit("SET_SNACKBAR_MESSAGE", {snackbarMessage: 'Validation failed: ' + validationResult.errors.toString(), snackbarColor: "error"});
+        this.commit("SET_SNACKBAR_MESSAGE", {
+          snackbarMessage: "Validation failed: " + validationResult.errors.toString(),
+          snackbarColor: "error"
+        });
         console.log("failed validation:", payload);
         return;
       }
@@ -467,7 +486,7 @@ export default {
 
       //Commit to Pouchdb
       return new Promise((resolve, reject) => {
-        Vue.prototype.$vm.$pouch.put(payload).then(
+       this._vm.$pouch.put(payload).then(
           response => {
             payload._rev = response.rev;
 
@@ -491,7 +510,7 @@ export default {
      */
     commitBulkDocsToPouchAndVuex(context, payload) {
       return new Promise((resolve, reject) => {
-        Vue.prototype.$vm.$pouch.bulkDocs(payload).then(
+       this._vm.$pouch.bulkDocs(payload).then(
           response => {
             resolve(response);
             // payload._rev = response.rev; //Response is an array for bulk updates
@@ -514,7 +533,7 @@ export default {
      */
     deleteDocFromPouchAndVuex(context, payload) {
       console.log("deleteDocFromPouchAndVuex", payload);
-      Vue.prototype.$vm.$pouch
+     this._vm.$pouch
         .remove(payload)
         .then(result => {
           context.commit("DELETE_DOCUMENT", result);
@@ -540,7 +559,7 @@ export default {
      *
      */
     eraseAllDocs(context) {
-      Vue.prototype.$vm.$pouch.erase().then(function(resp) {
+     this._vm.$pouch.erase().then(function(resp) {
         console.log(resp); //{ok: true}
       });
     },
@@ -550,13 +569,13 @@ export default {
      *
      */
     deleteAllDocs(context) {
-      Vue.prototype.$vm.$pouch
+     this._vm.$pouch
         .allDocs()
         .then(function(result) {
           // Promise isn't supported by all browsers; you may want to use bluebird
           return Promise.all(
             result.rows.map(function(row) {
-              return Vue.prototype.$vm.$pouch.remove(row.id, row.value.rev);
+              return this._vm.$pouch.remove(row.id, row.value.rev);
             })
           );
         })
@@ -564,7 +583,7 @@ export default {
           console.log("all docs deleted");
           context.dispatch("getAllDocsFromPouchDB");
 
-          Vue.prototype.$vm.$pouch
+          this._vm.$pouch
             .compact()
             .then(function(info) {
               // compaction complete
@@ -584,13 +603,13 @@ export default {
     loadMockData(context) {
       // context.dispatch('deleteAllDocs')
       console.log("loading mock data", mock_data_from_ynab4);
-      Vue.prototype.$vm.$pouch.bulkDocs(mock_data_from_ynab4.docs).then(result => {
+      this._vm.$pouch.bulkDocs(mock_data_from_ynab4.docs).then(result => {
         context.dispatch("loadLocalBudgetRoot");
       });
     },
 
     exportBudgetAsJSON(context) {
-      return Vue.prototype.$vm.$pouch
+      return this._vm.$pouch
         .allDocs({
           include_docs: true,
           attachments: true
@@ -617,7 +636,7 @@ export default {
     },
 
     exportSelectedBudgetAsJSON(context) {
-      return Vue.prototype.$vm.$pouch
+      return this._vm.$pouch
         .allDocs({
           include_docs: true,
           attachments: true,
@@ -628,10 +647,10 @@ export default {
           //Add in the budget object. TODO: add in budget_opened object?
           var b_object = context.rootGetters.budgetRootsMap[context.rootState.selectedBudgetID];
           delete b_object["_rev"];
-          
-          var b_opened_object = context.rootGetters.budgetOpenedMap[context.rootState.selectedBudgetID];
-          delete b_opened_object["_rev"];
 
+          var b_opened_object =
+            context.rootGetters.budgetOpenedMap[context.rootState.selectedBudgetID];
+          delete b_opened_object["_rev"];
 
           console.log("exportBudgetAsJSON", JSON.stringify(result.push(b_object)));
           const export_date = new Date();
@@ -643,7 +662,7 @@ export default {
               return row;
             });
 
-          reformattedExport.push(b_object)
+          reformattedExport.push(b_object);
           reformattedExport.push(b_opened_object);
 
           var blob = new Blob([JSON.stringify(reformattedExport)], {
@@ -657,7 +676,7 @@ export default {
     },
 
     deleteLocalDatabase(context) {
-      Vue.prototype.$vm.$pouch
+     this._vm.$pouch
         .destroy()
         .then(() => {
           context.dispatch("loadLocalBudgetRoot");
@@ -670,7 +689,7 @@ export default {
     },
 
     loadLocalBudgetRoot(context) {
-      return Vue.prototype.$vm.$pouch
+      return this._vm.$pouch
         .allDocs({
           include_docs: true,
           attachments: true,
@@ -700,7 +719,7 @@ export default {
     },
 
     loadBudgetOpened(context) {
-      return Vue.prototype.$vm.$pouch
+      return this._vm.$pouch
         .allDocs({
           include_docs: true,
           attachments: true,

@@ -127,6 +127,6 @@ npm run test-watch:unit
 
 Run with debugger (chrome://inspect)
 ```
-node --inspect node_modules/.bin/jest --runInBand tests/unit/Transactions.spec.js    
+node --inspect node_modules/jest/bin/jest --runInBand tests/unit/Transactions.spec.js    
 ```
 

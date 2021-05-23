@@ -1,5 +1,77 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`accounts table account renders correct snapshot 1`] = `
+<div class="mx-auto v-card v-sheet theme--light elevation-0">
+  <div class="v-data-table elevation-1 account-table v-data-table--has-top theme--light" id="accountsTable">
+    <header class="v-sheet theme--light v-toolbar v-toolbar--flat white" style="height: 64px;">
+      <div class="v-toolbar__content" style="height: 64px;"><span class="text-h3">Accounts</span>
+        <div class="spacer"></div>
+        <div role="dialog" class="v-dialog__container">
+          <!---->
+        </div> <button type="button" class="mb-2 v-btn v-btn--contained v-btn--is-elevated v-btn--has-bg theme--dark v-size--default accent" id="addAccountBtn"><span class="v-btn__content">
+          Add Account
+        </span></button>
+      </div>
+    </header>
+    <hr role="separator" aria-orientation="horizontal" class="pb-4 v-divider theme--light">
+    <div class="v-data-table__wrapper">
+      <table>
+        <colgroup>
+          <col class="">
+          <col class="">
+          <col class="">
+          <col class="">
+          <col class="">
+          <col class="">
+        </colgroup>
+        <thead class="v-data-table-header">
+          <tr>
+            <th role="columnheader" scope="col" aria-label="Name" class="text-left"><span>Name</span></th>
+            <th role="columnheader" scope="col" aria-label="Type: Not sorted. Activate to sort ascending." aria-sort="none" class="text-start sortable"><span>Type</span><i aria-hidden="true" class="v-icon notranslate v-data-table-header__icon mdi mdi-arrow-up theme--light" style="font-size: 18px;"></i></th>
+            <th role="columnheader" scope="col" aria-label="On Budget: Not sorted. Activate to sort ascending." aria-sort="none" class="text-start sortable"><span>On Budget</span><i aria-hidden="true" class="v-icon notranslate v-data-table-header__icon mdi mdi-arrow-up theme--light" style="font-size: 18px;"></i></th>
+            <th role="columnheader" scope="col" aria-label="Invert Balance: Not sorted. Activate to sort ascending." aria-sort="none" class="text-start sortable"><span>Invert Balance</span><i aria-hidden="true" class="v-icon notranslate v-data-table-header__icon mdi mdi-arrow-up theme--light" style="font-size: 18px;"></i></th>
+            <th role="columnheader" scope="col" aria-label="Closed: Not sorted. Activate to sort ascending." aria-sort="none" class="text-start sortable"><span>Closed</span><i aria-hidden="true" class="v-icon notranslate v-data-table-header__icon mdi mdi-arrow-up theme--light" style="font-size: 18px;"></i></th>
+            <th role="columnheader" scope="col" aria-label="Actions" class="text-start"><span>Actions</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="">
+            <td class="text-left">Savings</td>
+            <td class="text-start">CHECKING</td>
+            <td class="text-start">true</td>
+            <td class="text-start">false</td>
+            <td class="text-start">false</td>
+            <td class="text-start">
+              <div class="crud-actions"><button type="button" icon="" class="v-icon notranslate v-icon--link material-icons theme--dark primary--text">edit</button> <button type="button" icon="" class="v-icon notranslate ml-1 v-icon--link material-icons theme--dark accent--text">delete</button></div>
+            </td>
+          </tr>
+          <tr class="">
+            <td class="text-left">Chase</td>
+            <td class="text-start">CREDIT</td>
+            <td class="text-start">true</td>
+            <td class="text-start">true</td>
+            <td class="text-start">false</td>
+            <td class="text-start">
+              <div class="crud-actions"><button type="button" icon="" class="v-icon notranslate v-icon--link material-icons theme--dark primary--text">edit</button> <button type="button" icon="" class="v-icon notranslate ml-1 v-icon--link material-icons theme--dark accent--text">delete</button></div>
+            </td>
+          </tr>
+          <tr class="">
+            <td class="text-left">Vanguard</td>
+            <td class="text-start">INVESTMENT</td>
+            <td class="text-start">false</td>
+            <td class="text-start">false</td>
+            <td class="text-start">false</td>
+            <td class="text-start">
+              <div class="crud-actions"><button type="button" icon="" class="v-icon notranslate v-icon--link material-icons theme--dark primary--text">edit</button> <button type="button" icon="" class="v-icon notranslate ml-1 v-icon--link material-icons theme--dark accent--text">delete</button></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`transaction table account renders correct snapshot 1`] = `
 <div class="mx-auto v-card v-sheet theme--light elevation-0">
   <div class="v-data-table elevation-1 account-table v-data-table--has-top theme--light" id="accountsTable">

@@ -2,6 +2,7 @@ import moment from "moment";
 import Vue from "vue";
 import validator from "validator";
 import _ from "lodash";
+import { sanitizeValueInput } from "../../helper.js";
 
 export default {
   state: {
@@ -247,7 +248,6 @@ export default {
       });
     },
 
-
     /**
      * Creates new budget and commits to pouchdb
      * @param {*} context
@@ -277,7 +277,7 @@ export default {
     },
 
     getBudgetOpened(context) {
-      return Vue.prototype.$vm.$pouch
+      return this._vm.$pouch
         .allDocs({
           include_docs: true,
           attachments: true,
@@ -291,6 +291,54 @@ export default {
           console.log(err);
           context.commit("API_FAILURE", err);
         });
+    },
+
+    /**
+     * Deletes entire budget
+     * @param {*} context
+     * @param {*} payload budget_ document
+     */
+    deleteEntireBudget(context, payload) {
+      const budget_id = payload._id.slice(-36);
+
+      return new Promise((resolve, reject) => {
+        this._vm.$pouch
+          .allDocs({
+            include_docs: true,
+            attachments: true,
+            startkey: `b_${budget_id}_`,
+            endkey: `b_${budget_id}_\ufff0`
+          })
+          .then(result => {
+            //Add deleted key to each
+            const rowsToDelete = {};
+            rowsToDelete.docs = result.rows.map(v => ({ ...v.doc, _deleted: true }));
+            console.log("going to delete..", rowsToDelete);
+            //Bulk delete
+            context.dispatch("commitBulkDocsToPouchAndVuex", rowsToDelete).then(
+              response => {
+                this._vm.$pouch
+                  .get(`budget-opened_${budget_id}`)
+                  .then(function(doc) {
+                    context.dispatch("deleteDocFromPouchAndVuex", doc);
+                  })
+                  .catch(function(err) {
+                    console.log(err);
+                  });
+
+                // Finally, delete the budget_ doc
+                //TODO: Put this inside .then() above?
+                context.dispatch("deleteDocFromPouchAndVuex", payload);
+
+                resolve(response);
+              },
+              error => {
+                reject(error);
+                context.commit("API_FAILURE", error);
+              }
+            );
+          });
+      });
     },
 
     ///
@@ -392,7 +440,7 @@ export default {
             category: null,
             cleared: true,
             approved: true,
-            value: payload.initialBalance * 100,
+            value: sanitizeValueInput(payload.initialBalance) * 100,
             date: "2011-11-11", //TODO: current date
             memo: null,
             reconciled: true,
@@ -402,14 +450,14 @@ export default {
             splits: [],
             _id: `b_${context.getters.selectedBudgetID}_transaction_${Vue.prototype.$vm.$uuid.v4()}`
           };
-          //Don't go through normal updateTransaction action since we don't worry about the payee
-          context.dispatch("commitDocToPouchAndVuex", initTransaction);
+          console.log("initTransaction", initTransaction);
+          context.dispatch("createOrUpdateTransaction", initTransaction);
         }
       });
     },
     deleteAccount(context, payload) {
       const myId = payload._id.slice(-36);
-      Vue.prototype.$vm.$pouch
+      this._vm.$pouch
         .query((doc, emit) => {
           if (doc.account === myId) {
             emit(doc);
@@ -430,13 +478,13 @@ export default {
         });
     },
 
-   /**
-    * Create payee doc.
-    * This should only be called from getPayeeID() action.
-    * @param {*} context 
-    * @param {String} payload Plaintext payee name
-    * @returns 
-    */
+    /**
+     * Create payee doc.
+     * This should only be called from getPayeeID() action.
+     * @param {*} context
+     * @param {String} payload Plaintext payee name
+     * @returns
+     */
     createPayee(context, payload) {
       var payee = {
         _id: `b_${context.rootState.selectedBudgetID}_payee_${Vue.prototype.$vm.$uuid.v4()}`,
@@ -462,6 +510,9 @@ export default {
         return payeeLookup;
       } else if (validator.isUUID(`${payload}`)) {
         // If the payload is already UUID then return.
+        return payload;
+      } else if (payload === "---------------------initial-balance") {
+        //If it's initial balance then return
         return payload;
       } else if (typeof payload === "undefined" || payload === null || payload === "") {
         // If payload is an object, then it's an existing payee. Otherwise we need to create the payee.
@@ -516,7 +567,7 @@ export default {
      * Create or update transaction
      * @param {doc} payload The transaction to create or update
      */
-    async updateTransaction(context, payload) {
+    async createOrUpdateTransaction(context, payload) {
       //Check if this is a transfer transaction. if so, get the account ID
       //TODO: only let this be a transfer if the account actually exists?
       if (payload.payee && payload.payee.includes("Transfer: ")) {
@@ -536,6 +587,8 @@ export default {
         payload.transfer = null;
       }
 
+      payload.value = sanitizeValueInput(payload.value);
+
       await context.dispatch("getPayeeID", payload.payee).then(response => {
         payload.payee = response;
         return context.dispatch("commitDocToPouchAndVuex", payload);
@@ -548,7 +601,7 @@ export default {
      */
     completeReconciliation(context, payload) {
       if (payload.adjustmentTransaction) {
-        context.dispatch("updateTransaction", payload.adjustmentTransaction);
+        context.dispatch("createOrUpdateTransaction", payload.adjustmentTransaction);
       }
 
       //Search for transactions to lock
