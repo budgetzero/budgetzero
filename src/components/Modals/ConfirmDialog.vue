@@ -1,32 +1,32 @@
 <template>
-  <v-dialog v-model="dialog" :max-width="options.width" :style="{ zIndex: options.zIndex }" @keydown.esc="cancel">
-    <v-card>
-      <v-toolbar dark :color="options.color" dense flat>
-        <v-toolbar-title class="white--text">
-          {{ title }}
-        </v-toolbar-title>
-      </v-toolbar>
-      <v-card-text v-show="!!message" class="pa-4">
-        {{ message }}
-      </v-card-text>
-      <v-card-actions class="pt-0">
-        <v-spacer />
-        <v-btn color="primary darken-1" text @click.native="agree">
-          Yes
-        </v-btn>
-        <v-btn color="grey" text @click.native="cancel">
-          Cancel
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+  <BaseDialogModalComponent v-model="dialog" :style="{ zIndex: options.zIndex }" @keydown.esc="cancel">
+    <template #title>
+      {{ title }}
+    </template>
+    <template #body>
+      {{ message }}
+    </template>
+    <template #actions>
+      <v-btn color="grey" @click.native="cancel">
+        Cancel
+      </v-btn>
+      <v-btn color="accent" @click.native="agree">
+        Load Budget
+      </v-btn>
+    </template>
+  </BaseDialogModalComponent>
 </template>
 
 <script>
+import BaseDialogModalComponent from './BaseDialogModalComponent'
+
 /**
   Yoinked from https://gist.github.com/eolant/ba0f8a5c9135d1a146e1db575276177d
  */
 export default {
+  components: {
+    BaseDialogModalComponent
+  },
   data: () => ({
     dialog: false,
     resolve: null,
