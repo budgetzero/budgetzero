@@ -9,7 +9,7 @@
 
       <v-card-text class="pb-0">
         <slot name="body">
-          <v-text-field v-model="budgetName" data-cy="budget-name" label="Name" required />
+          <v-text-field v-model="budgetName" id="budgetName" label="Name" required />
         </slot>
       </v-card-text>
 
@@ -18,7 +18,7 @@
       <v-card-actions class=" white--text">
         <v-spacer />
         <slot name="actions">
-          <v-btn color="accent" data-cy="create-budget" @click="createBudget()">
+          <v-btn color="accent" btn-createBudget @click="createBudget()">
             Create
           </v-btn>
         </slot>

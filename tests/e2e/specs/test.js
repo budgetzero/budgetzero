@@ -3,6 +3,11 @@
 describe('My First Test', () => {
   it('Visits the app root url', () => {
     cy.visit('/settings')
-    cy.contains('h1', 'Welcome to Your Vue.js App')
+    cy.get('#budgetNameField').type('test budget name')
+    cy.get('#createBudgetBtn').click()
+
+    cy.get('#agreeBtn').click()
+    
   })
 })
+
