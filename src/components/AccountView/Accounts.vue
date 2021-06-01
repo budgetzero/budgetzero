@@ -16,21 +16,15 @@
 
           <AccountAddModal v-model="showModal" :editeditem="editedItem" @save="save()" />
 
-          <v-btn id="addAccountBtn" color="accent" dark class="mb-2" @click="create()">
-            Add Account
-          </v-btn>
+          <v-btn id="addAccountBtn" color="accent" dark class="mb-2" @click="create()"> Add Account </v-btn>
         </v-toolbar>
         <v-divider class="pb-4" />
       </template>
 
       <template #item.action="{ item }">
         <div class="crud-actions">
-          <v-icon icon dark class="" color="primary" @click="editItem(item)">
-            edit
-          </v-icon>
-          <v-icon icon dark class="ml-1" color="accent" @click="deleteItem(item)">
-            delete
-          </v-icon>
+          <v-icon icon dark class="" color="primary" @click="editItem(item)"> edit </v-icon>
+          <v-icon icon dark class="ml-1" color="accent" @click="deleteItem(item)"> delete </v-icon>
         </div>
       </template>
       <template #no-data>
@@ -101,7 +95,10 @@ export default {
         initialBalance: 0
       },
       showModal: false,
-      nameRules: [v => !!v || 'Name is required', v => (v && v.length <= 10) || 'Name must be less than 10 characters']
+      nameRules: [
+        (v) => !!v || 'Name is required',
+        (v) => (v && v.length <= 10) || 'Name must be less than 10 characters'
+      ]
     }
   },
   computed: {
