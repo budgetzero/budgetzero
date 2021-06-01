@@ -799,12 +799,6 @@ export default {
       return this.$route.params.account_id
     }
   },
-  watch: {
-    windowHeight(newHeight, oldHeight) {
-      console.log('window changed')
-      //  this.txt = `it changed to ${newHeight} from ${oldHeight}`;
-    }
-  },
   mounted() {
     this.$nextTick(() => {
       window.addEventListener('resize', this.onResize)
