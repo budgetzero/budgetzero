@@ -1,8 +1,7 @@
-import Vue from 'vue';
-import Vuetify from 'vuetify/lib';
+import Vue from 'vue'
+import Vuetify from 'vuetify/lib'
 
-
-Vue.use(Vuetify);
+Vue.use(Vuetify)
 
 export default new Vuetify({
   theme: {
@@ -18,11 +17,11 @@ export default new Vuetify({
         warning: '#FB8C00',
         error: '#FF5252',
         header_background: '#f5f5f5',
-        table_header: '#263238',
-      },
+        table_header: '#263238'
+      }
     },
     options: {
-      customProperties: true,
-    },
-  },
-});
+      customProperties: true
+    }
+  }
+})

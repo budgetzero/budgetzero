@@ -1,4 +1,3 @@
-
 # <a href="https://app.budgetzero.io"><p align="center"><img src="public/logo.png" width="300"></p>
 [![Netlify Status](https://api.netlify.com/api/v1/badges/1eb6d21e-b83a-42ca-9b46-82a0b37889f6/deploy-status)](https://app.netlify.com/sites/budgetzero/deploys)
 ![master](https://github.com/BudgetZero/BudgetZero/workflows/master/badge.svg)
@@ -130,4 +129,3 @@ Run with debugger (chrome://inspect)
 ```
 node --inspect node_modules/.bin/jest --runInBand tests/unit/Transactions.spec.js    
 ```
-

@@ -1,13 +1,9 @@
-
 $data-table-regular-row-height: 40px;
 $data-table-regular-header-height: 28px;
 $data-table-regular-header-font-size: 14px;
 // $data-table-row-group-children-td-height
 
 $body-font-family: SofiaPro, Roboto;
-
-
-
 
 @import '~sweetalert2/src/variables';
 
@@ -18,7 +14,7 @@ $material-ui-white: #fff;
 $material-ui-slider-track-height: 2px;
 $material-ui-slider-thumb-size: 16px;
 // Variables to be added to Sweetalert2
-$swal2-button-focus-background: rgba($material-ui-blue, .3);
+$swal2-button-focus-background: rgba($material-ui-blue, 0.3);
 $swal2-close-button-font-family: arial;
 
 // override SASS variables here
@@ -35,8 +31,8 @@ $swal2-cancel-button-background-color: rgba(255, 255, 255, 0);
 $swal2-cancel-button-color: $material-ui-blue;
 
 // BUTTONS
-$swal2-button-darken-hover: rgba($material-ui-blue, .1);
-$swal2-button-darken-active: rgba($material-ui-blue, .3);
+$swal2-button-darken-hover: rgba($material-ui-blue, 0.1);
+$swal2-button-darken-active: rgba($material-ui-blue, 0.3);
 $swal2-button-focus-outline: #fff;
 
 // ACTIONS
@@ -85,8 +81,8 @@ $checkbox-left-px: -2;
 .swal2-select {
   background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
   background-repeat: no-repeat, repeat;
-  background-position: right .7em top 50%, 0 0;
-  background-size: .65em auto, 100%;
+  background-position: right 0.7em top 50%, 0 0;
+  background-size: 0.65em auto, 100%;
   appearance: none;
 }
 
@@ -103,7 +99,7 @@ $checkbox-left-px: -2;
   }
 
   .swal2-label {
-    padding-left: .2em;
+    padding-left: 0.2em;
 
     &::before {
       content: '';
@@ -150,7 +146,7 @@ $checkbox-left-px: -2;
     left: 30px;
     width: 40px;
     height: 40px;
-    transition: opacity .3s, transform .2s;
+    transition: opacity 0.3s, transform 0.2s;
     border-radius: 50%;
     outline: none;
     opacity: 0;
@@ -182,7 +178,7 @@ $checkbox-left-px: -2;
       }
 
       &::after {
-        transform: translate($checkbox-left-px *2px, ($checkbox-size-px/6) * 1px);
+        transform: translate($checkbox-left-px * 2px, ($checkbox-size-px/6) * 1px);
         border-left: 0;
         border-color: $material-ui-blue;
       }
@@ -210,7 +206,7 @@ $checkbox-left-px: -2;
     }
 
     &:focus {
-      opacity: .12;
+      opacity: 0.12;
     }
   }
 
@@ -224,7 +220,7 @@ $checkbox-left-px: -2;
       width: $checkbox-size-px * 1px;
       height: $checkbox-size-px * 1px;
       float: left;
-      transition: border-color .2s, background-color .2s;
+      transition: border-color 0.2s, background-color 0.2s;
       border: solid 2px;
       border-radius: 2px;
       border-color: $material-ui-disabled;
@@ -238,7 +234,7 @@ $checkbox-left-px: -2;
       width: 10px;
       height: -$checkbox-left-px * 2px;
       float: left;
-      transform: translate(($checkbox-size-px/6) * 1px, -$checkbox-left-px *2px) rotate(-45deg);
+      transform: translate(($checkbox-size-px/6) * 1px, -$checkbox-left-px * 2px) rotate(-45deg);
       border: solid 2px transparent;
       border-top: 0;
       border-right: 0;
@@ -247,10 +243,10 @@ $checkbox-left-px: -2;
 
   &:hover {
     > input {
-      opacity: .04;
+      opacity: 0.04;
 
       &:focus {
-        opacity: .16;
+        opacity: 0.16;
       }
     }
   }
@@ -265,7 +261,7 @@ $checkbox-left-px: -2;
 @mixin slider-thumb {
   width: $material-ui-slider-thumb-size;
   height: $material-ui-slider-thumb-size;
-  margin-top: - 1 * ($material-ui-slider-thumb-size / 2) + 1;
+  margin-top: -1 * ($material-ui-slider-thumb-size / 2) + 1;
   border: 0;
   border-radius: 50%;
   background: $material-ui-blue;

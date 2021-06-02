@@ -1,211 +1,211 @@
-var Validator = require("jsonschema").Validator;
-var validateSchema = new Validator();
+var Validator = require('jsonschema').Validator
+var validateSchema = new Validator()
 
 const schema_account = {
-  type: "object",
+  type: 'object',
   properties: {
     _id: {
-      type: "string",
-      description: "user name"
+      type: 'string',
+      description: 'user name'
     },
     onBudget: {
-      type: "boolean"
+      type: 'boolean'
     },
     name: {
-      type: "string"
+      type: 'string'
     },
     sort: {
-      type: "integer"
+      type: 'integer'
     },
     closed: {
-      type: "boolean"
+      type: 'boolean'
     },
     type: {
-      type: "string"
+      type: 'string'
     }
   },
-  required: ["_id", "onBudget", "name", "sort", "closed", "type"]
-};
+  required: ['_id', 'onBudget', 'name', 'sort', 'closed', 'type']
+}
 
 const schema_transaction = {
-  type: "object",
+  type: 'object',
   properties: {
     value: {
-      type: "integer"
+      type: 'integer'
     },
     date: {
-      type: "string"
+      type: 'string'
     },
     category: {
-      type: ["string", "null"]
+      type: ['string', 'null']
     },
     account: {
-      type: "string"
+      type: 'string'
     },
     memo: {
-      type: ["string", "null"]
+      type: ['string', 'null']
     },
     cleared: {
-      type: "boolean"
+      type: 'boolean'
     },
     reconciled: {
-      type: "boolean"
+      type: 'boolean'
     },
     flag: {
-      type: "string"
+      type: 'string'
     },
     payee: {
-      type: ["string", "null"]
+      type: ['string', 'null']
     },
     transfer: {
-      type: ["string", "null"]
+      type: ['string', 'null']
     },
     splits: {
-      type: ["null", "array", "object"]
+      type: ['null', 'array', 'object']
     },
     _id: {
-      type: "string",
+      type: 'string',
       minimum: 84,
       maximum: 84
     }
   },
   required: [
-    "value",
-    "date",
-    "category",
-    "account",
-    "memo",
-    "cleared",
-    "reconciled",
-    "flag",
-    "payee",
-    "transfer",
-    "splits",
-    "_id"
+    'value',
+    'date',
+    'category',
+    'account',
+    'memo',
+    'cleared',
+    'reconciled',
+    'flag',
+    'payee',
+    'transfer',
+    'splits',
+    '_id'
   ]
-};
+}
 
 const schema_category = {
-  type: "object",
+  type: 'object',
   properties: {
     _id: {
-      type: "string",
+      type: 'string',
       minLength: 84,
       maxLength: 84
     },
     sort: {
-      type: ["null", "integer", "number"]
+      type: ['null', 'integer', 'number']
     },
     masterCategory: {
-      type: "string",
+      type: 'string',
       minLength: 36,
       maxLength: 36
     },
     name: {
-      type: "string"
+      type: 'string'
     }
   },
-  required: ["_id", "sort", "masterCategory", "name"]
-};
+  required: ['_id', 'sort', 'masterCategory', 'name']
+}
 
 const schema_m_category = {
-  type: "object",
+  type: 'object',
   properties: {
     _id: {
-      type: "string",
+      type: 'string',
       minLength: 97,
       maxLength: 97
     },
     budget: {
-      type: ["null", "integer"]
+      type: ['null', 'integer']
     },
     overspending: {
-      type: ["boolean", "null"]
+      type: ['boolean', 'null']
     },
     hidden: {
-      type: ["boolean", "null"]
+      type: ['boolean', 'null']
     }
   },
-  required: ["_id", "budget", "overspending"]
-};
+  required: ['_id', 'budget', 'overspending']
+}
 
 const schema_masterCategory = {
-  type: "object",
+  type: 'object',
   properties: {
     _id: {
-      type: "string",
+      type: 'string',
       minLength: 91,
       maxLength: 91
     },
     name: {
-      type: "string"
+      type: 'string'
     },
     sort: {
-      type: ["integer", "number"]
+      type: ['integer', 'number']
     },
     collapsed: {
-      type: ["boolean", "null"]
+      type: ['boolean', 'null']
     },
     hidden: {
-      type: ["boolean", "null"]
-    },
+      type: ['boolean', 'null']
+    }
   },
-  required: ["_id", "name", "sort", "collapsed"]
-};
+  required: ['_id', 'name', 'sort', 'collapsed']
+}
 
 const schema_payee = {
-  type: "object",
+  type: 'object',
   properties: {
     _id: {
-      type: "string",
+      type: 'string',
       minLength: 81,
       maxLength: 81
     },
     name: {
-      type: "string"
+      type: 'string'
     }
   },
-  required: ["_id", "name"]
-};
+  required: ['_id', 'name']
+}
 
 const schema_budget = {
-  type: "object",
+  type: 'object',
   properties: {
     _id: {
-      type: "string",
+      type: 'string',
       minLength: 43,
       maxLength: 43
     },
     name: {
-      type: "string"
+      type: 'string'
     },
     created: {
-      type: "string"
+      type: 'string'
     },
     currency: {
-      type: "string"
+      type: 'string'
     },
     checkNumber: {
-      type: "boolean"
+      type: 'boolean'
     }
   },
-  required: ["_id", "name", "created", "currency", "checkNumber"]
-};
+  required: ['_id', 'name', 'created', 'currency', 'checkNumber']
+}
 
 const schema_budget_opened = {
-  type: "object",
+  type: 'object',
   properties: {
     _id: {
-      type: "string",
+      type: 'string',
       minLength: 50,
       maxLength: 50
     },
     opened: {
-      type: "string"
+      type: 'string'
     }
   },
-  required: ["_id", "opened"]
-};
+  required: ['_id', 'opened']
+}
 
 export {
   schema_budget,
@@ -217,4 +217,4 @@ export {
   schema_masterCategory,
   schema_payee,
   validateSchema
-};
+}

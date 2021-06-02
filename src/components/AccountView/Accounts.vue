@@ -1,9 +1,7 @@
 <template>
-  <v-card
-    elevation="0"
-    class="mx-auto"
-  >
+  <v-card elevation="0" class="mx-auto">
     <v-data-table
+      id="accountsTable"
       :headers="headers"
       :items="accounts"
       sort-by="calories"
@@ -12,54 +10,21 @@
       disable-pagination
     >
       <template #top>
-        <v-toolbar
-          flat
-          color="white"
-        >
+        <v-toolbar flat color="white">
           <span class="text-h3">Accounts</span>
           <v-spacer />
 
-          <AccountAddModal
-            v-model="showModal"
-            :editeditem="editedItem"
-            @save="save"
-          />
+          <AccountAddModal v-model="showModal" :editeditem="editedItem" @save="save()" />
 
-          <v-btn
-            color="accent"
-            dark
-            class="mb-2"
-            data-cy="new-account"
-            @click="create()"
-          >
-            Add Account
-          </v-btn>
+          <v-btn id="addAccountBtn" color="accent" dark class="mb-2" @click="create()"> Add Account </v-btn>
         </v-toolbar>
         <v-divider class="pb-4" />
       </template>
 
       <template #item.action="{ item }">
-        <div
-          class="crud-actions"
-        >
-          <v-icon
-            icon
-            dark
-            class=""
-            color="primary"
-            @click="editItem(item)"
-          >
-            edit
-          </v-icon>
-          <v-icon
-            icon
-            dark
-            class="ml-1"
-            color="accent"
-            @click="deleteItem(item)"
-          >
-            delete
-          </v-icon>
+        <div class="crud-actions">
+          <v-icon icon dark class="" color="primary" @click="editItem(item)"> edit </v-icon>
+          <v-icon icon dark class="ml-1" color="accent" @click="deleteItem(item)"> delete </v-icon>
         </div>
       </template>
       <template #no-data>
@@ -69,8 +34,8 @@
   </v-card>
 </template>
 <script>
-import { mapGetters, mapState } from "vuex";
-import AccountAddModal from "./AccountAddModal";
+import { mapGetters, mapState } from 'vuex'
+import AccountAddModal from './AccountAddModal'
 
 /*
 Account view
@@ -97,7 +62,7 @@ View: Name -- Type -- Balance
 
 */
 export default {
-  name: "AccountGrid",
+  name: 'AccountGrid',
   components: {
     AccountAddModal
   },
@@ -105,24 +70,24 @@ export default {
     return {
       headers: [
         {
-          text: "Name",
-          align: "left",
+          text: 'Name',
+          align: 'left',
           sortable: false,
-          value: "name"
+          value: 'name'
         },
-        { text: "Type", value: "type" },
-        { text: "On Budget", value: "onBudget" },
-        { text: "Invert Balance", value: "balanceIsNegative" },
-        { text: "Closed", value: "closed" },
-        { text: "Actions", value: "action", sortable: false }
+        { text: 'Type', value: 'type' },
+        { text: 'On Budget', value: 'onBudget' },
+        { text: 'Invert Balance', value: 'balanceIsNegative' },
+        { text: 'Closed', value: 'closed' },
+        { text: 'Actions', value: 'action', sortable: false }
       ],
       editedIndex: -1,
       editedItem: null,
       emptyItem: {
-        type: "",
+        type: '',
         checkNumber: true,
         closed: false,
-        name: "",
+        name: '',
         note: null,
         sort: 0,
         onBudget: true,
@@ -131,41 +96,41 @@ export default {
       },
       showModal: false,
       nameRules: [
-        v => !!v || "Name is required",
-        v => (v && v.length <= 10) || "Name must be less than 10 characters"
+        (v) => !!v || 'Name is required',
+        (v) => (v && v.length <= 10) || 'Name must be less than 10 characters'
       ]
-    };
+    }
   },
   computed: {
-    ...mapGetters(["accounts", "selectedBudgetID"])
+    ...mapGetters(['accounts', 'selectedBudgetID'])
   },
   mounted() {},
   created() {},
   methods: {
     create() {
-      this.editedIndex = -1;
+      this.editedIndex = -1
       this.editedItem = Object.assign({}, this.emptyItem)
-      this.showModal = true;
+      this.showModal = true
     },
     editItem(item) {
-      this.editedIndex = this.accounts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.showModal = true;
+      this.editedIndex = this.accounts.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.showModal = true
     },
     deleteItem(item) {
-      const index = this.accounts.indexOf(item);
-      confirm("Are you sure you want to delete this item?") &&
-        this.$store.dispatch("deleteAccount", this.accounts[index]);
+      const index = this.accounts.indexOf(item)
+      confirm('Are you sure you want to delete this item?') &&
+        this.$store.dispatch('deleteAccount', this.accounts[index])
     },
     close() {
-      this.showModal = false;
+      this.showModal = false
       setTimeout(() => {
         // this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      }, 300);
+        this.editedIndex = -1
+      }, 300)
     },
     save() {
-      console.log("save account clicked");
+      console.log('save account clicked')
       if (this.editedIndex > -1) {
         // Editing existing account
         const editPayload = {
@@ -179,12 +144,12 @@ export default {
           balanceIsNegative: this.editedItem.balanceIsNegative,
           _id: this.editedItem._id,
           _rev: this.editedItem._rev
-        };
-        Object.assign(this.accounts[this.editedIndex], this.editedItem);
-        this.$store.dispatch("createUpdateAccount", {
+        }
+        Object.assign(this.accounts[this.editedIndex], this.editedItem)
+        this.$store.dispatch('createUpdateAccount', {
           account: editPayload,
           initialBalance: false
-        });
+        })
       } else {
         // Creating new account
         const newPayload = {
@@ -197,18 +162,18 @@ export default {
           onBudget: this.editedItem.onBudget,
           balanceIsNegative: this.editedItem.balanceIsNegative,
           _id: `b_${this.selectedBudgetID}_account_${this.$uuid.v4()}`
-        };
-        console.log("new acct", newPayload, this.editedItem.initialBalance);
-        this.$store.dispatch("createUpdateAccount", {
+        }
+        console.log('new acct', newPayload, this.editedItem.initialBalance)
+        this.$store.dispatch('createUpdateAccount', {
           account: newPayload,
           initialBalance: this.editedItem.initialBalance
-        });
+        })
         // this.desserts.push(this.editedItem); //Can't push onto vuex
       }
-      this.close();
-    },
+      this.close()
+    }
   }
-};
+}
 </script>
 
 <style scoped></style>

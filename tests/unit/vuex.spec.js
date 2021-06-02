@@ -26,7 +26,7 @@ describe("vuex budget module", () => {
   });
 
   it("monthlyData getter matches snapshot", async () => {
-    await store.dispatch("calculateMonthlyData");
+    store.dispatch("calculateMonthlyData");
     expect(store.getters.monthlyData).toMatchSnapshot();
   });
 
@@ -35,3 +35,5 @@ describe("vuex budget module", () => {
     expect(store.getters.transactions_by_account).toMatchSnapshot();
   });
 });
+
+
