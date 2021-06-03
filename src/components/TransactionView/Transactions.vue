@@ -6,7 +6,6 @@
       <template #body>
         <v-text-field
           id="txt_field_reconcileAmt"
-          ref="txt_field_reconcileAmt"
           v-model="reconcileAmount"
           prefix="$"
           label="Account balance"
@@ -512,6 +511,7 @@ import ImportModalComponent from './ImportModalComponent.vue'
 import ReconcileHeader from './ReconcileHeader'
 import TransactionHeader from './TransactionHeader'
 import _ from 'lodash'
+import { sanitizeValueInput } from '../../helper.js'
 
 export default {
   name: 'Transactions',
@@ -934,8 +934,7 @@ export default {
       this.isModalVisibleForReconcile = true
     },
     startReconcile() {
-      this.$refs.txt_field_reconcileAmt.focus()
-
+      this.reconcileAmount = sanitizeValueInput(this.reconcileAmount)
       this.isReconciling = true
       this.isModalVisibleForReconcile = false
     },
