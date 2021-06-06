@@ -66,7 +66,7 @@
         </v-form>
       </template>
       <template #actions>
-        <v-btn text data-cy="account-cancel" @click="close()">
+        <v-btn text id="cancelAccountBtn" @click="close()">
           Cancel
         </v-btn>
         <v-btn id="saveAccountBtn" color="accent" @click="save()">

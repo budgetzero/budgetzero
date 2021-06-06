@@ -9,5 +9,17 @@ describe('My First Test', () => {
     cy.get('#agreeBtn').click()
     
   })
+
+  it('Visits the accounts', () => {
+    cy.get('#accountsSidebarBtn').click()
+      
+    cy.get('#addAccountBtn').click()
+    cy.get('#nameField').type('myaccount')
+    cy.get('#typeField').type('CHECKING', { force: true })
+
+    cy.get('#saveAccountBtn').click()
+
+    cy.get('.account-table').contains("myaccount")
+  })
 })
 

@@ -106,7 +106,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item :to="{ path: '/accounts' }">
+      <v-list-item :to="{ path: '/accounts' }" id="accountsSidebarBtn">
         <v-list-item-icon>
           <v-icon>mdi-bank</v-icon>
         </v-list-item-icon>
