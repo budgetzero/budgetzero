@@ -151,6 +151,7 @@
         :to="{ path: '/transactions/' + item._id.slice(-36) }"
         active-class="primary white--text"
         class="primary darken-1"
+        v-bind:id="item.name"
       >
         <v-list-item-content>
           <v-list-item-title class="font-weight-regular subtitle-2">

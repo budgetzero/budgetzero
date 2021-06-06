@@ -1,7 +1,7 @@
 // https://docs.cypress.io/api/introduction/api.html
 
 describe('My First Test', () => {
-  it('Visits the app root url', () => {
+  it('Create new budget', () => {
     cy.visit('/settings')
     cy.get('#budgetNameField').type('test budget name')
     cy.get('#createBudgetBtn').click()
@@ -10,7 +10,7 @@ describe('My First Test', () => {
     
   })
 
-  it('Visits the accounts', () => {
+  it('Add account and it shows in table', () => {
     cy.get('#accountsSidebarBtn').click()
       
     cy.get('#addAccountBtn').click()
@@ -20,6 +20,14 @@ describe('My First Test', () => {
     cy.get('#saveAccountBtn').click()
 
     cy.get('.account-table').contains("myaccount")
+
+    cy.get('#myaccount').click()
+  })
+
+  it('Add a transaction', () => {
+    cy.get('#addTransactionBtn').click()
+      
+   
   })
 })
 
