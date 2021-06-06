@@ -12,10 +12,10 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
     <!---->
   </div>
   <div elevation="4" class="row grey lighten-4 ma-0">
-    <div align="center" justify="center" class="col"><button type="button" class="grey lighten-2 v-btn v-btn--has-bg theme--light elevation-0 v-size--small"><span class="v-btn__content"><i aria-hidden="true" medium="" class="v-icon notranslate mdi mdi-chevron-left theme--light"></i>Previous month
-      </span></button> <button type="button" class="grey lighten-2 ml-4 v-btn v-btn--has-bg theme--light elevation-0 v-size--default" id="btn-today" medium=""><span class="v-btn__content">
+    <div align="center" justify="center" class="col"><button type="button" class="grey lighten-2 v-btn v-btn--contained v-btn--is-elevated v-btn--has-bg theme--light elevation-0 v-size--small"><span class="v-btn__content"><i aria-hidden="true" medium="" class="v-icon notranslate mdi mdi-chevron-left theme--light"></i>Previous month
+      </span></button> <button type="button" class="grey lighten-2 ml-4 v-btn v-btn--contained v-btn--is-elevated v-btn--has-bg theme--light elevation-0 v-size--default" id="btn-today" medium=""><span class="v-btn__content">
         Today
-      </span></button> <button type="button" class="grey lighten-2 ml-4 v-btn v-btn--has-bg theme--light elevation-0 v-size--small"><span class="v-btn__content">
+      </span></button> <button type="button" class="grey lighten-2 ml-4 v-btn v-btn--contained v-btn--is-elevated v-btn--has-bg theme--light elevation-0 v-size--small"><span class="v-btn__content">
         Next month
         <i aria-hidden="true" medium="" class="v-icon notranslate mdi mdi-chevron-right theme--light"></i></span></button></div>
   </div>
@@ -73,8 +73,8 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
     </div>
   </div>
   <div class="row mx-2 mt-0 mb-1 align-end justify-end">
-    <div class="pa-0 col"><button type="button" class="mb-2 mr-2 v-btn v-btn--has-bg theme--light elevation-0 v-size--small grey lighten-2" id="btn-add-category-group"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate v-icon--left mdi mdi-plus theme--light"></i>Category Group
-      </span></button> <button type="button" class="mb-2 v-btn v-btn--has-bg theme--light elevation-0 v-size--small grey lighten-2" id="btn-modify"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate v-icon--left mdi mdi-drag-horizontal-variant theme--light"></i> <span> Modify </span></span></button></div>
+    <div class="pa-0 col"><button type="button" class="mb-2 mr-2 v-btn v-btn--contained v-btn--is-elevated v-btn--has-bg theme--light elevation-0 v-size--small grey lighten-2" id="btn-add-category-group"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate v-icon--left mdi mdi-plus theme--light"></i>Category Group
+      </span></button> <button type="button" class="mb-2 v-btn v-btn--contained v-btn--is-elevated v-btn--has-bg theme--light elevation-0 v-size--small grey lighten-2" id="btn-modify"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate v-icon--left mdi mdi-drag-horizontal-variant theme--light"></i> <span> Modify </span></span></button></div>
     <div id="budgeted-header" class="money-amount subtitle font-weight-medium col">
       Budgeted
     </div>
@@ -124,7 +124,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_c9a2045d-c298-4006-93f3-71729deddb7c" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -153,7 +153,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_3562c56a-9c3a-4ed1-b4b7-4fc452b20fee" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -196,7 +196,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_2df7e41f-ae2b-4ba4-bedf-c33efa51f641" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -225,7 +225,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_96ab5c01-8f16-47da-904d-b94c69202a10" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -254,7 +254,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_1ecd58b9-29bb-4f8d-9582-9520978640cb" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -283,7 +283,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_8dfd44ca-6d62-45ce-9105-6552a0642690" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -312,7 +312,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_61499dc4-f385-4814-99f2-c01f94fe34c1" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -341,7 +341,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_d22f8c65-f608-4946-adbc-445f98ee39e2" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -370,7 +370,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_363cae5a-ca64-4bc1-a319-e830fdaf6f41" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -399,7 +399,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_10ff08aa-956a-46af-b021-a02244772ba2" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -428,7 +428,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_e652b7b1-6377-4b24-a22c-e6ae4ef1a981" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -457,7 +457,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_326e087a-8d2b-4c36-b5b3-4442de7e13f4" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -486,7 +486,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_6c850efb-8c2c-4b23-8229-ae3e516bf8a5" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -515,7 +515,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_bc03bb3d-7a94-4428-9d1c-b36d179f6931" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -558,7 +558,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_9a2e8705-9a52-4083-ac14-c0252058f6d3" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -587,7 +587,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_866c20c7-17f1-4c8a-b058-dfa402277e9e" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -616,7 +616,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_6d41d936-b0d0-49ca-a9dc-a2c073115dcb" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -645,7 +645,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_48bba46b-ffea-448d-95bc-d5a0a78decba" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -674,7 +674,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_02340aa2-e22d-4b0f-93b9-938801a33edb" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -703,7 +703,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_e702b7b1-78e6-47a5-a636-0533a5530937" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -732,7 +732,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_1b022af2-5e42-47ee-a764-a7348bde3d91" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -775,7 +775,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_e34755f2-21e7-4002-9d97-9d043eb0010d" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -804,7 +804,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_72949291-4bb6-4d18-b1af-10d64603580f" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -847,7 +847,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_02ec642d-25c6-4f4b-a21f-3b4a5b4025c1" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -876,7 +876,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_d1423368-4db2-4d11-8fdb-3ac999f151e4" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -905,7 +905,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_25f8ec51-3b13-423a-bcfb-2250293b9a68" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>
@@ -934,7 +934,7 @@ exports[`budgetgrid component renders correct snapshot 1`] = `
           <div class="px-0 py-1 col-sm-auto col">
             <div category_uid="b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_category_d60d7c95-41c4-46af-b617-5ddd11dd58f8" class="balance-amount subtitle-2 grey--text">
               0
-              <button tabindex="-1" type="button" class="v-btn v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
+              <button tabindex="-1" type="button" class="v-btn v-btn--flat v-btn--icon v-btn--round theme--light v-size--x-small"><span class="v-btn__content"><i aria-hidden="true" tabindex="-1" class="v-icon notranslate mdi mdi-arrow-right theme--light"></i></span></button>
             </div>
           </div>
         </div>

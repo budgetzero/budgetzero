@@ -1,12 +1,12 @@
 name: run unit tests
 on: 
-  pull_request:
   push:
     branches:
       - master
       - dev
+      - cypress-tests
 jobs:
-  test:
+  unit_test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -14,4 +14,3 @@ jobs:
       run: npm i
     - name: Run tests
       run: npm run test:unit
-

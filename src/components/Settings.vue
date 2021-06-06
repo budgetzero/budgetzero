@@ -56,7 +56,15 @@
       <!-- </v-sheet> -->
 
       <br />
-      <v-btn color="primary" outlined dark class="mb-3 " small @click="$store.dispatch('loadLocalBudgetRoot')">
+      <v-btn
+        id="refreshDbBtn"
+        color="primary"
+        outlined
+        dark
+        class="mb-3 "
+        small
+        @click="$store.dispatch('loadLocalBudgetRoot')"
+      >
         Refresh Database
       </v-btn>
 
@@ -146,7 +154,7 @@
             <span class="pl-2">Reload Budget Root (for debugging purposes)</span>
             <br />
 
-            <v-btn color="purple" dark class="mb-2" small @click="loadMockData">
+            <v-btn id="loadMockDataBtn" color="purple" dark class="mb-2" small @click="loadMockData">
               Load Mock Data
             </v-btn>
             <span class="pl-2">Loads fake data for testing purposes.</span>
@@ -159,6 +167,29 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
+
+      <v-btn
+        id="loadMockDataBtn"
+        color="purple"
+        dark
+        class="mb-2"
+        small
+        @click="$store.dispatch('createMockTransactions')"
+      >
+        createMockTransactions
+      </v-btn>
+
+      <v-btn id="eraseDbBtn" color="red" dark class="mb-2" small data-cy="delete-local-db" @click="deleteLocalDatabase">
+        Erase Local Database
+      </v-btn>
+      <span class="pl-2"
+        >Deletes local PouchDB database. If connected to a remote database it will re-sync all the data.
+      </span>
+
+      <br />
+      <v-btn id="createDbBtn" color="primary" dark class="mb-2" small @click="$store.dispatch('createLocalPouchDB')">
+        Create Local Database
+      </v-btn>
     </v-col>
 
     <v-col cols="12">

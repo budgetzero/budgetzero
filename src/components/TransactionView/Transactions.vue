@@ -2,13 +2,10 @@
   <v-container fill-height fluid class="ma-0 pa-0">
     <!-- Modal to input reconcile amount  -->
     <BaseDialogModalComponent v-model="isModalVisibleForReconcile">
-      <template #title>
-        Enter current amount balance:
-      </template>
+      <template #title> Enter current amount balance: </template>
       <template #body>
         <v-text-field
           id="txt_field_reconcileAmt"
-          ref="txt_field_reconcileAmt"
           v-model="reconcileAmount"
           prefix="$"
           label="Account balance"
@@ -18,12 +15,8 @@
       </template>
       <template #actions>
         <v-spacer />
-        <v-btn color="grey" @click.stop="isModalVisibleForReconcile = false">
-          Cancel
-        </v-btn>
-        <v-btn id="btn-createMasterCategory" color="accent" @click="startReconcile()">
-          Start Reconcile
-        </v-btn>
+        <v-btn color="grey" @click.stop="isModalVisibleForReconcile = false"> Cancel </v-btn>
+        <v-btn id="btn-createMasterCategory" color="accent" @click="startReconcile()"> Start Reconcile </v-btn>
       </template>
     </BaseDialogModalComponent>
 
@@ -34,9 +27,7 @@
     <v-row class="transaction-toolbar ma-0">
       <v-col class="pt-2 pb-0">
         <v-btn id="addTransactionBtn" small color="accent darken-1" dark outlined class="mb-2" @click="addTransaction">
-          <v-icon color="accent" left medium>
-            mdi-plus
-          </v-icon>
+          <v-icon color="accent" left medium> mdi-plus </v-icon>
           Transaction
         </v-btn>
       </v-col>
@@ -45,39 +36,29 @@
           <template #activator="{ on, attrs }">
             <v-btn small class="white--text" color="grey darken-4" dark outlined v-bind="attrs" v-on="on">
               Edit ({{ selected.length }})
-              <v-icon dark color="grey darken-4" right>
-                mdi-chevron-down
-              </v-icon>
+              <v-icon dark color="grey darken-4" right> mdi-chevron-down </v-icon>
             </v-btn>
           </template>
 
           <v-list>
             <v-list-item @click="approveSelectedTransactions">
-              <v-icon dark color="primary" left>
-                mdi-check-circle
-              </v-icon>
+              <v-icon dark color="primary" left> mdi-check-circle </v-icon>
               <v-list-item-title>Approve</v-list-item-title>
             </v-list-item>
 
             <v-list-item @click="clearSelectedTransactions">
-              <v-icon dark color="primary" left>
-                mdi-alpha-c-circle
-              </v-icon>
+              <v-icon dark color="primary" left> mdi-alpha-c-circle </v-icon>
               <v-list-item-title>Clear</v-list-item-title>
             </v-list-item>
 
             <v-list-item @click="deleteSelectedTransactions">
-              <v-icon dark color="red" left>
-                mdi-delete
-              </v-icon>
+              <v-icon dark color="red" left> mdi-delete </v-icon>
               <v-list-item-title>Delete</v-list-item-title>
             </v-list-item>
 
             <v-menu bottom offset-x close-on-content-click close-on-click open-on-hover>
               <template #activator="{ on, attrs }">
-                <v-list-item v-bind="attrs" left v-on="on">
-                  Categorize as:
-                </v-list-item>
+                <v-list-item v-bind="attrs" left v-on="on"> Categorize as: </v-list-item>
               </template>
 
               <v-list>
@@ -96,18 +77,14 @@
         <v-tooltip bottom>
           <template #activator="{ on }">
             <v-btn icon class="ml-3" @click="deleteSelectedTransactions">
-              <v-icon dark color="grey darken-1" v-on="on">
-                mdi-delete
-              </v-icon>
+              <v-icon dark color="grey darken-1" v-on="on"> mdi-delete </v-icon>
             </v-btn>
           </template>
           <span>Delete</span>
         </v-tooltip>
 
         <v-btn icon class="white--text" color="grey darken-1" @click="$store.dispatch('getAllDocsFromPouchDB')">
-          <v-icon>
-            mdi-refresh
-          </v-icon>
+          <v-icon> mdi-refresh </v-icon>
         </v-btn>
 
         <!-- Edit ({{ selected.length }}):
@@ -167,9 +144,7 @@
       </v-col>
       <v-col class="pt-2 pb-0">
         <v-btn small class="mb-2 ml-2" color="grey lighten-2" elevation="0" @click.stop="importModalVisible = true">
-          <v-icon left>
-            mdi-cloud-upload
-          </v-icon>
+          <v-icon left> mdi-cloud-upload </v-icon>
           <span>Import</span>
         </v-btn>
       </v-col>
@@ -257,15 +232,11 @@
               </td>
 
               <!-- Cleared -->
-              <td class="pa-0" style="width:20px">
+              <td class="pa-0" style="width: 20px">
                 <div class="editing-cell-container">
                   <v-btn icon @click="flipCleared(item)">
-                    <v-icon v-if="item.cleared" color="primary">
-                      mdi-alpha-c-circle
-                    </v-icon>
-                    <v-icon v-if="!item.cleared" color="grey">
-                      mdi-alpha-c-circle-outline
-                    </v-icon>
+                    <v-icon v-if="item.cleared" color="primary"> mdi-alpha-c-circle </v-icon>
+                    <v-icon v-if="!item.cleared" color="grey"> mdi-alpha-c-circle-outline </v-icon>
                   </v-btn>
                 </div>
               </td>
@@ -357,9 +328,7 @@
                 <div v-if="item.transfer">
                   <span class="chip-label"
                     >Transfer: {{ account_map[item.payee] ? account_map[item.payee] : item.payee }}
-                    <v-icon color="primary">
-                      mdi-arrow-left-right-bold
-                    </v-icon></span
+                    <v-icon color="primary"> mdi-arrow-left-right-bold </v-icon></span
                   >
                 </div>
                 <div v-else>
@@ -404,7 +373,11 @@
               </td>
               <td v-else>
                 <div>
-                  <span v-if="!item.category">
+                  <span v-if="item.transfer"><v-chip color="grey lighten-2">Transfer</v-chip></span>
+                  <span v-else-if="item.payee == '---------------------initial-balance'">
+                    <v-chip color="grey lighten-2">Initial Balance</v-chip>
+                  </span>
+                  <span v-else-if="!item.category">
                     <v-chip color="yellow lighten-2">{{ category_map[item.category] }} </v-chip>
                   </span>
                   <span v-else>{{ category_map[item.category] }}</span>
@@ -462,14 +435,12 @@
               </td>
 
               <!-- Reconciled -->
-              <td class="pa-0" style="width:20px">
+              <td class="pa-0" style="width: 20px">
                 <div>
                   <!-- <v-btn
                   icon
                 > -->
-                  <v-icon v-if="item.reconciled" color="green lighten-1">
-                    mdi-lock
-                  </v-icon>
+                  <v-icon v-if="item.reconciled" color="green lighten-1"> mdi-lock </v-icon>
                   <!-- <v-icon
                     v-if="!item.reconciled"
                     color="grey"
@@ -510,16 +481,12 @@
           <template #expanded-item="{ headers, item, expand, isExpanded }">
             <td :colspan="headers.length" class="mr-0 pr-0 grey lighten-2">
               <div class="actions">
-                <v-btn small class="my-2 " rounded color="green" data-cy="save" @click="save(item)">
-                  <v-icon left>
-                    mdi-check
-                  </v-icon>
+                <v-btn small class="my-2" rounded color="green" data-cy="save" @click="save(item)">
+                  <v-icon left> mdi-check </v-icon>
                   Save
                 </v-btn>
                 <v-btn small class="my-2 mb-2 mx-2" rounded color="accent" data-cy="cancel" @click="cancel()">
-                  <v-icon left>
-                    mdi-cancel
-                  </v-icon>
+                  <v-icon left> mdi-cancel </v-icon>
                   Cancel
                 </v-btn>
               </div>
@@ -544,6 +511,7 @@ import ImportModalComponent from './ImportModalComponent.vue'
 import ReconcileHeader from './ReconcileHeader'
 import TransactionHeader from './TransactionHeader'
 import _ from 'lodash'
+import { sanitizeValueInput } from '../../helper.js'
 
 export default {
   name: 'Transactions',
@@ -966,8 +934,7 @@ export default {
       this.isModalVisibleForReconcile = true
     },
     startReconcile() {
-      this.$refs.txt_field_reconcileAmt.focus()
-
+      this.reconcileAmount = sanitizeValueInput(this.reconcileAmount)
       this.isReconciling = true
       this.isModalVisibleForReconcile = false
     },

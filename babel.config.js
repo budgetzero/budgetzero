@@ -5,6 +5,7 @@ if (process.env.NODE_ENV == 'staging' || process.env.NODE_ENV == 'production') {
 }
 
 module.exports = {
-  presets: ['@vue/cli-plugin-babel/preset'],
-  plugins: removeConsolePlugin
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ]
 }

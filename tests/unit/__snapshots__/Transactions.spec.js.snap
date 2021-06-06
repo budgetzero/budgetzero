@@ -9,9 +9,7 @@ exports[`transaction table renders correct snapshot 1`] = `
   <v-row-stub tag="div" class="transaction-toolbar ma-0">
     <v-col-stub tag="div" class="pt-2 pb-0">
       <v-btn-stub color="accent darken-1" dark="true" outlined="true" tag="button" activeclass="" small="true" type="button" id="addTransactionBtn" class="mb-2">
-        <v-icon-stub color="accent" left="" medium="">
-          mdi-plus
-        </v-icon-stub>
+        <v-icon-stub color="accent" left="" medium=""> mdi-plus </v-icon-stub>
         Transaction
       </v-btn-stub>
     </v-col-stub>
@@ -19,21 +17,15 @@ exports[`transaction table renders correct snapshot 1`] = `
       <v-menu-stub opendelay="0" closedelay="0" contentclass="" bottom="true" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" openonclick="true" closeonclick="true" closeoncontentclick="true" maxheight="auto" offsetx="true" origin="top left" transition="v-menu-transition">
         <v-list-stub tag="div">
           <v-list-item-stub activeclass="" tag="div">
-            <v-icon-stub dark="" color="primary" left="">
-              mdi-check-circle
-            </v-icon-stub>
+            <v-icon-stub dark="" color="primary" left=""> mdi-check-circle </v-icon-stub>
             <v-list-item-title-stub>Approve</v-list-item-title-stub>
           </v-list-item-stub>
           <v-list-item-stub activeclass="" tag="div">
-            <v-icon-stub dark="" color="primary" left="">
-              mdi-alpha-c-circle
-            </v-icon-stub>
+            <v-icon-stub dark="" color="primary" left=""> mdi-alpha-c-circle </v-icon-stub>
             <v-list-item-title-stub>Clear</v-list-item-title-stub>
           </v-list-item-stub>
           <v-list-item-stub activeclass="" tag="div">
-            <v-icon-stub dark="" color="red" left="">
-              mdi-delete
-            </v-icon-stub>
+            <v-icon-stub dark="" color="red" left=""> mdi-delete </v-icon-stub>
             <v-list-item-title-stub>Delete</v-list-item-title-stub>
           </v-list-item-stub>
           <v-menu-stub opendelay="0" closedelay="0" contentclass="" bottom="true" openonhover="true" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" openonclick="true" closeonclick="true" closeoncontentclick="true" maxheight="auto" offsetx="true" origin="top left" transition="v-menu-transition">
@@ -134,16 +126,12 @@ exports[`transaction table renders correct snapshot 1`] = `
       </v-menu-stub>
       <v-tooltip-stub opendelay="0" closedelay="0" contentclass="" bottom="true" fixed="true" openonhover="true" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" tag="span"> <span>Delete</span></v-tooltip-stub>
       <v-btn-stub color="grey darken-1" tag="button" activeclass="" icon="true" type="button" class="white--text">
-        <v-icon-stub>
-          mdi-refresh
-        </v-icon-stub>
+        <v-icon-stub> mdi-refresh </v-icon-stub>
       </v-btn-stub>
     </v-col-stub>
     <v-col-stub tag="div" class="pt-2 pb-0">
       <v-btn-stub color="grey lighten-2" elevation="0" tag="button" activeclass="" small="true" type="button" class="mb-2 ml-2">
-        <v-icon-stub left="">
-          mdi-cloud-upload
-        </v-icon-stub> <span>Import</span>
+        <v-icon-stub left=""> mdi-cloud-upload </v-icon-stub> <span>Import</span>
       </v-btn-stub>
     </v-col-stub>
     <v-col-stub tag="div" class="pt-0 pb-0">

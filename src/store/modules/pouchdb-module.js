@@ -13,6 +13,7 @@ import {
 import _ from 'lodash'
 import moment from 'moment'
 import PouchDB from 'pouchdb'
+import mock_budget from "@/../tests/__mockdata__/mock_budget2.json";
 
 var FileSaver = require('file-saver')
 
@@ -592,9 +593,7 @@ export default {
     },
 
     loadMockData(context) {
-      // context.dispatch('deleteAllDocs')
-      console.log('loading mock data', mock_data_from_ynab4)
-      this._vm.$pouch.bulkDocs(mock_data_from_ynab4.docs).then(result => {
+      context.dispatch('commitBulkDocsToPouchAndVuex', mock_budget).then(result => {
         context.dispatch('loadLocalBudgetRoot')
       })
     },
