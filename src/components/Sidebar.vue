@@ -62,7 +62,7 @@
             </v-list-item-title>
           </v-list-item-content>
           <v-list-item-icon>
-            <v-icon color="grey lighten-1" v-on="on"> mdi-cog </v-icon>
+            <v-icon id="settingsMenuBtn" color="grey lighten-1" v-on="on"> mdi-cog </v-icon>
           </v-list-item-icon>
         </v-list-item>
       </template>
@@ -75,7 +75,7 @@
             <v-list-item-title>Manage Budgets</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item :to="{ path: '/settings' }">
+        <v-list-item id="settingsBtn" :to="{ path: '/settings' }">
           <v-list-item-avatar>
             <v-icon left medium color="primary"> mdi-cog-outline </v-icon>
           </v-list-item-avatar>
@@ -106,7 +106,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item :to="{ path: '/accounts' }">
+      <v-list-item :to="{ path: '/accounts' }" id="accountsSidebarBtn">
         <v-list-item-icon>
           <v-icon>mdi-bank</v-icon>
         </v-list-item-icon>
@@ -151,6 +151,7 @@
         :to="{ path: '/transactions/' + item._id.slice(-36) }"
         active-class="primary white--text"
         class="primary darken-1"
+        v-bind:id="item.name"
       >
         <v-list-item-content>
           <v-list-item-title class="font-weight-regular subtitle-2">

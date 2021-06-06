@@ -9,11 +9,11 @@
         Let's get started!
       </template>
       <template #body>
-        <v-text-field v-model="budgetName" data-cy="budget-name" label="Enter a name for your budget" required />
+        <v-text-field v-model="budgetName" id="budgetNameField" label="Enter a name for your budget" required />
       </template>
       <template #actions>
         <v-spacer />
-        <v-btn id="btn-createBudget" color="accent" @click="createBudget()">
+        <v-btn id="createBudgetBtn" color="accent" @click="createBudget()">
           Create Budget
         </v-btn>
       </template>
