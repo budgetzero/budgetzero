@@ -2,7 +2,7 @@
 
 describe('My First Test', () => {
   it('Create new budget', () => {
-    cy.visit('/settings')
+    cy.visit('http://localhost:8080/settings')
     cy.get('#budgetNameField').type('test budget name')
     cy.get('#createBudgetBtn').click()
 
