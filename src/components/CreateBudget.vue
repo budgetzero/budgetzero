@@ -18,7 +18,7 @@
       <v-card-actions class=" white--text">
         <v-spacer />
         <slot name="actions">
-          <v-btn color="accent" btn-createBudget @click="createBudget()">
+          <v-btn color="accent" id="btn-createBudget" @click="createBudget()">
             Create
           </v-btn>
         </slot>
