@@ -5,8 +5,9 @@ on:
     branches:
       - master
       - dev
+      - cypress-tests
 jobs:
-  test:
+  unit_test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -14,4 +15,13 @@ jobs:
       run: npm i
     - name: Run tests
       run: npm run test:unit
-
+   e2e_test:
+    - name: Checkout
+      uses: actions/checkout@v2
+    # Install NPM dependencies, cache them correctly
+    # and run all Cypress tests
+    - name: Cypress run
+      uses: cypress-io/github-action@v2
+      with:
+        build: npm run build
+        start: npm start
