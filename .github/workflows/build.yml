@@ -1,6 +1,5 @@
 name: run unit tests
 on: 
-  pull_request:
   push:
     branches:
       - master
