@@ -15,7 +15,7 @@ jobs:
       run: npm i
     - name: Run tests
       run: npm run test:unit
-   e2e_test:
+  e2e_test:
     - name: Checkout
       uses: actions/checkout@v2
     # Install NPM dependencies, cache them correctly
