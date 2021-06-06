@@ -1,6 +1,6 @@
 {
   "name": "budgetzero",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
