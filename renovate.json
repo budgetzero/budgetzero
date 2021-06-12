@@ -3,6 +3,6 @@
     "config:base"
   ],
   "baseBranches": [
-    "develop"
+    "dev"
   ]
 }
