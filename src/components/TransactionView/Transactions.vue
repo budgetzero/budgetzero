@@ -404,12 +404,12 @@
                     prefix="$"
                     class="pa-0 pb-1 editing-cell-element"
                     color="green"
-                    data-cy="inflow-input"
+                    id="inflow-input"
                     :rules="currencyRule"
                   />
                 </div>
               </td>
-              <td v-else align="right">
+              <td v-else align="right" id="inflow">
                 <div>
                   {{ item.value > 0 ? item.value / 100 : '' | currency }}
                 </div>
@@ -423,12 +423,12 @@
                     prefix="$"
                     class="pa-0 pb-1 editing-cell-element"
                     color="red"
-                    data-cy="outflow-input"
+                    id="outflow-input"
                     :rules="currencyRule"
                   />
                 </div>
               </td>
-              <td v-else align="right">
+              <td v-else align="right" id="outflow">
                 <div>
                   {{ item.value < 0 ? -(item.value / 100) : '' | currency }}
                 </div>
@@ -481,11 +481,11 @@
           <template #expanded-item="{ headers, item, expand, isExpanded }">
             <td :colspan="headers.length" class="mr-0 pr-0 grey lighten-2">
               <div class="actions">
-                <v-btn small class="my-2" rounded color="green" data-cy="save" @click="save(item)">
+                <v-btn small class="my-2" rounded color="green" id="save-btn" @click="save(item)">
                   <v-icon left> mdi-check </v-icon>
                   Save
                 </v-btn>
-                <v-btn small class="my-2 mb-2 mx-2" rounded color="accent" data-cy="cancel" @click="cancel()">
+                <v-btn small class="my-2 mb-2 mx-2" rounded color="accent" id="cancel-btn" @click="cancel()">
                   <v-icon left> mdi-cancel </v-icon>
                   Cancel
                 </v-btn>
