@@ -18,7 +18,7 @@
   },
   "main": "background.js",
   "dependencies": {
-    "@sweetalert2/theme-borderless": "^4.0.1",
+    "@sweetalert2/theme-borderless": "^5.0.0",
     "banking": "^1.2.0",
     "chart.js": "^3.1.1",
     "core-js": "^3.8.1",
