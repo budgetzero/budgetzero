@@ -87,7 +87,7 @@
     "sass": "1.35.1",
     "sass-loader": "10.2.0",
     "vue-cli-plugin-electron-builder": "2.0.0",
-    "vue-cli-plugin-vuetify": "2.0.8",
+    "vue-cli-plugin-vuetify": "2.4.1",
     "vue-template-compiler": "2.6.14",
     "vuetify-loader": "1.6.0",
     "yarn-upgrade-all": "0.5.4"
