@@ -28,3 +28,8 @@ yarn-error.log*
 /dist_electron
 tests/e2e/screenshots/test.js/Test transactions -- enter text into memo field (failed).png
 *.mp4
+budgetzero_local_db/000003.log
+budgetzero_local_db/CURRENT
+budgetzero_local_db/LOCK
+budgetzero_local_db/LOG
+budgetzero_local_db/MANIFEST-000002
