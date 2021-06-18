@@ -80,7 +80,7 @@
     "electron-icon-builder": "2.0.1",
     "eslint": "7.28.0",
     "eslint-plugin-import": "2.22.1",
-    "eslint-plugin-jest": "24.1.3",
+    "eslint-plugin-jest": "24.3.6",
     "eslint-plugin-vue": "7.4.0",
     "lint-staged": "10.5.4",
     "node-sass": "5.0.0",
