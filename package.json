@@ -83,7 +83,7 @@
     "eslint-plugin-jest": "24.3.6",
     "eslint-plugin-vue": "7.4.0",
     "lint-staged": "11.0.0",
-    "node-sass": "5.0.0",
+    "node-sass": "6.0.0",
     "sass": "1.35.1",
     "sass-loader": "10.1.0",
     "vue-cli-plugin-electron-builder": "2.0.0",
