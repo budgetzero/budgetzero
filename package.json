@@ -43,7 +43,7 @@
     "sweetalert": "^2.1.2",
     "validator": "^13.5.2",
     "vue": "^2.6.12",
-    "vue-csv-import": "^3.3.5",
+    "vue-csv-import": "^4.0.0",
     "vue-json-tree-view": "^2.1.6",
     "vue-lodash": "^2.1.2",
     "vue-moment": "^4.1.0",
