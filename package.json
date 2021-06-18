@@ -84,7 +84,7 @@
     "eslint-plugin-vue": "7.4.0",
     "lint-staged": "10.5.4",
     "node-sass": "5.0.0",
-    "sass": "1.30.0",
+    "sass": "1.35.1",
     "sass-loader": "10.1.0",
     "vue-cli-plugin-electron-builder": "2.0.0-rc.5",
     "vue-cli-plugin-vuetify": "2.0.8",
