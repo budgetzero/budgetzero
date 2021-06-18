@@ -1,7 +1,7 @@
 # <a href="https://app.budgetzero.io"><p align="center"><img src="public/logo.png" width="300"></p>
 [![Netlify Status](https://api.netlify.com/api/v1/badges/1eb6d21e-b83a-42ca-9b46-82a0b37889f6/deploy-status)](https://app.netlify.com/sites/budgetzero/deploys)
-![master](https://github.com/BudgetZero/BudgetZero/workflows/master/badge.svg)
-![dev](https://github.com/BudgetZero/BudgetZero/workflows/dev/badge.svg)
+![master](https://img.shields.io/github/checks-status/budgetzero/budgetzero/master?label=master)
+![dev](https://img.shields.io/github/checks-status/budgetzero/budgetzero/dev?label=dev)
 ![Docker Pulls](https://img.shields.io/docker/pulls/budgetzero/budgetzero)  
 ![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/budgetzero?style=for-the-badge)
   
