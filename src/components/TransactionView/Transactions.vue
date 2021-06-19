@@ -171,23 +171,24 @@
           @close="importModalVisible = false"
         />
 
-        <v-data-table
-          ref="transaction_table"
-          v-model="selected"
-          :headers="headersForSingleAccount"
-          :items="transactionListForTable"
-          item-key="_id"
-          show-select
-          :expanded.sync="expanded"
-          single-expand
-          sort-by="date"
-          :sort-desc="true"
-          class="elevation-1 transaction-table"
-          :height="windowHeight"
-          :items-per-page="items_per_page"
-          fixed-header
-        >
-          <!-- <template v-slot:header="{ props: { headers } }">
+        <v-form ref="transactions_table_form">
+          <v-data-table
+            ref="transaction_table"
+            v-model="selected"
+            :headers="headersForSingleAccount"
+            :items="transactionListForTable"
+            item-key="_id"
+            show-select
+            :expanded.sync="expanded"
+            single-expand
+            sort-by="date"
+            :sort-desc="true"
+            class="elevation-1 transaction-table"
+            :height="windowHeight"
+            :items-per-page="items_per_page"
+            fixed-header
+          >
+            <!-- <template v-slot:header="{ props: { headers } }">
             <thead>
               <th>
                 <v-simple-checkbox
@@ -211,109 +212,113 @@
               </th>
             </thead>
           </template> -->
-          <!-- <template #header.data-table-select="{ on, props }">
+            <!-- <template #header.data-table-select="{ on, props }">
             <v-simple-checkbox :ripple="false" color="black" v-bind="props" v-on="on" />
           </template> -->
 
-          <template #item="{ item, expand, isExpanded, index, isSelected, select }">
-            <tr
-              :key="item._id"
-              :class="{ selectedRow: item._id === editedItem._id, 'un-approved': !item.approved }"
-              @dblclick="
-                editItem(item)
-                expand(item)
-              "
-            >
-              <!-- Checkbox -->
-              <td class="pr-0">
-                <div class="pt-2 editing-cell-container">
-                  <v-simple-checkbox color="accent" :value="isSelected" :ripple="false" @input="select($event)" />
-                </div>
-              </td>
+            <template #item="{ item, expand, isExpanded, index, isSelected, select }">
+              <tr
+                :key="item._id"
+                :class="{ selectedRow: item._id === editedItem._id, 'un-approved': !item.approved }"
+                @dblclick="
+                  editItem(item)
+                  expand(item)
+                "
+              >
+                <!-- Checkbox -->
+                <td class="pr-0">
+                  <div class="pt-2 editing-cell-container">
+                    <v-simple-checkbox color="accent" :value="isSelected" :ripple="false" @input="select($event)" />
+                  </div>
+                </td>
 
-              <!-- Cleared -->
-              <td class="pa-0" style="width: 20px">
-                <div class="editing-cell-container">
-                  <v-btn icon @click="flipCleared(item)">
-                    <v-icon v-if="item.cleared" color="primary"> mdi-alpha-c-circle </v-icon>
-                    <v-icon v-if="!item.cleared" color="grey"> mdi-alpha-c-circle-outline </v-icon>
-                  </v-btn>
-                </div>
-              </td>
+                <!-- Cleared -->
+                <td class="pa-0" style="width: 20px">
+                  <div class="editing-cell-container">
+                    <v-btn icon @click="flipCleared(item)">
+                      <v-icon v-if="item.cleared" color="primary"> mdi-alpha-c-circle </v-icon>
+                      <v-icon v-if="!item.cleared" color="grey"> mdi-alpha-c-circle-outline </v-icon>
+                    </v-btn>
+                  </div>
+                </td>
 
-              <!-- Date input -->
+                <!-- Date input -->
 
-              <td v-if="item._id === editedItem._id" data-cy="edit-date-input" class="pr-0 pl-1 editing-cell-container">
-                <div class="editing-cell-container">
-                  <v-menu
-                    v-model="dateMenu"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="290px"
-                  >
-                    <template #activator="{ on }">
-                      <v-text-field
-                        v-model="editedItem.date"
-                        label=""
-                        readonly
-                        class="pa-0 pb-1 editing-cell-element"
-                        v-on="on"
-                      />
-                    </template>
-                    <v-date-picker v-model="editedItem.date" @input="dateMenu = false" />
-                  </v-menu>
-                </div>
-              </td>
-              <td v-else class="date-cell">
-                <div>
-                  {{ item.date }}
-                </div>
-              </td>
+                <td
+                  v-if="item._id === editedItem._id"
+                  data-cy="edit-date-input"
+                  class="pr-0 pl-1 editing-cell-container"
+                >
+                  <div class="editing-cell-container">
+                    <v-menu
+                      v-model="dateMenu"
+                      :close-on-content-click="false"
+                      :nudge-right="40"
+                      transition="scale-transition"
+                      offset-y
+                      min-width="290px"
+                    >
+                      <template #activator="{ on }">
+                        <v-text-field
+                          v-model="editedItem.date"
+                          label=""
+                          class="pa-0 pb-1 editing-cell-element"
+                          v-on="on"
+                          :rules="[rules.date]"
+                        />
+                      </template>
+                      <v-date-picker v-model="editedItem.date" @input="dateMenu = false" />
+                    </v-menu>
+                  </div>
+                </td>
+                <td v-else class="date-cell">
+                  <div>
+                    {{ item.date }}
+                  </div>
+                </td>
 
-              <!-- Account input -->
-              <td v-if="item._id === editedItem._id && !isSingleAccount" class="pr-0 pl-1 editing-cell-container">
-                <div class="editing-cell-container">
-                  <v-select
-                    v-model="editedItem.account"
-                    :items="accounts"
-                    label=""
-                    class="pa-0 pb-1 editing-cell-element"
-                    item-text="name"
-                    item-value="id"
-                  />
-                </div>
-              </td>
-              <td v-if="item.id !== editedItem.id && !isSingleAccount">
-                <div class="editing-cell-container">
-                  {{ account_map[item.account] }}
-                </div>
-              </td>
+                <!-- Account input -->
+                <td v-if="item._id === editedItem._id && !isSingleAccount" class="pr-0 pl-1 editing-cell-container">
+                  <div class="editing-cell-container">
+                    <v-select
+                      v-model="editedItem.account"
+                      :items="accounts"
+                      label=""
+                      class="pa-0 pb-1 editing-cell-element"
+                      item-text="name"
+                      item-value="id"
+                    />
+                  </div>
+                </td>
+                <td v-if="item.id !== editedItem.id && !isSingleAccount">
+                  <div class="editing-cell-container">
+                    {{ account_map[item.account] }}
+                  </div>
+                </td>
 
-              <!-- Payee -->
-              <!-- payee data entered through 1) type w/autocomplete 2) select from dropdown -->
-              <!--  -->
-              <!--  -->
-              <td v-if="item._id === editedItem._id" class="pr-0 pl-1 editing-cell-container">
-                <div class="editing-cell-container">
-                  <v-combobox
-                    v-model="payee"
-                    :items="payeesForDropdown"
-                    class="pa-0 pb-1 editing-cell-element"
-                    :search-input.sync="payeeSearchText"
-                    item-text="name"
-                    data-cy="payee-input"
-                  >
-                    <!-- <template v-slot:selection="props">
+                <!-- Payee -->
+                <!-- payee data entered through 1) type w/autocomplete 2) select from dropdown -->
+                <!--  -->
+                <!--  -->
+                <td v-if="item._id === editedItem._id" class="pr-0 pl-1 editing-cell-container">
+                  <div class="editing-cell-container">
+                    <v-combobox
+                      v-model="payee"
+                      :items="payeesForDropdown"
+                      class="pa-0 pb-1 editing-cell-element"
+                      :search-input.sync="payeeSearchText"
+                      item-text="name"
+                      data-cy="payee-input"
+                    >
+                      <!-- <template v-slot:selection="props">
                     {{ props }}
                   </template> -->
-                    <template #no-data>
-                      <v-list-item>
-                        <span class="subheading">Payee {{ payeeSearchText }} not found and will be created.</span>
-                      </v-list-item>
-                    </template>
-                    <!-- <template v-slot:selection="{ attrs, item, parent, selected }">
+                      <template #no-data>
+                        <v-list-item>
+                          <span class="subheading">Payee {{ payeeSearchText }} not found and will be created.</span>
+                        </v-list-item>
+                      </template>
+                      <!-- <template v-slot:selection="{ attrs, item, parent, selected }">
                     <span v-if="item in payee_map">
                       {{ payee_map[item] }}
                     </span>
@@ -321,182 +326,187 @@
                       {{ item }}
                     </span>
                   </template> -->
-                  </v-combobox>
-                </div>
-              </td>
-              <td v-else>
-                <div v-if="item.transfer">
-                  <span class="chip-label"
-                    >Transfer: {{ account_map[item.payee] ? account_map[item.payee] : item.payee }}
-                    <v-icon color="primary"> mdi-arrow-left-right-bold </v-icon></span
-                  >
-                </div>
-                <div v-else>
-                  <span class="chip-label">{{
-                    payee_map[item.payee] ? payee_map[item.payee].substring(0, 25) : item.payee
-                  }}</span>
-                </div>
-              </td>
+                    </v-combobox>
+                  </div>
+                </td>
+                <td v-else>
+                  <div v-if="item.transfer">
+                    <span class="chip-label"
+                      >Transfer: {{ account_map[item.payee] ? account_map[item.payee] : item.payee }}
+                      <v-icon color="primary"> mdi-arrow-left-right-bold </v-icon></span
+                    >
+                  </div>
+                  <div v-else>
+                    <span class="chip-label">{{
+                      payee_map[item.payee] ? payee_map[item.payee].substring(0, 25) : item.payee
+                    }}</span>
+                  </div>
+                </td>
 
-              <!-- Category input -->
-              <td v-if="item._id === editedItem._id" class="pr-0 pl-1 editing-cell-container">
-                <div class="editing-cell-container">
-                  <v-select
-                    v-model="editedItem.category"
-                    :items="categoriesForDropdown"
-                    class="pa-0 pb-1"
-                    item-text="name"
-                    item-value="truncated_id"
-                    data-cy="category-input"
-                  >
-                    <template #item="{ item }">
-                      <v-list-tile-content>
-                        <v-list-tile-title>{{ item.name }}</v-list-tile-title>
-                      </v-list-tile-content>
-                      <v-spacer />
-                      <v-list-item-action>
-                        <!-- TODO: 'month_selected' should probably be the transaction month -->
-                        <v-list-item-action-text>
-                          {{ (getBalance(item) / 100) | currency }}
-                        </v-list-item-action-text>
-                      </v-list-item-action>
-                    </template>
-                    <!--                     
+                <!-- Category input -->
+                <td v-if="item._id === editedItem._id" class="pr-0 pl-1 editing-cell-container">
+                  <div class="editing-cell-container">
+                    <v-select
+                      v-model="editedItem.category"
+                      :items="categoriesForDropdown"
+                      class="pa-0 pb-1"
+                      item-text="name"
+                      item-value="truncated_id"
+                      data-cy="category-input"
+                    >
+                      <template #item="{ item }">
+                        <v-list-tile-content>
+                          <v-list-tile-title>{{ item.name }}</v-list-tile-title>
+                        </v-list-tile-content>
+                        <v-spacer />
+                        <v-list-item-action>
+                          <!-- TODO: 'month_selected' should probably be the transaction month -->
+                          <v-list-item-action-text>
+                            {{ (getBalance(item) / 100) | currency }}
+                          </v-list-item-action-text>
+                        </v-list-item-action>
+                      </template>
+                      <!--                     
                     <template slot="item" slot-scope="data">
                       <v-list-tile-content>
                         <v-list-tile-title v-html="data.item.name" />
                         <v-list-tile-subtitle>test</v-list-tile-subtitle>
                       </v-list-tile-content>
                     </template> -->
-                  </v-select>
-                </div>
-              </td>
-              <td v-else>
-                <div>
-                  <span v-if="item.transfer"><v-chip color="grey lighten-2">Transfer</v-chip></span>
-                  <span v-else-if="item.payee == '---------------------initial-balance'">
-                    <v-chip color="grey lighten-2">Initial Balance</v-chip>
-                  </span>
-                  <span v-else-if="!item.category">
-                    <v-chip color="yellow lighten-2">{{ category_map[item.category] }} </v-chip>
-                  </span>
-                  <span v-else>{{ category_map[item.category] }}</span>
-                </div>
-              </td>
+                    </v-select>
+                  </div>
+                </td>
+                <td v-else>
+                  <div>
+                    <span v-if="item.transfer"><v-chip color="grey lighten-2">Transfer</v-chip></span>
+                    <span v-else-if="item.payee == '---------------------initial-balance'">
+                      <v-chip color="grey lighten-2">Initial Balance</v-chip>
+                    </span>
+                    <span v-else-if="!item.category">
+                      <v-chip color="yellow lighten-2">{{ category_map[item.category] }} </v-chip>
+                    </span>
+                    <span v-else>{{ category_map[item.category] }}</span>
+                  </div>
+                </td>
 
-              <!-- Memo input -->
-              <td v-if="item._id === editedItem._id" class="pr-0 pl-1 editing-cell-container">
-                <div class="editing-cell-container">
-                  <v-text-field v-model="editedItem.memo" class="pa-0 pb-1 editing-cell-element" data-cy="memo-input" />
-                </div>
-              </td>
-              <td v-else>
-                <div>
-                  {{ item.memo }}
-                </div>
-              </td>
+                <!-- Memo input -->
+                <td v-if="item._id === editedItem._id" class="pr-0 pl-1 editing-cell-container">
+                  <div class="editing-cell-container">
+                    <v-text-field
+                      v-model="editedItem.memo"
+                      class="pa-0 pb-1 editing-cell-element"
+                      data-cy="memo-input"
+                    />
+                  </div>
+                </td>
+                <td v-else>
+                  <div>
+                    {{ item.memo }}
+                  </div>
+                </td>
 
-              <!-- Inflow -->
-              <td v-if="item._id === editedItem._id" class="pr-0 pl-1 editing-cell-container inflow">
-                <div class="editing-cell-container">
-                  <v-text-field
-                    v-model="inflowAmount"
-                    prefix="$"
-                    class="pa-0 pb-1 editing-cell-element"
-                    color="green"
-                    id="inflow-input"
-                    :rules="currencyRule"
-                  />
-                </div>
-              </td>
-              <td v-else align="right" id="inflow">
-                <div>
-                  {{ item.value > 0 ? item.value / 100 : '' | currency }}
-                </div>
-              </td>
+                <!-- Inflow -->
+                <td v-if="item._id === editedItem._id" class="pr-0 pl-1 editing-cell-container inflow">
+                  <div class="editing-cell-container">
+                    <v-text-field
+                      v-model="inflowAmount"
+                      prefix="$"
+                      class="pa-0 pb-1 editing-cell-element"
+                      color="green"
+                      id="inflow-input"
+                      :rules="currencyRule"
+                    />
+                  </div>
+                </td>
+                <td v-else align="right" id="inflow">
+                  <div>
+                    {{ item.value > 0 ? item.value / 100 : '' | currency }}
+                  </div>
+                </td>
 
-              <!-- Outflow -->
-              <td v-if="item._id === editedItem._id" class="pr-0 pl-1 editing-cell-container outflow">
-                <div class="editing-cell-container">
-                  <v-text-field
-                    v-model="outflowAmount"
-                    prefix="$"
-                    class="pa-0 pb-1 editing-cell-element"
-                    color="red"
-                    id="outflow-input"
-                    :rules="currencyRule"
-                  />
-                </div>
-              </td>
-              <td v-else align="right" id="outflow">
-                <div>
-                  {{ item.value < 0 ? -(item.value / 100) : '' | currency }}
-                </div>
-              </td>
+                <!-- Outflow -->
+                <td v-if="item._id === editedItem._id" class="pr-0 pl-1 editing-cell-container outflow">
+                  <div class="editing-cell-container">
+                    <v-text-field
+                      v-model="outflowAmount"
+                      prefix="$"
+                      class="pa-0 pb-1 editing-cell-element"
+                      color="red"
+                      id="outflow-input"
+                      :rules="currencyRule"
+                    />
+                  </div>
+                </td>
+                <td v-else align="right" id="outflow">
+                  <div>
+                    {{ item.value < 0 ? -(item.value / 100) : '' | currency }}
+                  </div>
+                </td>
 
-              <!-- Reconciled -->
-              <td class="pa-0" style="width: 20px">
-                <div>
-                  <!-- <v-btn
+                <!-- Reconciled -->
+                <td class="pa-0" style="width: 20px">
+                  <div>
+                    <!-- <v-btn
                   icon
                 > -->
-                  <v-icon v-if="item.reconciled" color="green lighten-1"> mdi-lock </v-icon>
-                  <!-- <v-icon
+                    <v-icon v-if="item.reconciled" color="green lighten-1"> mdi-lock </v-icon>
+                    <!-- <v-icon
                     v-if="!item.reconciled"
                     color="grey"
                   >
                     mdi-lock
                   </v-icon> -->
-                  <!-- </v-btn> -->
-                </div>
-              </td>
+                    <!-- </v-btn> -->
+                  </div>
+                </td>
 
-              <!-- Actions -->
-              <td class="actions-cell">
-                <div
-                  v-if="(item._id !== editedItem._id || creatingNewTransaction) && editedIndex === -1"
-                  class="crud-actions"
-                >
-                  <v-btn
-                    icon
-                    small
-                    dark
-                    class=""
-                    color="primary"
-                    @click="
-                      editItem(item)
-                      expand(item)
-                    "
+                <!-- Actions -->
+                <td class="actions-cell">
+                  <div
+                    v-if="(item._id !== editedItem._id || creatingNewTransaction) && editedIndex === -1"
+                    class="crud-actions"
                   >
-                    <v-icon>mdi-pencil</v-icon>
+                    <v-btn
+                      icon
+                      small
+                      dark
+                      class=""
+                      color="primary"
+                      @click="
+                        editItem(item)
+                        expand(item)
+                      "
+                    >
+                      <v-icon>mdi-pencil</v-icon>
+                    </v-btn>
+                    <v-btn icon small dark class="ml-1" color="accent" @click="deleteTransaction(item)">
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                  </div>
+                </td>
+              </tr>
+            </template>
+
+            <template #expanded-item="{ headers, item, expand, isExpanded }">
+              <td :colspan="headers.length" class="mr-0 pr-0 grey lighten-2">
+                <div class="actions">
+                  <v-btn small class="my-2" rounded color="green" id="save-btn" @click="save(item)">
+                    <v-icon left> mdi-check </v-icon>
+                    Save
                   </v-btn>
-                  <v-btn icon small dark class="ml-1" color="accent" @click="deleteTransaction(item)">
-                    <v-icon>mdi-delete</v-icon>
+                  <v-btn small class="my-2 mb-2 mx-2" rounded color="accent" id="cancel-btn" @click="cancel()">
+                    <v-icon left> mdi-cancel </v-icon>
+                    Cancel
                   </v-btn>
                 </div>
               </td>
-            </tr>
-          </template>
+            </template>
 
-          <template #expanded-item="{ headers, item, expand, isExpanded }">
-            <td :colspan="headers.length" class="mr-0 pr-0 grey lighten-2">
-              <div class="actions">
-                <v-btn small class="my-2" rounded color="green" id="save-btn" @click="save(item)">
-                  <v-icon left> mdi-check </v-icon>
-                  Save
-                </v-btn>
-                <v-btn small class="my-2 mb-2 mx-2" rounded color="accent" id="cancel-btn" @click="cancel()">
-                  <v-icon left> mdi-cancel </v-icon>
-                  Cancel
-                </v-btn>
-              </div>
-            </td>
-          </template>
-
-          <template #no-data>
-            <span>No transactions in this account.</span>
-          </template>
-        </v-data-table>
+            <template #no-data>
+              <span>No transactions in this account.</span>
+            </template>
+          </v-data-table>
+        </v-form>
       </v-col>
     </v-row>
   </v-container>
@@ -656,7 +666,13 @@ export default {
           if (isNaN(parseFloat(v)) && v.length > 0) return 'Numbers only'
           return true
         }
-      ]
+      ],
+      rules: {
+        date: value => {
+          const pattern = /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/
+          return pattern.test(value) || 'Invalid date.'
+        }
+      }
     }
   },
   computed: {
@@ -765,6 +781,9 @@ export default {
     },
     selected_account_id() {
       return this.$route.params.account_id
+    },
+    isTransactionsValid() {
+      return this.$refs.transactions_table_form.validate()
     }
   },
   mounted() {
@@ -847,20 +866,27 @@ export default {
       })
     },
     save() {
-      this.editedItem.payee = this.payeeSearchText //TODO: hacky?
+      // Check if transaction is valid
+      if (this.isTransactionsValid) {
+        this.editedItem.payee = this.payeeSearchText //TODO: hacky?
 
-      if (this.isSingleAccount) {
-        this.editedItem.account = this.selected_account_id
+        if (this.isSingleAccount) {
+          this.editedItem.account = this.selected_account_id
+        }
+
+        if (this.creatingNewTransaction) {
+          this.editedItem._id = `b_${this.selectedBudgetID}_transaction_${Vue.prototype.$vm.$uuid.v4()}`
+        }
+        this.editedItem.approved = true
+
+        this.$store.dispatch('createOrUpdateTransaction', this.editedItem)
+        this.cancel()
+      } else {
+        this.$store.commit('SET_SNACKBAR_MESSAGE', {
+          snackbarMessage: 'Transaction is not formatted correctly.',
+          snackbarColor: 'error'
+        })
       }
-
-      if (this.creatingNewTransaction) {
-        this.editedItem._id = `b_${this.selectedBudgetID}_transaction_${Vue.prototype.$vm.$uuid.v4()}`
-      }
-      this.editedItem.approved = true
-
-      this.$store.dispatch('createOrUpdateTransaction', this.editedItem)
-
-      this.cancel()
     },
     toggleAll() {
       if (this.selected.length) this.selected = []
