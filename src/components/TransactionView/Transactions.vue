@@ -385,7 +385,7 @@
                       <v-chip color="grey lighten-2">Initial Balance</v-chip>
                     </span>
                     <span v-else-if="!item.category">
-                      <v-chip color="yellow lighten-2">{{ category_map[item.category] }} </v-chip>
+                      <v-chip color="yellow lighten-3">{{ category_map[item.category] }} </v-chip>
                     </span>
                     <span v-else>{{ category_map[item.category] }}</span>
                   </div>
