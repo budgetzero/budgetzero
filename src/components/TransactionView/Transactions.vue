@@ -246,15 +246,17 @@
 
                 <td
                   v-if="item._id === editedItem._id"
-                  data-cy="edit-date-input"
+                  id="edit-date-input"
                   class="pr-0 pl-1 editing-cell-container"
                 >
                   <div class="editing-cell-container">
                     <v-menu
                       v-model="dateMenu"
                       :close-on-content-click="false"
-                      :nudge-right="40"
+                      nudge-right="-20"
+                      nudge-bottom="-20"
                       transition="scale-transition"
+                      offset-x
                       offset-y
                       min-width="290px"
                     >
