@@ -50,7 +50,7 @@
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.5.1",
     "vue-select": "^3.11.2",
-    "vue-sweetalert2": "^4.3.1",
+    "vue-sweetalert2": "^5.0.0",
     "vue-uuid": "^2.0.2",
     "vue2-filters": "^0.13.0",
     "vuedraggable": "^2.24.3",
