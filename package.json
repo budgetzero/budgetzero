@@ -79,7 +79,7 @@
     "electron-devtools-installer": "3.2.0",
     "electron-icon-builder": "2.0.1",
     "eslint": "8.1.0",
-    "eslint-plugin-import": "2.23.4",
+    "eslint-plugin-import": "2.25.2",
     "eslint-plugin-jest": "25.2.2",
     "eslint-plugin-vue": "8.0.3",
     "lint-staged": "11.0.0",
