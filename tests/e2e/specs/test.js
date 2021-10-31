@@ -27,7 +27,7 @@ describe('My First Test', () => {
   it('Add a transaction', () => {
     cy.get('#addTransactionBtn').click()
     
-    cy.get('#inflow-input').type('55.55')
+    cy.get('#inflow-input').type('55.55', { force: true })
     cy.get('#save-btn').click()
 
     cy.get(".transaction-table tbody").find("tr").should("have.length", 1);
@@ -37,7 +37,7 @@ describe('My First Test', () => {
   it('Add a transaction 2', () => {
     cy.get('#addTransactionBtn').click()
     
-    cy.get('#outflow-input').type('66.55')
+    cy.get('#outflow-input').type('66.55', { force: true })
     cy.get('#save-btn').click()
 
     cy.get(".transaction-table tbody").find("tr").should("have.length", 2);
@@ -47,7 +47,7 @@ describe('My First Test', () => {
   it('test malformed', () => {
     cy.get('#addTransactionBtn').click()
     
-    cy.get('#outflow-input').type('7ff5.g58')
+    cy.get('#outflow-input').type('7ff5.g58', { force: true })
     cy.get('#save-btn').click()
 
     cy.get(".transaction-table tbody").find("tr").should("have.length", 3);
