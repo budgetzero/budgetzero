@@ -24,7 +24,7 @@
     "core-js": "^3.14.0",
     "electron-updater": "^4.3.9",
     "file-saver": "^2.0.5",
-    "firebase": "^8.6.8",
+    "firebase": "^9.0.0",
     "firebaseui": "^6.0.0",
     "is-electron": "^2.2.0",
     "jsonschema": "^1.4.0",
