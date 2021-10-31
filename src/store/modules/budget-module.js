@@ -432,26 +432,30 @@ export default {
       })
     },
     deleteAccount(context, payload) {
-      const myId = payload._id.slice(-36)
-      this._vm.$pouch
-        .query((doc, emit) => {
-          if (doc.account === myId) {
-            emit(doc)
-          }
-        })
-        .then(result2 => {
-          console.log('delete account', result2.total_rows)
-          if (result2.total_rows > 0) {
-            alert(
-              `This account still has ${result2.total_rows} transaction(s). You must delete those transactions to delete the account.`
-            )
-          } else {
-            context.dispatch('deleteDocFromPouchAndVuex', payload)
-          }
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      return new Promise((resolve, reject) => {
+        const myId = payload._id.slice(-36)
+        this._vm.$pouch
+          .query((doc, emit) => {
+            if (doc.account === myId) {
+              emit(doc)
+            }
+          })
+          .then(result2 => {
+            console.log('delete account', result2.total_rows)
+            if (result2.total_rows > 0) {
+              // Account still has transactions, so resolve with amount of transactions in account for error message.
+              reject(result2.total_rows)
+            } else {
+              // Dispatch account for deletion
+              context.dispatch('deleteDocFromPouchAndVuex', payload)
+              resolve('Success')
+            }
+          })
+          .catch(err => {
+            reject('Error')
+            console.log(err)
+          })
+      })
     },
 
     /**

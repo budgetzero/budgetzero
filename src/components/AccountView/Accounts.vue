@@ -95,10 +95,7 @@ export default {
         initialBalance: 0
       },
       showModal: false,
-      nameRules: [
-        (v) => !!v || 'Name is required',
-        (v) => (v && v.length <= 10) || 'Name must be less than 10 characters'
-      ]
+      nameRules: [v => !!v || 'Name is required', v => (v && v.length <= 10) || 'Name must be less than 10 characters']
     }
   },
   computed: {
@@ -119,8 +116,28 @@ export default {
     },
     deleteItem(item) {
       const index = this.accounts.indexOf(item)
-      confirm('Are you sure you want to delete this item?') &&
-        this.$store.dispatch('deleteAccount', this.accounts[index])
+      this.$root
+        .$confirm('Delete Account', 'Are you sure you want to delete this account?', {
+          onlyShowAgreeBtn: false,
+          agreeBtnColor: 'accent',
+          agreeBtnText: 'Delete Account',
+          cancelBtnColor: 'grey'
+        })
+        .then(confirm => {
+          this.$store
+            .dispatch('deleteAccount', this.accounts[index])
+            .then(response => {
+              console.log('Got some data, now lets show something in this component', response)
+            })
+            .catch(error => {
+              // Action failed     
+              this.$root.$confirm('Deletion Failed', `This account still has ${error} transaction(s). You must delete those transactions to delete the account.`, {
+                onlyShowAgreeBtn: true,
+                agreeBtnColor: 'accent',
+                agreeBtnText: 'Ok',
+              })
+            })
+        })
     },
     close() {
       this.showModal = false
