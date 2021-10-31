@@ -124,7 +124,7 @@ exports[`transaction table renders correct snapshot 1`] = `
           </v-menu-stub>
         </v-list-stub>
       </v-menu-stub>
-      <v-tooltip-stub opendelay="0" closedelay="0" bottom="true" fixed="true" openonhover="true" contentclass="" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" tag="span"> <span>Delete</span></v-tooltip-stub>
+      <v-tooltip-stub opendelay="0" closedelay="0" bottom="true" openonhover="true" contentclass="" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" tag="span"> <span>Delete</span></v-tooltip-stub>
       <v-btn-stub color="grey darken-1" tag="button" activeclass="" icon="true" type="button" class="white--text">
         <v-icon-stub> mdi-refresh </v-icon-stub>
       </v-btn-stub>
