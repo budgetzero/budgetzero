@@ -1,0 +1,16 @@
+{
+    "extends": [
+      "config:base",
+      "group:all",
+      "schedule:weekly"
+    ],
+    "separateMinorPatch": true,
+    "packageRules": [
+      {
+        // Only major and minor updates
+        "updateTypes": ["patch"],
+        "enabled": false
+      }
+    ],
+  }
+  
