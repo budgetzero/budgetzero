@@ -196,7 +196,34 @@
 
     <template #append>
       <v-list dense>
-        <v-list-item v-if="mini && !user.loggedIn" class="pl-2">
+        <!-- Help Menu -->
+        <v-menu offset-x max-width="250">
+          <template #activator="{ on }">
+            <v-list-item v-if="mini" class="pl-2">
+              <v-btn icon class="accent" v-on="on">
+                <v-icon color="white"> mdi-help-circle-outline </v-icon>
+              </v-btn>
+            </v-list-item>
+            <v-list-item v-if="!mini">
+              <v-btn block text outline v-on="on">
+                <v-icon left color="white"> mdi-help-circle-outline </v-icon>
+                <span>Help</span>
+              </v-btn>
+            </v-list-item>
+          </template>
+
+          <v-list dense color="grey lighten-4">
+            <v-list-item>
+                <v-btn text href="https://docs.budgetzero.io/"  target="_blank">
+                  <v-icon left color="primary"> mdi-account </v-icon>
+                  <span class="primary--text">Documentation</span>
+                </v-btn>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+
+        <!-- Login Button -->
+        <!-- <v-list-item v-if="mini && !user.loggedIn" class="pl-2">
           <v-btn icon class="accent" :to="{ path: '/login' }">
             <v-icon color="white"> mdi-login </v-icon>
           </v-btn>
@@ -206,9 +233,10 @@
             <v-icon left color="white"> mdi-login </v-icon>
             <span>Login</span>
           </v-btn>
-        </v-list-item>
+        </v-list-item> -->
       </v-list>
 
+      <!-- Logged-in Menu -->
       <v-menu v-if="user.loggedIn" offset-x max-width="150">
         <template #activator="{ on }">
           <v-list-item>
