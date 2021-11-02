@@ -13,7 +13,7 @@ import {
 import _ from 'lodash'
 import moment from 'moment'
 import PouchDB from 'pouchdb'
-import mock_budget from "@/../tests/__mockdata__/mock_budget2.json";
+import mock_budget from '@/../tests/__mockdata__/mock_budget2.json'
 
 var FileSaver = require('file-saver')
 
@@ -377,13 +377,13 @@ export default {
     },
     clearRemoteSync(context) {
       if (Vue.prototype.$pouchSyncHandler) {
-        Vue.prototype.$pouchSyncHandler.on('complete', function(info) {
-          // replication was canceled!
-          context.commit('CLEAR_REMOTE_SYNC_URL')
-          context.commit('SET_STATUS_MESSAGE', 'Sync disabled')
-        })
-
         Vue.prototype.$pouchSyncHandler.cancel()
+
+        // Removed this because it'll never complete if sync isn't actually occuring
+        // Vue.prototype.$pouchSyncHandler.on('complete', function(info) {
+        context.commit('CLEAR_REMOTE_SYNC_URL')
+        context.commit('SET_STATUS_MESSAGE', 'Sync disabled')
+        // })
       }
     },
     getAllDocsFromPouchDB(context) {

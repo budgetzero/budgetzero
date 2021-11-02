@@ -8,7 +8,7 @@ exports[`accounts table account renders correct snapshot 1`] = `
         <div class="spacer"></div>
         <div role="dialog" class="v-dialog__container">
           <!---->
-        </div> <button type="button" class="mb-2 v-btn v-btn--contained v-btn--is-elevated v-btn--has-bg theme--dark v-size--default accent" id="addAccountBtn"><span class="v-btn__content"> Add Account </span></button>
+        </div> <button type="button" class="mb-2 v-btn v-btn--is-elevated v-btn--has-bg theme--dark v-size--default accent" id="addAccountBtn"><span class="v-btn__content"> Add Account </span></button>
       </div>
     </header>
     <hr role="separator" aria-orientation="horizontal" class="pb-4 v-divider theme--light">
