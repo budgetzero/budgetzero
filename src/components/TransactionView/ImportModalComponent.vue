@@ -65,10 +65,10 @@
 
           <v-card-actions>
             <v-spacer />
-            <v-btn color="error" flat @click.stop="show = false">
+            <v-btn color="error" text @click.stop="show = false">
               Cancel
             </v-btn>
-            <v-btn color="primary" flat @click="pushTransactionsToBackend">
+            <v-btn color="primary" text @click="pushTransactionsToBackend">
               Import Transactions
             </v-btn>
           </v-card-actions>
@@ -149,10 +149,10 @@
 
             <v-card-actions>
               <v-spacer />
-              <v-btn color="error" flat @click.stop="show = false">
+              <v-btn color="error" text @click.stop="show = false">
                 Cancel
               </v-btn>
-              <v-btn color="primary" flat :disabled="!parseCsv" @click="importCSVTransactions">
+              <v-btn color="primary" text :disabled="!parseCsv" @click="importCSVTransactions">
                 Import Transactions
               </v-btn>
             </v-card-actions>
@@ -366,7 +366,7 @@ export default {
       for (const transaction of transactionListToImport) {
         console.log('import transaction', transaction)
 
-        await this.$store.dispatch('updateTransaction', transaction)
+        await this.$store.dispatch('createOrUpdateTransaction', transaction)
       }
 
       return Promise.resolve()
