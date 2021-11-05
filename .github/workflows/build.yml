@@ -4,7 +4,7 @@ on:
     branches:
       - master
       - dev
-      - cypress-tests
+      - fix-broken-github-actions
 jobs:
   unit_test:
     runs-on: ubuntu-latest
