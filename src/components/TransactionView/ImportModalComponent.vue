@@ -11,7 +11,7 @@
         <v-tab>
           OFX
         </v-tab>
-        <v-tab>
+        <v-tab id="csvTab">
           CSV
         </v-tab>
       </v-tabs>
@@ -68,7 +68,7 @@
             <v-btn color="error" flat @click.stop="show = false">
               Cancel
             </v-btn>
-            <v-btn color="primary" flat @click="pushTransactionsToBackend">
+            <v-btn id="importTransactionsBtn" color="primary" flat @click="pushTransactionsToBackend">
               Import Transactions
             </v-btn>
           </v-card-actions>
@@ -152,7 +152,7 @@
               <v-btn color="error" flat @click.stop="show = false">
                 Cancel
               </v-btn>
-              <v-btn color="primary" flat :disabled="!parseCsv" @click="importCSVTransactions">
+              <v-btn id="importTransactionsBtn" color="primary" flat :disabled="!parseCsv" @click="importCSVTransactions">
                 Import Transactions
               </v-btn>
             </v-card-actions>

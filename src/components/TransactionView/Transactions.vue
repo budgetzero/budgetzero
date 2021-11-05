@@ -143,7 +143,7 @@
         </v-tooltip> -->
       </v-col>
       <v-col class="pt-2 pb-0">
-        <v-btn small class="mb-2 ml-2" color="grey lighten-2" elevation="0" @click.stop="importModalVisible = true">
+        <v-btn id="importBtn" small class="mb-2 ml-2" color="grey lighten-2" elevation="0" @click.stop="importModalVisible = true">
           <v-icon left> mdi-cloud-upload </v-icon>
           <span>Import</span>
         </v-btn>

@@ -1,3 +1,6 @@
 {
-  "pluginsFile": "tests/e2e/plugins/index.js"
+  "pluginsFile": "tests/e2e/plugins/index.js",
+  "experimentalStudio": true,
+    "viewportWidth": 1000,
+    "viewportHeight": 1000
 }
