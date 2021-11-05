@@ -4,7 +4,6 @@ on:
     branches:
       - master
       - dev
-      - cypress-tests
 jobs:
   unit_test:
     runs-on: ubuntu-latest
