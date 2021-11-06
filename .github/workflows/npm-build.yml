@@ -1,5 +1,7 @@
 name: npm build
 
+on: [push]
+
 jobs:
   release:
     runs-on: ${{ matrix.os }}
