@@ -32,3 +32,9 @@ jobs:
 
       - name: Run npm build
         run: npm run build
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/
