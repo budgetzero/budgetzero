@@ -23,11 +23,12 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        run: npm i
+        run: npm ci
 
       - name: Build Electron release
         run: npm run electron:build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run npm build
         run: npm run build
