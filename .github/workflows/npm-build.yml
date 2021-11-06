@@ -1,14 +1,14 @@
-name: run npm build
-on: 
-  push:
-    branches:
-      - add-build-release
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Install modules
-      run: npm ci
-    - name: Build
-      run: npm run build
+# name: run npm build
+# on: 
+#   push:
+#     branches:
+#       - add-build-release
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Install modules
+#       run: npm ci
+#     - name: Build
+#       run: npm run build
