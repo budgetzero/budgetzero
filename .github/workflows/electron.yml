@@ -29,3 +29,5 @@ jobs:
         run: npm run electron:build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run npm build
+        run: npm run build
