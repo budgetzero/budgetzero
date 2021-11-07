@@ -30,28 +30,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Run npm build
-      #   run: npm run build
-
-      # - name: Archive production artifacts
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: dist
-      #     path: dist/
-
-  build:
-    name: Upload Release Asset
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Install project # This would actually build your project, using zip for an example artifact
-        run: npm ci
-
-      - name: Build project # This would actually build your project, using zip for an example artifact
-        run: npm run build
-
       - name: zip dist # This would actually build your project, using zip for an example artifact
         run: |
           zip --junk-paths dist/
@@ -75,5 +53,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
           asset_path: ./dist
-          asset_name: my-artifact.zip
+          asset_name: dist.zip
           asset_content_type: application/zip
