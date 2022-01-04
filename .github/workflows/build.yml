@@ -40,6 +40,11 @@ jobs:
         with:
           name: dist.zip
           path: dist/
+      - name: Download the artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: dist.zip
+          path: ./
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
