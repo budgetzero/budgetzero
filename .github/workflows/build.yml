@@ -39,7 +39,7 @@ jobs:
 
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
-          zip --junk-paths -r dist
+          zip --junk-paths -r dist.zip dist
 
       # - uses: actions/upload-artifact@v2
       #   with:
