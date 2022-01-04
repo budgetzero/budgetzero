@@ -36,23 +36,28 @@ jobs:
         run: npm ci 
       - name: Build
         run: npm run build
-      - uses: actions/upload-artifact@v2
-        with:
-          name: dist.zip
-          path: dist/
-      - name: Download the artifact
-        uses: actions/download-artifact@v1
-        with:
-          name: dist.zip
-          path: ./
+
+      - name: Build project # This would actually build your project, using zip for an example artifact
+        run: |
+          zip --junk-paths -r dist
+
+      # - uses: actions/upload-artifact@v2
+      #   with:
+      #     name: dist.zip
+      #     path: dist/
+      # - name: Download the artifact
+      #   uses: actions/download-artifact@v1
+      #   with:
+      #     name: dist.zip
+      #     path: ./
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: v1.0
+          release_name: Release test
           draft: true
           prerelease: false
       - name: Upload Release Asset
@@ -62,6 +67,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: /
+          asset_path: ./dist.zip
           asset_name: dist.zip
           asset_content_type: application/zip
