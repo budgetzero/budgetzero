@@ -4,12 +4,25 @@ on:
     branches:
       - master
       - dev
-jobs:
-  unit_test:
+# jobs:
+#   unit_test:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Install modules
+#       run: npm ci
+#     - name: Run tests
+#       run: npm run test:unit
+
+  artifact:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Install modules
-      run: npm ci
-    - name: Run tests
-      run: npm run test:unit
+      - uses: actions/checkout@v2
+      - name: Install modules
+        run: npm ci 
+      - name: Build
+        run: npm run build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist-files
+          path: dist/
