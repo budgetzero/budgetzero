@@ -4,7 +4,7 @@ on:
     branches:
       - master
       - dev
-# jobs:
+jobs:
 #   unit_test:
 #     runs-on: ubuntu-latest
 #     steps:
