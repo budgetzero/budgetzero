@@ -66,6 +66,11 @@ jobs:
 
   build_apps:
     runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest]
+
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
