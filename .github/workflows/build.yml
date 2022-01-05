@@ -65,6 +65,7 @@ jobs:
           asset_content_type: application/zip
 
   build_apps:
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
