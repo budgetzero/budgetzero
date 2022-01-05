@@ -14,7 +14,7 @@ jobs:
 #     - name: Run tests
 #       run: npm run test:unit
 
-  artifact:
+  build dist:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -34,6 +34,7 @@ jobs:
 
       - name: Install modules
         run: npm ci 
+
       - name: Build
         run: npm run build
 
@@ -41,15 +42,6 @@ jobs:
         run: |
           zip --junk-paths -r dist.zip dist
 
-      # - uses: actions/upload-artifact@v2
-      #   with:
-      #     name: dist.zip
-      #     path: dist/
-      # - name: Download the artifact
-      #   uses: actions/download-artifact@v1
-      #   with:
-      #     name: dist.zip
-      #     path: ./
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -60,6 +52,7 @@ jobs:
           release_name: Release test
           draft: true
           prerelease: false
+          
       - name: Upload Release Asset
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
