@@ -63,3 +63,20 @@ jobs:
           asset_path: ./dist.zip
           asset_name: dist.zip
           asset_content_type: application/zip
+
+  build_apps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Build Electron release
+        run: npm run electron:build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
