@@ -1,6 +1,6 @@
 {
   "name": "budgetzero",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -74,7 +74,7 @@
     "@vue/test-utils": "1.2.2",
     "babel-eslint": "10.1.0",
     "babel-plugin-transform-remove-console": "6.9.4",
-    "electron": "15.3.0",
+    "electron": "^16.0.6",
     "electron-builder": "22.10.5",
     "electron-devtools-installer": "3.2.0",
     "electron-icon-builder": "2.0.1",
