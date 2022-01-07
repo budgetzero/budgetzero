@@ -74,7 +74,7 @@ jobs:
         node-version: 16
 
     - name: install dependencies
-      run: npm i 
+      run: npm ci 
       
     - name: publish
       env:
