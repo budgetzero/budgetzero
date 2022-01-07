@@ -22,6 +22,9 @@ jobs:
       - name: Get current package version
         uses: martinbeentjes/npm-get-version-action@v1.1.0
 
+      - name: Print version
+        run: echo ${{ steps.package-version.outputs.current-version }}
+
       - name: Cache node modules
         uses: actions/cache@v2
         env:
@@ -45,8 +48,7 @@ jobs:
         run: |
           zip --junk-paths -r dist.zip dist
 
-      - name: Print version
-        run: echo ${{ steps.extract_version.outputs.version }}
+
 
       - name: Create Release
         id: create_release
@@ -54,7 +56,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.package-version.outputs.current-version}}
+          tag_name: ${{ steps.package-version.outputs.current-version }}
           release_name: Release test
           draft: true
           prerelease: false
