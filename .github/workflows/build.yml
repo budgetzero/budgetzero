@@ -19,6 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Get current package version
+        uses: martinbeentjes/npm-get-version-action@v1.1.0
+
       - name: Cache node modules
         uses: actions/cache@v2
         env:
@@ -48,7 +51,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: '0.2.0'
+          tag_name: ${{ steps.package-version.outputs.current-version}}
           release_name: Release test
           draft: true
           prerelease: false
@@ -66,6 +69,23 @@ jobs:
 
   publish_on_mac:
     runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-node@master
+      with:
+        node-version: 16
+
+    - name: install dependencies
+      run: npm ci 
+      
+    - name: publish
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: npm run electron:build
+
+  publish_on_win:
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
 
