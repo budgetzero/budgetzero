@@ -68,11 +68,14 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
+
     - uses: actions/setup-node@master
       with:
         node-version: 14
+
     - name: install dependencies
-      run: npm install
+      run: npm ci 
+      
     - name: publish
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
