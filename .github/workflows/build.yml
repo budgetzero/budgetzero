@@ -71,7 +71,7 @@ jobs:
 
     - uses: actions/setup-node@master
       with:
-        node-version: 14
+        node-version: 16
 
     - name: install dependencies
       run: npm i 
