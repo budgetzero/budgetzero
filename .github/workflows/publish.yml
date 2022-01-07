@@ -38,8 +38,8 @@ jobs:
         run: npm run build
 
       - name: Build project # This would actually build your project, using zip for an example artifact
-        run: cd dist
-        run: zip -r ../dist.zip ./
+        - run: cd dist
+        - run: zip -r ../dist.zip ./
 
       - name: Create Release
         id: create_release
