@@ -57,7 +57,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: 'v${{ steps.extract_version.outputs.version }}'
+          tag_name: v${{ steps.extract_version.outputs.version }}
           release_name: Release test
           draft: true
           prerelease: false
@@ -89,7 +89,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npm run electron:build
-      vPrefixedTagName: true
 
   publish_on_win:
     runs-on: windows-latest
@@ -107,4 +106,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npm run electron:build
-      vPrefixedTagName: true
+      
