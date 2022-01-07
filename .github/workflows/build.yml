@@ -45,6 +45,9 @@ jobs:
         run: |
           zip --junk-paths -r dist.zip dist
 
+      - name: Print version
+        run: echo ${{ steps.extract_version.outputs.version }}
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
