@@ -6,6 +6,9 @@ node_modules
 docs/
 /docs
 
+#Cypress
+/tests/e2e/screenshots/
+
 # local env files
 .env.local
 .env.*.local
