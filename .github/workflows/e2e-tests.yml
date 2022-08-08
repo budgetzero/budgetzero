@@ -15,3 +15,4 @@ jobs:
         with:
           start: npm run serve
           wait-on: 'http://localhost:8080'
+          config: baseUrl=http://localhost:8080
