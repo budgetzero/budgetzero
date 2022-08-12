@@ -42,7 +42,7 @@
     "pouchdb-load": "^1.4.6",
     "sortablejs": "^1.13.0",
     "sweetalert": "^2.1.2",
-    "validator": "^13.6.0",
+    "validator": "^13.7.0",
     "vue": "^2.6.14",
     "vue-csv-import": "^3.3.7",
     "vue-json-tree-view": "^2.1.6",
