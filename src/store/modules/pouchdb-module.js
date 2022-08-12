@@ -595,6 +595,7 @@ export default {
     loadMockData(context) {
       context.dispatch('commitBulkDocsToPouchAndVuex', mock_budget).then(result => {
         context.dispatch('loadLocalBudgetRoot')
+        context.dispatch('setSelectedBudgetID', '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
       })
     },
 
@@ -691,13 +692,16 @@ export default {
           if (localStorage.remoteSyncURL) {
             context.commit('GET_REMOTE_SYNC_URL')
           }
-
+          
+          var b_id = null
           if (localStorage.budgetID) {
-            context.commit('UPDATE_SELECTED_BUDGET', localStorage.budgetID)
+            b_id = localStorage.budgetID
           } else {
             // Select first budget ID on initial load if nothing found in localstorage
-            context.commit('UPDATE_SELECTED_BUDGET', result.rows[0].id.slice(-36))
+            b_id = result.rows[0].id.slice(-36)
           }
+
+          context.commit('UPDATE_SELECTED_BUDGET', b_id)
           context.dispatch('getAllDocsFromPouchDB')
           context.dispatch('loadBudgetOpened')
         })

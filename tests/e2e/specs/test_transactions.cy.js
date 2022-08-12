@@ -11,13 +11,13 @@
 //     //Clear db and load mock test data
 //   before(function() {
 //     cy.visit("http://localhost:8080/settings");
-//     cy.get(".mdi-chevron-down").click();
-
-//     cy.get("[data-cy=delete-local-db]").click(); 
+//     cy.contains("Debugging").click();
+//     // cy.get("[data-cy=delete-local-db]").click(); 
 //     cy.contains("Mock").click();
 //     cy.visit("http://localhost:8080/accounts");
+ 
 //   });
-  
+
 //   it("Visit the first account page", () => {
 //     cy.contains("USAA").click();
 //   });

@@ -1,15 +1,16 @@
-//Create new account
-//Edit existing account...twice
-//Delete account
+// // Create new account
+// // Edit existing account...twice
+// // Delete account
 
 // describe("Test accounts", () => {
 //   //Clear db and load mock test data
 //   before(function() {
-//     cy.visit("http://localhost:8080/settings");
-//     cy.get(".mdi-chevron-down").click();
+//     cy.visit('http://localhost:8080/settings')
+//     cy.get('#budgetNameField').type('test budget name')
+//     cy.get('#createBudgetBtn').click()
 
-//     cy.get("[data-cy=delete-local-db]").click(); 
-//     cy.visit("http://localhost:8080/accounts");
+//     cy.get('#agreeBtn').click()
+    
 //   });
 
 //   it("Create new budget", () => {
