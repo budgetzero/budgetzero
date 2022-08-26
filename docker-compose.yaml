@@ -7,13 +7,12 @@ services:
     restart: always
     ports:
       - 5984:5984
+    volumes:
+      # "./budgetzero_data" is where data will persist locally
+      - ./budgetzero_data:/opt/couchdb/data
     environment:
       - COUCHDB_USER=admin 
       - COUCHDB_PASSWORD=changeme
-    # command: sh -c "sleep 15; curl -u admin:changeme -X PUT 127.0.0.1:5984/_users"
-    # volumes:
-    #   - ./data:/opt/couchdb/data
-    # command: ["sh", "-c", "/opt/couchdb/bin/couchdb && curl -X PUT http://${COUCHDB_USER}:${COUCHDB_PASSWORD}@127.0.0.1:5984/_users; curl -X PUT http://${COUCHDB_USER}:${COUCHDB_PASSWORD}@127.0.0.1:5984/_budgets"]
 
   initializer:
     image: curlimages/curl
@@ -27,7 +26,7 @@ services:
       
   frontend:
     container_name: frontend
-    image: budgetzero/budgetzero
+    image: budgetzero_frontend
     restart: always
     ports:
       - 8080:8080

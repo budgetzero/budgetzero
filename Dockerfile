@@ -2,7 +2,7 @@
 FROM node:lts-alpine as build-stage
 WORKDIR /app
 COPY package*.json ./
-RUN npm install --only=prod
+RUN npm install --omit=dev
 RUN npm install @vue/cli-service
 COPY . .
 RUN npm run build
