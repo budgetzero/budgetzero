@@ -2,18 +2,20 @@ version: "3"
 
 services:
   backend:
-    container_name: backend
-    image: b0 #couchdb:3.2.2
+    container_name: budgetzero_backend
+    image: budgetzero_backend 
     restart: always
     ports:
       - 5984:5984
     volumes:
-      # "./budgetzero_data" is where data will persist locally
+      # "./budgetzero_data" is where data will persist locally. Feel free to change
       - ./budgetzero_data:/opt/couchdb/data
     environment:
       - COUCHDB_USER=admin 
-      - COUCHDB_PASSWORD=changeme
+      - COUCHDB_PASSWORD=changeme # change password if desired
 
+  # This is only used to create the default database. This can also be done
+  # manually in couchdb
   initializer:
     image: curlimages/curl
     deploy:
@@ -23,9 +25,10 @@ services:
       - backend
     command: >
       sh -c "curl -u admin:changeme -X PUT backend:5984/budgetzero_default"
+    # username/pass should match env variables above
       
   frontend:
-    container_name: frontend
+    container_name: budgetzero_frontend
     image: budgetzero_frontend
     restart: always
     ports:
