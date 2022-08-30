@@ -6,7 +6,8 @@ import { sanitizeValueInput } from '../../helper.js'
 
 export default {
   state: {
-    monthlyData: {}
+    monthlyData: {},
+    
   },
   getters: {
     monthlyData: state => state.monthlyData,

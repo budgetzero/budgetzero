@@ -14,6 +14,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import PouchDB from 'pouchdb'
 import mock_budget from '@/../tests/__mockdata__/mock_budget2.json'
+import { BudgetManager } from '../budget-manager.js';
 
 var FileSaver = require('file-saver')
 
@@ -33,7 +34,9 @@ export default {
     budgetOpened: null,
     budgetExists: true, // This opens the create budget modal when 'false'
     remoteSyncURL: null,
-    syncHandle: null
+    syncHandle: null,
+
+    budgetManager: new BudgetManager()
   },
   getters: {
     remoteSyncURL: state => state.remoteSyncURL,
@@ -210,6 +213,10 @@ export default {
   mutations: {
     SET_POUCHDB_DOCS(state, response) {
       const data = response.map(row => row.doc)
+      
+      // Initalize budgetmanager data
+      state.budgetManager.initializeBudget(data)
+
       state.transactions = data.filter(row => row._id.includes('_transaction_'))
       state.monthCategoryBudgets = data.filter(row => row._id.includes('_m_category_'))
       state.payees = data.filter(row => row._id.includes('_payee_'))
