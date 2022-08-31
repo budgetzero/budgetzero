@@ -1,3 +1,4 @@
+// import { resolve } from 'core-js/fn/promise'
 import _, { reject } from 'lodash'
 import moment from 'moment'
 import PouchDB from 'pouchdb'
@@ -54,6 +55,7 @@ export class BudgetManager {
     this.pouchdbManager = new PouchDBManager()
     this.loadAvailableBudgets()
     this.budgetData = null
+    this.budgetID = null
   }
 
   loadData(data) {
@@ -97,13 +99,14 @@ export class BudgetManager {
     this.calculateMonthlyData()
   }
 
-  async loadBudgetWithID(budget_id) {
+  async loadBudgetWithID(budgetID) {
+    this.budgetID = budgetID
     try {
       let res = await this.pouchdbManager.localdb.allDocs({
         include_docs: true,
         attachments: true,
-        startkey: `b_${budget_id}_`,
-        endkey: `b_${budget_id}_\ufff0`
+        startkey: `b_${budgetID}_`,
+        endkey: `b_${budgetID}_\ufff0`
       })
       this.initializeBudget(res.rows.map((row) => row.doc))
     } catch (err) {
@@ -124,23 +127,48 @@ export class BudgetManager {
     }
   }
 
-  addDocument(doc) {
-    return new Promise((resolveOuter, rejectOuter) => {
+  async addDocument(doc) {
+    // Validate document
+    try {
       if (!this._isValidDocument(doc)) {
-        rejectOuter('Document failed validation')
+        throw Error('Document failed validation')
       }
-      this.pouchdbManager.localdb.put(doc).then(
-        (response) => {
-          this.budgetData.push(doc)
-          this.parseBudget()
-          resolveOuter(response)
-        },
-        (error) => {
-          console.error(error)
-          rejectOuter(error.name)
-        }
-      )
-    })
+    } catch (err) {
+      throw err
+    }
+
+    // Check if document already exists
+    // May be able to remove in the future?
+    let addingNewDocument = false
+    var originalDoc
+    try {
+      originalDoc = await this.pouchdbManager.localdb.get(doc._id)
+      doc._rev = originalDoc._rev // update _rev just in case
+    } catch (err) {
+      if (err.name === 'not_found') {
+        addingNewDocument = true
+      } else {
+        throw err 
+      }
+    }
+
+
+    let response
+    try {
+      response = await this.pouchdbManager.localdb.put(doc)
+    } catch (err) {
+      throw err
+    }
+
+    if (addingNewDocument) {
+      this.budgetData.push(doc)
+    } else {
+      // reload entire budget
+      this.loadBudgetWithID
+    }
+    
+    this.parseBudget()
+    return response
   }
 
   _isValidDocument(payload) {
