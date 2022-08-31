@@ -1,10 +1,21 @@
-import _ from 'lodash'
+import _, { reject } from 'lodash'
 import moment from 'moment'
 import PouchDB from 'pouchdb'
+import {
+  schema_budget,
+  schema_budget_opened,
+  schema_account,
+  schema_transaction,
+  schema_category,
+  schema_m_category,
+  schema_masterCategory,
+  schema_payee,
+  validateSchema
+} from '../../src/store/validation'
 
 export class PouchDBManager {
   constructor() {
-    this.localdb = new PouchDB('budgetzero_local_db123335')
+    this.localdb = new PouchDB(new Date().toISOString())
     this.remoteSyncDB = null
     this.syncHandler = null
   }
@@ -42,10 +53,15 @@ export class BudgetManager {
   constructor() {
     this.pouchdbManager = new PouchDBManager()
     this.loadAvailableBudgets()
+    this.budgetData = null
   }
 
-  initializeBudget(data) {
+  loadData(data) {
     this.budgetData = data
+    this.parseBudget()
+  }
+
+  parseBudget() {
     this.budgetsAvailable = null
     this.transactions = this.budgetData.filter((row) => row._id.includes('_transaction_'))
     this.monthCategoryBudgets = this._month_category_budgets()
@@ -110,16 +126,77 @@ export class BudgetManager {
 
   addDocument(doc) {
     return new Promise((resolveOuter, rejectOuter) => {
+      if (!this._isValidDocument(doc)) {
+        rejectOuter('Document failed validation')
+      }
       this.pouchdbManager.localdb.put(doc).then(
-        response => {
-          this.transactions.push(doc)
+        (response) => {
+          this.budgetData.push(doc)
+          this.parseBudget()
           resolveOuter(response)
         },
-        error => {
+        (error) => {
           rejectOuter(error)
         }
       )
     })
+  }
+
+  _isValidDocument(payload) {
+    var docType = null
+    var _id = null
+
+    //Validation
+    var index = null
+    if (payload._id.startsWith('budget_')) {
+      docType = 'budget'
+      _id = payload._id.substring(7)
+    } else if (payload._id.startsWith('budget-opened_')) {
+      docType = 'budget-opened'
+    } else {
+      docType = payload._id.substring(payload._id.indexOf('_', 5) + 1, payload._id.lastIndexOf('_', 55))
+    }
+
+    var validationResult = {
+      errors: 'Validation schema not found.'
+    }
+
+    switch (docType) {
+      case 'transaction':
+        validationResult = validateSchema.validate(payload, schema_transaction)
+        break
+      case 'category':
+        validationResult = validateSchema.validate(payload, schema_category)
+        break
+      case 'master-category':
+        validationResult = validateSchema.validate(payload, schema_masterCategory)
+        break
+      case 'account':
+        validationResult = validateSchema.validate(payload, schema_account)
+        break
+      case 'm_category':
+        validationResult = validateSchema.validate(payload, schema_m_category)
+        break
+      case 'payee':
+        validationResult = validateSchema.validate(payload, schema_payee)
+        break
+      case 'budget':
+        validationResult = validateSchema.validate(payload, schema_budget)
+        break
+      case 'budget-opened':
+        //TODO: validate
+        validationResult = validateSchema.validate(payload, schema_budget_opened)
+        break
+      default:
+        console.error('Doesnt recognize doc type ', docType)
+    }
+
+    if (validationResult.errors.length > 0) {
+      console.log('Failed validation:', payload)
+      return false
+    }
+
+    return true
   }
 
   async addBulkDocuments(doc) {
