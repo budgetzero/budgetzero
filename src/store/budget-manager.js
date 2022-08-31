@@ -102,7 +102,7 @@ export class BudgetManager {
     this.month_category_lookup = this._month_category_lookup()
     this.transaction_lookup = this._transaction_lookup()
     this.all_months = this._all_months()
-    
+
     this.calculateMonthlyData()
   }
 
@@ -135,7 +135,7 @@ export class BudgetManager {
     }
   }
 
-  async addDocument(doc) {
+  async putDocument(doc) {
     // Validate document
     try {
       if (!this._isValidDocument(doc)) {
@@ -156,10 +156,9 @@ export class BudgetManager {
       if (err.name === 'not_found') {
         addingNewDocument = true
       } else {
-        throw err 
+        throw err
       }
     }
-
 
     let response
     try {
@@ -175,7 +174,32 @@ export class BudgetManager {
       // reload entire budget
       await this.loadBudgetWithID(this.budgetID)
     }
-    
+
+    return response
+  }
+
+  async putBulkDocuments(docs) {
+    // Validate documents
+    try {
+      docs.forEach((doc) => {
+        if (!this._isValidDocument(doc)) {
+          throw Error('Document failed validation')
+        }
+      })
+    } catch (err) {
+      throw err
+    }
+
+    let response
+    try {
+      response = await this.pouchdbManager.localdb.bulkDocs(docs)
+    } catch (err) {
+      throw err
+    }
+
+    // reload entire budget
+    await this.loadBudgetWithID(this.budgetID)
+
     return response
   }
 

@@ -55,7 +55,7 @@ describe('budget-manager transactions', () => {
 
   it('add transaction', async () => {
     expect(budgetmanager.transactions.length).toBe(563)
-    let resp = await budgetmanager.addDocument({
+    let resp = await budgetmanager.putDocument({
       account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
       category: null,
       cleared: false,
@@ -76,7 +76,7 @@ describe('budget-manager transactions', () => {
 
   it('add bad transaction', async () => {
     expect(
-      budgetmanager.addDocument({
+      budgetmanager.putDocument({
         category: null,
         cleared: false,
         approved: false,
@@ -102,7 +102,7 @@ describe('budget-manager transactions', () => {
     const num_of_trans = budgetmanager.transactions.length
     const num_of_docs = budgetmanager.budgetData.length
     
-    let resp = await budgetmanager.addDocument(original_transaction)
+    let resp = await budgetmanager.putDocument(original_transaction)
       
     // Number of data shouldn't change for a modification
     expect(budgetmanager.transactions.length).toBe(num_of_trans)
@@ -124,21 +124,21 @@ describe('budget-manager transactions', () => {
     original_transaction.value = 'not a number'
 
     const num_of_trans = budgetmanager.transactions.length
-    await expect(budgetmanager.addDocument(original_transaction)).rejects.toThrowError('Document failed validation')
+    await expect(budgetmanager.putDocument(original_transaction)).rejects.toThrowError('Document failed validation')
     expect(budgetmanager.transactions.length).toBe(num_of_trans)
   })
 
     
 })
 
-describe('budget-manager monthlData calculates when', () => {
+describe('budget-manager monthlyData calculates when', () => {
   beforeAll(async () => {
    await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
   })
 
   it('add transaction', async () => {
     // const data = budgetmanager.monthlyData
-    let resp = await budgetmanager.addDocument({
+    let resp = await budgetmanager.putDocument({
       account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
       category: null,
       cleared: false,
@@ -160,7 +160,7 @@ describe('budget-manager monthlData calculates when', () => {
 
   it('modify budget amount', async () => {
     // const data = budgetmanager.monthlyData
-    let resp = await budgetmanager.addDocument(  {
+    let resp = await budgetmanager.putDocument(  {
       "budget": 20000,
       "overspending": null,
       "note": "",
@@ -171,5 +171,73 @@ describe('budget-manager monthlData calculates when', () => {
     // expect(data).toStrictEqual(after)
   })
 
+ 
+})
+
+describe('budget-manager putBulkDocuments', () => {
+  beforeAll(async () => {
+   await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
+  })
+
+  it('add bulk transaction', async () => {
+
+    const num_of_trans = budgetmanager.transactions.length
+    const num_of_docs = budgetmanager.budgetData.length
+    
+    const bulk = [{
+      account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+      category: null,
+      cleared: false,
+      approved: false,
+      value: -100000,
+      date: '2015-05-10',
+      memo: 'memo',
+      reconciled: false,
+      flag: '#ffffff',
+      payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
+      transfer: null,
+      splits: [],
+      _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed0yyyy'
+    },{
+      account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+      category: null,
+      cleared: false,
+      approved: false,
+      value: -150000,
+      date: '2015-05-10',
+      memo: 'memo',
+      reconciled: false,
+      flag: '#ffffff',
+      payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
+      transfer: null,
+      splits: [],
+      _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed0zzzz'
+      }]
+    
+    let resp = await budgetmanager.putBulkDocuments(bulk)
+    
+    // Number of data shouldn't change for a modification
+    expect(budgetmanager.transactions.length).toBe(num_of_trans + bulk.length)
+    expect(budgetmanager.budgetData.length).toBe(num_of_docs + bulk.length)
+  })
+
+  it('add bad transaction', async () => {
+    expect(
+      budgetmanager.putBulkDocuments([{
+        category: null,
+        cleared: false,
+        approved: false,
+        value: -4444,
+        date: '2015-05-10',
+        memo: 'memo',
+        reconciled: false,
+        flag: '#ffffff',
+        payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
+        transfer: null,
+        splits: [],
+        _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed01234'
+      }])
+    ).rejects.toThrowError('Document failed validation')
+  })
  
 })
