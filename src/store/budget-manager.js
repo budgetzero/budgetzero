@@ -136,7 +136,8 @@ export class BudgetManager {
           resolveOuter(response)
         },
         (error) => {
-          rejectOuter(error)
+          console.error(error)
+          rejectOuter(error.name)
         }
       )
     })
