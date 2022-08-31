@@ -22,9 +22,10 @@ describe('budget-manager', () => {
     expect(budgetmanager.monthlyData).toMatchSnapshot()
   })
 
-  //   it('loaded the data', async () => {
-  //     expect(budgetmanager.budgetData.length).toBe(620)
-  //   })
+  it('loaded the data', async () => {
+    // Subtract budget and budget-opened docs
+    expect(budgetmanager.budgetData.length).toBe(mock_budget.length-2)
+  })
 
   it('has correct number of transactions', async () => {
     expect(budgetmanager.transactions.length).toBe(563)
@@ -47,7 +48,7 @@ describe('budget-manager', () => {
   })
 })
 
-describe('budget-manager', () => {
+describe('budget-manager transactions', () => {
   beforeAll(async () => {
     await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
   })
@@ -73,44 +74,24 @@ describe('budget-manager', () => {
     expect(resp['ok']).toBe(true)
   })
 
-  // it('add duplicate transaction', async () => {
-  //   expect(
-  //     budgetmanager.addDocument({
-  //       account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
-  //       category: null,
-  //       cleared: false,
-  //       approved: false,
-  //       value: -4444,
-  //       date: '2015-05-10',
-  //       memo: 'memo',
-  //       reconciled: false,
-  //       flag: '#ffffff',
-  //       payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
-  //       transfer: null,
-  //       splits: [],
-  //       _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed01234'
-  //     })
-  //   ).rejects.toBe('conflict: Document update conflict')
-  // })
-
-  // it('add bad transaction', async () => {
-  //   expect(
-  //     budgetmanager.addDocument({
-  //       category: null,
-  //       cleared: false,
-  //       approved: false,
-  //       value: -4444,
-  //       date: '2015-05-10',
-  //       memo: 'memo',
-  //       reconciled: false,
-  //       flag: '#ffffff',
-  //       payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
-  //       transfer: null,
-  //       splits: [],
-  //       _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed01234'
-  //     })
-  //   ).rejects.toEqual('Error: Document failed validation')
-  // })
+  it('add bad transaction', async () => {
+    expect(
+      budgetmanager.addDocument({
+        category: null,
+        cleared: false,
+        approved: false,
+        value: -4444,
+        date: '2015-05-10',
+        memo: 'memo',
+        reconciled: false,
+        flag: '#ffffff',
+        payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
+        transfer: null,
+        splits: [],
+        _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed01234'
+      })
+    ).rejects.toThrowError('Document failed validation')
+  })
 
   it('get and modify transaction', async () => {
     const original_transaction = await budgetmanager.pouchdbManager.localdb.get(
@@ -148,4 +129,47 @@ describe('budget-manager', () => {
   })
 
     
+})
+
+describe('budget-manager monthlData calculates when', () => {
+  beforeAll(async () => {
+   await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
+  })
+
+  it('add transaction', async () => {
+    // const data = budgetmanager.monthlyData
+    let resp = await budgetmanager.addDocument({
+      account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+      category: null,
+      cleared: false,
+      approved: false,
+      value: -100000,
+      date: '2015-05-10',
+      memo: 'memo',
+      reconciled: false,
+      flag: '#ffffff',
+      payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
+      transfer: null,
+      splits: [],
+      _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed0xxxx'
+    })
+    expect(budgetmanager.monthlyData).toMatchSnapshot()
+    // const after = budgetmanager.monthlyData
+    // expect(data).toStrictEqual(after)
+  })
+
+  it('modify budget amount', async () => {
+    // const data = budgetmanager.monthlyData
+    let resp = await budgetmanager.addDocument(  {
+      "budget": 20000,
+      "overspending": null,
+      "note": "",
+      "_id": "b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_m_category_2019-08-01_02ec642d-25c6-4f4b-a21f-3b4a5b4025c1"
+    })
+    expect(budgetmanager.monthlyData).toMatchSnapshot()
+    // const after = budgetmanager.monthlyData
+    // expect(data).toStrictEqual(after)
+  })
+
+ 
 })
