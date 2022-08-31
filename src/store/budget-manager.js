@@ -58,12 +58,20 @@ export class BudgetManager {
     this.budgetID = null
   }
 
-  loadData(data) {
-    this.budgetData = data
-    this.parseBudget()
+  async loadMockDataIntoPouchDB(data, id) {
+    try {
+      await this.pouchdbManager.localdb.bulkDocs(data)
+    } catch (err) {
+      console.log('error=', err)
+    }
+    try {
+      await this.loadBudgetWithID(id)
+    } catch (err) {
+      console.log('error=', err)
+    }
   }
 
-  parseBudget() {
+  initializeBudget() {
     this.budgetsAvailable = null
     this.transactions = this.budgetData.filter((row) => row._id.includes('_transaction_'))
     this.monthCategoryBudgets = this._month_category_budgets()
@@ -94,8 +102,7 @@ export class BudgetManager {
     this.month_category_lookup = this._month_category_lookup()
     this.transaction_lookup = this._transaction_lookup()
     this.all_months = this._all_months()
-
-    this.monthlyData = null
+    
     this.calculateMonthlyData()
   }
 
@@ -108,7 +115,8 @@ export class BudgetManager {
         startkey: `b_${budgetID}_`,
         endkey: `b_${budgetID}_\ufff0`
       })
-      this.initializeBudget(res.rows.map((row) => row.doc))
+      this.budgetData = res.rows.map((row) => row.doc)
+      this.initializeBudget()
     } catch (err) {
       console.log('error=', err)
     }
@@ -162,12 +170,12 @@ export class BudgetManager {
 
     if (addingNewDocument) {
       this.budgetData.push(doc)
+      this.initializeBudget()
     } else {
       // reload entire budget
-      this.loadBudgetWithID
+      await this.loadBudgetWithID(this.budgetID)
     }
     
-    this.parseBudget()
     return response
   }
 

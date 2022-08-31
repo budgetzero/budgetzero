@@ -13,9 +13,8 @@ new PouchDB('budgetzero_local_db12333')
 let budgetmanager = new BudgetManager()
 
 describe('budget-manager', () => {
-  beforeAll(() => {
-    budgetmanager.loadData(mock_budget)
-    budgetmanager.loadBudgetWithID('5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
+  beforeAll(async () => {
+   await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
   })
 
   it('calculates correctly', async () => {
@@ -49,9 +48,8 @@ describe('budget-manager', () => {
 })
 
 describe('budget-manager', () => {
-  beforeAll(() => {
-    budgetmanager.loadData(mock_budget)
-    budgetmanager.loadBudgetWithID('5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
+  beforeAll(async () => {
+    await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
   })
 
   it('add transaction', async () => {
@@ -116,7 +114,7 @@ describe('budget-manager', () => {
 
   it('get and modify transaction', async () => {
     const original_transaction = await budgetmanager.pouchdbManager.localdb.get(
-      'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed01234'
+      'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_2b84300c-9503-497e-be96-dfc9a683027f'
     )
     original_transaction.name = 'new name'
 
@@ -133,14 +131,14 @@ describe('budget-manager', () => {
 
     //Check that it was modified
     const updated_transaction = await budgetmanager.pouchdbManager.localdb.get(
-      'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed01234'
+      'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_2b84300c-9503-497e-be96-dfc9a683027f'
     )
     expect(updated_transaction.name).toBe('new name')
   })
 
   it('get and modify malformed transaction', async () => {
     const original_transaction = await budgetmanager.pouchdbManager.localdb.get(
-      'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed01234'
+      'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_2b84300c-9503-497e-be96-dfc9a683027f'
     )
     original_transaction.value = 'not a number'
 
