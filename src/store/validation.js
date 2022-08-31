@@ -65,8 +65,8 @@ const schema_transaction = {
     },
     _id: {
       type: 'string',
-      minimum: 84,
-      maximum: 84
+      minLength: 87,
+      maxLength: 87
     }
   },
   required: [

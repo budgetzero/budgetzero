@@ -222,7 +222,7 @@ describe('budget-manager putBulkDocuments', () => {
   })
 
   it('add bad transaction', async () => {
-    expect(
+    await expect(
       budgetmanager.putBulkDocuments([{
         category: null,
         cleared: false,
@@ -239,5 +239,25 @@ describe('budget-manager putBulkDocuments', () => {
       }])
     ).rejects.toThrowError('Document failed validation')
   })
- 
+
+  it('add bad transaction with wrong length ID', async () => {
+    await expect(
+      budgetmanager.putBulkDocuments([{
+        account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+        category: null,
+        cleared: false,
+        approved: false,
+        value: -4444,
+        date: '2015-05-10',
+        memo: 'memo',
+        reconciled: false,
+        flag: '#ffffff',
+        payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
+        transfer: null,
+        splits: [],
+        _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4da'
+      }])
+    ).rejects.toThrowError('Document failed validation')
+  })
+
 })
