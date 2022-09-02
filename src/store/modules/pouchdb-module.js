@@ -14,7 +14,6 @@ import _ from 'lodash'
 import moment from 'moment'
 import PouchDB from 'pouchdb'
 import mock_budget from '@/../tests/__mockdata__/mock_budget2.json'
-import { BudgetManager } from '../budget-manager.js';
 
 var FileSaver = require('file-saver')
 
@@ -36,10 +35,8 @@ export default {
     remoteSyncURL: null,
     syncHandle: null,
 
-    budgetManager: new BudgetManager()
   },
   getters: {
-    budgetManager: state => state.budgetManager,
     remoteSyncURL: state => state.remoteSyncURL,
     //Plain getters for main doc types
     transactions: state => state.transactions,
@@ -218,16 +215,9 @@ export default {
         snackbarColor: 'primary'
       })
     },
-    INIT_BUDGET_MANAGER(state) {
-      // Initalize budgetmanager data
-      console.log('init manager')
-      state.budgetManager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
-    },
     SET_POUCHDB_DOCS(state, response) {
       const data = response.map(row => row.doc)
       
-      state.budgetManager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
-
       state.transactions = data.filter(row => row._id.includes('_transaction_'))
       state.monthCategoryBudgets = data.filter(row => row._id.includes('_m_category_'))
       state.payees = data.filter(row => row._id.includes('_payee_'))

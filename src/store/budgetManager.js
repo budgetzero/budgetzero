@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { PouchDBManager } from '../../src/store/budget-manager'
+import { PouchDBManager } from './pouchdb-manager'
 import moment from 'moment'
 import {
   schema_budget,
@@ -11,7 +11,7 @@ import {
   schema_masterCategory,
   schema_payee,
   validateSchema
-} from '../../src/store/validation'
+} from './validation'
 import _ from 'lodash'
 
 export const useBudgetManagerStore = defineStore('budgetManager', {

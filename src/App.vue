@@ -42,7 +42,7 @@ import BaseDialogModalComponent from './components/Modals/BaseDialogModalCompone
 import ConfirmDialog from './components/Modals/ConfirmDialog.vue'
 
 import { mapStores } from 'pinia'
-import { useBudgetManagerStore } from './store/pinia'
+import { useBudgetManagerStore } from './store/budgetManager'
 import mock_budget from '@/../tests/__mockdata__/mock_budget2.json'
 
 export default {

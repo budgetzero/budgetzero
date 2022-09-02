@@ -443,8 +443,8 @@ import TransactionHeader from './TransactionHeader'
 import _ from 'lodash'
 import { sanitizeValueInput } from '../../helper.js'
 import { mapStores } from 'pinia'
-import { useBudgetManagerStore } from '../../store/pinia'
-import { useBudgetHelperStore } from '../../store/budget-helper'
+import { useBudgetManagerStore } from '../../store/budgetManager'
+import { useBudgetHelperStore } from '../../store/budgetManagerHelper'
 
 export default {
   name: 'Transactions',

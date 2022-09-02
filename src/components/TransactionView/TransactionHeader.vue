@@ -77,7 +77,7 @@
 <script>
 import Vue from 'vue'
 import { mapStores } from 'pinia'
-import { useBudgetManagerStore } from '../../store/pinia'
+import { useBudgetManagerStore } from '../../store/budgetManager'
 
 export default {
   props: ['selected_account'],

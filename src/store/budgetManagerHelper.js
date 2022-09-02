@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { useBudgetManagerStore } from './pinia'
+import { useBudgetManagerStore } from './budgetManager'
 import { v4 as uuidv4 } from 'uuid'
 import validator from 'validator'
 import { sanitizeValueInput } from '../helper.js'

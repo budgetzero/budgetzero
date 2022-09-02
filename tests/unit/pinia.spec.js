@@ -1,7 +1,7 @@
 // stores/counter.spec.ts
 import { setActivePinia, createPinia } from 'pinia'
-import { useBudgetManagerStore } from '../../src/store/pinia'
-import { useBudgetHelperStore } from '../../src/store/budget-helper'
+import { useBudgetManagerStore } from '../../src/store/budgetManager'
+import { useBudgetHelperStore } from '../../src/store/budgetManagerHelper'
 import validator from 'validator'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -311,6 +311,27 @@ describe('budget-manager helper', () => {
     expect(budgetmanager.payees.length).toBe(payee_count + 1)
     expect(validator.isUUID(resp)).toBe(true)
   })
+
+  // it('add transfer transaction', async () => {
+  //   const transaction_count = budgetmanager.transactions.length
+  //   let resp = await budgetHelper.putTransaction({
+  //     account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+  //     category: null,
+  //     cleared: false,
+  //     approved: false,
+  //     value: -4444,
+  //     date: '2015-05-10',
+  //     memo: 'unit test',
+  //     reconciled: false,
+  //     flag: '#ffffff',
+  //     payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
+  //     transfer: null,
+  //     splits: [],
+  //     _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed05454'
+  //   })
+  //   expect(budgetmanager.payees.length).toBe(transaction_count + 1)
+  //   expect(validator.isUUID(resp)).toBe(true)
+  // })
 
   it('add transaction with budget-helper action', async () => {
     const transaction_count = budgetmanager.transactions.length
