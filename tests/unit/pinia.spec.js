@@ -1,10 +1,15 @@
 // stores/counter.spec.ts
 import { setActivePinia, createPinia } from 'pinia'
 import { useBudgetManagerStore } from '../../src/store/pinia'
+import { useBudgetHelperStore } from '../../src/store/budget-helper'
+import validator from 'validator'
+import { v4 as uuidv4 } from 'uuid'
+
 import mock_budget from '@/../tests/__mockdata__/mock_budget2.json'
 import PouchDB from 'pouchdb'
 
 let budgetmanager
+let budgetHelper
 
 describe('budget manager', () => {
   beforeEach(async () => {
@@ -264,5 +269,67 @@ describe('budget-manager putBulkDocuments', () => {
         }
       ])
     ).rejects.toThrowError('Document failed validation')
+  })
+})
+
+describe('budget-manager helper', () => {
+  beforeEach(async () => {
+    // creates a fresh pinia and make it active so it's automatically picked
+    // up by any useStore() call without having to pass it to it:
+    // `useStore(pinia)`
+    setActivePinia(createPinia())
+    budgetmanager = useBudgetManagerStore()
+    budgetHelper = useBudgetHelperStore()
+    await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
+  })
+
+  it('add payee', async () => {
+    const payee_count = budgetmanager.payees.length
+    let resp = await budgetHelper.createPayee('test payee')
+    expect(budgetmanager.payees.length).toBe(payee_count + 1)
+    expect(resp['ok']).toBe(true)
+  })
+
+  it('get payee ID for existing payee', async () => {
+    let resp = await budgetHelper.getPayeeID('Test Payee 16')
+    expect(validator.isUUID(resp)).toBe(true)
+  })
+
+  it('get payee ID for initial balance', async () => {
+    let resp = await budgetHelper.getPayeeID('---------------------initial-balance')
+    expect(resp).toBe('---------------------initial-balance')
+  })
+
+  it('get null payee ID for empty or null', async () => {
+    let resp = await budgetHelper.getPayeeID('')
+    expect(resp).toBe(null)
+  })
+
+  it('get payee ID for new payee', async () => {
+    const payee_count = budgetmanager.payees.length
+    let resp = await budgetHelper.getPayeeID('a new payee')
+    expect(budgetmanager.payees.length).toBe(payee_count + 1)
+    expect(validator.isUUID(resp)).toBe(true)
+  })
+
+  it('add transaction with budget-helper action', async () => {
+    const transaction_count = budgetmanager.transactions.length
+    let resp = await budgetHelper.putTransaction({
+      account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+      category: null,
+      cleared: false,
+      approved: false,
+      value: -4444,
+      date: '2015-05-10',
+      memo: 'unit test',
+      reconciled: false,
+      flag: '#ffffff',
+      payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
+      transfer: null,
+      splits: [],
+      _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed05454'
+    })
+    expect(budgetmanager.transactions.length).toBe(transaction_count + 1)
+    expect(resp['ok']).toBe(true)
   })
 })

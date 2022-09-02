@@ -444,6 +444,7 @@ import _ from 'lodash'
 import { sanitizeValueInput } from '../../helper.js'
 import { mapStores } from 'pinia'
 import { useBudgetManagerStore } from '../../store/pinia'
+import { useBudgetHelperStore } from '../../store/budget-helper'
 
 export default {
   name: 'Transactions',
@@ -598,7 +599,7 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useBudgetManagerStore),
+    ...mapStores(useBudgetManagerStore, useBudgetHelperStore),
     inflowAmount: {
       get() {
         return this.editedItem.value > 0 ? Math.round(this.parseInflowOutflow(this.editedItem.value)) / 100 : ''
@@ -673,7 +674,7 @@ export default {
       // Returns early if not searching
       if (!this.search) return trans
 
-      // Implements search 
+      // Implements search
       return trans.filter((row) => {
         if (this.budgetManagerStore.payee_map[row.payee] !== undefined) {
           return (
@@ -750,7 +751,6 @@ export default {
         //TODO: Repeating code here from above. Boo
         this.creatingNewTransaction = false
         this.editedIndex = this.budgetManagerStore.transactions.indexOf(item)
-        console.log(this.budgetManagerStore.transactions, this.editedIndex, item)
         this.editedItem = JSON.parse(JSON.stringify(this.budgetManagerStore.transactions[this.editedIndex])) // Removes reactivity to avoid mutating vuex state illegally
       }
     },
@@ -792,7 +792,8 @@ export default {
         }
         this.editedItem.approved = true
 
-        this.budgetManagerStore.putDocument(this.editedItem)
+        console.log('put', this.editedItem)
+        this.budgetHelperStore.putTransaction(this.editedItem)
         this.cancel()
       } else {
         this.$store.commit('SET_SNACKBAR_MESSAGE', {
