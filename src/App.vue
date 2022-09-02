@@ -5,17 +5,13 @@
 
     <!-- Modal to input reconcile amount  -->
     <BaseDialogModalComponent v-model="isModalVisibleCreateBudget">
-      <template #title>
-        Let's get started!
-      </template>
+      <template #title> Let's get started! </template>
       <template #body>
         <v-text-field v-model="budgetName" id="budgetNameField" label="Enter a name for your budget" required />
       </template>
       <template #actions>
         <v-spacer />
-        <v-btn id="createBudgetBtn" color="accent" @click="createBudget()">
-          Create Budget
-        </v-btn>
+        <v-btn id="createBudgetBtn" color="accent" @click="createBudget()"> Create Budget </v-btn>
       </template>
     </BaseDialogModalComponent>
 
@@ -24,13 +20,11 @@
     <v-main>
       <router-view class="animated" />
     </v-main>
-    <v-snackbar v-model="snackbar" :color="snackBarColor">
-      {{ snackbarMessage }}
+    <v-snackbar v-model="mainPiniaStore.snackbar" :color="mainPiniaStore.snackBarColor">
+      {{ mainPiniaStore.snackbarMessage }}
 
       <template #action="{ attrs }">
-        <v-btn color="white" text v-bind="attrs" @click="snackbar = false">
-          Close
-        </v-btn>
+        <v-btn color="white" text v-bind="attrs" @click="mainPiniaStore.snackbar = false"> Close </v-btn>
       </template>
     </v-snackbar>
   </v-app>
@@ -43,6 +37,8 @@ import ConfirmDialog from './components/Modals/ConfirmDialog.vue'
 
 import { mapStores } from 'pinia'
 import { useBudgetManagerStore } from './store/budgetManager'
+import { useMainStore } from './store/mainPiniaStore'
+
 import mock_budget from '@/../tests/__mockdata__/mock_budget2.json'
 
 export default {
@@ -60,29 +56,16 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useBudgetManagerStore),
+    ...mapStores(useBudgetManagerStore, useMainStore),
     isModalVisibleCreateBudget() {
       return !this.$store.getters.budgetExists
     },
-    snackbarMessage() {
-      return this.$store.getters.snackbarMessage
-    },
-    snackBarColor() {
-      return this.$store.getters.snackbarColor
-    },
-    snackbar: {
-      get() {
-        return this.$store.getters.snackbar
-      },
-      set(value) {
-        this.$store.dispatch('setSnackBarBoolean', value)
-      }
-    }
   },
   mounted() {
+    console.log(this)
+    this.mainPiniaStore.setSnackbarMessage({snackbarMessage: 'ok', snackBarColor: 'blue'})
     this.budgetManagerStore.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
-    this.$store.dispatch('AUTH_CHECK')
-    this.$root.$confirm = this.$refs.confirm.open
+    // this.$root.$confirm = this.$refs.confirm.open
   },
   methods: {
     async createBudget() {

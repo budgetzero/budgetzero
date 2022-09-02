@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { PouchDBManager } from './pouchdb-manager'
 import moment from 'moment'
 import {
   schema_budget,
@@ -13,10 +12,10 @@ import {
   validateSchema
 } from './validation'
 import _ from 'lodash'
+import { usePouchDBStore } from './pouchdbStore'
 
 export const useBudgetManagerStore = defineStore('budgetManager', {
   state: () => ({
-    pouchdbManager: new PouchDBManager(),
     budgetData: null,
     budgetID: null,
     budgetsAvailable: null,
@@ -125,9 +124,11 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
     },
 
     async loadBudgetWithID(budgetID) {
+      const pouchdbStore = usePouchDBStore()
+
       this.budgetID = budgetID
       try {
-        let res = await this.pouchdbManager.localdb.allDocs({
+        let res = await pouchdbStore.localdb.allDocs({
           include_docs: true,
           attachments: true,
           startkey: `b_${budgetID}_`,
@@ -141,8 +142,9 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
     },
 
     async _loadAvailableBudgets() {
+      const pouchdbStore = usePouchDBStore()
       try {
-        let resp = await this.pouchdbManager.localdb.allDocs({
+        let resp = await pouchdbStore.localdb.allDocs({
           include_docs: true,
           attachments: true,
           startkey: 'budget-opened_',
@@ -155,8 +157,9 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
     },
 
     async loadMockDataIntoPouchDB(data, id) {
+      const pouchdbStore = usePouchDBStore()
       try {
-        await this.pouchdbManager.localdb.bulkDocs(data)
+        await pouchdbStore.localdb.bulkDocs(data)
       } catch (err) {
         console.log('error=', err)
       }
@@ -168,6 +171,7 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
     },
 
     async putDocument(doc) {
+      const pouchdbStore = usePouchDBStore()
       // Validate document
       try {
         if (!this._isValidDocument(doc)) {
@@ -182,7 +186,7 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
       let addingNewDocument = false
       var originalDoc
       try {
-        originalDoc = await this.pouchdbManager.localdb.get(doc._id)
+        originalDoc = await pouchdbStore.localdb.get(doc._id)
         doc._rev = originalDoc._rev // update _rev just in case
       } catch (err) {
         if (err.name === 'not_found') {
@@ -194,7 +198,7 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
 
       let response
       try {
-        response = await this.pouchdbManager.localdb.put(doc)
+        response = await pouchdbStore.localdb.put(doc)
       } catch (err) {
         throw err
       }
@@ -211,6 +215,7 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
     },
 
     async putBulkDocuments(docs) {
+      const pouchdbStore = usePouchDBStore()
       // Validate documents
       try {
         docs.forEach((doc) => {
@@ -224,7 +229,7 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
 
       let response
       try {
-        response = await this.pouchdbManager.localdb.bulkDocs(docs)
+        response = await pouchdbStore.localdb.bulkDocs(docs)
       } catch (err) {
         throw err
       }
@@ -487,6 +492,6 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
           result[key] = obj[key]
           return result
         }, {})
-    }
+    },
   }
 })

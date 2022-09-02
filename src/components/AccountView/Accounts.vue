@@ -3,7 +3,7 @@
     <v-data-table
       id="accountsTable"
       :headers="headers"
-      :items="accounts"
+      :items="budgetManagerStore.accounts"
       sort-by="calories"
       class="elevation-1 account-table"
       hide-default-footer
@@ -36,31 +36,9 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import AccountAddModal from './AccountAddModal'
+import { mapStores } from 'pinia'
+import { useBudgetManagerStore } from '../../store/budgetManager'
 
-/*
-Account view
--------------
-
-+ Add account
-+ Delete account
-+ Edit account
-    ++ Rename
-    ++ TODO: Add plaid association
-
-View: Name -- Type -- Balance
-
-{
-  "type": "CREDIT",         //type one of: MORTGAGE ASSET CREDIT DEBIT INVESTMENT SAVINGS CASH
-  "checkNumber": true,      //checkNumber true if check column is enabled
-  "closed": false,
-  "name": "Mortgage",
-  "note": null,
-  "sort": 7,                //sort can just all be zero initially
-  "onBudget": false,
-  "_id": “b_{budgetId}_account_{accountId}
-}
-
-*/
 export default {
   name: 'AccountGrid',
   components: {
@@ -99,7 +77,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['accounts', 'selectedBudgetID'])
+    ...mapStores(useBudgetManagerStore),
   },
   mounted() {},
   created() {},
@@ -178,7 +156,7 @@ export default {
           sort: this.editedItem.sort,
           onBudget: this.editedItem.onBudget,
           balanceIsNegative: this.editedItem.balanceIsNegative,
-          _id: `b_${this.selectedBudgetID}_account_${this.$uuid.v4()}`
+          _id: `b_${this.budgetManagerStore.budgetID}_account_${this.$uuid.v4()}`
         }
         console.log('new acct', newPayload, this.editedItem.initialBalance)
         this.$store.dispatch('createUpdateAccount', {
