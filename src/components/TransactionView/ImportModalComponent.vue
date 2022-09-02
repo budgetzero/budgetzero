@@ -288,19 +288,6 @@ export default {
         }
       })
 
-      // this.$swal({
-      //   title: "Auto close alert!",
-      //   html: "I will close in <b></b> milliseconds.",
-      //   preConfirm: login => {
-      //   }
-      // }).then(result => {
-      //   /* Read more about handling dismissals below */
-      //   // if (result.dismiss === Swal.DismissReason.timer) {
-      //   //   console.log("I was closed by the timer");
-      //   // }
-      // });
-
-      // this.$swal.showLoading();
       this.$swal({
         title: 'Loading...',
         html: 'Importing transactions. Please wait...',

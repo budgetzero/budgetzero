@@ -221,58 +221,8 @@
             </v-list-item>
           </v-list>
         </v-menu>
-
-        <!-- Login Button -->
-        <!-- <v-list-item v-if="mini && !user.loggedIn" class="pl-2">
-          <v-btn icon class="accent" :to="{ path: '/login' }">
-            <v-icon color="white"> mdi-login </v-icon>
-          </v-btn>
-        </v-list-item>
-        <v-list-item v-if="!mini && !user.loggedIn">
-          <v-btn block class="accent" :to="{ path: '/login' }">
-            <v-icon left color="white"> mdi-login </v-icon>
-            <span>Login</span>
-          </v-btn>
-        </v-list-item> -->
       </v-list>
 
-      <!-- Logged-in Menu -->
-      <v-menu v-if="user.loggedIn" offset-x max-width="150">
-        <template #activator="{ on }">
-          <v-list-item>
-            <v-list-item-icon class="mr-3">
-              <v-btn icon class="primary lighten-2" v-on="on">
-                <v-icon color="grey lighten-1"> mdi-account </v-icon>
-              </v-btn>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title class="subtitle-2 font-weight-bold">
-                {{ user.email }}
-              </v-list-item-title>
-              <v-list-item-subtitle class="font-weight-bold">
-                {{ sync_state }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </template>
-
-        <v-list dense color="grey lighten-4">
-          <v-list-item>
-            <v-list-item-content>
-              <v-btn class="blue-grey darken-5" :to="{ path: '/profile' }">
-                <v-icon left color="white"> mdi-account </v-icon>
-                <span class="white--text">Profile</span>
-              </v-btn>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item v-if="user.loggedIn">
-            <v-btn block class="accent" @click="$store.dispatch('LOGOUT')">
-              <v-icon left color="white"> mdi-logout </v-icon>Logout
-            </v-btn>
-          </v-list-item>
-        </v-list>
-      </v-menu>
     </template>
   </v-navigation-drawer>
 </template>
@@ -305,7 +255,6 @@ export default {
       'selectedBudgetID',
       'budgetRoots',
       'budgetRootsMap',
-      'user'
     ]),
     budgetName() {
       if (this.selectedBudget) {
@@ -336,64 +285,6 @@ export default {
     createBudget() {
       this.$router.push({ path: `/create` })
     },
-    plaid_link() {
-      const linkHandler = Plaid.create({
-        env: 'sandbox',
-        clientName: 'Plaid Sandbox',
-        // Replace '<PUBLIC_KEY>' with your own `public_key`
-        key: '1313814b396f2092dfda37b0697f4f',
-        product: ['auth'],
-        apiVersion: 'v2',
-        onSuccess(public_token, metadata) {
-          // Send the public_token to your app server here.
-          // The metadata object contains info about the
-          // institution the user selected and the
-          // account_id, if selectAccount is enabled.
-          console.log(public_token)
-          this.public_token = public_token
-
-          const dicttosend2 = {
-            name: 'Account name - autoadded',
-            type: 'Plaid',
-            public_token
-          }
-
-          fetch('http://192.168.1.4:8000/accounts/', {
-            method: 'POST',
-            body: JSON.stringify(dicttosend2),
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json'
-            }
-          }).then(
-            response => {
-              response.status //= > number 100–599
-              response.statusText //= > String
-              response.headers //= > Headers
-              response.url //= > String
-              return response.text()
-            },
-            error => {
-              error.message //= > String
-              console.log('Put failed')
-            }
-          )
-        },
-        onExit(err, metadata) {
-          // The user exited the Link flow.
-          if (err != null) {
-            // The user encountered a Plaid API error
-            // prior to exiting.
-          }
-          // metadata contains information about the
-          // institution that the user selected and the
-          // most recent API request IDs. Storing this
-          // information can be helpful for support.
-        }
-      })
-
-      linkHandler.open()
-    }
   }
 }
 </script>

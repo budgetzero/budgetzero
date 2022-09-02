@@ -27,8 +27,6 @@ import Transactions from './components/TransactionView/Transactions'
 
 import Accounts from './components/AccountView/Accounts'
 import BudgetGrid from './components/BudgetView/BudgetGrid'
-import Login from './components/Auth/Login.vue'
-import Profile from './components/Auth/Profile.vue'
 import CreateBudget from './components/CreateBudget.vue'
 import Manage from './components/Manage.vue'
 import Reports from './components/Reports.vue'
@@ -50,13 +48,6 @@ const options = {
 }
 
 Vue.use(VueSweetalert2, options)
-/** */
-
-/**
- * Treeview for debugger
- */
-import TreeView from 'vue-json-tree-view'
-Vue.use(TreeView)
 /** */
 
 Vue.use(require('vue-moment'))
@@ -100,7 +91,6 @@ export var router = new VueRouter({
     {
       path: '/settings',
       component: Settings
-      // beforeEnter: ifAuthenticated,
     },
     {
       path: '/manage',
@@ -134,16 +124,6 @@ export var router = new VueRouter({
       component: BudgetGrid
       // redirect: '/budget',
       // beforeEnter: ifAnyBudgetExists,
-    },
-    {
-      path: '/login',
-      component: Login
-      // beforeEnter: ifNotAuthenticated
-    },
-    {
-      path: '/profile',
-      component: Profile
-      // beforeEnter: ifNotAuthenticated
     },
     {
       path: '/create',
