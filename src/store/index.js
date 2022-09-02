@@ -22,14 +22,6 @@ export default new Vuex.Store({
     selectedBudgetID: null,
     month_selected: moment(new Date()).format('YYYY-MM')
   },
-  getters: {
-    snackbarMessage: state => state.snackbarMessage,
-    snackbarColor: state => state.snackbarColor,
-    sync_state: state => state.sync_state,
-    snackbar: state => state.snackbar,
-    selectedBudgetID: state => state.selectedBudgetID,
-    month_selected: state => state.month_selected
-  },
   mutations: {
     SET_STATUS_MESSAGE(state, message) {
       // console.log('failure');

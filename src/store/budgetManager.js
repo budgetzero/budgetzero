@@ -16,15 +16,15 @@ import { usePouchDBStore } from './pouchdbStore'
 
 export const useBudgetManagerStore = defineStore('budgetManager', {
   state: () => ({
-    budgetData: null,
+    budgetData: [],
     budgetID: null,
-    budgetsAvailable: null,
-    transactions: null,
-    monthCategoryBudgets: null,
-    payees: null,
-    masterCategories: null,
-    accounts: null,
-    categories: null,
+    budgetsAvailable: [],
+    transactions: [],
+    monthCategoryBudgets: [],
+    payees: [],
+    masterCategories: [],
+    accounts: [],
+    categories: [],
     transaction_lookup: null,
     month_category_lookup: null,
     transaction_lookup: null,

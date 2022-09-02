@@ -146,7 +146,7 @@
       <!-- </template> -->
 
       <v-list-item
-        v-for="item in accountsOnBudget"
+        v-for="item in budgetManagerStore.accounts"
         :key="item._id"
         :to="{ path: '/transactions/' + item._id.slice(-36) }"
         active-class="primary white--text"
@@ -159,7 +159,7 @@
           </v-list-item-title>
         </v-list-item-content>
         <v-list-item-icon class="subtitle-2">
-          {{ (account_balances[item._id.slice(-36)].working / 100) | currency }}
+          {{ (budgetManagerStore.accountBalances[item._id.slice(-36)].working / 100) | currency }}
         </v-list-item-icon>
       </v-list-item>
 
@@ -173,7 +173,7 @@
       <!-- </template> -->
 
       <v-list-item
-        v-for="item in accountsOffBudget"
+        v-for="item in budgetManagerStore.accounts"
         :key="item._id"
         :to="{ path: '/transactions/' + item._id.slice(-36) }"
         active-class="primary white--text"
@@ -185,7 +185,7 @@
           </v-list-item-title>
         </v-list-item-content>
         <v-list-item-icon class="subtitle-2">
-          {{ (account_balances[item._id.slice(-36)].working / 100) | currency }}
+          {{ (budgetManagerStore.accountBalances[item._id.slice(-36)].working / 100) | currency }}
         </v-list-item-icon>
       </v-list-item>
 
@@ -230,6 +230,8 @@
 <script>
 import { mapGetters } from 'vuex'
 import BaseDialogModalComponent from './Modals/BaseDialogModalComponent'
+import { useBudgetManagerStore } from '../store/budgetManager'
+import { mapStores } from 'pinia'
 
 export default {
   name: 'Sidebar',
@@ -246,39 +248,26 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'account_balances',
-      'accounts',
-      'sync_state',
-      'accountsOnBudget',
-      'accountsOffBudget',
-      'selectedBudgetID',
-      'budgetRoots',
-      'budgetRootsMap',
-    ]),
+    ...mapStores(useBudgetManagerStore),
     budgetName() {
-      if (this.selectedBudget) {
+      if (this.budgetManagerStore.budgetID) {
         return this.budgetRootsMap[this.selectedBudget] ? this.budgetRootsMap[this.selectedBudget].name : 'None'
       } else {
         return ''
       }
     },
     sumOfOnBudgetAccounts() {
-      return this.accountsOnBudget.reduce(
-        (acct_sum, b) => acct_sum + this.account_balances[b._id.slice(-36)].working / 100,
+      //TODO fix to on/off budget
+      return this.budgetManagerStore.accounts.reduce(
+        (acct_sum, b) => acct_sum + this.budgetManagerStore.accountBalances[b._id.slice(-36)].working / 100,
         0
       )
     },
     sumOfOffBudgetAccounts() {
-      return this.accountsOffBudget.reduce(
-        (acct_sum, b) => acct_sum + this.account_balances[b._id.slice(-36)].working / 100,
+      return this.budgetManagerStore.accounts.reduce(
+        (acct_sum, b) => acct_sum + this.budgetManagerStore.accountBalances[b._id.slice(-36)].working / 100,
         0
       )
-    }
-  },
-  watch: {
-    selectedBudgetID: function(newBudget, oldBudget) {
-      this.selectedBudget = newBudget //Assign value from vuex to local var when loads/updates
     }
   },
   methods: {
