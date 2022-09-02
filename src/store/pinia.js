@@ -14,7 +14,7 @@ import {
 } from '../../src/store/validation'
 import _ from 'lodash'
 
-export const useBudgetManagerStore = defineStore('budgetmanager', {
+export const useBudgetManagerStore = defineStore('budgetManager', {
   state: () => ({
     pouchdbManager: new PouchDBManager(),
     budgetData: null,
@@ -29,10 +29,62 @@ export const useBudgetManagerStore = defineStore('budgetmanager', {
     transaction_lookup: null,
     month_category_lookup: null,
     transaction_lookup: null,
-    all_months: null
+    all_months: null,
+    monthlyData: null
   }),
   getters: {
-    doubleCount: (state) => state.count * 2
+    category_map() {
+      return this.categories.reduce((map, obj) => {
+        const id = obj._id ? obj._id.slice(-36) : null
+        map[id] = obj.name
+        return map
+      }, {})
+    },
+    payee_map() {
+      let payees = this.payees.reduce((map, obj) => {
+        const id = obj._id ? obj._id.slice(-36) : null
+        map[id] = obj.name
+        return map
+      }, {})
+      payees['---------------------initial-balance'] = 'Initial Balance'
+      return payees
+    },
+    account_map() {
+      return this.accounts.reduce((map, obj) => {
+        map[obj._id.slice(-36)] = obj.name
+        return map
+      }, {})
+    },
+    transactionsGroupedByAccount() {
+      return _.groupBy(this.transactions, 'account')
+    },
+    accountBalances() {
+      const accountBalances = this.transactions.reduce((map, obj) => {
+        const amt = obj.value ? obj.value : 0
+
+        if (!(obj.account in map)) {
+          map[obj.account] = { cleared: 0, uncleared: 0, working: 0 }
+        }
+
+        if (obj.cleared) {
+          map[obj.account].cleared += amt
+        } else {
+          map[obj.account].uncleared += amt
+        }
+
+        map[obj.account].working += amt
+
+        return map
+      }, {})
+
+      this.accounts.forEach((account) => {
+        // Add in missing account keys
+        if (!(account._id.slice(-36) in accountBalances)) {
+          accountBalances[account._id.slice(-36)] = { cleared: 0, uncleared: 0 }
+        }
+      })
+      return accountBalances
+    }
   },
   actions: {
     initializeBudget() {
@@ -331,7 +383,7 @@ export const useBudgetManagerStore = defineStore('budgetmanager', {
       })
 
       const t8 = performance.now()
-      self.monthlyData = final_data
+      this.monthlyData = final_data
       console.log('Call to getMonthlyData took ' + (t8 - t7) + ' milliseconds.')
     },
 

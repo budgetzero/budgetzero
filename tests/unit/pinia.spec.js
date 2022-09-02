@@ -53,7 +53,7 @@ describe('budget-manager transactions', () => {
     // up by any useStore() call without having to pass it to it:
     // `useStore(pinia)`
     setActivePinia(createPinia())
-    budgetmanager = useCounterStore()
+    budgetmanager = useBudgetManagerStore()
     await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
   })
 

@@ -86,61 +86,6 @@
         <v-btn icon class="white--text" color="grey darken-1" @click="$store.dispatch('getAllDocsFromPouchDB')">
           <v-icon> mdi-refresh </v-icon>
         </v-btn>
-
-        <!-- Edit ({{ selected.length }}):
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn
-              icon
-              @click="approveSelectedTransactions"
-            >
-              <v-icon
-                dark
-                color="primary"
-                v-on="on"
-              >
-                mdi-check-circle
-              </v-icon>
-            </v-btn>
-          </template>
-          <span>Approve</span>
-        </v-tooltip>
-
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn
-              icon
-              @click="clearSelectedTransactions"
-            >
-              <v-icon
-                dark
-                color="primary"
-                v-on="on"
-              >
-                mdi-alpha-c-circle
-              </v-icon>
-            </v-btn>
-          </template>
-          <span>Clear</span>
-        </v-tooltip>
-
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn
-              icon
-              @click="deleteSelectedTransactions"
-            >
-              <v-icon
-                dark
-                color="primary"
-                v-on="on"
-              >
-                mdi-delete
-              </v-icon>
-            </v-btn>
-          </template>
-          <span>Delete</span>
-        </v-tooltip> -->
       </v-col>
       <v-col class="pt-2 pb-0">
         <v-btn small class="mb-2 ml-2" color="grey lighten-2" elevation="0" @click.stop="importModalVisible = true">
@@ -176,7 +121,7 @@
             ref="transaction_table"
             v-model="selected"
             :headers="headersForSingleAccount"
-            :items="transactionListForTable"
+            :items="filteredTransactions"
             item-key="_id"
             show-select
             :expanded.sync="expanded"
@@ -188,34 +133,6 @@
             :items-per-page="items_per_page"
             fixed-header
           >
-            <!-- <template v-slot:header="{ props: { headers } }">
-            <thead>
-              <th>
-                <v-simple-checkbox
-                  color="purple"
-                  v-bind="props"
-                  v-on="on"
-                />
-              </th>
-              <th
-                v-for="header in headers_single_account"
-                :key="header.value"
-                class="text-center"
-                :class="[
-                  'column sortable',
-                  pagination.descending ? 'desc' : 'asc',
-                  header.value === pagination.sortBy ? 'active' : ''
-                ]"
-                @click="changeSort(header.value)"
-              >
-                <span class="subtitle-1 font-weight-medium">{{ header.text }}</span>
-              </th>
-            </thead>
-          </template> -->
-            <!-- <template #header.data-table-select="{ on, props }">
-            <v-simple-checkbox :ripple="false" color="black" v-bind="props" v-on="on" />
-          </template> -->
-
             <template #item="{ item, expand, isExpanded, index, isSelected, select }">
               <tr
                 :key="item._id"
@@ -330,13 +247,20 @@
                 <td v-else>
                   <div v-if="item.transfer">
                     <span class="chip-label"
-                      >Transfer: {{ account_map[item.payee] ? account_map[item.payee] : item.payee }}
+                      >Transfer:
+                      {{
+                        budgetManagerStore.account_map[item.payee]
+                          ? budgetManagerStore.account_map[item.payee]
+                          : item.payee
+                      }}
                       <v-icon color="primary"> mdi-arrow-left-right-bold </v-icon></span
                     >
                   </div>
                   <div v-else>
                     <span class="chip-label">{{
-                      payee_map[item.payee] ? payee_map[item.payee].substring(0, 25) : item.payee
+                      budgetManagerStore.payee_map[item.payee]
+                        ? budgetManagerStore.payee_map[item.payee].substring(0, 25)
+                        : item.payee
                     }}</span>
                   </div>
                 </td>
@@ -381,9 +305,9 @@
                       <v-chip color="grey lighten-2">Initial Balance</v-chip>
                     </span>
                     <span v-else-if="!item.category">
-                      <v-chip color="yellow lighten-3">{{ category_map[item.category] }} </v-chip>
+                      <v-chip color="yellow lighten-3">{{ budgetManagerStore.category_map[item.category] }} </v-chip>
                     </span>
-                    <span v-else>{{ category_map[item.category] }}</span>
+                    <span v-else>{{ budgetManagerStore.category_map[item.category] }}</span>
                   </div>
                 </td>
 
@@ -512,7 +436,6 @@
 
 <script>
 import Vue from 'vue'
-import validator from 'validator'
 import BaseDialogModalComponent from '../Modals/BaseDialogModalComponent.vue'
 import ImportModalComponent from './ImportModalComponent.vue'
 import ReconcileHeader from './ReconcileHeader'
@@ -521,7 +444,6 @@ import _ from 'lodash'
 import { sanitizeValueInput } from '../../helper.js'
 import { mapStores } from 'pinia'
 import { useBudgetManagerStore } from '../../store/pinia'
-import mock_budget from '@/../tests/__mockdata__/mock_budget2.json'
 
 export default {
   name: 'Transactions',
@@ -693,56 +615,21 @@ export default {
         this.editedItem.value = -Math.round(this.parseInflowOutflow(newValue) * 100)
       }
     },
-    categories() {
-      return this.budgetmanagerStore.categories
-    },
-    category_map() {
-      return this.budgetmanagerStore.categories.reduce((map, obj) => {
-        const id = obj._id ? obj._id.slice(-36) : null
-        map[id] = obj.name
-        return map
-      }, {})
-    },
-    payee_map() {
-      let payees = this.budgetmanagerStore.payees.reduce((map, obj) => {
-        const id = obj._id ? obj._id.slice(-36) : null
-        map[id] = obj.name
-        return map
-      }, {})
-      payees['---------------------initial-balance'] = 'Initial Balance'
-      return payees
-    },
-    payee_array() {
-      return this.budgetmanagerStore.payees.map((obj) => {
-        const rObj = {}
-        rObj.id = obj.id ? obj.id.slice(-36) : null
-        rObj.name = obj.name
-        return rObj
-      })
-    },
     payee_names() {
-      return this.budgetmanagerStore.payees.map((obj) => obj.name)
+      return this.budgetManagerStore.payees.map((obj) => obj.name)
     },
     payee() {
-      if (this.editedItem.payee in this.payee_map) {
-        return this.payee_map[this.editedItem.payee]
-      } else if (this.editedItem.payee in this.account_map) {
-        return 'Transfer: ' + this.account_map[this.editedItem.payee]
+      if (this.editedItem.payee in this.budgetManagerStore.payee_map) {
+        return this.budgetManagerStore.payee_map[this.editedItem.payee]
+      } else if (this.editedItem.payee in this.budgetManagerStore.account_map) {
+        return 'Transfer: ' + this.budgetManagerStore.account_map[this.editedItem.payee]
       } else {
         return 'Error'
       }
     },
-    accountNames() {
-      return this.budgetmanagerStore.accounts.map((acc) => 'Transfer: ' + acc.name)
-    },
-    account_map() {
-      return this.budgetmanagerStore.accounts.reduce((map, obj) => {
-        map[obj._id.slice(-36)] = obj.name
-        return map
-      }, {})
-    },
     payeesForDropdown() {
-      return this.budgetmanagerStore.payees.concat(this.accountNames)
+      const accountNames = this.budgetManagerStore.accounts.map((acc) => 'Transfer: ' + acc.name)
+      return this.budgetManagerStore.payees.concat(accountNames)
     },
     isSingleAccount() {
       // Is this viewing a single account or all transactions for all accounts?
@@ -759,35 +646,38 @@ export default {
     categoriesForDropdown() {
       // All categories for transaction editing dropdown.
       // TODO: Sort by order...and group by master category?
-      return this.categories
+      return this.budgetManagerStore.categories
         .map((cat) => {
           cat.truncated_id = cat._id && cat._id.length >= 36 ? cat._id.slice(-36) : cat._id
           return cat
         })
         .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
     },
-    transactionListForTable() {
-      let trans = this.budgetmanagerStore.transactions
+    filteredTransactions() {
+      let trans = []
 
-      // var trans = []
-      // if (this.isSingleAccount) {
-      //   trans = _.get(this.transactions_by_account, this.$route.params.account_id, [])
-      // } else {
-      //   trans = this.transactions
-      // }
+      // Filter transactions by account if viewing single account
+      if (this.isSingleAccount) {
+        trans = _.get(this.budgetManagerStore.transactionsGroupedByAccount, this.$route.params.account_id, [])
+      } else {
+        trans = this.budgetManagerStore.transactions
+      }
 
+      // Add additional row if creating new transaction
       if (this.creatingNewTransaction) {
         const tpo = [...trans]
         tpo.unshift(this.defaultItem)
         return tpo
       }
 
+      // Returns early if not searching
       if (!this.search) return trans
 
+      // Implements search 
       return trans.filter((row) => {
-        if (this.payee_map[row.payee] !== undefined) {
+        if (this.budgetManagerStore.payee_map[row.payee] !== undefined) {
           return (
-            this.payee_map[row.payee].toUpperCase().includes(this.search.toUpperCase()) ||
+            this.budgetManagerStore.payee_map[row.payee].toUpperCase().includes(this.search.toUpperCase()) ||
             JSON.stringify(row).toUpperCase().includes(this.search.toUpperCase())
           )
         } else {
@@ -797,7 +687,9 @@ export default {
     },
     selected_account() {
       if (this.isSingleAccount) {
-        const find = this.budgetmanagerStore.accounts.find(({ _id }) => _id.slice(-36) === this.$route.params.account_id)
+        const find = this.budgetManagerStore.accounts.find(
+          ({ _id }) => _id.slice(-36) === this.$route.params.account_id
+        )
         return find
       }
       return { _id: null, name: 'All Accounts', type: '' }
@@ -810,7 +702,6 @@ export default {
     }
   },
   mounted() {
-    this.budgetmanagerStore.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
     this.$nextTick(() => {
       window.addEventListener('resize', this.onResize)
       this.onResize()
@@ -828,15 +719,12 @@ export default {
       const id = item.truncated_id
       const transaction_month = this.editedItem.date.substring(0, 7)
 
-      const balance = _.get(this.budgetmanagerStore.monthlyData, `${transaction_month}.categories.${id}.balance`, 0)
+      const balance = _.get(this.budgetManagerStore.monthlyData, `${transaction_month}.categories.${id}.balance`, 0)
       return balance
     },
     addTransaction() {
       this.creatingNewTransaction = true
       this.expanded.push(this.defaultItem)
-    },
-    isUUID(text) {
-      return validator.isUUID(text)
     },
     editItem(item) {
       if (item.reconciled) {
@@ -852,7 +740,7 @@ export default {
           if (continueEdit.value) {
             this.creatingNewTransaction = false
             this.editedIndex = this.budgetManager.transactions.indexOf(item)
-            this.editedItem = JSON.parse(JSON.stringify(this.budgetmanagerStore.transactions[this.editedIndex])) // Removes reactivity to avoid mutating vuex state illegally
+            this.editedItem = JSON.parse(JSON.stringify(this.budgetManagerStore.transactions[this.editedIndex])) // Removes reactivity to avoid mutating vuex state illegally
           } else {
             this.cancel()
             return
@@ -861,9 +749,9 @@ export default {
       } else {
         //TODO: Repeating code here from above. Boo
         this.creatingNewTransaction = false
-        this.editedIndex = this.budgetmanagerStore.transactions.indexOf(item)
-        console.log(this.budgetmanagerStore.transactions, this.editedIndex, item)
-        this.editedItem = JSON.parse(JSON.stringify(this.budgetmanagerStore.transactions[this.editedIndex])) // Removes reactivity to avoid mutating vuex state illegally
+        this.editedIndex = this.budgetManagerStore.transactions.indexOf(item)
+        console.log(this.budgetManagerStore.transactions, this.editedIndex, item)
+        this.editedItem = JSON.parse(JSON.stringify(this.budgetManagerStore.transactions[this.editedIndex])) // Removes reactivity to avoid mutating vuex state illegally
       }
     },
     deleteTransaction(item) {
@@ -904,7 +792,7 @@ export default {
         }
         this.editedItem.approved = true
 
-        this.$store.dispatch('createOrUpdateTransaction', this.editedItem)
+        this.budgetManagerStore.putDocument(this.editedItem)
         this.cancel()
       } else {
         this.$store.commit('SET_SNACKBAR_MESSAGE', {
@@ -913,44 +801,30 @@ export default {
         })
       }
     },
-    toggleAll() {
-      if (this.selected.length) this.selected = []
-      else this.selected = this.items.slice()
-    },
     flipCleared(item) {
-      console.log('flip')
       var item = JSON.parse(JSON.stringify(item))
-
       item.cleared = !item.cleared
       item.approved = true
-      console.log(this.$store.state.pouchdb.budgetManager.transactions)
-      this.budgetmanagerStore.putDocument(item).then(() => {
-        console.log('update')
-        console.log(this.$store.state.pouchdb.budgetManager.transactions)
-
-      })
+      this.budgetManagerStore.putDocument(item)
     },
     clearTransaction(item) {
       var item = JSON.parse(JSON.stringify(item))
-
       item.cleared = true
       item.approved = true
-
-      this.$store.dispatch('putDocument', item)
+      this.budgetManagerStore.putDocument(item)
     },
     approveSelectedTransactions() {
       var payload = JSON.parse(JSON.stringify(this.selected))
       payload.map((trans) => (trans.approved = true))
 
-      this.$store.dispatch('putDocument', payload)
+      this.budgetManagerStore.putDocument(payload)
       this.selected = []
     },
     clearSelectedTransactions() {
       var payload = JSON.parse(JSON.stringify(this.selected))
       payload.map((trans) => (trans.cleared = true))
       payload.map((trans) => (trans.approved = true))
-
-      this.$store.dispatch('commitBulkDocsToPouchAndVuex', payload)
+      this.budgetManagerStore.putBulkDocuments(payload)
       this.selected = []
     },
     deleteSelectedTransactions() {
@@ -960,12 +834,11 @@ export default {
       this.selected = []
     },
     categorizeSelectedTransactions(category) {
-      console.log(category)
       var payload = JSON.parse(JSON.stringify(this.selected))
       const id = category._id ? category._id.slice(-36) : null
       payload.map((trans) => (trans.category = id))
 
-      this.$store.dispatch('commitBulkDocsToPouchAndVuex', payload)
+      this.budgetManagerStore.putBulkDocuments(payload)
       this.selected = []
       this.editMenuOpen = false
     },

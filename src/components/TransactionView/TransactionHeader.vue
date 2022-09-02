@@ -76,6 +76,8 @@
 
 <script>
 import Vue from 'vue'
+import { mapStores } from 'pinia'
+import { useBudgetManagerStore } from '../../store/pinia'
 
 export default {
   props: ['selected_account'],
@@ -83,8 +85,9 @@ export default {
     return {}
   },
   computed: {
+    ...mapStores(useBudgetManagerStore),
     selected_account_balance() {
-      return this.$store.getters.account_balances[this.$store.state.route.params.account_id]
+      return this.budgetManagerStore.accountBalances[this.$store.state.route.params.account_id]
     }
   },
   methods: {}
