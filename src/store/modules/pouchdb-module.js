@@ -39,6 +39,7 @@ export default {
     budgetManager: new BudgetManager()
   },
   getters: {
+    budgetManager: state => state.budgetManager,
     remoteSyncURL: state => state.remoteSyncURL,
     //Plain getters for main doc types
     transactions: state => state.transactions,
@@ -211,11 +212,21 @@ export default {
     payee_names: (state, getters) => getters.payees.map(obj => obj.name)
   },
   mutations: {
+    PUT_DOCUMENT(state, resp) {
+      this.commit('SET_SNACKBAR_MESSAGE', {
+        snackbarMessage: `${resp.ok} ${resp.id} ${resp.rev}`,
+        snackbarColor: 'primary'
+      })
+    },
+    INIT_BUDGET_MANAGER(state) {
+      // Initalize budgetmanager data
+      console.log('init manager')
+      state.budgetManager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
+    },
     SET_POUCHDB_DOCS(state, response) {
       const data = response.map(row => row.doc)
       
-      // Initalize budgetmanager data
-      state.budgetManager.initializeBudget(data)
+      state.budgetManager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
 
       state.transactions = data.filter(row => row._id.includes('_transaction_'))
       state.monthCategoryBudgets = data.filter(row => row._id.includes('_m_category_'))
@@ -392,6 +403,25 @@ export default {
         context.commit('SET_STATUS_MESSAGE', 'Sync disabled')
         // })
       }
+    },
+    async putDocument(context, payload) {
+      let resp = await context.state.budgetManager.putDocument(payload)
+      resp = await context.state.budgetManager.putDocument({
+        account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+        category: null,
+        cleared: false,
+        approved: false,
+        value: -4444,
+        date: '2015-05-10',
+        memo: 'memo',
+        reconciled: false,
+        flag: '#ffffff',
+        payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
+        transfer: null,
+        splits: [],
+        _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed01234'
+      })
+      context.commit('PUT_DOCUMENT', resp)
     },
     getAllDocsFromPouchDB(context) {
       return this._vm.$pouch
@@ -734,6 +764,7 @@ export default {
       const pouch = new PouchDB('budgetzero_local_db')
       Vue.prototype.$pouch = pouch
       context.dispatch('loadLocalBudgetRoot')
+      context.commit('INIT_BUDGET_MANAGER')
     }
   }
 }

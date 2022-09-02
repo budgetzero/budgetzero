@@ -4,7 +4,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit --silent",
+    "test:unit": "vue-cli-service test:unit --silent=false",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "electron:build": "vue-cli-service electron:build --publish always",
@@ -19,6 +19,7 @@
   "main": "background.js",
   "dependencies": {
     "@sweetalert2/theme-borderless": "^4.0.5",
+    "@vue/composition-api": "^1.7.0",
     "banking": "^1.2.0",
     "chart.js": "^3.3.2",
     "core-js": "^3.14.0",
@@ -31,6 +32,7 @@
     "lodash": "^4.17.21",
     "material-design-icons-iconfont": "^6.1.0",
     "moment": "^2.29.1",
+    "pinia": "^2.0.21",
     "pouch-vue": "^0.3.5",
     "pouchdb": "^7.2.2",
     "pouchdb-authentication": "^1.1.3",

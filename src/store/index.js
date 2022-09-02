@@ -14,7 +14,7 @@ export default new Vuex.Store({
     user,
     budget,
     pouchdb,
-    reports
+    reports,
   },
   state: {
     snackbarMessage: '',

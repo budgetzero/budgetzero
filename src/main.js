@@ -33,6 +33,11 @@ import CreateBudget from './components/CreateBudget.vue'
 import Manage from './components/Manage.vue'
 import Reports from './components/Reports.vue'
 
+
+import { createPinia, PiniaVuePlugin } from 'pinia'
+Vue.use(PiniaVuePlugin)
+const pinia = createPinia()
+
 /**
  * Sweet Alert
  */
@@ -156,6 +161,7 @@ const vm = new Vue({
   methods: {},
   vuetify,
   router,
+  pinia,
   render: h => h(App)
 }).$mount('#app')
 
@@ -163,3 +169,4 @@ const vm = new Vue({
 Vue.prototype.$vm = vm
 
 vm.$store.dispatch('createLocalPouchDB')
+

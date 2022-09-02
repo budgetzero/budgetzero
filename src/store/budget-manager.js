@@ -53,7 +53,6 @@ export class PouchDBManager {
 export class BudgetManager {
   constructor() {
     this.pouchdbManager = new PouchDBManager()
-    this.loadAvailableBudgets()
     this.budgetData = null
     this.budgetID = null
   }
@@ -72,6 +71,8 @@ export class BudgetManager {
   }
 
   initializeBudget() {
+    this._loadAvailableBudgets()
+
     this.budgetsAvailable = null
     this.transactions = this.budgetData.filter((row) => row._id.includes('_transaction_'))
     this.monthCategoryBudgets = this._month_category_budgets()
@@ -122,14 +123,15 @@ export class BudgetManager {
     }
   }
 
-  async loadAvailableBudgets() {
+  async _loadAvailableBudgets() {
     try {
-      this.budgetsAvailable = await this.pouchdbManager.localdb.allDocs({
+      let resp = await this.pouchdbManager.localdb.allDocs({
         include_docs: true,
         attachments: true,
         startkey: 'budget-opened_',
         endkey: 'budget-opened_\ufff0'
       })
+      this.budgetsAvailable = resp.rows.map((row) => row.doc)
     } catch (err) {
       console.log('error=', err)
     }
