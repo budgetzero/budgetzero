@@ -41,6 +41,10 @@ import Sidebar from './components/Sidebar.vue'
 import BaseDialogModalComponent from './components/Modals/BaseDialogModalComponent.vue'
 import ConfirmDialog from './components/Modals/ConfirmDialog.vue'
 
+import { mapStores } from 'pinia'
+import { useBudgetManagerStore } from './store/pinia'
+import mock_budget from '@/../tests/__mockdata__/mock_budget2.json'
+
 export default {
   name: 'App',
   components: {
@@ -56,6 +60,7 @@ export default {
     }
   },
   computed: {
+    ...mapStores(useBudgetManagerStore),
     isModalVisibleCreateBudget() {
       return !this.$store.getters.budgetExists
     },
@@ -75,6 +80,7 @@ export default {
     }
   },
   mounted() {
+    this.budgetManagerStore.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
     this.$store.dispatch('AUTH_CHECK')
     this.$root.$confirm = this.$refs.confirm.open
   },
