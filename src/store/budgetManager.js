@@ -87,7 +87,7 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
   },
   actions: {
     initializeBudget() {
-      this._loadAvailableBudgets()
+      this.loadAvailableBudgets()
 
       this.budgetsAvailable = null
       this.transactions = this.budgetData.filter((row) => row._id.includes('_transaction_'))
@@ -141,14 +141,14 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
       }
     },
 
-    async _loadAvailableBudgets() {
+    async loadAvailableBudgets() {
       const pouchdbStore = usePouchDBStore()
       try {
         let resp = await pouchdbStore.localdb.allDocs({
           include_docs: true,
           attachments: true,
-          startkey: 'budget-opened_',
-          endkey: 'budget-opened_\ufff0'
+          startkey: 'budget_',
+          endkey: 'budget_\ufff0'
         })
         this.budgetsAvailable = resp.rows.map((row) => row.doc)
       } catch (err) {

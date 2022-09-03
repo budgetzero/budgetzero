@@ -1,5 +1,66 @@
 <template>
   <v-app id="inspire">
+
+    <v-overlay :value="loadingOverlay">
+        
+        <v-row justify="center">
+         
+        <v-card
+        
+      >
+          <v-simple-table>
+        <template #default>
+          <thead>
+            <tr>
+              <th class="text-left" >
+                 
+              </th>
+              <th class="text-left" width="50px">
+                Selected
+              </th>
+              <th class="text-left">
+                Date Created
+              </th>
+              <th class="text-left">
+                Name
+              </th>
+              <th class="text-left">
+                Currency
+              </th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="budget in budgetManagerStore.budgetsAvailable" :key="budget._id">
+              <td><v-btn @click="loadBudget(budget)">Load</v-btn></td>
+
+              <td v-if="budget._id.slice(-36) == budgetManagerStore.budgetID">
+                <v-icon color="accent">
+                  mdi-check-bold
+                </v-icon>
+              </td>
+              <td v-else />
+              <td>{{ budget.created }}</td>
+              <td>{{ budget.name }}</td>
+              <td>{{ budget.currency }}</td>
+              <td>
+                <v-icon icon dark class="" color="primary" @click="editItem(budget)">
+                  edit
+                </v-icon>
+                <v-icon icon dark class="ml-1" color="accent" @click="deleteItem(budget)">
+                  delete
+                </v-icon>
+              </td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+
+    </v-card>
+
+        </v-row>
+      </v-overlay>
+
     <!-- Global confirm dialog -->
     <confirm-dialog ref="confirm"></confirm-dialog>
 
@@ -15,10 +76,10 @@
       </template>
     </BaseDialogModalComponent>
 
-    <sidebar />
+    <sidebar v-if="!loadingOverlay" />
 
-    <v-main>
-      <router-view class="animated" />
+    <v-main v-if="!loadingOverlay">
+      <router-view  class="animated" />
     </v-main>
     <v-snackbar v-model="mainPiniaStore.snackbar" :color="mainPiniaStore.snackBarColor">
       {{ mainPiniaStore.snackbarMessage }}
@@ -52,22 +113,44 @@ export default {
     return {
       drawer: null,
       mini: false,
-      budgetName: null
+      budgetName: null,
+      loadingOverlay: true,
     }
   },
   computed: {
     ...mapStores(useBudgetManagerStore, useMainStore),
     isModalVisibleCreateBudget() {
-      return !this.$store.getters.budgetExists
+      return false
     },
   },
-  mounted() {
+  async mounted() {
     console.log(this)
     this.mainPiniaStore.setSnackbarMessage({snackbarMessage: 'ok', snackBarColor: 'blue'})
     this.budgetManagerStore.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
+    this.loadAvailableBudgets()
     // this.$root.$confirm = this.$refs.confirm.open
   },
   methods: {
+    async loadAvailableBudgets() {
+      try {
+      await this.budgetManagerStore.loadAvailableBudgets()
+    } catch (err) {
+      console.error(err)
+    }
+    console.log('available budgets loaded', this.budgetManagerStore.budgetsAvailable)
+    this.showBudgetSelection = true
+    },
+    async loadBudget(budget) {
+      const budget_id = budget._id.slice(-36)
+      console.log('load budget', budget_id)
+      try {
+        await this.budgetManagerStore.loadBudgetWithID(budget_id)
+      } catch(err) {
+        console.error(err)
+      }
+      this.loadingOverlay = false
+
+    },
     async createBudget() {
       this.$store.dispatch('loadLocalBudgetRoot')
       this.$store.dispatch('createBudget', this.budgetName)
