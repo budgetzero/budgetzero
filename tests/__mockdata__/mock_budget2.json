@@ -8796,5 +8796,16 @@
     "created": "2020-12-29T01:30:14.886Z",
     "checkNumber": false,
     "_id": "budget_5a98dc44-7982-4ecc-aa50-146fc4dc4e16"
+  },
+  {
+    "opened": "2020-05-29T01:30:14.886Z",
+    "_id": "budget-opened_hz98dc44-7982-4ecc-aa50-146fc4dc4e66"
+  },
+  {
+    "name": "Empty Budget",
+    "currency": "USD",
+    "created": "2019-12-29T01:30:14.886Z",
+    "checkNumber": false,
+    "_id": "budget_hz98dc44-7982-4ecc-aa50-146fc4dc4e66"
   }
 ]

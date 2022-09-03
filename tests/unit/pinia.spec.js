@@ -31,7 +31,7 @@ describe('budget manager', () => {
 
   it('loaded the data', async () => {
     // Subtract budget and budget-opened docs
-    expect(budgetmanager.budgetData.length).toBe(mock_budget.length - 2)
+    expect(budgetmanager.budgetData.length).toBe(620)
   })
 
   it('has correct number of transactions', async () => {
