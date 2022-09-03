@@ -10,7 +10,7 @@ import {
   schema_masterCategory,
   schema_payee,
   validateSchema
-} from './validation'
+} from '../validation'
 import _ from 'lodash'
 import { usePouchDBStore } from './pouchdbStore'
 

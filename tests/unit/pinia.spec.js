@@ -2,6 +2,8 @@
 import { setActivePinia, createPinia } from 'pinia'
 import { useBudgetManagerStore } from '../../src/store/budgetManager'
 import { useBudgetHelperStore } from '../../src/store/budgetManagerHelper'
+import { usePouchDBStore } from '../../src/store/pouchdbStore'
+
 import validator from 'validator'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -10,6 +12,7 @@ import PouchDB from 'pouchdb'
 
 let budgetmanager
 let budgetHelper
+let pouchdbStore
 
 describe('budget manager', () => {
   beforeEach(async () => {
@@ -59,6 +62,7 @@ describe('budget-manager transactions', () => {
     // `useStore(pinia)`
     setActivePinia(createPinia())
     budgetmanager = useBudgetManagerStore()
+    pouchdbStore = usePouchDBStore()
     await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
   })
 
@@ -103,7 +107,7 @@ describe('budget-manager transactions', () => {
   })
 
   it('get and modify transaction', async () => {
-    const original_transaction = await budgetmanager.pouchdbManager.localdb.get(
+    const original_transaction = await pouchdbStore.localdb.get(
       'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_2b84300c-9503-497e-be96-dfc9a683027f'
     )
     original_transaction.name = 'new name'
@@ -120,14 +124,14 @@ describe('budget-manager transactions', () => {
     expect(resp['ok']).toBe(true)
 
     //Check that it was modified
-    const updated_transaction = await budgetmanager.pouchdbManager.localdb.get(
+    const updated_transaction = await pouchdbStore.localdb.get(
       'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_2b84300c-9503-497e-be96-dfc9a683027f'
     )
     expect(updated_transaction.name).toBe('new name')
   })
 
   it('get and modify malformed transaction', async () => {
-    const original_transaction = await budgetmanager.pouchdbManager.localdb.get(
+    const original_transaction = await pouchdbStore.localdb.get(
       'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_2b84300c-9503-497e-be96-dfc9a683027f'
     )
     original_transaction.value = 'not a number'
@@ -332,6 +336,27 @@ describe('budget-manager helper', () => {
   //   expect(budgetmanager.payees.length).toBe(transaction_count + 1)
   //   expect(validator.isUUID(resp)).toBe(true)
   // })
+
+  it('add transaction with budget-helper action', async () => {
+    const transaction_count = budgetmanager.transactions.length
+    let resp = await budgetHelper.putTransaction({
+      account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+      category: null,
+      cleared: false,
+      approved: false,
+      value: -4444,
+      date: '2015-05-10',
+      memo: 'unit test',
+      reconciled: false,
+      flag: '#ffffff',
+      payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
+      transfer: null,
+      splits: [],
+      _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed05454'
+    })
+    expect(budgetmanager.transactions.length).toBe(transaction_count + 1)
+    expect(resp['ok']).toBe(true)
+  })
 
   it('add transaction with budget-helper action', async () => {
     const transaction_count = budgetmanager.transactions.length
