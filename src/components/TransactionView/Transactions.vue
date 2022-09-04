@@ -754,29 +754,19 @@ export default {
         this.editedItem = JSON.parse(JSON.stringify(this.budgetManagerStore.transactions[this.editedIndex])) // Removes reactivity to avoid mutating vuex state illegally
       }
     },
-    deleteTransaction(item) {
+    async deleteTransaction(item) {
       this.creatingNewTransaction = false
-
-      this.$swal({
-        title: 'Delete This Transaction?',
-        text: 'Are you sure you want to delete?',
-        icon: 'warning',
-        showCancelButton: true,
-        cancelButtonText: 'Cancel',
-        confirmButtonText: 'Delete',
-        confirmButtonColor: '#990000',
-        cancelButtonColor: '#263238'
-      }).then((continueDelete) => {
-        if (continueDelete.value) {
-          this.$store.dispatch('deleteDocFromPouchAndVuex', JSON.parse(JSON.stringify(item)))
-          this.expanded = []
-          this.cancel()
-          return
-        } else {
-          this.cancel()
-          return
+      let payload = JSON.parse(JSON.stringify(item))
+      const confirmDelete = await this.$root.$confirm('Delete This Transaction?', `Are you sure you want to delete?`, {
+          agreeBtnColor: 'accent',
+          cancelBtnColor: 'grey',
+          agreeBtnText: 'Delete',
+          showMessage: true
+        })
+        if (confirmDelete) {
+          payload._deleted = true
+          this.budgetManagerStore.putDocument(payload)
         }
-      })
     },
     save() {
       // Check if transaction is valid
@@ -792,7 +782,6 @@ export default {
         }
         this.editedItem.approved = true
 
-        console.log('put', this.editedItem)
         this.budgetHelperStore.putTransaction(this.editedItem)
         this.cancel()
       } else {
@@ -818,7 +807,7 @@ export default {
       var payload = JSON.parse(JSON.stringify(this.selected))
       payload.map((trans) => (trans.approved = true))
 
-      this.budgetManagerStore.putDocument(payload)
+      this.budgetManagerStore.putBulkDocuments(payload)
       this.selected = []
     },
     clearSelectedTransactions() {
@@ -828,11 +817,21 @@ export default {
       this.budgetManagerStore.putBulkDocuments(payload)
       this.selected = []
     },
-    deleteSelectedTransactions() {
+    async deleteSelectedTransactions() {
       var payload = JSON.parse(JSON.stringify(this.selected))
 
-      this.$store.dispatch('deleteBulkDocumentsFromPouchAndVuex', payload)
-      this.selected = []
+      const confirmDelete = await this.$root.$confirm('Delete This Transaction?', `Are you sure you want to delete ${payload.length} transactions?`, {
+          agreeBtnColor: 'accent',
+          cancelBtnColor: 'grey',
+          agreeBtnText: 'Delete',
+          showMessage: true
+        })
+        if (confirmDelete) {
+          payload.map((trans) => (trans._deleted = true))
+
+          this.budgetManagerStore.putBulkDocuments(payload)
+          this.selected = []
+        }
     },
     categorizeSelectedTransactions(category) {
       var payload = JSON.parse(JSON.stringify(this.selected))

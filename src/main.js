@@ -27,7 +27,6 @@ import Transactions from './components/TransactionView/Transactions'
 
 import Accounts from './components/AccountView/Accounts'
 import BudgetGrid from './components/BudgetView/BudgetGrid'
-import Manage from './components/Manage.vue'
 import Reports from './components/Reports.vue'
 
 
@@ -90,11 +89,6 @@ export var router = new VueRouter({
     {
       path: '/settings',
       component: Settings
-    },
-    {
-      path: '/manage',
-      component: Manage
-      // beforeEnter: ifAnyBudgetExists,
     },
     {
       path: '/accounts',
