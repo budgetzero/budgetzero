@@ -38,6 +38,7 @@ import { mapGetters, mapState } from 'vuex'
 import AccountAddModal from './AccountAddModal'
 import { mapStores } from 'pinia'
 import { useBudgetManagerStore } from '../../store/budgetManager'
+import { useBudgetHelperStore } from '../../store/budgetManagerHelper'
 
 export default {
   name: 'AccountGrid',
@@ -73,11 +74,14 @@ export default {
         initialBalance: 0
       },
       showModal: false,
-      nameRules: [v => !!v || 'Name is required', v => (v && v.length <= 10) || 'Name must be less than 10 characters']
+      nameRules: [
+        (v) => !!v || 'Name is required',
+        (v) => (v && v.length <= 10) || 'Name must be less than 10 characters'
+      ]
     }
   },
   computed: {
-    ...mapStores(useBudgetManagerStore),
+    ...mapStores(useBudgetManagerStore, useBudgetHelperStore)
   },
   mounted() {},
   created() {},
@@ -88,7 +92,7 @@ export default {
       this.showModal = true
     },
     editItem(item) {
-      this.editedIndex = this.accounts.indexOf(item)
+      this.editedIndex = this.budgetManagerStore.accounts.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.showModal = true
     },
@@ -101,19 +105,23 @@ export default {
           agreeBtnText: 'Delete Account',
           cancelBtnColor: 'grey'
         })
-        .then(confirm => {
+        .then((confirm) => {
           this.$store
             .dispatch('deleteAccount', this.accounts[index])
-            .then(response => {
+            .then((response) => {
               console.log('Got some data, now lets show something in this component', response)
             })
-            .catch(error => {
-              // Action failed     
-              this.$root.$confirm('Deletion Failed', `This account still has ${error} transaction(s). You must delete those transactions to delete the account.`, {
-                onlyShowAgreeBtn: true,
-                agreeBtnColor: 'accent',
-                agreeBtnText: 'Ok',
-              })
+            .catch((error) => {
+              // Action failed
+              this.$root.$confirm(
+                'Deletion Failed',
+                `This account still has ${error} transaction(s). You must delete those transactions to delete the account.`,
+                {
+                  onlyShowAgreeBtn: true,
+                  agreeBtnColor: 'accent',
+                  agreeBtnText: 'Ok'
+                }
+              )
             })
         })
     },
@@ -124,8 +132,7 @@ export default {
         this.editedIndex = -1
       }, 300)
     },
-    save() {
-      console.log('save account clicked')
+    async save() {
       if (this.editedIndex > -1) {
         // Editing existing account
         const editPayload = {
@@ -140,11 +147,8 @@ export default {
           _id: this.editedItem._id,
           _rev: this.editedItem._rev
         }
-        Object.assign(this.accounts[this.editedIndex], this.editedItem)
-        this.$store.dispatch('createUpdateAccount', {
-          account: editPayload,
-          initialBalance: false
-        })
+        Object.assign(this.budgetManagerStore.accounts[this.editedIndex], this.editedItem)
+        await this.budgetHelperStore.createUpdateAccount(editPayload, false)
       } else {
         // Creating new account
         const newPayload = {
@@ -158,12 +162,7 @@ export default {
           balanceIsNegative: this.editedItem.balanceIsNegative,
           _id: `b_${this.budgetManagerStore.budgetID}_account_${this.$uuid.v4()}`
         }
-        console.log('new acct', newPayload, this.editedItem.initialBalance)
-        this.$store.dispatch('createUpdateAccount', {
-          account: newPayload,
-          initialBalance: this.editedItem.initialBalance
-        })
-        // this.desserts.push(this.editedItem); //Can't push onto vuex
+        await this.budgetHelperStore.createUpdateAccount(newPayload, this.editedItem.initialBalance)
       }
       this.close()
     }

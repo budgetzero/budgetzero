@@ -68,7 +68,7 @@ export const useBudgetHelperStore = defineStore('budgetHelper', {
       budgetDoc._deleted = true
       await budgetManagerStore.putDocument(budgetDoc)
 
-      return(budget_id)
+      return budget_id
     },
 
     /**
@@ -257,6 +257,53 @@ export const useBudgetHelperStore = defineStore('budgetHelper', {
         payload.payee = response
       })
       return budgetManagerStore.putDocument(payload)
+    },
+
+    async createUpdateAccount(accountDoc, initialTransactionValue) {
+      const budgetManagerStore = useBudgetManagerStore()
+
+      const accountResponse = await budgetManagerStore.putDocument(accountDoc)
+
+      if (initialTransactionValue) {
+        const initTransaction = {
+          account: accountResponse.id.slice(-36),
+          category: null,
+          cleared: true,
+          approved: true,
+          value: sanitizeValueInput(initialTransactionValue) * 100,
+          date: new Date().toISOString().slice(0, 10),
+          memo: null,
+          reconciled: true,
+          flag: '#ffffff',
+          payee: `---------------------initial-balance`,
+          transfer: null,
+          splits: [],
+          _id: `b_${budgetManagerStore.budgetID}_transaction_${uuidv4()}`
+        }
+        await budgetManagerStore.putDocument(initTransaction)
+      }
+    },
+
+    async deleteAccount(accountDoc) {
+      const budgetManagerStore = useBudgetManagerStore()
+      const pouchdbStore = usePouchDBStore()
+
+      const accountID = accountDoc._id.slice(-36)
+      const existingTransactions = await pouchdbStore.localdb.query((doc, emit) => {
+        if (doc.account === accountID) {
+          emit(doc)
+        }
+      })
+
+      if (existingTransactions.total_rows > 0) {
+        // Account still has transactions, so resolve with amount of transactions in account for error message.
+        throw new Error(existingTransactions.total_rows)
+      } else {
+        // Dispatch account for deletion
+        accountDoc._deleted = true
+        budgetManagerStore.putDocument(accountDoc)
+        return('account deleted')
+      }
     }
   }
 })
