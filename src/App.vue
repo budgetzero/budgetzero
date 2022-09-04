@@ -83,6 +83,7 @@ import { mapStores } from 'pinia'
 import { useBudgetManagerStore } from './store/budgetManager'
 import { useMainStore } from './store/mainPiniaStore'
 import mock_budget from '@/../tests/__mockdata__/mock_budget2.json'
+import { useBudgetHelperStore } from './store/budgetManagerHelper'
 
 export default {
   name: 'App',
@@ -100,7 +101,7 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useBudgetManagerStore, useMainStore),
+    ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useMainStore),
     isModalVisibleCreateBudget() {
       return false
     }
@@ -132,9 +133,6 @@ export default {
       }
       this.loadingOverlay = false
     },
-    async createBudget(budget) {
-      this.$store.dispatch('createBudget', this.budgetName)
-    },
     async showCreateBudgetDialog() {
       try {
         const newBudgetName = await this.$root.$confirm(
@@ -150,7 +148,7 @@ export default {
           }
         )
         if (newBudgetName) {
-          useBudgetManagerStore.createBudget(newBudgetName)
+          await this.budgetHelperStore.createBudget(newBudgetName)
         }
         this.mainPiniaStore.setSnackbarMessage({ snackbarMessage: newBudgetName, snackBarColor: 'blue' })
       } catch (err) {
