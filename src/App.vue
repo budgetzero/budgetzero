@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-overlay :value="loadingOverlay">
+    <v-overlay :value="mainPiniaStore.loadingOverlay">
       <v-row justify="center">
         <v-card>
           <v-card-title>Manage Budgets</v-card-title>
@@ -59,10 +59,10 @@
       </template>
     </BaseDialogModalComponent>
 
-    <sidebar v-if="!loadingOverlay" />
+    <sidebar v-if="!mainPiniaStore.loadingOverlay" />
 
-    <v-main v-if="!loadingOverlay">
-      <router-view class="animated" />
+    <v-main v-if="!mainPiniaStore.loadingOverlay">
+      <router-view  class="animated" />
     </v-main>
     <v-snackbar v-model="mainPiniaStore.snackbar" :color="mainPiniaStore.snackBarColor">
       {{ mainPiniaStore.snackbarMessage }}
@@ -97,7 +97,6 @@ export default {
       drawer: null,
       mini: false,
       budgetName: null,
-      loadingOverlay: true
     }
   },
   computed: {
@@ -131,7 +130,7 @@ export default {
       } catch (err) {
         console.error(err)
       }
-      this.loadingOverlay = false
+      this.mainPiniaStore.loadingOverlay = false
     },
     async showCreateBudgetDialog() {
       try {

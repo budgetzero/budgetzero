@@ -57,7 +57,7 @@
           <v-list-item-content v-if="!mini">
             <v-list-item-title>
               <v-chip small label>
-                {{ budgetName ? budgetName : 'No budget loaded.' }}
+                {{ budgetDoc ? budgetDoc.name : 'No budget loaded.' }}
               </v-chip>
             </v-list-item-title>
           </v-list-item-content>
@@ -67,7 +67,7 @@
         </v-list-item>
       </template>
       <v-list max-width="400" color="grey lighten-4">
-        <v-list-item :to="{ path: '/manage' }">
+        <v-list-item @click="mainPiniaStore.loadingOverlay = true">
           <v-list-item-avatar>
             <v-icon left color="primary"> mdi-swap-horizontal </v-icon>
           </v-list-item-avatar>
@@ -231,6 +231,7 @@
 import { mapGetters } from 'vuex'
 import BaseDialogModalComponent from './Modals/BaseDialogModalComponent'
 import { useBudgetManagerStore } from '../store/budgetManager'
+import { useMainStore } from '../store/mainPiniaStore'
 import { mapStores } from 'pinia'
 
 export default {
@@ -248,12 +249,13 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useBudgetManagerStore),
-    budgetName() {
-      if (this.budgetManagerStore.budgetID) {
-        return this.budgetRootsMap[this.selectedBudget] ? this.budgetRootsMap[this.selectedBudget].name : 'None'
+    ...mapStores(useBudgetManagerStore, useMainStore),
+    budgetDoc() {
+      if (this.budgetManagerStore.budgetID && this.budgetManagerStore.budgetsAvailable) {
+        const budgetDoc = this.budgetManagerStore.budgetsAvailable.find(budget => `budget_${this.budgetManagerStore.budgetID}` == budget._id);
+        return budgetDoc
       } else {
-        return ''
+        return null
       }
     },
     sumOfOnBudgetAccounts() {
