@@ -10,28 +10,6 @@
     stateless
     hide-overlay
   >
-    <BaseDialogModalComponent v-model="manageBudgetsModalVisible">
-      <template #title> Budgets </template>
-      <template #body>
-        <v-select
-          v-model="selectedBudget"
-          :items="budgetRoots"
-          label=""
-          class="pa-0 pb-1"
-          item-text="name"
-          item-value="short_id"
-        />
-      </template>
-      <template #actions>
-        <v-btn color="grey" @click.stop="manageBudgetsModalVisible = false">
-          Cancel
-        </v-btn>
-        <v-btn color="accent" @click="loadSelectedBudget()">
-          Load Budget
-        </v-btn>
-      </template>
-    </BaseDialogModalComponent>
-
     <v-list-item class="pl-0">
       <v-list-item-content v-if="!mini" class="py-1">
         <v-list-item-title class="title pl-4">
@@ -237,15 +215,12 @@ import { mapStores } from 'pinia'
 export default {
   name: 'Sidebar',
   components: {
-    BaseDialogModalComponent
   },
   data() {
     return {
-      selectedBudget: null,
       links: '',
       drawer: null,
       mini: false,
-      manageBudgetsModalVisible: false
     }
   },
   computed: {

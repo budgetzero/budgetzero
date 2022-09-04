@@ -31,6 +31,8 @@ export const useBudgetHelperStore = defineStore('budgetHelper', {
 
       // initalize budget categories
       await this.initializeBudgetCategories(budget_id)
+
+      return(budget_id)
     },
 
     /**

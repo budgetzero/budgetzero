@@ -47,15 +47,46 @@
     <!-- Global confirm dialog -->
     <confirm-dialog ref="confirm"></confirm-dialog>
 
-    <!-- Modal to input reconcile amount  -->
-    <BaseDialogModalComponent v-model="isModalVisibleCreateBudget">
-      <template #title> Let's get started! </template>
-      <template #body>
-        <v-text-field v-model="budgetName" id="budgetNameField" label="Enter a name for your budget" required />
+    <!-- Modal to edit accounts -->
+    <BaseDialogModalComponent v-model="isModelVisibleEditAccount">
+      <template #title>
+        Manage Budget
       </template>
+      <template #body>
+        <v-container>
+          <v-row>
+            <v-col cols="12">
+              <v-text-field v-model="accountItem.name" label="Budget name" />
+            </v-col>
+            <!-- <v-col cols="12">
+                <v-text-field
+                  label="Email*"
+                  required
+                />
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  label="Password*"
+                  type="password"
+                  required
+                />
+              </v-col> -->
+            <v-col cols="12" sm="6">
+              <v-select v-model="accountItem.currency" :items="currencies" label="Currency" required />
+            </v-col>
+            <v-col cols="12" sm="6" />
+          </v-row>
+        </v-container>
+      </template>
+
       <template #actions>
         <v-spacer />
-        <v-btn id="createBudgetBtn" color="accent" @click="createBudget()"> Create Budget </v-btn>
+        <v-btn color="blue darken-1" text @click="dialog = false">
+          Close
+        </v-btn>
+        <v-btn color="blue darken-1" text @click="saveBudget()">
+          Save
+        </v-btn>
       </template>
     </BaseDialogModalComponent>
 
@@ -97,6 +128,11 @@ export default {
       drawer: null,
       mini: false,
       budgetName: null,
+      isModelVisibleEditAccount: false,
+      accountItem: {},
+      currencies: [
+        { value: 'USD', text: '$' }
+      ]
     }
   },
   computed: {
@@ -105,8 +141,8 @@ export default {
       return false
     }
   },
+
   async mounted() {
-    console.log(this)
     this.mainPiniaStore.setSnackbarMessage({ snackbarMessage: 'ok', snackBarColor: 'blue' })
     this.budgetManagerStore.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
     this.loadAvailableBudgets()
@@ -135,8 +171,8 @@ export default {
     async showCreateBudgetDialog() {
       try {
         const newBudgetName = await this.$root.$confirm(
-          'Budget Created!',
-          `A budget named ${this.budgetName} has been created!`,
+          'Create a new budget',
+          ``,
           {
             agreeBtnColor: 'primary',
             cancelBtnColor: 'accent',
@@ -147,9 +183,10 @@ export default {
           }
         )
         if (newBudgetName) {
-          await this.budgetHelperStore.createBudget(newBudgetName)
+          const new_id = await this.budgetHelperStore.createBudget(newBudgetName)
+          this.mainPiniaStore.setSnackbarMessage({ snackbarMessage: new_id, snackBarColor: 'blue' })
         }
-        this.mainPiniaStore.setSnackbarMessage({ snackbarMessage: newBudgetName, snackBarColor: 'blue' })
+        
       } catch (err) {
         console.error(err)
       }
@@ -163,6 +200,32 @@ export default {
       //     agreeBtnText: 'Ok'
       //   })
       // )
+    },
+
+    async deleteItem(item) {
+      if (
+        await this.$root.$confirm(
+          'Delete Entire Budget?',
+          'Are you sure you want to delete this Budget? It will permanently delete all transactions, categories, and budget amounts and replicate deletion to any remote sync servers.',
+          { cancelBtnColor: 'grey', agreeBtnColor: 'accent', agreeBtnText: 'Delete Entire Budget'}
+        )
+      ) {
+        //TODO
+        await this.$store.dispatch('deleteEntireBudget', item)
+        this.$store.dispatch('loadLocalBudgetRoot')
+        
+      } else {
+        // cancel
+      }
+    },
+    editItem(accountItem) {
+      this.accountItem = accountItem
+      this.isModelVisibleEditAccount = true
+    },
+ 
+    async saveBudget() {
+      await this.budgetManagerStore.putDocument(this.accountItem)
+      this.isModelVisibleEditAccount = false
     }
   }
 }
