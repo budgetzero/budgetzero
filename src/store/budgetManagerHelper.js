@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import { useBudgetManagerStore } from './budgetManager'
+import { usePouchDBStore } from './pouchdbStore'
+
 import { v4 as uuidv4 } from 'uuid'
 import validator from 'validator'
 import { sanitizeValueInput } from '../helper.js'
@@ -31,6 +33,40 @@ export const useBudgetHelperStore = defineStore('budgetHelper', {
 
       // initalize budget categories
       await this.initializeBudgetCategories(budget_id)
+
+      return budget_id
+    },
+
+    /**
+     * Deletes entire budget
+     * @param {*} budgetDoc budget_ document
+     */
+    async deleteEntireBudget(budgetDoc) {
+      const pouchdbStore = usePouchDBStore()
+      const budgetManagerStore = useBudgetManagerStore()
+
+      const budget_id = budgetDoc._id.slice(-36)
+
+      const result = await pouchdbStore.localdb.allDocs({
+        include_docs: true,
+        attachments: true,
+        startkey: `b_${budget_id}_`,
+        endkey: `b_${budget_id}_\ufff0`
+      })
+
+      //Add deleted key to each
+      const rowsToDelete = {}
+      rowsToDelete.docs = result.rows.map((v) => ({ ...v.doc, _deleted: true }))
+
+      //Bulk delete
+      await budgetManagerStore.putBulkDocuments(rowsToDelete.docs)
+
+      const budgetOpenedDoc = await pouchdbStore.localdb.get(`budget-opened_${budget_id}`)
+      budgetOpenedDoc._deleted = true
+      await budgetManagerStore.putDocument(budgetOpenedDoc)
+
+      budgetDoc._deleted = true
+      await budgetManagerStore.putDocument(budgetDoc)
 
       return(budget_id)
     },

@@ -39,6 +39,8 @@
           </v-card-text>
           <v-card-actions>
             <v-btn @click="showCreateBudgetDialog(budget)">Create Budget</v-btn>
+            <v-btn @click="isModelVisibleImportBudgetFile = true">Import Budget</v-btn>
+            <v-btn @click="pouchdbStore.exportAllBudgetsAsJSON()">Backup All Budgets</v-btn>
           </v-card-actions>
         </v-card>
       </v-row>
@@ -49,9 +51,7 @@
 
     <!-- Modal to edit accounts -->
     <BaseDialogModalComponent v-model="isModelVisibleEditAccount">
-      <template #title>
-        Manage Budget
-      </template>
+      <template #title> Manage Budget </template>
       <template #body>
         <v-container>
           <v-row>
@@ -81,19 +81,41 @@
 
       <template #actions>
         <v-spacer />
-        <v-btn color="blue darken-1" text @click="dialog = false">
-          Close
-        </v-btn>
-        <v-btn color="blue darken-1" text @click="saveBudget()">
-          Save
-        </v-btn>
+        <v-btn color="blue darken-1" text @click="dialog = false"> Close </v-btn>
+        <v-btn color="blue darken-1" text @click="saveBudget()"> Save </v-btn>
+      </template>
+    </BaseDialogModalComponent>
+
+    <!-- Modal to import budget file -->
+    <BaseDialogModalComponent v-model="isModelVisibleImportBudgetFile">
+      <template #title> Import Budget </template>
+      <template #body>
+        <v-container>
+          <v-file-input v-model="backupFile" label="Restore Backup File" @change="onFileChange" />
+          <v-btn
+            color="accent"
+            dark
+            class="mb-1"
+            small
+            :disabled="!backupFileParsed"
+            @click="$store.dispatch('commitBulkDocsToPouchAndVuex', backupFileParsed)"
+          >
+            Restore From File
+          </v-btn>
+        </v-container>
+      </template>
+
+      <template #actions>
+        <v-spacer />
+        <v-btn color="blue darken-1" text @click="dialog = false"> Close </v-btn>
+        <v-btn color="blue darken-1" text @click="saveBudget()"> Save </v-btn>
       </template>
     </BaseDialogModalComponent>
 
     <sidebar v-if="!mainPiniaStore.loadingOverlay" />
 
     <v-main v-if="!mainPiniaStore.loadingOverlay">
-      <router-view  class="animated" />
+      <router-view class="animated" />
     </v-main>
     <v-snackbar v-model="mainPiniaStore.snackbar" :color="mainPiniaStore.snackBarColor">
       {{ mainPiniaStore.snackbarMessage }}
@@ -115,6 +137,7 @@ import { useBudgetManagerStore } from './store/budgetManager'
 import { useMainStore } from './store/mainPiniaStore'
 import mock_budget from '@/../tests/__mockdata__/mock_budget2.json'
 import { useBudgetHelperStore } from './store/budgetManagerHelper'
+import { usePouchDBStore } from './store/pouchdbStore'
 
 export default {
   name: 'App',
@@ -129,14 +152,14 @@ export default {
       mini: false,
       budgetName: null,
       isModelVisibleEditAccount: false,
+      isModelVisibleImportBudgetFile: false,
+      backupFile: null,
       accountItem: {},
-      currencies: [
-        { value: 'USD', text: '$' }
-      ]
+      currencies: [{ value: 'USD', text: '$' }]
     }
   },
   computed: {
-    ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useMainStore),
+    ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useMainStore, usePouchDBStore)
   },
 
   async mounted() {
@@ -146,6 +169,21 @@ export default {
     this.$root.$confirm = this.$refs.confirm.open
   },
   methods: {
+    onFileChange() {
+      console.log(this.backupFile)
+
+      const reader = new FileReader()
+      this.accountsForImport = []
+      this.selectedAccount = {}
+
+      reader.onload = (e) => {
+        const vm = this
+        let data = JSON.parse(e.target.result)
+
+        vm.backupFileParsed = data
+      }
+      reader.readAsText(this.backupFile)
+    },
     async loadAvailableBudgets() {
       try {
         await this.budgetManagerStore.loadAvailableBudgets()
@@ -166,23 +204,18 @@ export default {
     },
     async showCreateBudgetDialog() {
       try {
-        const newBudgetName = await this.$root.$confirm(
-          'Create a new budget',
-          ``,
-          {
-            agreeBtnColor: 'primary',
-            cancelBtnColor: 'accent',
-            agreeBtnText: 'Ok',
-            showTextField: true,
-            textFieldLabel: 'Enter budget name',
-            showMessage: false
-          }
-        )
+        const newBudgetName = await this.$root.$confirm('Create a new budget', ``, {
+          agreeBtnColor: 'primary',
+          cancelBtnColor: 'accent',
+          agreeBtnText: 'Ok',
+          showTextField: true,
+          textFieldLabel: 'Enter budget name',
+          showMessage: false
+        })
         if (newBudgetName) {
           const new_id = await this.budgetHelperStore.createBudget(newBudgetName)
           this.mainPiniaStore.setSnackbarMessage({ snackbarMessage: new_id, snackBarColor: 'blue' })
         }
-        
       } catch (err) {
         console.error(err)
       }
@@ -197,28 +230,22 @@ export default {
       //   })
       // )
     },
-
     async deleteItem(item) {
       if (
         await this.$root.$confirm(
           'Delete Entire Budget?',
           'Are you sure you want to delete this Budget? It will permanently delete all transactions, categories, and budget amounts and replicate deletion to any remote sync servers.',
-          { cancelBtnColor: 'grey', agreeBtnColor: 'accent', agreeBtnText: 'Delete Entire Budget'}
+          { cancelBtnColor: 'grey', agreeBtnColor: 'accent', agreeBtnText: 'Delete Entire Budget' }
         )
       ) {
-        //TODO
-        await this.$store.dispatch('deleteEntireBudget', item)
-        this.$store.dispatch('loadLocalBudgetRoot')
-        
-      } else {
-        // cancel
+        await this.budgetHelperStore.deleteEntireBudget(item)
       }
     },
     editItem(accountItem) {
       this.accountItem = accountItem
       this.isModelVisibleEditAccount = true
     },
- 
+
     async saveBudget() {
       await this.budgetManagerStore.putDocument(this.accountItem)
       this.isModelVisibleEditAccount = false

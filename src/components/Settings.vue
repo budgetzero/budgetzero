@@ -42,17 +42,7 @@
         >
           Before restoring, delete your database or all documents
         </v-alert> -->
-      <v-file-input v-model="backupFile" label="Restore Backup File" @change="onFileChange" />
-      <v-btn
-        color="accent"
-        dark
-        class="mb-1"
-        small
-        :disabled="!backupFileParsed"
-        @click="$store.dispatch('commitBulkDocsToPouchAndVuex', backupFileParsed)"
-      >
-        Restore From File
-      </v-btn>
+
       <!-- </v-sheet> -->
 
       <br />
