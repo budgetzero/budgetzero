@@ -4,7 +4,8 @@
       {{ title }}
     </template>
     <template #body>
-      <div class="mb-4 subtitle-1 font-weight-medium">{{ message }}</div>
+      <div v-if="options.showMessage" class="mb-4 subtitle-1 font-weight-medium">{{ message }}</div>
+      <v-text-field v-model="textInput" v-if="options.showTextField" :label=options.textFieldLabel></v-text-field>
     </template>
     <template #actions>
       <v-btn id="cancelBtn" v-if="!options.onlyShowAgreeBtn" :color="options.cancelBtnColor" @click.native="cancel">
@@ -33,6 +34,7 @@ export default {
     reject: null,
     message: null,
     title: null,
+    textInput: null,
     options: {
       onlyShowAgreeBtn: false,
       agreeBtnText: 'Agree',
@@ -40,7 +42,10 @@ export default {
       cancelBtnColor: 'red',
       color: 'primary',
       width: 290,
-      zIndex: 200
+      zIndex: 200,
+      showMessage: true,
+      showTextField: false,
+      textFieldLabel: '',
     }
   }),
   methods: {
@@ -55,7 +60,8 @@ export default {
       })
     },
     agree() {
-      this.resolve(true)
+      const returnMessageInResolve = this.textInput ? this.textInput : true
+      this.resolve(returnMessageInResolve)
       this.dialog = false
     },
     cancel() {

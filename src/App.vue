@@ -1,65 +1,48 @@
 <template>
   <v-app id="inspire">
-
     <v-overlay :value="loadingOverlay">
-        
-        <v-row justify="center">
-         
-        <v-card
-        
-      >
-          <v-simple-table>
-        <template #default>
-          <thead>
-            <tr>
-              <th class="text-left" >
-                 
-              </th>
-              <th class="text-left" width="50px">
-                Selected
-              </th>
-              <th class="text-left">
-                Date Created
-              </th>
-              <th class="text-left">
-                Name
-              </th>
-              <th class="text-left">
-                Currency
-              </th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="budget in budgetManagerStore.budgetsAvailable" :key="budget._id">
-              <td><v-btn @click="loadBudget(budget)">Load</v-btn></td>
+      <v-row justify="center">
+        <v-card>
+          <v-card-title>Manage Budgets</v-card-title>
+          <v-card-text>
+            <v-simple-table>
+              <template #default>
+                <thead>
+                  <tr>
+                    <th class="text-left"></th>
+                    <th class="text-left" width="50px">Selected</th>
+                    <th class="text-left">Date Created</th>
+                    <th class="text-left">Name</th>
+                    <th class="text-left">Currency</th>
+                    <th />
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="budget in budgetManagerStore.budgetsAvailable" :key="budget._id">
+                    <td><v-btn @click="loadBudget(budget)">Load</v-btn></td>
 
-              <td v-if="budget._id.slice(-36) == budgetManagerStore.budgetID">
-                <v-icon color="accent">
-                  mdi-check-bold
-                </v-icon>
-              </td>
-              <td v-else />
-              <td>{{ budget.created }}</td>
-              <td>{{ budget.name }}</td>
-              <td>{{ budget.currency }}</td>
-              <td>
-                <v-icon icon dark class="" color="primary" @click="editItem(budget)">
-                  edit
-                </v-icon>
-                <v-icon icon dark class="ml-1" color="accent" @click="deleteItem(budget)">
-                  delete
-                </v-icon>
-              </td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
-
-    </v-card>
-
-        </v-row>
-      </v-overlay>
+                    <td v-if="budget._id.slice(-36) == budgetManagerStore.budgetID">
+                      <v-icon color="accent"> mdi-check-bold </v-icon>
+                    </td>
+                    <td v-else />
+                    <td>{{ budget.created | moment('from', 'now') }}</td>
+                    <td>{{ budget.name }}</td>
+                    <td>{{ budget.currency }}</td>
+                    <td>
+                      <v-icon icon dark class="" color="primary" @click="editItem(budget)"> edit </v-icon>
+                      <v-icon icon dark class="ml-1" color="accent" @click="deleteItem(budget)"> delete </v-icon>
+                    </td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn @click="showCreateBudgetDialog(budget)">Create Budget</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-row>
+    </v-overlay>
 
     <!-- Global confirm dialog -->
     <confirm-dialog ref="confirm"></confirm-dialog>
@@ -79,7 +62,7 @@
     <sidebar v-if="!loadingOverlay" />
 
     <v-main v-if="!loadingOverlay">
-      <router-view  class="animated" />
+      <router-view class="animated" />
     </v-main>
     <v-snackbar v-model="mainPiniaStore.snackbar" :color="mainPiniaStore.snackBarColor">
       {{ mainPiniaStore.snackbarMessage }}
@@ -99,7 +82,6 @@ import ConfirmDialog from './components/Modals/ConfirmDialog.vue'
 import { mapStores } from 'pinia'
 import { useBudgetManagerStore } from './store/budgetManager'
 import { useMainStore } from './store/mainPiniaStore'
-
 import mock_budget from '@/../tests/__mockdata__/mock_budget2.json'
 
 export default {
@@ -114,56 +96,76 @@ export default {
       drawer: null,
       mini: false,
       budgetName: null,
-      loadingOverlay: true,
+      loadingOverlay: true
     }
   },
   computed: {
     ...mapStores(useBudgetManagerStore, useMainStore),
     isModalVisibleCreateBudget() {
       return false
-    },
+    }
   },
   async mounted() {
     console.log(this)
-    this.mainPiniaStore.setSnackbarMessage({snackbarMessage: 'ok', snackBarColor: 'blue'})
+    this.mainPiniaStore.setSnackbarMessage({ snackbarMessage: 'ok', snackBarColor: 'blue' })
     this.budgetManagerStore.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
     this.loadAvailableBudgets()
-    // this.$root.$confirm = this.$refs.confirm.open
+    this.$root.$confirm = this.$refs.confirm.open
   },
   methods: {
     async loadAvailableBudgets() {
       try {
-      await this.budgetManagerStore.loadAvailableBudgets()
-    } catch (err) {
-      console.error(err)
-    }
-    console.log('available budgets loaded', this.budgetManagerStore.budgetsAvailable)
-    this.showBudgetSelection = true
+        await this.budgetManagerStore.loadAvailableBudgets()
+      } catch (err) {
+        console.error(err)
+      }
+      console.log('available budgets loaded', this.budgetManagerStore.budgetsAvailable)
+      this.showBudgetSelection = true
     },
     async loadBudget(budget) {
       const budget_id = budget._id.slice(-36)
       console.log('load budget', budget_id)
       try {
         await this.budgetManagerStore.loadBudgetWithID(budget_id)
-      } catch(err) {
+      } catch (err) {
         console.error(err)
       }
       this.loadingOverlay = false
-
     },
-    async createBudget() {
-      this.$store.dispatch('loadLocalBudgetRoot')
+    async createBudget(budget) {
       this.$store.dispatch('createBudget', this.budgetName)
-
-      if (
-        await this.$root.$confirm('Budget Created!', `A budget named ${this.budgetName} has been created!`, {
-          onlyShowAgreeBtn: true,
-          agreeBtnColor: 'accent',
-          agreeBtnText: 'Ok'
-        })
-      ) {
-        this.$router.push({ path: `/budget` })
+    },
+    async showCreateBudgetDialog() {
+      try {
+        const newBudgetName = await this.$root.$confirm(
+          'Budget Created!',
+          `A budget named ${this.budgetName} has been created!`,
+          {
+            agreeBtnColor: 'primary',
+            cancelBtnColor: 'accent',
+            agreeBtnText: 'Ok',
+            showTextField: true,
+            textFieldLabel: 'Enter budget name',
+            showMessage: false
+          }
+        )
+        if (newBudgetName) {
+          useBudgetManagerStore.createBudget(newBudgetName)
+        }
+        this.mainPiniaStore.setSnackbarMessage({ snackbarMessage: newBudgetName, snackBarColor: 'blue' })
+      } catch (err) {
+        console.error(err)
       }
+
+      // this.$store.dispatch('createBudget', this.budgetName)
+
+      // if (
+      //   await this.$root.$confirm('Budget Created!', `A budget named ${this.budgetName} has been created!`, {
+      //     onlyShowAgreeBtn: true,
+      //     agreeBtnColor: 'accent',
+      //     agreeBtnText: 'Ok'
+      //   })
+      // )
     }
   }
 }

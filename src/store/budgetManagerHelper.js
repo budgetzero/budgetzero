@@ -6,7 +6,105 @@ import { sanitizeValueInput } from '../helper.js'
 
 export const useBudgetHelperStore = defineStore('budgetHelper', {
   actions: {
-    
+    /**
+     * Creates new budget and commits to pouchdb
+     * @param {string} budgetName The name of the budget to be created
+     */
+    async createBudget(budgetName) {
+      const budgetManagerStore = useBudgetManagerStore()
+      const budget_id = uuidv4()
+      const budget = {
+        name: budgetName,
+        currency: 'USD',
+        created: new Date().toISOString(),
+        checkNumber: false,
+        _id: `budget_${budget_id}`
+      }
+
+      var budget_opened = {
+        opened: new Date().toISOString(),
+        _id: `budget-opened_${budget_id}`
+      }
+
+      await budgetManagerStore.putDocument(budget)
+      await budgetManagerStore.putDocument(budget_opened)
+
+      // initalize budget categories
+      await this.initializeBudgetCategories(budget_id)
+    },
+
+    /**
+     * Initialize categories in a new budget
+     */
+    async initializeBudgetCategories(budget_id) {
+      const budgetManagerStore = useBudgetManagerStore()
+      const starterCategories = {
+        Giving: ['Tithing', 'Charitable'],
+        'Everyday Expenses': ['Restaurants', 'Groceries', 'Household Goods', 'Spending Money'],
+        'Monthly Bills': [
+          'Medical/Dental',
+          'Internet',
+          'Rent/Mortgage',
+          'Clothing',
+          'Water',
+          'Renters Insurance',
+          'Car Insurance',
+          'Phone',
+          'Fuel',
+          'Car Maintenance',
+          'Electricity',
+          'Cable TV'
+        ],
+        Debt: ['Student Loan Payment', 'Car Payment'],
+        'Savings Goals': [
+          'Rainy Day Funds',
+          'Christmas',
+          'Birthdays',
+          'Emergency Fund',
+          'Car Replacement',
+          'Retirement',
+          'Vacation'
+        ]
+      }
+      for (let [master, subCategories] of Object.entries(starterCategories)) {
+        const masterCategoryID = uuidv4()
+        const masterCategory = {
+          _id: `b_${budget_id}_master-category_${masterCategoryID}`,
+          name: master,
+          sort: 1,
+          collapsed: false
+        }
+
+        await budgetManagerStore.putDocument(masterCategory)
+
+        subCategories.forEach(async (sub) => {
+          await this.createCategory(budget_id, sub, masterCategoryID)
+        })
+      }
+    },
+
+    /**
+     *
+     * @param {*} categoryName
+     * @param {*} masterCategoryID
+     */
+    async createCategory(budgetID, categoryName, masterCategoryID) {
+      const budgetManagerStore = useBudgetManagerStore()
+      const sort_length = 0 //context.getters.categoriesGroupedByMaster[payload.masterCategoryForModalForm]
+      // ? context.getters.categoriesGroupedByMaster[payload.masterCategoryForModalForm].length
+      // : 0
+
+      const category = {
+        name: categoryName,
+        hidden: false,
+        masterCategory: masterCategoryID,
+        sort: sort_length,
+        _id: `b_${budgetID}_category_${uuidv4()}`
+      }
+
+      await budgetManagerStore.putDocument(category)
+    },
+
     /**
      * Create payee doc.
      * This should only be called from getPayeeID() action.
