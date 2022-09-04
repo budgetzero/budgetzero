@@ -61,14 +61,6 @@
             <v-list-item-title>Settings</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item>
-          <v-list-item-content>
-            <v-btn class="accent" @click="createBudget()">
-              <v-icon left color="white"> mdi-pencil </v-icon>
-              <span class="white--text">Create Budget</span>
-            </v-btn>
-          </v-list-item-content>
-        </v-list-item>
       </v-list>
     </v-menu>
 
@@ -115,13 +107,9 @@
 
       <v-divider>Off Budget (Tracking)</v-divider>
 
-      <!-- <v-list-group value="true">
-        <template v-slot:activator> -->
       <v-list-item-title class="pl-2 pt-1 pb-1 font-weight-medium subtitle-2 blue-grey--text text--lighten-3">
         ON BUDGET <span class="float-right pr-4">{{ sumOfOnBudgetAccounts | currency }}</span>
       </v-list-item-title>
-
-      <!-- </template> -->
 
       <v-list-item
         v-for="item in budgetManagerStore.accounts"
@@ -143,12 +131,9 @@
 
       <v-divider />
 
-      <!-- <v-list-group value="true">
-        <template v-slot:activator> -->
       <v-list-item-title class="pl-2 pt-1 pb-1 font-weight-medium subtitle-2 blue-grey--text text--lighten-3">
         OFF BUDGET <span class="float-right pr-4">{{ sumOfOffBudgetAccounts | currency }}</span>
       </v-list-item-title>
-      <!-- </template> -->
 
       <v-list-item
         v-for="item in budgetManagerStore.accounts"
@@ -169,7 +154,6 @@
 
       <v-divider />
 
-      <!-- </v-list-group> -->
     </v-list>
 
     <template #append>
@@ -206,8 +190,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import BaseDialogModalComponent from './Modals/BaseDialogModalComponent'
 import { useBudgetManagerStore } from '../store/budgetManager'
 import { useMainStore } from '../store/mainPiniaStore'
 import { mapStores } from 'pinia'
@@ -248,9 +230,6 @@ export default {
     }
   },
   methods: {
-    createBudget() {
-      this.$router.push({ path: `/create` })
-    },
   }
 }
 </script>
