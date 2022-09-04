@@ -137,9 +137,6 @@ export default {
   },
   computed: {
     ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useMainStore),
-    isModalVisibleCreateBudget() {
-      return false
-    }
   },
 
   async mounted() {
@@ -155,7 +152,6 @@ export default {
       } catch (err) {
         console.error(err)
       }
-      console.log('available budgets loaded', this.budgetManagerStore.budgetsAvailable)
       this.showBudgetSelection = true
     },
     async loadBudget(budget) {

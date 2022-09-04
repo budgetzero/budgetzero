@@ -107,18 +107,6 @@ export default {
         // cancel
       }
     },
-    createBudget(budgetName) {
-      console.log('create called', budgetName)
-      this.$store.dispatch('createBudget', budgetName)
-    },
-    loadSelectedBudget() {
-      this.$store.dispatch('setSelectedBudgetID', this.selectedBudget)
-      this.manageBudgetsModalVisible = false
-    },
-    saveBudget() {
-      this.dialog = false
-      this.$store.dispatch('commitDocToPouchAndVuex', this.item)
-    }
   }
 }
 </script>

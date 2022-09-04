@@ -27,7 +27,6 @@ import Transactions from './components/TransactionView/Transactions'
 
 import Accounts from './components/AccountView/Accounts'
 import BudgetGrid from './components/BudgetView/BudgetGrid'
-import CreateBudget from './components/CreateBudget.vue'
 import Manage from './components/Manage.vue'
 import Reports from './components/Reports.vue'
 
@@ -125,10 +124,6 @@ export var router = new VueRouter({
       // redirect: '/budget',
       // beforeEnter: ifAnyBudgetExists,
     },
-    {
-      path: '/create',
-      component: CreateBudget
-    }
   ]
 })
 
