@@ -39,6 +39,7 @@ import AccountAddModal from './AccountAddModal'
 import { mapStores } from 'pinia'
 import { useBudgetManagerStore } from '../../store/budgetManager'
 import { useBudgetHelperStore } from '../../store/budgetManagerHelper'
+import { useMainStore } from '../../store/mainPiniaStore'
 
 export default {
   name: 'AccountGrid',
@@ -81,7 +82,7 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useBudgetManagerStore, useBudgetHelperStore)
+    ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useMainStore)
   },
   mounted() {},
   created() {},
@@ -96,34 +97,29 @@ export default {
       this.editedItem = Object.assign({}, item)
       this.showModal = true
     },
-    deleteItem(item) {
-      const index = this.accounts.indexOf(item)
-      this.$root
-        .$confirm('Delete Account', 'Are you sure you want to delete this account?', {
-          onlyShowAgreeBtn: false,
-          agreeBtnColor: 'accent',
-          agreeBtnText: 'Delete Account',
-          cancelBtnColor: 'grey'
-        })
-        .then((confirm) => {
-          this.$store
-            .dispatch('deleteAccount', this.accounts[index])
-            .then((response) => {
-              console.log('Got some data, now lets show something in this component', response)
-            })
-            .catch((error) => {
-              // Action failed
-              this.$root.$confirm(
-                'Deletion Failed',
-                `This account still has ${error} transaction(s). You must delete those transactions to delete the account.`,
-                {
-                  onlyShowAgreeBtn: true,
-                  agreeBtnColor: 'accent',
-                  agreeBtnText: 'Ok'
-                }
-              )
-            })
-        })
+    async deleteItem(item) {
+      const index = this.budgetManagerStore.accounts.indexOf(item)
+
+      await this.$root.$confirm('Delete Account', 'Are you sure you want to delete this account?', {
+        onlyShowAgreeBtn: false,
+        agreeBtnColor: 'accent',
+        agreeBtnText: 'Delete Account',
+        cancelBtnColor: 'grey'
+      })
+
+      try {
+        await this.budgetHelperStore.deleteAccount(this.budgetManagerStore.accounts[index])
+      } catch (err) {
+        await this.$root.$confirm(
+          'Deletion Failed',
+          `This account still has ${err.message} transaction(s). You must delete those transactions to delete the account.`,
+          {
+            onlyShowAgreeBtn: true,
+            agreeBtnColor: 'accent',
+            agreeBtnText: 'Ok'
+          }
+        )
+      }
     },
     close() {
       this.showModal = false
