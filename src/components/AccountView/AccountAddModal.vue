@@ -36,10 +36,10 @@
                 data-cy="account-on-budget"
               />
             </v-col>
-            <v-col cols="4">
+            <!-- <v-col cols="4">
               <v-switch id="balanceIsNegativeSwitch" v-model="editeditem.balanceIsNegative" label="Invert Balance" />
               <span>(generally for credit card accounts)</span>
-            </v-col>
+            </v-col> -->
 
             <v-col cols="12">
               <v-textarea
