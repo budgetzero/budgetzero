@@ -164,8 +164,9 @@ export default {
 
   async mounted() {
     this.mainPiniaStore.setSnackbarMessage({ snackBarMessage: 'ok', snackBarColor: 'blue' })
-    this.budgetManagerStore.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
-    this.loadAvailableBudgets()
+    await this.budgetManagerStore.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
+    await this.loadAvailableBudgets()
+    this.pouchdbStore.startSyncIfRemoteSet()
     this.$root.$confirm = this.$refs.confirm.open
   },
   methods: {

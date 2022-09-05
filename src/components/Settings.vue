@@ -7,7 +7,7 @@
 
       <br />
 
-      <h3>Sync to Server <span class="subtitle-1 ml-3">sync state?</span></h3>
+      <h3>Sync to Server <span class="subtitle-1 ml-3">Last synced: {{ pouchdbStore.lastSyncTimestamp | moment('from', 'now')  }}</span></h3>
       <span
         >Sync to remote CouchDB server:
         <v-tooltip bottom>
@@ -22,7 +22,7 @@
       </span>
       <v-row align="center" class="mt-2">
         <v-col cols="7">
-          <v-text-field v-model="remoteSyncURLInput" label="Remote CouchDB URL" required />
+          <v-text-field v-model="pouchdbStore.remoteSyncDB" label="Remote CouchDB URL" required />
         </v-col>
         <v-col cols="5">
           <v-btn color="primary" dark small @click="startRemoteSync()">Start Sync</v-btn>
@@ -52,7 +52,6 @@ export default {
   components: {},
   data() {
     return {
-      remoteSyncURLInput: 'http://admin:changeme@localhost:5984/budgetzero_remotedb',
       headers: [
         { text: 'Name', value: 'name' },
         { text: 'id', value: '_id' }
@@ -71,7 +70,6 @@ export default {
   },
   methods: {
     startRemoteSync() {
-      this.pouchdbStore.remoteSyncDB = this.remoteSyncURLInput
       this.pouchdbStore.startRemoteSync()
     },
     stopRemoteSync() {

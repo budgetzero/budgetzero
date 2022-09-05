@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import PouchDB from 'pouchdb'
 import { useMainStore } from './mainPiniaStore'
+import { useStorage } from '@vueuse/core'
 
 var FileSaver = require('file-saver')
 
@@ -8,17 +9,27 @@ export const usePouchDBStore = defineStore('pouchdb', {
   state: () => {
     return {
       localdb: new PouchDB('budgetzero_localdb'),
-      remoteSyncDB: '',
-      syncHandler: null
+      remoteSyncDB: useStorage('remoteSyncDB', ''),
+      syncHandler: null,
+      lastSyncTimestamp: '',
     }
   },
   actions: {
     startRemoteSync() {
       const mainStore = useMainStore()
+      var self = this;
       this.syncHandler = this.localdb
-        .sync(this.remoteSyncDB)
+        .sync(this.remoteSyncDB, {
+          live: true,
+        })
+        .on('change', function () {
+          self.lastSyncTimestamp = new Date().toISOString()
+        })
+        .on('complete', function () {
+          self.lastSyncTimestamp = new Date().toISOString()
+        })
         .on('paused', function (info) {
-          console.info('replication paused', info)
+          self.lastSyncTimestamp = new Date().toISOString()
         })
         .on('active', function () {
           console.info('replication active')
@@ -39,6 +50,11 @@ export const usePouchDBStore = defineStore('pouchdb', {
       if (this.syncHandler) {
         this.syncHandler.cancel()
       } 
+    },
+    startSyncIfRemoteSet() {
+      if (this.remoteSyncDB !== '') {
+      this.startRemoteSync() 
+      }
     },
     async exportAllBudgetsAsJSON() {
       try {
