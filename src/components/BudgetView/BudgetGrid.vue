@@ -1,65 +1,5 @@
 <template>
   <v-container fluid class="pa-0">
-    <!-- Modal to create category group  -->
-    <BaseDialogModalComponent v-model="isModalVisibleMasterCat">
-      <template #title> Create a Category Group: </template>
-      <template #body>
-        <v-text-field
-          id="txt_field_category_name"
-          v-model="category_name"
-          label="New category group"
-          required
-          tabindex="0"
-          @keyup.enter="createMasterCategory(category_name)"
-        />
-      </template>
-      <template #actions>
-        <v-spacer />
-        <v-btn color="grey" text @click.stop="isModalVisibleMasterCat = false"> Cancel </v-btn>
-        <v-btn id="btn-createMasterCategory" color="accent" text @click="createMasterCategory(category_name)">
-          Create
-        </v-btn>
-      </template>
-    </BaseDialogModalComponent>
-
-    <!-- Modal to edit category group  -->
-    <BaseDialogModalComponent v-model="isModalVisibleEditCategory">
-      <template #title> Edit Category Name: </template>
-      <template #body>
-        <v-text-field
-          id="txt-categoryName"
-          v-model="editedCategory.name"
-          label="Category name"
-          required
-          tabindex="0"
-          @keyup.enter="saveCategory()"
-        />
-      </template>
-      <template #actions>
-        <v-spacer />
-        <v-btn color="grey" text @click.stop="isModalVisibleEditCategory = false"> Cancel </v-btn>
-        <v-btn id="btn-save" color="accent" text @click="saveCategory()"> Save </v-btn>
-      </template>
-    </BaseDialogModalComponent>
-
-    <!-- Modal to add sub category  -->
-    <BaseDialogModalComponent v-model="isModalVisibleCreateSubCategory">
-      <template #title> Create Category for {{ editedCategory.name }}: </template>
-      <template #body>
-        <v-text-field
-          v-model="category_name"
-          label="Category"
-          required
-          tabindex="0"
-          @keyup.enter="createCategory(category_name)"
-        />
-      </template>
-      <template #actions>
-        <v-spacer />
-        <v-btn color="grey" text @click.stop="isModalVisibleCreateSubCategory = false"> Cancel </v-btn>
-        <v-btn color="accent" text @click="createCategory(category_name)"> Create </v-btn>
-      </template>
-    </BaseDialogModalComponent>
 
     <v-row elevation="4" class="grey lighten-4 ma-0">
       <v-col align="center" justify="center">
@@ -92,7 +32,7 @@
           color="grey lighten-2"
           elevation="0"
           class="mb-2 mr-2"
-          @click.stop="isModalVisibleMasterCat = true"
+          @click.stop="createMasterCategory()"
         >
           <v-icon left> mdi-plus </v-icon>Category Group
         </v-btn>
@@ -187,7 +127,7 @@
             >
               <v-icon>mdi-pencil</v-icon>
             </v-btn>
-            <v-btn v-if="isReorderingCategories" icon small dark color="white" @click="addSubCategory(cat)">
+            <v-btn v-if="isReorderingCategories" icon small dark color="white" @click="createSubCategory(cat)">
               <v-icon>mdi-plus</v-icon>
             </v-btn>
             <v-btn v-if="isReorderingCategories" icon small dark color="white" @click="hideCategory(cat)">
@@ -297,7 +237,6 @@
       </v-col>
     </draggable>
   </v-container>
-  <!-- </section> -->
 </template>
 
 <script>
@@ -311,6 +250,7 @@ import { mapStores } from 'pinia'
 import { useBudgetManagerStore } from '../../store/budgetManager'
 import { useBudgetHelperStore } from '../../store/budgetManagerHelper'
 import moment from 'moment'
+import { v4 as uuidv4 } from 'uuid'
 
 export default {
   name: 'BudgetGrid',
@@ -324,10 +264,6 @@ export default {
       monthSelected: new Date().toISOString().slice(0, 7),
       isReorderingCategories: false,
       category_name: '',
-      isModalVisibleMasterCat: false,
-      isModalVisibleCategory: false,
-      isModalVisibleEditCategory: false,
-      isModalVisibleCreateSubCategory: false,
       masterCategoryForModalForm: '',
       editedCategory: {},
       headers: [
@@ -409,17 +345,59 @@ export default {
       this.editedCategory = JSON.parse(JSON.stringify(category))
       this.isModalVisibleEditCategory = true
     },
-    addSubCategory(category) {
-      this.editedCategory = JSON.parse(JSON.stringify(category))
-      this.isModalVisibleCreateSubCategory = true
+    async createSubCategory(masterCategory) {
+      try {
+        const newCategoryName = await this.$root.$confirm(`${masterCategory.name}: create sub category`, ``, {
+          agreeBtnColor: 'primary',
+          cancelBtnColor: 'accent',
+          agreeBtnText: 'Create',
+          showTextField: true,
+          textFieldValue: '',
+          textFieldLabel: `Enter new category name`,
+          showMessage: false
+        })
+        if (newCategoryName) {
+          const sort_length = this.categoriesGroupedByMaster[masterCategory._id.slice(-36)]
+            ? this.categoriesGroupedByMaster[masterCategory._id.slice(-36)].length
+            : 0
+
+          const newCategory = {
+            _id: `b_${this.budgetManagerStore.budgetID}_category_${uuidv4()}`,
+            name: newCategoryName,
+            hidden: false,
+            masterCategory: masterCategory._id.slice(-36),
+            sort: sort_length
+          }
+          await this.budgetManagerStore.putDocument(newCategory)
+        }
+      } catch (err) {
+        console.error(err)
+      }
     },
-    saveCategory() {
-      this.$store.dispatch('updateCategory', this.editedCategory)
-      this.doneEditing()
-    },
-    doneEditing() {
-      this.editedCategory = {}
-      this.isModalVisibleEditCategory = false
+    async createMasterCategory() {
+      try {
+        const newCategoryName = await this.$root.$confirm(`Create New Category Group`, ``, {
+          agreeBtnColor: 'primary',
+          cancelBtnColor: 'accent',
+          agreeBtnText: 'Create',
+          showTextField: true,
+          textFieldValue: '',
+          textFieldLabel: `Enter new category group name`,
+          showMessage: false
+        })
+        if (newCategoryName) {
+          const newCategory = {
+            _id: `b_${this.budgetManagerStore.budgetID}_master-category_${uuidv4()}`,
+            name: newCategoryName,
+            sort: this.budgetManagerStore.masterCategories.length,
+            collapsed: false
+          }
+
+          await this.budgetManagerStore.putDocument(newCategory)
+        }
+      } catch (err) {
+        console.error(err)
+      }
     },
     budgetValueChanged(item, event) {
       var payload = {}
@@ -465,30 +443,6 @@ export default {
       const id = item._id ? item._id.slice(-36) : null
 
       return _.get(this.budgetManagerStore.month_category_lookup, `${this.monthSelected}.${id}.overspending`, false)
-    },
-    deleteCategory(item) {
-      this.deleteDocFromPouchAndVuex(item)
-    },
-    createMasterCategory(newCategoryGroupName) {
-      if (newCategoryGroupName.length > 0) {
-        this.$store.dispatch('createMasterCategory', newCategoryGroupName)
-      }
-      this.clear()
-    },
-    createCategory() {
-      const payload = {
-        masterCategoryForModalForm: this.editedCategory._id.slice(-36),
-        category_name: this.category_name
-      }
-      this.$store.dispatch('createCategory', payload)
-      this.clear()
-    },
-    clear() {
-      this.isModalVisibleCreateSubCategory = false
-      this.masterCategoryForModalForm = ''
-      this.isModalVisibleMasterCat = false
-      this.isModalVisibleCategory = false
-      this.category_name = ''
     },
     flipOverspending(item) {
       this.$store.dispatch('flipOverspending', item)
@@ -588,10 +542,4 @@ tr:hover .crud-actions {
   margin-top: -1px;
   height: 30px;
 }
-</style>
-
-<style lang="scss">
-// .v-row-group__header {
-//   height: 10px;
-// }
 </style>
