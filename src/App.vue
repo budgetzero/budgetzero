@@ -3,14 +3,13 @@
     <v-overlay :value="mainPiniaStore.loadingOverlay">
       <v-row justify="center">
         <v-card>
-          <v-card-title>Manage Budgets</v-card-title>
+          <v-card-title><v-list-item-title class="text-h5 mb-1">Manage Budgets</v-list-item-title></v-card-title>
           <v-card-text>
             <v-simple-table>
               <template #default>
                 <thead>
                   <tr>
                     <th class="text-left"></th>
-                    <th class="text-left" width="50px">Selected</th>
                     <th class="text-left">Date Created</th>
                     <th class="text-left">Name</th>
                     <th class="text-left">Currency</th>
@@ -19,12 +18,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="budget in budgetManagerStore.budgetsAvailable" :key="budget._id">
-                    <td><v-btn @click="loadBudget(budget)">Load</v-btn></td>
-
-                    <td v-if="budget._id.slice(-36) == budgetManagerStore.budgetID">
-                      <v-icon color="accent"> mdi-check-bold </v-icon>
-                    </td>
-                    <td v-else />
+                    <td><v-btn small light color="white" @click="loadBudget(budget)">Load</v-btn></td>
                     <td>{{ budget.created | moment('from', 'now') }}</td>
                     <td>{{ budget.name }}</td>
                     <td>{{ budget.currency }}</td>
@@ -38,9 +32,12 @@
             </v-simple-table>
           </v-card-text>
           <v-card-actions>
-            <v-btn @click="showCreateBudgetDialog(budget)">Create Budget</v-btn>
-            <v-btn @click="isModelVisibleImportBudgetFile = true">Import Budget</v-btn>
-            <v-btn @click="pouchdbStore.exportAllBudgetsAsJSON()">Backup All Budgets</v-btn>
+            <v-btn @click="showCreateBudgetDialog(budget)" color="green"
+              ><v-icon left color="white">mdi-plus</v-icon>Create Budget</v-btn
+            >
+            <v-spacer></v-spacer>
+            <v-btn @click="isModelVisibleImportBudgetFile = true">Import</v-btn>
+            <v-btn @click="pouchdbStore.exportAllBudgetsAsJSON()">Backup</v-btn>
           </v-card-actions>
         </v-card>
       </v-row>
@@ -49,30 +46,17 @@
     <!-- Global confirm dialog -->
     <confirm-dialog ref="confirm"></confirm-dialog>
 
-    <!-- Modal to edit accounts -->
-    <BaseDialogModalComponent v-model="isModelVisibleEditAccount">
+    <!-- Modal to edit budget -->
+    <BaseDialogModalComponent v-model="isModelVisibleEditBudget">
       <template #title> Manage Budget </template>
       <template #body>
         <v-container>
           <v-row>
             <v-col cols="12">
-              <v-text-field v-model="accountItem.name" label="Budget name" />
+              <v-text-field v-model="budgetItem.name" label="Budget name" />
             </v-col>
-            <!-- <v-col cols="12">
-                <v-text-field
-                  label="Email*"
-                  required
-                />
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  label="Password*"
-                  type="password"
-                  required
-                />
-              </v-col> -->
             <v-col cols="12" sm="6">
-              <v-select v-model="accountItem.currency" :items="currencies" label="Currency" required />
+              <v-select v-model="budgetItem.currency" :items="currencies" label="Currency" required />
             </v-col>
             <v-col cols="12" sm="6" />
           </v-row>
@@ -81,7 +65,7 @@
 
       <template #actions>
         <v-spacer />
-        <v-btn color="blue darken-1" text @click="dialog = false"> Close </v-btn>
+        <v-btn color="blue darken-1" text @click="isModelVisibleEditBudget = false"> Close </v-btn>
         <v-btn color="blue darken-1" text @click="saveBudget()"> Save </v-btn>
       </template>
     </BaseDialogModalComponent>
@@ -151,10 +135,10 @@ export default {
       drawer: null,
       mini: false,
       budgetName: null,
-      isModelVisibleEditAccount: false,
+      isModelVisibleEditBudget: false,
       isModelVisibleImportBudgetFile: false,
       backupFile: null,
-      accountItem: {},
+      budgetItem: {},
       currencies: [{ value: 'USD', text: '$' }]
     }
   },
@@ -242,14 +226,14 @@ export default {
         await this.budgetHelperStore.deleteEntireBudget(item)
       }
     },
-    editItem(accountItem) {
-      this.accountItem = accountItem
-      this.isModelVisibleEditAccount = true
+    editItem(budgetItem) {
+      this.budgetItem = JSON.parse(JSON.stringify(budgetItem))
+      this.isModelVisibleEditBudget = true
     },
 
     async saveBudget() {
-      await this.budgetManagerStore.putDocument(this.accountItem)
-      this.isModelVisibleEditAccount = false
+      await this.budgetManagerStore.putDocument(this.budgetItem)
+      this.isModelVisibleEditBudget = false
     }
   }
 }
@@ -275,5 +259,10 @@ export default {
   color: var(--v-primary-base) !important;
   font-weight: 500;
   padding-right: 5px !important;
+}
+tbody {
+  tr:hover {
+    background-color: transparent !important;
+  }
 }
 </style>
