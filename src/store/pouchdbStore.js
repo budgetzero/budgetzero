@@ -35,8 +35,10 @@ export const usePouchDBStore = defineStore('pouchdb', {
     },
     stopRemoteSync() {
       const mainStore = useMainStore()
-      mainStore.setSnackbarMessage({ snackBarMessage: 'Sync stopped', snackBarColor: 'grey' })
-      this.syncHandler.cancel()
+      mainStore.setSnackbarMessage({ snackBarMessage: 'Sync stopped', snackBarColor: 'dark-grey' })
+      if (this.syncHandler) {
+        this.syncHandler.cancel()
+      } 
     },
     async exportAllBudgetsAsJSON() {
       try {

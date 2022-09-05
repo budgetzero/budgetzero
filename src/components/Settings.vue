@@ -26,7 +26,7 @@
         </v-col>
         <v-col cols="5">
           <v-btn color="primary" dark small @click="startRemoteSync()">Start Sync</v-btn>
-          <v-btn color="primary" outlined dark class="ml-2" small @click="stopRemoteSync()">Stop Sync</v-btn>
+          <v-btn color="primary" :disabled="pouchdbStore.syncHandler == null" outlined dark class="ml-2" small @click="stopRemoteSync()">Stop Sync</v-btn>
         </v-col>
       </v-row>
     </v-col>
@@ -35,7 +35,7 @@
       <h3 class="mx-2 py-2">Payees</h3>
       <v-data-table
         :headers="headers"
-        :items="budgetManagerStore.payees.sort((a, b) => (a.name > b.name ? 1 : -1))"
+        :items="payeesForTable"
         class="elevation-1"
       />
     </v-col>
@@ -64,6 +64,9 @@ export default {
     ...mapStores(useBudgetManagerStore, usePouchDBStore),
     packageVersion() {
       return process.env.PACKAGE_VERSION || '0'
+    },
+    payeesForTable() {
+      return this.budgetManagerStore.payees.sort((a, b) => (a.name > b.name ? 1 : -1))
     }
   },
   methods: {
