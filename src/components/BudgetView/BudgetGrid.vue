@@ -2,9 +2,7 @@
   <v-container fluid class="pa-0">
     <!-- Modal to create category group  -->
     <BaseDialogModalComponent v-model="isModalVisibleMasterCat">
-      <template #title>
-        Create a Category Group:
-      </template>
+      <template #title> Create a Category Group: </template>
       <template #body>
         <v-text-field
           id="txt_field_category_name"
@@ -17,9 +15,7 @@
       </template>
       <template #actions>
         <v-spacer />
-        <v-btn color="grey" text @click.stop="isModalVisibleMasterCat = false">
-          Cancel
-        </v-btn>
+        <v-btn color="grey" text @click.stop="isModalVisibleMasterCat = false"> Cancel </v-btn>
         <v-btn id="btn-createMasterCategory" color="accent" text @click="createMasterCategory(category_name)">
           Create
         </v-btn>
@@ -28,9 +24,7 @@
 
     <!-- Modal to edit category group  -->
     <BaseDialogModalComponent v-model="isModalVisibleEditCategory">
-      <template #title>
-        Edit Category Name:
-      </template>
+      <template #title> Edit Category Name: </template>
       <template #body>
         <v-text-field
           id="txt-categoryName"
@@ -43,12 +37,8 @@
       </template>
       <template #actions>
         <v-spacer />
-        <v-btn color="grey" text @click.stop="isModalVisibleEditCategory = false">
-          Cancel
-        </v-btn>
-        <v-btn id="btn-save" color="accent" text @click="saveCategory()">
-          Save
-        </v-btn>
+        <v-btn color="grey" text @click.stop="isModalVisibleEditCategory = false"> Cancel </v-btn>
+        <v-btn id="btn-save" color="accent" text @click="saveCategory()"> Save </v-btn>
       </template>
     </BaseDialogModalComponent>
 
@@ -66,12 +56,8 @@
       </template>
       <template #actions>
         <v-spacer />
-        <v-btn color="grey" text @click.stop="isModalVisibleCreateSubCategory = false">
-          Cancel
-        </v-btn>
-        <v-btn color="accent" text @click="createCategory(category_name)">
-          Create
-        </v-btn>
+        <v-btn color="grey" text @click.stop="isModalVisibleCreateSubCategory = false"> Cancel </v-btn>
+        <v-btn color="accent" text @click="createCategory(category_name)"> Create </v-btn>
       </template>
     </BaseDialogModalComponent>
 
@@ -85,9 +71,7 @@
         </v-btn>
         <v-btn small elevation="0" class="grey lighten-2 ml-4" @click="ADD_MONTH()">
           Next month
-          <v-icon medium>
-            mdi-chevron-right
-          </v-icon>
+          <v-icon medium> mdi-chevron-right </v-icon>
         </v-btn>
       </v-col>
     </v-row>
@@ -121,29 +105,21 @@
           class="mb-2"
           @click.stop="isReorderingCategories = !isReorderingCategories"
         >
-          <v-icon left>
-            mdi-drag-horizontal-variant
-          </v-icon>
+          <v-icon left> mdi-drag-horizontal-variant </v-icon>
           <span v-if="!isReorderingCategories"> Modify </span>
           <span v-else> Done </span>
         </v-btn>
       </v-col>
-      <v-col id="budgeted-header" class="money-amount subtitle font-weight-medium">
-        Budgeted
-      </v-col>
-      <v-col id="spent-header" class="money-amount subtitle font-weight-medium">
-        Spent
-      </v-col>
-      <v-col id="balance-header" class="money-amount subtitle font-weight-medium">
-        Balance
-      </v-col>
+      <v-col id="budgeted-header" class="money-amount subtitle font-weight-medium"> Budgeted </v-col>
+      <v-col id="spent-header" class="money-amount subtitle font-weight-medium"> Spent </v-col>
+      <v-col id="balance-header" class="money-amount subtitle font-weight-medium"> Balance </v-col>
     </v-row>
 
     <!-- 
       Display row for uncategorized if they exist for this month
      -->
     <v-row v-if="getBalanceValue(null) !== 0" class="elevation-0 ma-0 pa-0 yellow lighten-2">
-      <v-col class="master-category-row ">
+      <v-col class="master-category-row">
         <v-chip class="py-0">
           <span class="subtitle font-weight-medium primary--text">Uncategorized</span>
         </v-chip>
@@ -169,7 +145,7 @@
       :group="{ name: 'people', pull: 'false', put: false }"
     >
       <v-col
-        v-for="cat in masterCategories.filter(cat => !cat.hidden || isReorderingCategories)"
+        v-for="cat in masterCategories.filter((cat) => !cat.hidden || isReorderingCategories)"
         :key="cat._id"
         class="pa-0"
       >
@@ -215,12 +191,8 @@
               <v-icon>mdi-plus</v-icon>
             </v-btn>
             <v-btn v-if="isReorderingCategories" icon small dark color="white" @click="hideCategory(cat)">
-              <v-icon v-if="!cat.hidden">
-                mdi-eye
-              </v-icon>
-              <v-icon v-if="cat.hidden">
-                mdi-eye-off
-              </v-icon>
+              <v-icon v-if="!cat.hidden"> mdi-eye </v-icon>
+              <v-icon v-if="cat.hidden"> mdi-eye-off </v-icon>
             </v-btn>
           </v-col>
         </v-row>
@@ -238,15 +210,13 @@
           <v-row
             v-for="item in categoriesGroupedByMaster[cat._id.slice(-36)]
               .sort((a, b) => (a.sort > b.sort ? 1 : -1))
-              .filter(cat => !cat.hidden || isReorderingCategories)"
+              .filter((cat) => !cat.hidden || isReorderingCategories)"
             :key="item._id"
             class="category-row ma-0"
             align="center"
           >
             <v-col class="py-0 pt-0">
-              <v-icon v-if="isReorderingCategories" class="handle pr-1">
-                mdi-drag-horizontal-variant
-              </v-icon>
+              <v-icon v-if="isReorderingCategories" class="handle pr-1"> mdi-drag-horizontal-variant </v-icon>
               <span :class="{ 'text-decoration-line-through': item.hidden }">{{ item.name }}</span>
               <v-btn
                 v-if="isReorderingCategories"
@@ -261,12 +231,8 @@
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
               <v-btn v-if="isReorderingCategories" icon small dark color="grey darken-4" @click="hideCategory(item)">
-                <v-icon v-if="!item.hidden">
-                  mdi-eye
-                </v-icon>
-                <v-icon v-if="item.hidden">
-                  mdi-eye-off
-                </v-icon>
+                <v-icon v-if="!item.hidden"> mdi-eye </v-icon>
+                <v-icon v-if="item.hidden"> mdi-eye-off </v-icon>
               </v-btn>
             </v-col>
             <!-- <v-col>{{ item.name }}</v-col> -->
@@ -321,12 +287,8 @@
               >
                 {{ getBalanceValue(item._id) | currency }}
                 <v-btn icon x-small tabindex="-1" @click.stop="flipOverspending(item)">
-                  <v-icon v-if="getOverspendingProperty(item)" color="red" tabindex="-1">
-                    mdi-arrow-right
-                  </v-icon>
-                  <v-icon v-else tabindex="-1">
-                    mdi-arrow-right
-                  </v-icon>
+                  <v-icon v-if="getOverspendingProperty(item)" color="red" tabindex="-1"> mdi-arrow-right </v-icon>
+                  <v-icon v-else tabindex="-1"> mdi-arrow-right </v-icon>
                 </v-btn>
               </div>
             </v-col>
@@ -348,6 +310,7 @@ import Sortable from 'sortablejs'
 import { mapStores } from 'pinia'
 import { useBudgetManagerStore } from '../../store/budgetManager'
 import { useBudgetHelperStore } from '../../store/budgetManagerHelper'
+import moment from 'moment'
 
 export default {
   name: 'BudgetGrid',
@@ -413,7 +376,15 @@ export default {
   created() {},
   methods: {
     ...mapActions(['updateBudgetAmount', 'deleteDocFromPouchAndVuex']),
-    ...mapMutations(['PREVIOUS_MONTH', 'ADD_MONTH', 'GO_TO_CURRENT_MONTH']),
+    ADD_MONTH() {
+      this.monthSelected = moment(this.monthSelected).add(1, 'M').format('YYYY-MM')
+    },
+    PREVIOUS_MONTH() {
+      this.monthSelected = moment(this.monthSelected).subtract(1, 'M').format('YYYY-MM')
+    },
+    GO_TO_CURRENT_MONTH() {
+      this.monthSelected = new Date().toISOString().slice(0, 7)
+    },
     onFocus(param) {
       this.$nextTick(() => {
         param.target.select()
@@ -451,48 +422,49 @@ export default {
       this.isModalVisibleEditCategory = false
     },
     budgetValueChanged(item, event) {
-      console.log('budget change', event)
       var payload = {}
       payload.doc = {
         budget: Math.round(event * 100),
         overspending: null,
         note: '',
-        _id: `b_${this.selectedBudgetID}_m_category_${this.month_selected}-01_${item._id.slice(-36)}`
+        _id: `b_${this.budgetManagerStore.budgetID}_m_category_${this.monthSelected}-01_${item._id.slice(-36)}`
       }
 
       //Check if already exists
       if (
-        this.budgetManagerStore.month_category_lookup[this.month_selected] &&
-        this.budgetManagerStore.month_category_lookup[this.month_selected][item._id.slice(-36)]
+        this.budgetManagerStore.month_category_lookup[this.monthSelected] &&
+        this.budgetManagerStore.month_category_lookup[this.monthSelected][item._id.slice(-36)]
       ) {
-        payload.doc._id = this.budgetManagerStore.month_category_lookup[this.month_selected][item._id.slice(-36)]._id
-        payload.doc._rev = this.budgetManagerStore.month_category_lookup[this.month_selected][item._id.slice(-36)]._rev
+        payload.doc._id = this.budgetManagerStore.month_category_lookup[this.monthSelected][item._id.slice(-36)]._id
+        payload.doc._rev = this.budgetManagerStore.month_category_lookup[this.monthSelected][item._id.slice(-36)]._rev
       }
 
       console.log('payload for budget', payload.doc)
       if (!isNaN(payload.doc.budget)) {
-        this.$store.dispatch('updateBudgetAmount', payload.doc)
+        this.budgetManagerStore.putDocument(payload.doc)
       }
     },
     getBudgetedValue(full_id) {
       const id = full_id ? full_id.slice(-36) : null
 
-      return (_.get(this.monthlyData, `${this.month_selected}.categories.${id}.budgeted`, 0) / 100).toFixed(2)
+      return (
+        _.get(this.budgetManagerStore.monthlyData, `${this.monthSelected}.categories.${id}.budgeted`, 0) / 100
+      ).toFixed(2)
     },
     getSpentValue(full_id) {
       const id = full_id ? full_id.slice(-36) : null
 
-      return _.get(this.monthlyData, `${this.month_selected}.categories.${id}.spent`, 0) / 100
+      return _.get(this.budgetManagerStore.monthlyData, `${this.monthSelected}.categories.${id}.spent`, 0) / 100
     },
     getBalanceValue(full_id) {
       const id = full_id ? full_id.slice(-36) : null
 
-      return _.get(this.monthlyData, `${this.month_selected}.categories.${id}.balance`, 0) / 100
+      return _.get(this.budgetManagerStore.monthlyData, `${this.monthSelected}.categories.${id}.balance`, 0) / 100
     },
     getOverspendingProperty(item) {
       const id = item._id ? item._id.slice(-36) : null
 
-      return _.get(this.budgetManagerStore.month_category_lookup, `${this.month_selected}.${id}.overspending`, false)
+      return _.get(this.budgetManagerStore.month_category_lookup, `${this.monthSelected}.${id}.overspending`, false)
     },
     deleteCategory(item) {
       this.deleteDocFromPouchAndVuex(item)
@@ -523,23 +495,23 @@ export default {
     },
     async renameCategory(item) {
       let newItem = JSON.parse(JSON.stringify(item))
-      const { value: newCategoryName } = await this.$swal({
-        title: 'Rename category',
-        input: 'text',
-        inputValue: item.name,
-        inputAttributes: {
-          autocapitalize: 'off',
-          autocorrect: 'off'
-        },
-        inputValidator: value => {
-          if (!value) {
-            return 'You need to write something!'
-          }
+
+      try {
+        const newCategoryName = await this.$root.$confirm('Rename category', ``, {
+          agreeBtnColor: 'primary',
+          cancelBtnColor: 'accent',
+          agreeBtnText: 'Ok',
+          showTextField: true,
+          textFieldValue: item.name,
+          textFieldLabel: 'Enter new category name',
+          showMessage: false
+        })
+        if (newCategoryName) {
+          newItem.name = newCategoryName
+          await this.budgetManagerStore.putDocument(newItem)
         }
-      })
-      if (newCategoryName) {
-        newItem.name = newCategoryName
-        this.$store.dispatch('commitDocToPouchAndVuex', newItem)
+      } catch (err) {
+        console.error(err)
       }
     }
   }

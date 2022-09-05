@@ -760,7 +760,8 @@ export default {
           agreeBtnColor: 'accent',
           cancelBtnColor: 'grey',
           agreeBtnText: 'Delete',
-          showMessage: true
+          showMessage: true,
+          showTextField: false
         })
         if (confirmDelete) {
           payload._deleted = true
