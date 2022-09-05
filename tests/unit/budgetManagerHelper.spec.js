@@ -1,4 +1,3 @@
-// stores/counter.spec.ts
 import { setActivePinia, createPinia } from 'pinia'
 import { useBudgetManagerStore } from '../../src/store/budgetManager'
 import { useBudgetHelperStore } from '../../src/store/budgetManagerHelper'
@@ -16,13 +15,15 @@ let pouchdbStore
 
 
 describe('budget-manager delete budget', () => {
-  beforeEach(async () => {
-    // creates a fresh pinia and make it active so it's automatically picked
-    // up by any useStore() call without having to pass it to it:
-    // `useStore(pinia)`
+  beforeAll(async () => {
     setActivePinia(createPinia())
+    pouchdbStore = usePouchDBStore()
     budgetmanager = useBudgetManagerStore()
     budgetHelper = useBudgetHelperStore()
+
+    await new PouchDB('budgetzero_localdb').destroy()
+    pouchdbStore.localdb = new PouchDB('budgetzero_localdb')
+
     await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
   })
 
@@ -43,10 +44,15 @@ describe('budget-manager delete budget', () => {
 })
 
 describe('budget-manager-helper accounts', () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
     setActivePinia(createPinia())
+    pouchdbStore = usePouchDBStore()
     budgetmanager = useBudgetManagerStore()
     budgetHelper = useBudgetHelperStore()
+
+    await new PouchDB('budgetzero_localdb').destroy()
+    pouchdbStore.localdb = new PouchDB('budgetzero_localdb')
+
     await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
   })
 
@@ -127,3 +133,92 @@ describe('budget-manager-helper accounts', () => {
     expect(budgetmanager.accounts.length).toBe(num_of_accounts)
   })
 })
+
+// TODO need to rewrite
+// describe('budget-manager putBulkDocuments', () => {
+//   beforeAll(async () => {
+//    await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
+//   })
+
+//   it('add bulk transaction', async () => {
+
+//     const num_of_trans = budgetmanager.transactions.length
+//     const num_of_docs = budgetmanager.budgetData.length
+    
+//     const bulk = [{
+//       account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+//       category: null,
+//       cleared: false,
+//       approved: false,
+//       value: -100000,
+//       date: '2015-05-10',
+//       memo: 'memo',
+//       reconciled: false,
+//       flag: '#ffffff',
+//       payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
+//       transfer: null,
+//       splits: [],
+//       _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed0yyyy'
+//     },{
+//       account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+//       category: null,
+//       cleared: false,
+//       approved: false,
+//       value: -150000,
+//       date: '2015-05-10',
+//       memo: 'memo',
+//       reconciled: false,
+//       flag: '#ffffff',
+//       payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
+//       transfer: null,
+//       splits: [],
+//       _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed0zzzz'
+//       }]
+    
+//     let resp = await budgetmanager.putBulkDocuments(bulk)
+    
+//     // Number of data shouldn't change for a modification
+//     expect(budgetmanager.transactions.length).toBe(num_of_trans + bulk.length)
+//     expect(budgetmanager.budgetData.length).toBe(num_of_docs + bulk.length)
+//   })
+
+//   it('add bad transaction', async () => {
+//     await expect(
+//       budgetmanager.putBulkDocuments([{
+//         category: null,
+//         cleared: false,
+//         approved: false,
+//         value: -4444,
+//         date: '2015-05-10',
+//         memo: 'memo',
+//         reconciled: false,
+//         flag: '#ffffff',
+//         payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
+//         transfer: null,
+//         splits: [],
+//         _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed01234'
+//       }])
+//     ).rejects.toThrowError('Document failed validation')
+//   })
+
+//   it('add bad transaction with wrong length ID', async () => {
+//     await expect(
+//       budgetmanager.putBulkDocuments([{
+//         account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+//         category: null,
+//         cleared: false,
+//         approved: false,
+//         value: -4444,
+//         date: '2015-05-10',
+//         memo: 'memo',
+//         reconciled: false,
+//         flag: '#ffffff',
+//         payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
+//         transfer: null,
+//         splits: [],
+//         _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4da'
+//       }])
+//     ).rejects.toThrowError('Document failed validation')
+//   })
+
+// })
