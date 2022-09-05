@@ -96,7 +96,7 @@
     <v-row justify="space-between" class="ma-0 pt-2">
       <v-col sm="auto" />
       <v-col sm="auto">
-        <!-- <BudgetHeader /> -->
+        <BudgetHeader :month_selected="monthSelected" />
       </v-col>
     </v-row>
 
@@ -358,7 +358,7 @@ export default {
   },
   data() {
     return {
-      monthSelected: new Date().toISOString().slice(0, 10),
+      monthSelected: new Date().toISOString().slice(0, 7),
       isReorderingCategories: false,
       category_name: '',
       isModalVisibleMasterCat: false,
@@ -394,7 +394,7 @@ export default {
     },
     categoriesGroupedByMaster: {
       get() {
-        return _.groupBy(this.$store.getters.categoriesGroupedByMaster, 'masterCategory')
+        return _.groupBy(this.budgetManagerStore.categories, 'masterCategory')
       },
       set(value) {
         this.$store.dispatch('reorderMasterCategories', value)
@@ -462,11 +462,11 @@ export default {
 
       //Check if already exists
       if (
-        this.month_category_lookup[this.month_selected] &&
-        this.month_category_lookup[this.month_selected][item._id.slice(-36)]
+        this.budgetManagerStore.month_category_lookup[this.month_selected] &&
+        this.budgetManagerStore.month_category_lookup[this.month_selected][item._id.slice(-36)]
       ) {
-        payload.doc._id = this.month_category_lookup[this.month_selected][item._id.slice(-36)]._id
-        payload.doc._rev = this.month_category_lookup[this.month_selected][item._id.slice(-36)]._rev
+        payload.doc._id = this.budgetManagerStore.month_category_lookup[this.month_selected][item._id.slice(-36)]._id
+        payload.doc._rev = this.budgetManagerStore.month_category_lookup[this.month_selected][item._id.slice(-36)]._rev
       }
 
       console.log('payload for budget', payload.doc)
@@ -492,7 +492,7 @@ export default {
     getOverspendingProperty(item) {
       const id = item._id ? item._id.slice(-36) : null
 
-      return _.get(this.month_category_lookup, `${this.month_selected}.${id}.overspending`, false)
+      return _.get(this.budgetManagerStore.month_category_lookup, `${this.month_selected}.${id}.overspending`, false)
     },
     deleteCategory(item) {
       this.deleteDocFromPouchAndVuex(item)

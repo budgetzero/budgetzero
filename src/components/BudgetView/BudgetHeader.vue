@@ -15,8 +15,8 @@
               Leftover Last Month
               <span id="leftover-amount" style="float:right;">
                 {{
-                  monthlyData[month_selected]
-                    ? monthlyData[month_selected].summaryData.available_to_budget_last_month / 100
+                  budgetManagerStore.monthlyData[month_selected]
+                    ? budgetManagerStore.monthlyData[month_selected].summaryData.available_to_budget_last_month / 100
                     : 0 | currency
                 }}
               </span>
@@ -25,8 +25,8 @@
               Income This Month
               <span id="income-amount" style="float:right;">
                 {{
-                  monthlyData[month_selected]
-                    ? monthlyData[month_selected].summaryData.income_this_month / 100
+                  budgetManagerStore.monthlyData[month_selected]
+                    ? budgetManagerStore.monthlyData[month_selected].summaryData.income_this_month / 100
                     : 0 | currency
                 }}
               </span>
@@ -35,8 +35,8 @@
               Overspent Last Month
               <span id="overspent-amount" style="float:right;">
                 {{
-                  monthlyData[month_selected]
-                    ? monthlyData[month_selected].summaryData.last_month_overspent / 100
+                  budgetManagerStore.monthlyData[month_selected]
+                    ? budgetManagerStore.monthlyData[month_selected].summaryData.last_month_overspent / 100
                     : 0 | currency
                 }}
               </span>
@@ -45,8 +45,8 @@
               Budgeted This Month
               <span id="budgeted-amount" style="float:right;">
                 {{
-                  monthlyData[month_selected]
-                    ? monthlyData[month_selected].summaryData.budgeted_this_month / 100
+                  budgetManagerStore.monthlyData[month_selected]
+                    ? budgetManagerStore.monthlyData[month_selected].summaryData.budgeted_this_month / 100
                     : 0 | currency
                 }}
               </span>
@@ -60,8 +60,8 @@
 
           <div id="available-to-budget-amount" class="title text-center mb-0">
             {{
-              monthlyData[month_selected]
-                ? monthlyData[month_selected].summaryData.available_to_budget_this_month / 100
+              budgetManagerStore.monthlyData[month_selected]
+                ? budgetManagerStore.monthlyData[month_selected].summaryData.available_to_budget_this_month / 100
                 : 0 | currency
             }}
           </div>
@@ -72,17 +72,18 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapStores } from 'pinia'
+import { useBudgetManagerStore } from '../../store/budgetManager'
 
 export default {
-  props: {},
+  props: ['month_selected'],
   data() {
     return {}
   },
   computed: {
-    ...mapGetters(['monthlyData', 'month_selected']),
+    ...mapStores(useBudgetManagerStore),
     doesMonthDataExist() {
-      if (this.monthlyData.hasOwnProperty(`${this.month_selected}`)) {
+      if (this.budgetManagerStore.monthlyData.hasOwnProperty(`${this.month_selected}`)) {
         return true
       } else {
         return false
