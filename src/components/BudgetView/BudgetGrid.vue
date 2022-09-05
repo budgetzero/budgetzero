@@ -123,7 +123,7 @@
               small
               dark
               color="white"
-              @click="editCategory(cat)"
+              @click="renameCategory(cat)"
             >
               <v-icon>mdi-pencil</v-icon>
             </v-btn>
@@ -340,10 +340,6 @@ export default {
       // console.log(event.oldIndex); //Sort index of sub category
       // console.log(event);
       this.$store.dispatch('reorderSubCategory', event)
-    },
-    editCategory(category) {
-      this.editedCategory = JSON.parse(JSON.stringify(category))
-      this.isModalVisibleEditCategory = true
     },
     async createSubCategory(masterCategory) {
       try {
