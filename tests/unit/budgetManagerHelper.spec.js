@@ -21,8 +21,8 @@ describe('budget-manager delete budget', () => {
     budgetmanager = useBudgetManagerStore()
     budgetHelper = useBudgetHelperStore()
 
-    await new PouchDB('budgetzero_localdb').destroy()
-    pouchdbStore.localdb = new PouchDB('budgetzero_localdb')
+    await new PouchDB(new Date().toDateString()).destroy()
+    pouchdbStore.localdb = new PouchDB(new Date().toDateString()+1)
 
     await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
   })
@@ -50,8 +50,8 @@ describe('budget-manager-helper accounts', () => {
     budgetmanager = useBudgetManagerStore()
     budgetHelper = useBudgetHelperStore()
 
-    await new PouchDB('budgetzero_localdb').destroy()
-    pouchdbStore.localdb = new PouchDB('budgetzero_localdb')
+    await new PouchDB(new Date().toDateString()).destroy()
+    pouchdbStore.localdb = new PouchDB(new Date().toDateString()+1)
 
     await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
   })

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`budget manager calculates correctly 1`] = `
+exports[`budgetManager core calculates correctly 1`] = `
 Object {
   "2019-08": Object {
     "categories": Object {
@@ -3987,7 +3987,7 @@ Object {
 }
 `;
 
-exports[`budget-manager monthlyData calculates when add transaction 1`] = `
+exports[`budgetManager monthlyData consistent when add transaction 1`] = `
 Object {
   "2015-05": Object {
     "categories": Object {
@@ -4154,10 +4154,10 @@ Object {
         "spent": 0,
       },
       "null": Object {
-        "balance": -100000,
+        "balance": -104444,
         "budgeted": 0,
         "overspending": false,
-        "spent": -100000,
+        "spent": -104444,
       },
     },
     "summaryData": Object {
@@ -4167,7 +4167,7 @@ Object {
       "budgeted_this_month": 0,
       "income_this_month": 0,
       "last_month_overspent": 0,
-      "overspent": -100000,
+      "overspent": -104444,
     },
   },
   "2019-08": Object {
@@ -4343,11 +4343,11 @@ Object {
     },
     "summaryData": Object {
       "available_to_budget_last_month": 0,
-      "available_to_budget_this_month": -110000,
+      "available_to_budget_this_month": -114444,
       "balance_this_month": 0,
       "budgeted_this_month": 10000,
       "income_this_month": 0,
-      "last_month_overspent": -100000,
+      "last_month_overspent": -104444,
       "overspent": 0,
     },
   },
@@ -4523,8 +4523,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": -110000,
-      "available_to_budget_this_month": 390000,
+      "available_to_budget_last_month": -114444,
+      "available_to_budget_this_month": 385556,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -4704,8 +4704,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 390000,
-      "available_to_budget_this_month": 555666,
+      "available_to_budget_last_month": 385556,
+      "available_to_budget_this_month": 551222,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -4885,8 +4885,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 555666,
-      "available_to_budget_this_month": 814869,
+      "available_to_budget_last_month": 551222,
+      "available_to_budget_this_month": 810425,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -5066,8 +5066,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 814869,
-      "available_to_budget_this_month": 1036666,
+      "available_to_budget_last_month": 810425,
+      "available_to_budget_this_month": 1032222,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -5247,8 +5247,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 1036666,
-      "available_to_budget_this_month": 1293902,
+      "available_to_budget_last_month": 1032222,
+      "available_to_budget_this_month": 1289458,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -5428,8 +5428,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 1293902,
-      "available_to_budget_this_month": 1529874,
+      "available_to_budget_last_month": 1289458,
+      "available_to_budget_this_month": 1525430,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -5609,8 +5609,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 1529874,
-      "available_to_budget_this_month": 1601997,
+      "available_to_budget_last_month": 1525430,
+      "available_to_budget_this_month": 1597553,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -5790,8 +5790,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 1601997,
-      "available_to_budget_this_month": 1773317,
+      "available_to_budget_last_month": 1597553,
+      "available_to_budget_this_month": 1768873,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -5971,8 +5971,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 1773317,
-      "available_to_budget_this_month": 2004002,
+      "available_to_budget_last_month": 1768873,
+      "available_to_budget_this_month": 1999558,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -6152,8 +6152,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 2004002,
-      "available_to_budget_this_month": 2264690,
+      "available_to_budget_last_month": 1999558,
+      "available_to_budget_this_month": 2260246,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -6333,8 +6333,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 2264690,
-      "available_to_budget_this_month": 2460876,
+      "available_to_budget_last_month": 2260246,
+      "available_to_budget_this_month": 2456432,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -6514,8 +6514,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 2460876,
-      "available_to_budget_this_month": 2664773,
+      "available_to_budget_last_month": 2456432,
+      "available_to_budget_this_month": 2660329,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -6695,8 +6695,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 2664773,
-      "available_to_budget_this_month": 2882646,
+      "available_to_budget_last_month": 2660329,
+      "available_to_budget_this_month": 2878202,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -6876,8 +6876,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 2882646,
-      "available_to_budget_this_month": 3106749,
+      "available_to_budget_last_month": 2878202,
+      "available_to_budget_this_month": 3102305,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -7057,8 +7057,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 3106749,
-      "available_to_budget_this_month": 3345695,
+      "available_to_budget_last_month": 3102305,
+      "available_to_budget_this_month": 3341251,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -7238,8 +7238,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 3345695,
-      "available_to_budget_this_month": 3437386,
+      "available_to_budget_last_month": 3341251,
+      "available_to_budget_this_month": 3432942,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -7419,8 +7419,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 3437386,
-      "available_to_budget_this_month": 3585491,
+      "available_to_budget_last_month": 3432942,
+      "available_to_budget_this_month": 3581047,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -7600,8 +7600,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 3585491,
-      "available_to_budget_this_month": 3809502,
+      "available_to_budget_last_month": 3581047,
+      "available_to_budget_this_month": 3805058,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -7781,8 +7781,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 3809502,
-      "available_to_budget_this_month": 4282402,
+      "available_to_budget_last_month": 3805058,
+      "available_to_budget_this_month": 4277958,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -7962,8 +7962,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 4282402,
-      "available_to_budget_this_month": 4282402,
+      "available_to_budget_last_month": 4277958,
+      "available_to_budget_this_month": 4277958,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 0,
@@ -8143,8 +8143,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 4282402,
-      "available_to_budget_this_month": 4282402,
+      "available_to_budget_last_month": 4277958,
+      "available_to_budget_this_month": 4277958,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 0,
@@ -8155,7 +8155,7 @@ Object {
 }
 `;
 
-exports[`budget-manager monthlyData calculates when modify budget amount 1`] = `
+exports[`budgetManager monthlyData consistent when modify budget amount 1`] = `
 Object {
   "2015-05": Object {
     "categories": Object {
@@ -8322,10 +8322,10 @@ Object {
         "spent": 0,
       },
       "null": Object {
-        "balance": -100000,
+        "balance": -104444,
         "budgeted": 0,
         "overspending": false,
-        "spent": -100000,
+        "spent": -104444,
       },
     },
     "summaryData": Object {
@@ -8335,7 +8335,7 @@ Object {
       "budgeted_this_month": 0,
       "income_this_month": 0,
       "last_month_overspent": 0,
-      "overspent": -100000,
+      "overspent": -104444,
     },
   },
   "2019-08": Object {
@@ -8511,11 +8511,11 @@ Object {
     },
     "summaryData": Object {
       "available_to_budget_last_month": 0,
-      "available_to_budget_this_month": -120000,
+      "available_to_budget_this_month": -124444,
       "balance_this_month": 0,
       "budgeted_this_month": 20000,
       "income_this_month": 0,
-      "last_month_overspent": -100000,
+      "last_month_overspent": -104444,
       "overspent": 0,
     },
   },
@@ -8691,8 +8691,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": -120000,
-      "available_to_budget_this_month": 380000,
+      "available_to_budget_last_month": -124444,
+      "available_to_budget_this_month": 375556,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -8872,8 +8872,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 380000,
-      "available_to_budget_this_month": 545666,
+      "available_to_budget_last_month": 375556,
+      "available_to_budget_this_month": 541222,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -9053,8 +9053,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 545666,
-      "available_to_budget_this_month": 804869,
+      "available_to_budget_last_month": 541222,
+      "available_to_budget_this_month": 800425,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -9234,8 +9234,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 804869,
-      "available_to_budget_this_month": 1026666,
+      "available_to_budget_last_month": 800425,
+      "available_to_budget_this_month": 1022222,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -9415,8 +9415,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 1026666,
-      "available_to_budget_this_month": 1283902,
+      "available_to_budget_last_month": 1022222,
+      "available_to_budget_this_month": 1279458,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -9596,8 +9596,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 1283902,
-      "available_to_budget_this_month": 1519874,
+      "available_to_budget_last_month": 1279458,
+      "available_to_budget_this_month": 1515430,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -9777,8 +9777,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 1519874,
-      "available_to_budget_this_month": 1591997,
+      "available_to_budget_last_month": 1515430,
+      "available_to_budget_this_month": 1587553,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -9958,8 +9958,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 1591997,
-      "available_to_budget_this_month": 1763317,
+      "available_to_budget_last_month": 1587553,
+      "available_to_budget_this_month": 1758873,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -10139,8 +10139,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 1763317,
-      "available_to_budget_this_month": 1994002,
+      "available_to_budget_last_month": 1758873,
+      "available_to_budget_this_month": 1989558,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -10320,8 +10320,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 1994002,
-      "available_to_budget_this_month": 2254690,
+      "available_to_budget_last_month": 1989558,
+      "available_to_budget_this_month": 2250246,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -10501,8 +10501,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 2254690,
-      "available_to_budget_this_month": 2450876,
+      "available_to_budget_last_month": 2250246,
+      "available_to_budget_this_month": 2446432,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -10682,8 +10682,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 2450876,
-      "available_to_budget_this_month": 2654773,
+      "available_to_budget_last_month": 2446432,
+      "available_to_budget_this_month": 2650329,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -10863,8 +10863,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 2654773,
-      "available_to_budget_this_month": 2872646,
+      "available_to_budget_last_month": 2650329,
+      "available_to_budget_this_month": 2868202,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -11044,8 +11044,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 2872646,
-      "available_to_budget_this_month": 3096749,
+      "available_to_budget_last_month": 2868202,
+      "available_to_budget_this_month": 3092305,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -11225,8 +11225,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 3096749,
-      "available_to_budget_this_month": 3335695,
+      "available_to_budget_last_month": 3092305,
+      "available_to_budget_this_month": 3331251,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -11406,8 +11406,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 3335695,
-      "available_to_budget_this_month": 3427386,
+      "available_to_budget_last_month": 3331251,
+      "available_to_budget_this_month": 3422942,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -11587,8 +11587,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 3427386,
-      "available_to_budget_this_month": 3575491,
+      "available_to_budget_last_month": 3422942,
+      "available_to_budget_this_month": 3571047,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -11768,8 +11768,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 3575491,
-      "available_to_budget_this_month": 3799502,
+      "available_to_budget_last_month": 3571047,
+      "available_to_budget_this_month": 3795058,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -11949,8 +11949,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 3799502,
-      "available_to_budget_this_month": 4272402,
+      "available_to_budget_last_month": 3795058,
+      "available_to_budget_this_month": 4267958,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 500000,
@@ -12130,8 +12130,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 4272402,
-      "available_to_budget_this_month": 4272402,
+      "available_to_budget_last_month": 4267958,
+      "available_to_budget_this_month": 4267958,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 0,
@@ -12311,8 +12311,8 @@ Object {
       },
     },
     "summaryData": Object {
-      "available_to_budget_last_month": 4272402,
-      "available_to_budget_this_month": 4272402,
+      "available_to_budget_last_month": 4267958,
+      "available_to_budget_this_month": 4267958,
       "balance_this_month": 0,
       "budgeted_this_month": 0,
       "income_this_month": 0,
