@@ -20,7 +20,7 @@
       </template>
     </BaseDialogModalComponent>
 
-    <TransactionHeader :selected_account="selected_account" @showReconcileModal="showReconcileModal" />
+    <TransactionHeader :selected_account="selected_account" :accountBalance="accountBalance" @showReconcileModal="showReconcileModal" />
     <ReconcileHeader v-if="isReconciling" :reconcile-amount="reconcileAmount" @reconcileComplete="reconcileComplete" />
 
     <v-divider />
@@ -109,7 +109,7 @@
         <!-- Modal component for import transactions -->
         <ImportModalComponent
           :visible="importModalVisible"
-          :account="selected_account_id"
+          :account="selectedAccountID"
           @close="importModalVisible = false"
         />
 
@@ -694,11 +694,14 @@ export default {
       }
       return { _id: null, name: 'All Accounts', type: '' }
     },
-    selected_account_id() {
+    selectedAccountID() {
       return this.$route.params.account_id
     },
     isTransactionsValid() {
       return this.$refs.transactions_table_form.validate()
+    },
+    accountBalance() {
+      return this.budgetManagerStore.accountBalances[this.selectedAccountID]
     }
   },
   mounted() {
@@ -774,7 +777,7 @@ export default {
         this.editedItem.payee = this.payeeSearchText //TODO: hacky?
 
         if (this.isSingleAccount) {
-          this.editedItem.account = this.selected_account_id
+          this.editedItem.account = this.selectedAccountID
         }
 
         if (this.creatingNewTransaction) {

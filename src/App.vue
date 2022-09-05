@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-overlay opacity=1 z-index="999" :value="mainPiniaStore.loadingOverlay">
+    <v-overlay opacity=1 z-index="9" :value="mainPiniaStore.loadingOverlay">
         <v-progress-circular
           indeterminate
           size="64"

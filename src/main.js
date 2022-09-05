@@ -4,8 +4,6 @@ import App from './App.vue'
 import UUID from 'vue-uuid'
 
 import PouchDB from 'pouchdb-browser'
-import PouchLiveFind from 'pouchdb-live-find'
-import PouchFind from 'pouchdb-find'
 
 import Vue2Filters from 'vue2-filters'
 
@@ -54,7 +52,6 @@ Vue.use(UUID)
 PouchDB.plugin(require('pouchdb-find'))
 PouchDB.plugin(require('pouchdb-live-find'))
 PouchDB.plugin(require('pouchdb-authentication'))
-// PouchDB.plugin(require('pouchdb-load'));
 PouchDB.plugin(require('pouchdb-erase'))
 
 Vue.use(Vue2Filters)
@@ -64,21 +61,6 @@ Vue.use(Vuelidate)
 Vue.config.productionTip = false
 Vue.use(VueRouter)
 
-const ifAnyBudgetExists = (to, from, next) => {
-  if (store.getters.budgetRoots.length > 0 || from.path === '/create') {
-    console.log('root', store.getters.budgetRoots.length)
-    next()
-    return
-  }
-  Vue.prototype.$swal({
-    title: 'Create Budget',
-    text: 'Time to create a budget!',
-    confirmButtonText: 'Lets Get Started'
-  })
-  next('/create')
-}
-
-// eslint-disable-next-line vars-on-top
 export var router = new VueRouter({
   mode: process.env.IS_ELECTRON ? 'hash' : 'history',
   routes: [
@@ -93,36 +75,30 @@ export var router = new VueRouter({
     {
       path: '/accounts',
       component: Accounts
-      // beforeEnter: ifAnyBudgetExists,
     },
     {
       path: '/reports',
       component: Reports
-      // beforeEnter: ifAnyBudgetExists,
     },
     {
       path: '/transactions',
       name: 'all_transactions',
       component: Transactions
-      // beforeEnter: ifAnyBudgetExists,
     },
     {
       path: '/transactions/:account_id',
       name: 'transactions',
       component: Transactions
-      // beforeEnter: ifAnyBudgetExists,
     },
     {
       path: '/budget',
       component: BudgetGrid
-      // redirect: '/budget',
-      // beforeEnter: ifAnyBudgetExists,
     },
   ]
 })
 
 import { sync } from 'vuex-router-sync'
-sync(store, router)
+// sync(store, router)
 
 const vm = new Vue({
   store,
@@ -134,6 +110,4 @@ const vm = new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-//TODO: Allows access to vm within Vuex store. May want to research alternative ways... this._vm may work within store?
-Vue.prototype.$vm = vm
 
