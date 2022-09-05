@@ -281,7 +281,6 @@ export default {
   },
   computed: {
     ...mapStores(useBudgetManagerStore, useBudgetHelperStore),
-    ...mapGetters(['month_category_lookup']),
     masterCategories: {
       get() {
         return this.budgetManagerStore.masterCategories

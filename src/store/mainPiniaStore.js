@@ -4,9 +4,9 @@ import moment from 'moment'
 export const useMainStore = defineStore('mainPinia', {
   state: () => {
     return {
-      snackbarMessage: '',
-      snackbarColor: '',
-      snackbar: false,
+      snackBarMessage: '',
+      snackBarColor: '',
+      snackBar: false,
       sync_state: '',
       selectedBudgetID: null,
       month_selected: moment(new Date()).format('YYYY-MM'),
@@ -15,10 +15,10 @@ export const useMainStore = defineStore('mainPinia', {
   },
   actions: {
     setSnackbarMessage(payload) {
-      this.snackbarMessage = payload.snackbarMessage
-      this.snackbarColor = payload.snackbarColor
+      this.snackBarMessage = payload.snackBarMessage
+      this.snackBarColor = payload.snackBarColor
 
-      this.snackbar = true
+      this.snackBar = true
     },
     addMonth() {
       this.month_selected = moment(this.month_selected).add(1, 'M').format('YYYY-MM')

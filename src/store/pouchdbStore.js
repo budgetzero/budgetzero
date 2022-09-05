@@ -1,40 +1,41 @@
 import { defineStore } from 'pinia'
 import PouchDB from 'pouchdb'
+import { useMainStore } from './mainPiniaStore'
 
 var FileSaver = require('file-saver')
 
 export const usePouchDBStore = defineStore('pouchdb', {
   state: () => {
     return {
-      localdb: new PouchDB(new Date().toISOString()),
-      remoteSyncDB: null,
+      localdb: new PouchDB('budgetzero_localdb'),
+      remoteSyncDB: '',
       syncHandler: null
     }
   },
   actions: {
-    setRemoteSyncDB(remoteURL) {
-      this.remoteSyncDB = new PouchDB(remoteURL)
-    },
     startRemoteSync() {
-      if (this.remoteSyncDB) {
-        this.syncHandler = PouchDB.sync(this.remoteSyncDB, this.localdb, { live: true })
-          .on('paused', function (info) {
-            console.info('replication paused', info)
-          })
-          .on('active', function () {
-            console.info('replication active')
-          })
-          .on('denied', function (err) {
-            console.error('replication denied', err)
-          })
-          .on('error', function (err) {
-            console.error('replication error', err)
-          })
-      } else {
-        console.error('No remote sync URL found')
-      }
+      const mainStore = useMainStore()
+      this.syncHandler = this.localdb
+        .sync(this.remoteSyncDB)
+        .on('paused', function (info) {
+          console.info('replication paused', info)
+        })
+        .on('active', function () {
+          console.info('replication active')
+        })
+        .on('denied', function (err) {
+          console.error('replication denied', err)
+        })
+        .on('error', function (err) {
+          console.error('replication error', err)
+        })
+
+        mainStore.setSnackbarMessage({ snackBarMessage: 'Sync started', snackBarColor: 'primary' })
+
     },
     stopRemoteSync() {
+      const mainStore = useMainStore()
+      mainStore.setSnackbarMessage({ snackBarMessage: 'Sync stopped', snackBarColor: 'grey' })
       this.syncHandler.cancel()
     },
     async exportAllBudgetsAsJSON() {

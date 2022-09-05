@@ -117,11 +117,11 @@
     <v-main v-if="!mainPiniaStore.loadingOverlay">
       <router-view class="animated" />
     </v-main>
-    <v-snackbar v-model="mainPiniaStore.snackbar" :color="mainPiniaStore.snackBarColor">
-      {{ mainPiniaStore.snackbarMessage }}
+    <v-snackbar v-model="mainPiniaStore.snackBar" :color="mainPiniaStore.snackBarColor">
+      {{ mainPiniaStore.snackBarMessage }}
 
       <template #action="{ attrs }">
-        <v-btn color="white" text v-bind="attrs" @click="mainPiniaStore.snackbar = false"> Close </v-btn>
+        <v-btn color="white" text v-bind="attrs" @click="mainPiniaStore.snackBar = false"> Close </v-btn>
       </template>
     </v-snackbar>
   </v-app>
@@ -163,7 +163,7 @@ export default {
   },
 
   async mounted() {
-    this.mainPiniaStore.setSnackbarMessage({ snackbarMessage: 'ok', snackBarColor: 'blue' })
+    this.mainPiniaStore.setSnackbarMessage({ snackBarMessage: 'ok', snackBarColor: 'blue' })
     this.budgetManagerStore.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
     this.loadAvailableBudgets()
     this.$root.$confirm = this.$refs.confirm.open
@@ -214,7 +214,7 @@ export default {
         })
         if (newBudgetName) {
           const new_id = await this.budgetHelperStore.createBudget(newBudgetName)
-          this.mainPiniaStore.setSnackbarMessage({ snackbarMessage: new_id, snackBarColor: 'blue' })
+          this.mainPiniaStore.setSnackbarMessage({ snackBarMessage: new_id, snackBarColor: 'blue' })
         }
       } catch (err) {
         console.error(err)

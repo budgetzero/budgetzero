@@ -166,7 +166,7 @@
               </v-btn>
             </v-list-item>
             <v-list-item v-if="!mini">
-              <v-btn block text outline v-on="on">
+              <v-btn block text outlined v-on="on">
                 <v-icon left color="white"> mdi-help-circle-outline </v-icon>
                 <span>Help</span>
               </v-btn>
