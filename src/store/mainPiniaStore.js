@@ -10,6 +10,7 @@ export const useMainStore = defineStore('mainPinia', {
       sync_state: '',
       selectedBudgetID: null,
       month_selected: moment(new Date()).format('YYYY-MM'),
+      manageBudgetOverlay: true,
       loadingOverlay: true,
     }
   },

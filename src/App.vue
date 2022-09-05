@@ -1,6 +1,13 @@
 <template>
   <v-app id="inspire">
-    <v-overlay :value="mainPiniaStore.loadingOverlay">
+    <v-overlay opacity=1 z-index="999" :value="mainPiniaStore.loadingOverlay">
+        <v-progress-circular
+          indeterminate
+          size="64"
+        ></v-progress-circular>
+      </v-overlay>
+
+    <v-overlay :value="mainPiniaStore.manageBudgetOverlay">
       <v-row justify="center">
         <v-card>
           <v-card-title><v-list-item-title class="text-h5 mb-1">Manage Budgets</v-list-item-title></v-card-title>
@@ -18,7 +25,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="budget in budgetManagerStore.budgetsAvailable" :key="budget._id">
-                    <td><v-btn small light color="white" @click="loadBudget(budget)">Load</v-btn></td>
+                    <td><v-btn small light color="white" @click="loadBudget(budget._id.slice(-36))">Load</v-btn></td>
                     <td>{{ budget.created | moment('from', 'now') }}</td>
                     <td>{{ budget.name }}</td>
                     <td>{{ budget.currency }}</td>
@@ -96,9 +103,9 @@
       </template>
     </BaseDialogModalComponent>
 
-    <sidebar v-if="!mainPiniaStore.loadingOverlay" />
+    <sidebar v-if="!mainPiniaStore.manageBudgetOverlay" />
 
-    <v-main v-if="!mainPiniaStore.loadingOverlay">
+    <v-main v-if="!mainPiniaStore.manageBudgetOverlay">
       <router-view class="animated" />
     </v-main>
     <v-snackbar v-model="mainPiniaStore.snackBar" :color="mainPiniaStore.snackBarColor">
@@ -134,22 +141,24 @@ export default {
     return {
       drawer: null,
       mini: false,
-      budgetName: null,
       isModelVisibleEditBudget: false,
       isModelVisibleImportBudgetFile: false,
       backupFile: null,
       budgetItem: {},
-      currencies: [{ value: 'USD', text: '$' }]
+      currencies: [{ value: 'USD', text: '$' }],
     }
   },
   computed: {
     ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useMainStore, usePouchDBStore)
   },
-
   async mounted() {
-    this.mainPiniaStore.setSnackbarMessage({ snackBarMessage: 'ok', snackBarColor: 'blue' })
     await this.budgetManagerStore.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
     await this.loadAvailableBudgets()
+    if (localStorage.budgetID) {
+      this.loadBudget(localStorage.budgetID)
+    } else {
+      this.mainPiniaStore.loadingOverlay = false
+    }
     this.pouchdbStore.startSyncIfRemoteSet()
     this.$root.$confirm = this.$refs.confirm.open
   },
@@ -177,14 +186,16 @@ export default {
       }
       this.showBudgetSelection = true
     },
-    async loadBudget(budget) {
-      const budget_id = budget._id.slice(-36)
+    async loadBudget(budget_id) {
       console.log('load budget', budget_id)
+      
       try {
         await this.budgetManagerStore.loadBudgetWithID(budget_id)
+        localStorage.budgetID = budget_id
       } catch (err) {
         console.error(err)
       }
+      this.mainPiniaStore.manageBudgetOverlay = false
       this.mainPiniaStore.loadingOverlay = false
     },
     async showCreateBudgetDialog() {
@@ -198,22 +209,12 @@ export default {
           showMessage: false
         })
         if (newBudgetName) {
-          const new_id = await this.budgetHelperStore.createBudget(newBudgetName)
-          this.mainPiniaStore.setSnackbarMessage({ snackBarMessage: new_id, snackBarColor: 'blue' })
+          this.mainPiniaStore.loadingOverlay = true
+          await this.budgetHelperStore.createBudget(newBudgetName)
         }
       } catch (err) {
         console.error(err)
       }
-
-      // this.$store.dispatch('createBudget', this.budgetName)
-
-      // if (
-      //   await this.$root.$confirm('Budget Created!', `A budget named ${this.budgetName} has been created!`, {
-      //     onlyShowAgreeBtn: true,
-      //     agreeBtnColor: 'accent',
-      //     agreeBtnText: 'Ok'
-      //   })
-      // )
     },
     async deleteItem(item) {
       if (
@@ -230,7 +231,6 @@ export default {
       this.budgetItem = JSON.parse(JSON.stringify(budgetItem))
       this.isModelVisibleEditBudget = true
     },
-
     async saveBudget() {
       await this.budgetManagerStore.putDocument(this.budgetItem)
       this.isModelVisibleEditBudget = false

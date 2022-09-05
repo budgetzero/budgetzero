@@ -45,7 +45,7 @@
         </v-list-item>
       </template>
       <v-list max-width="400" color="grey lighten-4">
-        <v-list-item @click="mainPiniaStore.loadingOverlay = true">
+        <v-list-item @click="mainPiniaStore.manageBudgetOverlay = true">
           <v-list-item-avatar>
             <v-icon left color="primary"> mdi-swap-horizontal </v-icon>
           </v-list-item-avatar>
