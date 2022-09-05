@@ -152,7 +152,7 @@ export default {
     ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useMainStore, usePouchDBStore)
   },
   async mounted() {
-    await this.budgetManagerStore.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
+    // await this.budgetManagerStore.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
     await this.loadAvailableBudgets()
     if (localStorage.budgetID) {
       this.loadBudget(localStorage.budgetID)
@@ -206,6 +206,7 @@ export default {
           agreeBtnText: 'Ok',
           showTextField: true,
           textFieldLabel: 'Enter budget name',
+          textFieldValue: '',
           showMessage: false
         })
         if (newBudgetName) {
@@ -213,8 +214,9 @@ export default {
           await this.budgetHelperStore.createBudget(newBudgetName)
         }
       } catch (err) {
-        console.error(err)
+        this.mainPiniaStore.setSnackbarMessage({ snackBarMessage: err, snackBarColor: 'accent' })
       }
+      this.mainPiniaStore.loadingOverlay = false
     },
     async deleteItem(item) {
       if (
