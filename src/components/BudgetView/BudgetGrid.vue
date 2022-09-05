@@ -96,7 +96,7 @@
     <v-row justify="space-between" class="ma-0 pt-2">
       <v-col sm="auto" />
       <v-col sm="auto">
-        <BudgetHeader />
+        <!-- <BudgetHeader /> -->
       </v-col>
     </v-row>
 
@@ -345,6 +345,9 @@ import BudgetHeader from './BudgetHeader.vue'
 import _ from 'lodash'
 import draggable from 'vuedraggable'
 import Sortable from 'sortablejs'
+import { mapStores } from 'pinia'
+import { useBudgetManagerStore } from '../../store/budgetManager'
+import { useBudgetHelperStore } from '../../store/budgetManagerHelper'
 
 export default {
   name: 'BudgetGrid',
@@ -355,6 +358,7 @@ export default {
   },
   data() {
     return {
+      monthSelected: new Date().toISOString().slice(0, 10),
       isReorderingCategories: false,
       category_name: '',
       isModalVisibleMasterCat: false,
@@ -378,10 +382,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['selectedBudgetID', 'monthlyData', 'month_selected', 'month_category_lookup']),
+    ...mapStores(useBudgetManagerStore, useBudgetHelperStore),
+    ...mapGetters(['month_category_lookup']),
     masterCategories: {
       get() {
-        return this.$store.getters.masterCategories
+        return this.budgetManagerStore.masterCategories
       },
       set(value) {
         this.$store.dispatch('reorderMasterCategories', value)
@@ -389,7 +394,7 @@ export default {
     },
     categoriesGroupedByMaster: {
       get() {
-        return this.$store.getters.categoriesGroupedByMaster
+        return _.groupBy(this.$store.getters.categoriesGroupedByMaster, 'masterCategory')
       },
       set(value) {
         this.$store.dispatch('reorderMasterCategories', value)
@@ -397,7 +402,7 @@ export default {
     },
     categories: {
       get() {
-        return this.$store.getters.categories
+        return this.budgetManagerStore.categories
       },
       set(value) {
         this.$store.commit('setPages', value)

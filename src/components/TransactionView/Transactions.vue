@@ -82,10 +82,7 @@
           </template>
           <span>Delete</span>
         </v-tooltip>
-
-        <v-btn icon class="white--text" color="grey darken-1" @click="$store.dispatch('getAllDocsFromPouchDB')">
-          <v-icon> mdi-refresh </v-icon>
-        </v-btn>
+        
       </v-col>
       <v-col class="pt-2 pb-0">
         <v-btn small class="mb-2 ml-2" color="grey lighten-2" elevation="0" @click.stop="importModalVisible = true">
@@ -620,7 +617,9 @@ export default {
       return this.budgetManagerStore.payees.map((obj) => obj.name)
     },
     payee() {
-      if (this.editedItem.payee in this.budgetManagerStore.payee_map) {
+      if (this.editedItem.payee == null) {
+        return ''
+      } else if (this.editedItem.payee in this.budgetManagerStore.payee_map) {
         return this.budgetManagerStore.payee_map[this.editedItem.payee]
       } else if (this.editedItem.payee in this.budgetManagerStore.account_map) {
         return 'Transfer: ' + this.budgetManagerStore.account_map[this.editedItem.payee]
@@ -778,7 +777,7 @@ export default {
         }
 
         if (this.creatingNewTransaction) {
-          this.editedItem._id = `b_${this.selectedBudgetID}_transaction_${Vue.prototype.$vm.$uuid.v4()}`
+          this.editedItem._id = `b_${this.budgetManagerStore.budgetID}_transaction_${Vue.prototype.$vm.$uuid.v4()}`
         }
         this.editedItem.approved = true
 
