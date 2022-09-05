@@ -1,4 +1,4 @@
-import { BudgetManager } from '../../src/store/pouchdb-manager'
+import { BudgetManager } from '../../src/store/budgetManager'
 import mock_budget from '@/../tests/__mockdata__/mock_budget2.json'
 import PouchDB from 'pouchdb'
 
