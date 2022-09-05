@@ -112,7 +112,7 @@
       </v-list-item-title>
 
       <v-list-item
-        v-for="item in budgetManagerStore.accounts"
+        v-for="item in onBudgetAccounts"
         :key="item._id"
         :to="{ path: '/transactions/' + item._id.slice(-36) }"
         active-class="primary white--text"
@@ -136,7 +136,7 @@
       </v-list-item-title>
 
       <v-list-item
-        v-for="item in budgetManagerStore.accounts"
+        v-for="item in offBudgetAccounts"
         :key="item._id"
         :to="{ path: '/transactions/' + item._id.slice(-36) }"
         active-class="primary white--text"
@@ -153,7 +153,6 @@
       </v-list-item>
 
       <v-divider />
-
     </v-list>
 
     <template #append>
@@ -176,15 +175,14 @@
 
           <v-list dense color="grey lighten-4">
             <v-list-item>
-                <v-btn text href="https://docs.budgetzero.io/"  target="_blank">
-                  <v-icon left color="primary"> mdi-account </v-icon>
-                  <span class="primary--text">Documentation</span>
-                </v-btn>
+              <v-btn text href="https://docs.budgetzero.io/" target="_blank">
+                <v-icon left color="primary"> mdi-account </v-icon>
+                <span class="primary--text">Documentation</span>
+              </v-btn>
             </v-list-item>
           </v-list>
         </v-menu>
       </v-list>
-
     </template>
   </v-navigation-drawer>
 </template>
@@ -196,41 +194,50 @@ import { mapStores } from 'pinia'
 
 export default {
   name: 'Sidebar',
-  components: {
-  },
+  components: {},
   data() {
     return {
       links: '',
       drawer: null,
-      mini: false,
+      mini: false
     }
   },
   computed: {
     ...mapStores(useBudgetManagerStore, useMainStore),
     budgetDoc() {
       if (this.budgetManagerStore.budgetID && this.budgetManagerStore.budgetsAvailable) {
-        const budgetDoc = this.budgetManagerStore.budgetsAvailable.find(budget => `budget_${this.budgetManagerStore.budgetID}` == budget._id);
+        const budgetDoc = this.budgetManagerStore.budgetsAvailable.find(
+          (budget) => `budget_${this.budgetManagerStore.budgetID}` == budget._id
+        )
         return budgetDoc
       } else {
         return null
       }
     },
+    onBudgetAccounts() {
+      return this.budgetManagerStore.accounts.filter((account) => account.onBudget == true)
+    },
+    offBudgetAccounts() {
+      return this.budgetManagerStore.accounts.filter((account) => account.onBudget == false)
+    },
     sumOfOnBudgetAccounts() {
-      //TODO fix to on/off budget
-      return this.budgetManagerStore.accounts.reduce(
-        (acct_sum, b) => acct_sum + this.budgetManagerStore.accountBalances[b._id.slice(-36)].working / 100,
-        0
-      )
+      return this.onBudgetAccounts.reduce((acct_sum, b) => {
+        const workingBalance = this.budgetManagerStore.accountBalances[b._id.slice(-36)].working
+          ? this.budgetManagerStore.accountBalances[b._id.slice(-36)].working
+          : 0
+        return acct_sum + workingBalance / 100
+      }, 0)
     },
     sumOfOffBudgetAccounts() {
-      return this.budgetManagerStore.accounts.reduce(
-        (acct_sum, b) => acct_sum + this.budgetManagerStore.accountBalances[b._id.slice(-36)].working / 100,
-        0
-      )
+      return this.offBudgetAccounts.reduce((acct_sum, b) => {
+        const workingBalance = this.budgetManagerStore.accountBalances[b._id.slice(-36)].working
+          ? this.budgetManagerStore.accountBalances[b._id.slice(-36)].working
+          : 0
+        return acct_sum + (workingBalance / 100)
+      }, 0)
     }
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 
