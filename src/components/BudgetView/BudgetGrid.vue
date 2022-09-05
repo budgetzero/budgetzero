@@ -1,6 +1,5 @@
 <template>
   <v-container fluid class="pa-0">
-
     <v-row elevation="4" class="grey lighten-4 ma-0">
       <v-col align="center" justify="center">
         <v-btn small elevation="0" class="grey lighten-2" @click="PREVIOUS_MONTH()">
@@ -326,11 +325,15 @@ export default {
         param.target.select()
       })
     },
-    collapseMasterCategory(cat) {
-      this.$store.dispatch('flipMasterCategoryCollapsed', cat)
+    async collapseMasterCategory(cat) {
+      let updatedCategory = JSON.parse(JSON.stringify(cat))
+      updatedCategory.collapsed = !updatedCategory.collapsed
+      await this.budgetManagerStore.putDocument(updatedCategory)
     },
-    hideCategory(cat) {
-      this.$store.dispatch('flipCategoryHidden', cat)
+    async hideCategory(cat) {
+      let updatedCategory = JSON.parse(JSON.stringify(cat))
+      updatedCategory.hidden = !updatedCategory.hidden
+      await this.budgetManagerStore.putDocument(updatedCategory)
     },
     subCategoryMoveEnd(event) {
       // console.log(event.to.className.slice(-36)); //ID of new master category
@@ -395,7 +398,7 @@ export default {
         console.error(err)
       }
     },
-    budgetValueChanged(item, event) {
+    async budgetValueChanged(item, event) {
       var payload = {}
       payload.doc = {
         budget: Math.round(event * 100),
@@ -413,9 +416,8 @@ export default {
         payload.doc._rev = this.budgetManagerStore.month_category_lookup[this.monthSelected][item._id.slice(-36)]._rev
       }
 
-      console.log('payload for budget', payload.doc)
       if (!isNaN(payload.doc.budget)) {
-        this.budgetManagerStore.putDocument(payload.doc)
+        await this.budgetManagerStore.putDocument(payload.doc)
       }
     },
     getBudgetedValue(full_id) {
@@ -440,8 +442,27 @@ export default {
 
       return _.get(this.budgetManagerStore.month_category_lookup, `${this.monthSelected}.${id}.overspending`, false)
     },
-    flipOverspending(item) {
-      this.$store.dispatch('flipOverspending', item)
+    async flipOverspending(item) {
+      let payload = {
+        budget: 0,
+        overspending: true,
+        note: '',
+        _id: `b_${this.budgetManagerStore.budgetID}_m_category_${this.monthSelected}-01_${item._id.slice(-36)}`,
+        date: `${this.monthSelected}-01`
+      }
+
+      //Check if already exists
+      if (
+        this.budgetManagerStore.month_category_lookup[this.monthSelected] &&
+        this.budgetManagerStore.month_category_lookup[this.monthSelected][item._id.slice(-36)]
+      ) {
+        payload = JSON.parse(
+          JSON.stringify(this.budgetManagerStore.month_category_lookup[this.monthSelected][item._id.slice(-36)])
+        )
+
+        payload.overspending = !payload.overspending
+      }
+      await this.budgetManagerStore.putDocument(payload)
     },
     async renameCategory(item) {
       let newItem = JSON.parse(JSON.stringify(item))
