@@ -782,6 +782,7 @@ export default {
         }
         this.editedItem.approved = true
 
+        console.log(this.editedItem)
         this.budgetHelperStore.putTransaction(this.editedItem)
         this.cancel()
       } else {

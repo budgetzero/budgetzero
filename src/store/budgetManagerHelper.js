@@ -197,38 +197,44 @@ export const useBudgetHelperStore = defineStore('budgetHelper', {
     /**
      * Create/update the mirrored transfer transaction
      */
-    saveMirroredTransferTransaction(_mirroredTransferTransaction) {
-      var mirroredTransferTransaction = JSON.parse(JSON.stringify(mirroredTransferTransaction))
+    async saveMirroredTransferTransaction(originalTransaction) {
+      const budgetManagerStore = useBudgetManagerStore()
+      console.log('the id', originalTransaction._id.slice(-36))
+      let mirrorTransaction = {
+        _id: `b_${budgetManagerStore.budgetID}_transaction_${uuidv4()}`,
+        value: -originalTransaction.value,
+        transfer: originalTransaction._id.slice(-36),
+        account: originalTransaction.payee,
+        payee: originalTransaction.account, //The payee is the _id of the other account
+        memo: originalTransaction.memo,
+        category: null,
+        reconciled: false,
+        approved: true,
+        flag: '#ffffff',
+        date: originalTransaction.date,
+        cleared: true,
+        splits: []
+      }
 
       //Check if the mirrored transaction doesn't exist then we create
-      if (payload.transfer) {
-        const index =
-          context.getters.transactionsLookupByID[
-            `b_${context.getters.selectedBudgetID}_transaction_${payload.transfer}`
-          ]
+      if (originalTransaction.transfer) {
+        const mirrorTransactionExisting = budgetManagerStore.transactions.find((trans) => {
+          return trans._id == `b_${budgetManagerStore.budgetID}_transaction_${originalTransaction.transfer}`
+        })
+        mirrorTransaction._id = `b_${budgetManagerStore.budgetID}_transaction_${originalTransaction.transfer}`
 
-        mirroredTransferTransaction = Object.assign({}, context.getters.transactions[index])
-      } else {
-        //Creating new transaction
-        mirroredTransferTransaction._id = `b_${
-          context.getters.selectedBudgetID
-        }_transaction_${Vue.prototype.$vm.$uuid.v4()}`
-
-        delete mirroredTransferTransaction._rev
-      }
-      //Create the mirrored transaction
-      mirroredTransferTransaction.value = -payload.value
-      mirroredTransferTransaction.transfer = payload._id.slice(-36)
-      mirroredTransferTransaction.account = payload.payee
-      mirroredTransferTransaction.payee = payload.account //The payee is the _id of the other account
-      mirroredTransferTransaction.memo = payload.memo
-      mirroredTransferTransaction.category = null
-      mirroredTransferTransaction.date = payload.date
-      mirroredTransferTransaction.cleared = payload.cleared
-
-      context.dispatch('commitDocToPouchAndVuex', mirroredTransferTransaction)
-
-      return mirroredTransferTransaction._id.slice(-36)
+        // Update some values
+        mirrorTransaction._id = mirrorTransactionExisting._id
+        mirrorTransaction._rev = mirrorTransactionExisting._rev
+        mirrorTransaction.transfer = originalTransaction._id.slice(-36)
+        console.log('existing', mirrorTransaction)
+      } 
+      
+      console.log('put', JSON.stringify(mirrorTransaction))
+      const resp = await budgetManagerStore.putDocument(mirrorTransaction)
+      mirrorTransaction._rev = resp.rev
+      
+      return mirrorTransaction
     },
 
     /**
@@ -239,16 +245,20 @@ export const useBudgetHelperStore = defineStore('budgetHelper', {
       const budgetManagerStore = useBudgetManagerStore()
 
       //Check if this is a transfer transaction. if so, get the account ID
-      //TODO: only let this be a transfer if the account actually exists?
       if (payload.payee && payload.payee.includes('Transfer: ')) {
         //account_id is the account the original transfer is going to
         const account_id = Object.keys(budgetManagerStore.account_map).find(
           (key) => budgetManagerStore.account_map[key] === payload.payee.slice(10)
         )
-
         payload.payee = account_id
-        const mirroredTransferID = await context.dispatch('saveMirroredTransferTransaction', payload)
-        payload.transfer = mirroredTransferID
+        const mirroredTransactionDoc = await this.saveMirroredTransferTransaction(payload)
+
+        //TODO: only let this be a transfer if the account actually exists?
+        if (!validator.isUUID(account_id)) {
+          throw Error('Cannot find mirrored account')
+        }
+
+        payload.transfer = mirroredTransactionDoc._id.slice(-36)
         payload.category = null
       } else {
         payload.transfer = null

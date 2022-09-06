@@ -269,6 +269,87 @@ describe('budget-manager-helper transactions', () => {
     expect(resp['ok']).toBe(true)
   })
 
+  it('create mirrored transfer transaction', async () => {
+    const num_trans = budgetmanager.transactions.length
+
+    let resp = await budgetHelper.saveMirroredTransferTransaction({
+      account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+      category: null,
+      cleared: false,
+      approved: false,
+      value: -4444,
+      date: '2015-05-10',
+      memo: 'memo',
+      reconciled: false,
+      flag: '#ffffff',
+      payee: '84c4446c-f250-4d7e-ac09-02a8cfff2583',
+      transfer: null,
+      splits: [],
+      _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed01234'
+    })
+    expect(budgetmanager.transactions.length).toBe(num_trans + 1)
+
+    const mirrored = {
+      account: '84c4446c-f250-4d7e-ac09-02a8cfff2583',
+      category: null,
+      cleared: true,
+      approved: true,
+      value: 4444,
+      date: '2015-05-10',
+      memo: 'memo',
+      reconciled: false,
+      flag: '#ffffff',
+      payee: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+      transfer: null,
+      splits: [],
+    }
+    resp = JSON.parse(JSON.stringify(resp))
+    const mirrorID =resp._id.slice(-36)
+    // delete resp._rev
+    delete resp._id
+    // expect(resp).toStrictEqual(mirrored)
+
+    //
+    // edit existing transfer
+    //
+
+    let resp_existing = await budgetHelper.saveMirroredTransferTransaction({
+      account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+      category: null,
+      cleared: false,
+      approved: false,
+      value: -5555,
+      date: '2015-05-11',
+      memo: 'memo',
+      reconciled: false,
+      flag: '#ffffff',
+      payee: '84c4446c-f250-4d7e-ac09-02a8cfff2583',
+      transfer: mirrorID,
+      splits: [],
+      _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed06665'
+    })
+    expect(budgetmanager.transactions.length).toBe(num_trans+1)
+
+    const mirrored_existing = {
+      account: '84c4446c-f250-4d7e-ac09-02a8cfff2583',
+      category: null,
+      cleared: true,
+      approved: true,
+      value: 5555,
+      date: '2015-05-11',
+      memo: 'memo',
+      reconciled: false,
+      flag: '#ffffff',
+      payee: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+      transfer: null,
+      splits: [],
+    }
+    resp_existing = JSON.parse(JSON.stringify(resp_existing))
+    delete resp_existing._rev
+    delete resp_existing._id
+    expect(resp_existing).toStrictEqual(mirrored_existing)
+  })
+
   it('add transfer transaction', async () => {
     const num_trans = budgetmanager.transactions.length
 
@@ -282,14 +363,38 @@ describe('budget-manager-helper transactions', () => {
       memo: 'memo',
       reconciled: false,
       flag: '#ffffff',
-      payee: 'Transfer: newaccount',
+      payee: 'Transfer: Chase',
       transfer: null,
       splits: [],
-      _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed01234'
+      _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed03232'
     })
     expect(budgetmanager.transactions.length).toBe(num_trans + 2)
     expect(resp['ok']).toBe(true)
   })
+
+
+
+  // it('add transfer transaction', async () => {
+  //   const num_trans = budgetmanager.transactions.length
+
+  //   let resp = await budgetHelper.putTransaction({
+  //     account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+  //     category: null,
+  //     cleared: false,
+  //     approved: false,
+  //     value: -4444,
+  //     date: '2015-05-10',
+  //     memo: 'memo',
+  //     reconciled: false,
+  //     flag: '#ffffff',
+  //     payee: 'Transfer: newaccount',
+  //     transfer: null,
+  //     splits: [],
+  //     _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed01234'
+  //   })
+  //   expect(budgetmanager.transactions.length).toBe(num_trans + 2)
+  //   expect(resp['ok']).toBe(true)
+  // })
 })
 
 // TODO need to rewrite

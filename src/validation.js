@@ -58,7 +58,9 @@ const schema_transaction = {
       type: ['string', 'null']
     },
     transfer: {
-      type: ['string', 'null']
+      type: ['string', 'null'],
+      minLength: 36,
+      maxLength: 36
     },
     splits: {
       type: ['null', 'array', 'object']
