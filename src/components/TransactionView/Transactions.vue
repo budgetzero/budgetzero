@@ -740,7 +740,7 @@ export default {
           {
             agreeBtnColor: 'accent',
             cancelBtnColor: 'grey',
-            agreeBtnText: 'Delete',
+            agreeBtnText: 'Edit',
             showMessage: true,
             showTextField: false
           }
