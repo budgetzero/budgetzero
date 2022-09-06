@@ -176,6 +176,9 @@ describe('budget-manager-helper reconcile', () => {
     expect(reconciled).toBe(3)
 
     expect(budgetmanager.transactions.length).toBe(num_of_transactions)
+
+    // zero amount should be same as null
+    await expect(budgetHelper.completeReconciliation(account_id, 0)).resolves.toBe(0)
   })
 
 
