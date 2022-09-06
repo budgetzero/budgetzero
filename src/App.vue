@@ -1,11 +1,8 @@
 <template>
   <v-app id="inspire">
-    <v-overlay opacity=1 z-index="9" :value="mainPiniaStore.loadingOverlay">
-        <v-progress-circular
-          indeterminate
-          size="64"
-        ></v-progress-circular>
-      </v-overlay>
+    <v-overlay opacity="1" z-index="9" :value="mainPiniaStore.loadingOverlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
 
     <v-overlay :value="mainPiniaStore.manageBudgetOverlay">
       <v-row justify="center">
@@ -43,8 +40,8 @@
               ><v-icon left color="white">mdi-plus</v-icon>Create Budget</v-btn
             >
             <v-spacer></v-spacer>
-            <v-btn @click="isModelVisibleImportBudgetFile = true">Import</v-btn>
-            <v-btn @click="pouchdbStore.exportAllBudgetsAsJSON()">Backup</v-btn>
+            <v-btn @click="showImportModal()">Import</v-btn>
+            <v-btn @click="budgetHelperStore.exportAllBudgetsAsJSON()">Backup</v-btn>
           </v-card-actions>
         </v-card>
       </v-row>
@@ -83,23 +80,13 @@
       <template #body>
         <v-container>
           <v-file-input v-model="backupFile" label="Restore Backup File" @change="onFileChange" />
-          <v-btn
-            color="accent"
-            dark
-            class="mb-1"
-            small
-            :disabled="!backupFileParsed"
-            @click="$store.dispatch('commitBulkDocsToPouchAndVuex', backupFileParsed)"
-          >
-            Restore From File
-          </v-btn>
         </v-container>
       </template>
 
       <template #actions>
         <v-spacer />
-        <v-btn color="blue darken-1" text @click="dialog = false"> Close </v-btn>
-        <v-btn color="blue darken-1" text @click="saveBudget()"> Save </v-btn>
+        <v-btn color="grey" @click="this.isModelVisibleImportBudgetFile = false">Close</v-btn>
+        <v-btn color="primary" :disabled="!backupFileParsed" @click="importBudget()">Import Budget</v-btn>
       </template>
     </BaseDialogModalComponent>
 
@@ -144,8 +131,9 @@ export default {
       isModelVisibleEditBudget: false,
       isModelVisibleImportBudgetFile: false,
       backupFile: null,
+      backupFileParsed: null,
       budgetItem: {},
-      currencies: [{ value: 'USD', text: '$' }],
+      currencies: [{ value: 'USD', text: '$' }]
     }
   },
   computed: {
@@ -164,19 +152,28 @@ export default {
   },
   methods: {
     onFileChange() {
-      console.log(this.backupFile)
+      if (this.backupFile) {
+        this.mainPiniaStore.loadingOverlay = true
 
-      const reader = new FileReader()
-      this.accountsForImport = []
-      this.selectedAccount = {}
+        const reader = new FileReader()
+        this.accountsForImport = []
+        this.selectedAccount = {}
 
-      reader.onload = (e) => {
-        const vm = this
-        let data = JSON.parse(e.target.result)
+        reader.onload = (e) => {
+          const vm = this
+          let data = JSON.parse(e.target.result)
 
-        vm.backupFileParsed = data
+          vm.backupFileParsed = data
+        }
+        reader.readAsText(this.backupFile)
+        this.mainPiniaStore.loadingOverlay = false
       }
-      reader.readAsText(this.backupFile)
+    },
+    async importBudget() {
+      this.mainPiniaStore.loadingOverlay = true
+      await this.budgetManagerStore.putBulkDocuments(this.backupFileParsed)
+      this.isModelVisibleImportBudgetFile = false
+      this.mainPiniaStore.loadingOverlay = false
     },
     async loadAvailableBudgets() {
       try {
@@ -188,7 +185,7 @@ export default {
     },
     async loadBudget(budget_id) {
       console.log('load budget', budget_id)
-      
+
       try {
         await this.budgetManagerStore.loadBudgetWithID(budget_id)
         localStorage.budgetID = budget_id
@@ -217,6 +214,11 @@ export default {
         this.mainPiniaStore.setSnackbarMessage({ snackBarMessage: err, snackBarColor: 'accent' })
       }
       this.mainPiniaStore.loadingOverlay = false
+    },
+    showImportModal() {
+      this.isModelVisibleImportBudgetFile = true
+      this.backupFile = null
+      this.backupFileParsed = null
     },
     async deleteItem(item) {
       if (

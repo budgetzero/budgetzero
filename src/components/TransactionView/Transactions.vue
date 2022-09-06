@@ -435,7 +435,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import BaseDialogModalComponent from '../Modals/BaseDialogModalComponent.vue'
 import ImportModalComponent from './ImportModalComponent.vue'
 import ReconcileHeader from './ReconcileHeader'
@@ -445,6 +444,8 @@ import { sanitizeValueInput } from '../../helper.js'
 import { mapStores } from 'pinia'
 import { useBudgetManagerStore } from '../../store/budgetManager'
 import { useBudgetHelperStore } from '../../store/budgetManagerHelper'
+import { useMainStore } from '../../store/mainPiniaStore'
+import { v4 as uuidv4 } from 'uuid'
 
 export default {
   name: 'Transactions',
@@ -599,7 +600,7 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useBudgetManagerStore, useBudgetHelperStore),
+    ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useMainStore),
     inflowAmount: {
       get() {
         return this.editedItem.value > 0 ? Math.round(this.parseInflowOutflow(this.editedItem.value)) / 100 : ''
@@ -769,7 +770,6 @@ export default {
       }
     },
     save() {
-      // Check if transaction is valid
       if (this.isTransactionsValid) {
         this.editedItem.payee = this.payeeSearchText //TODO: hacky?
 
@@ -778,17 +778,14 @@ export default {
         }
 
         if (this.creatingNewTransaction) {
-          this.editedItem._id = `b_${this.budgetManagerStore.budgetID}_transaction_${Vue.prototype.$vm.$uuid.v4()}`
+          this.editedItem._id = `b_${this.budgetManagerStore.budgetID}_transaction_${uuidv4()}`
         }
         this.editedItem.approved = true
 
         this.budgetHelperStore.putTransaction(this.editedItem)
         this.cancel()
       } else {
-        this.$store.commit('SET_SNACKBAR_MESSAGE', {
-          snackbarMessage: 'Transaction is not formatted correctly.',
-          snackbarColor: 'error'
-        })
+        this.mainPiniaStore.setSnackbarMessage({ snackBarMessage: 'Transaction is not formatted correctly.', snackBarColor: 'accent' })
       }
     },
     flipCleared(item) {

@@ -138,16 +138,16 @@
 
         <!-- Container under each master category containing all individual categories -->
         <draggable
-          v-if="categoriesGroupedByMaster[cat._id.slice(-36)] && !cat.collapsed"
+          v-if="budgetManagerStore.categoriesGroupedByMaster[cat._id.slice(-36)] && !cat.collapsed"
           tag="div"
           :class="cat._id.slice(-36)"
           :group="{ name: cat._id.slice(-36), put: true }"
           handle=".handle"
-          @end="subCategoryMoveEnd"
+          @end="reorderSubCategory"
         >
           <!-- Each individual category row -->
           <v-row
-            v-for="item in categoriesGroupedByMaster[cat._id.slice(-36)]
+            v-for="item in budgetManagerStore.categoriesGroupedByMaster[cat._id.slice(-36)]
               .sort((a, b) => (a.sort > b.sort ? 1 : -1))
               .filter((cat) => !cat.hidden || isReorderingCategories)"
             :key="item._id"
@@ -239,12 +239,10 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex'
 import BaseDialogModalComponent from '../Modals/BaseDialogModalComponent.vue'
 import BudgetHeader from './BudgetHeader.vue'
 import _ from 'lodash'
 import draggable from 'vuedraggable'
-import Sortable from 'sortablejs'
 import { mapStores } from 'pinia'
 import { useBudgetManagerStore } from '../../store/budgetManager'
 import { useBudgetHelperStore } from '../../store/budgetManagerHelper'
@@ -283,33 +281,16 @@ export default {
     ...mapStores(useBudgetManagerStore, useBudgetHelperStore),
     masterCategories: {
       get() {
-        return this.budgetManagerStore.masterCategories.sort((a,b) => a.sort - b.sort)
+        return this.budgetManagerStore.masterCategories.sort((a, b) => a.sort - b.sort)
       },
       set(value) {
         this.budgetHelperStore.reorderMasterCategories(value)
       }
     },
-    categoriesGroupedByMaster: {
-      get() {
-        return this.budgetManagerStore.categoriesGroupedByMaster
-      },
-      set(value) {
-        this.budgetHelperStore.reorderMasterCategories(value)
-      }
-    },
-    categories: {
-      get() {
-        return this.budgetManagerStore.categories
-      },
-      set(value) {
-        this.$store.commit('setPages', value)
-      }
-    }
   },
   mounted() {},
   created() {},
   methods: {
-    ...mapActions(['updateBudgetAmount', 'deleteDocFromPouchAndVuex']),
     ADD_MONTH() {
       this.monthSelected = moment(this.monthSelected).add(1, 'M').format('YYYY-MM')
     },
@@ -334,12 +315,12 @@ export default {
       updatedCategory.hidden = !updatedCategory.hidden
       await this.budgetManagerStore.putDocument(updatedCategory)
     },
-    subCategoryMoveEnd(event) {
-      console.log(event.from.className.slice(-36)); //ID of old master category
-      console.log(event.oldIndex); //Sort index of sub category
+    reorderSubCategory(event) {
+      // console.log(event.from.className.slice(-36)) //ID of old master category
+      // console.log(event.oldIndex) //Sort index of sub category
 
-      console.log(event.to.className.slice(-36)); //ID of new master category
-      console.log(event.newIndex); //Sort index of sub category
+      // console.log(event.to.className.slice(-36)) //ID of new master category
+      // console.log(event.newIndex) //Sort index of sub category
 
       this.budgetHelperStore.reorderSubCategory(event)
     },
@@ -355,8 +336,8 @@ export default {
           showMessage: false
         })
         if (newCategoryName) {
-          const sort_length = this.categoriesGroupedByMaster[masterCategory._id.slice(-36)]
-            ? this.categoriesGroupedByMaster[masterCategory._id.slice(-36)].length
+          const sort_length = this.budgetManagerStore.categoriesGroupedByMaster[masterCategory._id.slice(-36)]
+            ? this.budgetManagerStore.categoriesGroupedByMaster[masterCategory._id.slice(-36)].length
             : 0
 
           const newCategory = {

@@ -3,7 +3,6 @@ import PouchDB from 'pouchdb'
 import { useMainStore } from './mainPiniaStore'
 import { useStorage } from '@vueuse/core'
 
-var FileSaver = require('file-saver')
 
 export const usePouchDBStore = defineStore('pouchdb', {
   state: () => {
@@ -56,30 +55,6 @@ export const usePouchDBStore = defineStore('pouchdb', {
       this.startRemoteSync() 
       }
     },
-    async exportAllBudgetsAsJSON() {
-      try {
-        const allDocs = await this.localdb.allDocs({
-          include_docs: true,
-          attachments: true
-        })
-        console.log('exportBudgetAsJSON', JSON.stringify(allDocs))
-        const export_date = new Date()
-
-        const reformattedExport = allDocs.rows
-          .map((row) => row.doc)
-          .map((row) => {
-            delete row['_rev'] //Delete rev field to prevent conflicts on restore
-            return row
-          })
-
-        var blob = new Blob([JSON.stringify(reformattedExport)], {
-          type: 'text/plain;charset=utf-8'
-        })
-        FileSaver.saveAs(blob, `BudgetZero_Export_${export_date.toISOString()}.txt`)
-      } catch (err) {
-        console.log(err)
-      }
-      return true
-    }
+    
   }
 })

@@ -7,6 +7,8 @@ import validator from 'validator'
 import { sanitizeValueInput } from '../helper.js'
 import _ from 'lodash'
 
+var FileSaver = require('file-saver')
+
 export const useBudgetHelperStore = defineStore('budgetHelper', {
   actions: {
     /**
@@ -397,6 +399,35 @@ export const useBudgetHelperStore = defineStore('budgetHelper', {
 
       await budgetManagerStore.putBulkDocuments(newMasterCategoryOrdering)
       return 'Reordering complete'
+    },
+    async exportAllBudgetsAsJSON() {
+      const pouchdbStore = usePouchDBStore()
+      const budgetManagerStore = useBudgetManagerStore()
+
+      try {
+        const allDocs = await pouchdbStore.localdb.allDocs({
+          include_docs: true,
+          attachments: true
+        })
+
+        const export_date = new Date()
+
+        const reformattedExport = allDocs.rows
+          .filter((row) => budgetManagerStore._isValidDocument(row.doc)) //only export valid docs
+          .map((row) => row.doc)
+          .map((row) => {
+            delete row['_rev'] //Delete rev field to prevent conflicts on restore
+            return row
+          })
+
+        var blob = new Blob([JSON.stringify(reformattedExport)], {
+          type: 'text/plain;charset=utf-8'
+        })
+        FileSaver.saveAs(blob, `BudgetZero_Export_${export_date.toISOString()}.txt`)
+      } catch (err) {
+        console.log(err)
+      }
+      return true
     }
   }
 })
