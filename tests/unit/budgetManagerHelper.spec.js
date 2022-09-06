@@ -13,7 +13,6 @@ let budgetmanager
 let budgetHelper
 let pouchdbStore
 
-
 describe('budget-manager delete budget', () => {
   beforeAll(async () => {
     setActivePinia(createPinia())
@@ -22,7 +21,7 @@ describe('budget-manager delete budget', () => {
     budgetHelper = useBudgetHelperStore()
 
     await new PouchDB(new Date().toDateString()).destroy()
-    pouchdbStore.localdb = new PouchDB(new Date().toDateString()+1)
+    pouchdbStore.localdb = new PouchDB(new Date().toDateString())
 
     await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
   })
@@ -51,7 +50,7 @@ describe('budget-manager-helper accounts', () => {
     budgetHelper = useBudgetHelperStore()
 
     await new PouchDB(new Date().toDateString()).destroy()
-    pouchdbStore.localdb = new PouchDB(new Date().toDateString()+1)
+    pouchdbStore.localdb = new PouchDB(new Date().toDateString())
 
     await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
   })
@@ -59,7 +58,7 @@ describe('budget-manager-helper accounts', () => {
   it('create account with no starting transaction', async () => {
     const num_of_accounts = budgetmanager.accounts.length
     const accountDoc = {
-      type: "Checking",
+      type: 'Checking',
       checkNumber: false,
       closed: false,
       name: 'test account',
@@ -78,7 +77,7 @@ describe('budget-manager-helper accounts', () => {
     const num_of_accounts = budgetmanager.accounts.length
     const num_of_transactions = budgetmanager.transactions.length
     const accountDoc = {
-      type: "Checking",
+      type: 'Checking',
       checkNumber: false,
       closed: false,
       name: 'test account',
@@ -96,17 +95,17 @@ describe('budget-manager-helper accounts', () => {
 
   it('delete account with existing transactions', async () => {
     const num_of_accounts = budgetmanager.accounts.length
-    
-    const acct =  {
-      "type": "CHECKING",
-      "checkNumber": true,
-      "closed": false,
-      "name": "Savings",
-      "note": "Savings account",
-      "sort": 0,
-      "onBudget": true,
-      "balanceIsNegative": false,
-      "_id": "b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_account_38e690f8-198f-4735-96fb-3a2ab15081c2"
+
+    const acct = {
+      type: 'CHECKING',
+      checkNumber: true,
+      closed: false,
+      name: 'Savings',
+      note: 'Savings account',
+      sort: 0,
+      onBudget: true,
+      balanceIsNegative: false,
+      _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_account_38e690f8-198f-4735-96fb-3a2ab15081c2'
     }
     expect(budgetHelper.deleteAccount(acct)).rejects.toThrowError('563')
 
@@ -115,25 +114,23 @@ describe('budget-manager-helper accounts', () => {
 
   it('delete account without existing transactions', async () => {
     const num_of_accounts = budgetmanager.accounts.length
-    
-    const acct =    {
-      "type": "CREDIT",
-      "checkNumber": true,
-      "closed": false,
-      "name": "Chase",
-      "note": null,
-      "sort": 0,
-      "onBudget": true,
-      "balanceIsNegative": true,
-      "_id": "b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_account_84c4446c-f250-4d7e-ac09-02a8cfff2583"
+
+    const acct = {
+      type: 'CREDIT',
+      checkNumber: true,
+      closed: false,
+      name: 'Chase',
+      note: null,
+      sort: 0,
+      onBudget: true,
+      balanceIsNegative: true,
+      _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_account_84c4446c-f250-4d7e-ac09-02a8cfff2583'
     }
-    
+
     expect(budgetHelper.deleteAccount(acct)).resolves.toBe('account deleted')
 
     expect(budgetmanager.accounts.length).toBe(num_of_accounts)
   })
-
-  
 })
 
 describe('budget-manager-helper reconcile', () => {
@@ -155,7 +152,7 @@ describe('budget-manager-helper reconcile', () => {
     const num_of_transactions = budgetmanager.transactions.length
 
     const res = await budgetHelper.completeReconciliation(account_id, adjAmount)
-    
+
     expect(res[0]).toBe(3)
     expect(res[1].value).toBe(-parseInt(adjAmount * 100))
 
@@ -169,7 +166,7 @@ describe('budget-manager-helper reconcile', () => {
     const account_id = budgetmanager.accounts[0]._id.slice(-36)
     const adjAmount = null
     const num_of_transactions = budgetmanager.transactions.length
-    
+
     await expect(budgetHelper.completeReconciliation(account_id, adjAmount)).resolves.toBe(3)
 
     const reconciled = budgetmanager.transactionsGroupedByAccount[account_id].filter((trans) => trans.reconciled).length
@@ -180,11 +177,36 @@ describe('budget-manager-helper reconcile', () => {
     // zero amount should be same as null
     await expect(budgetHelper.completeReconciliation(account_id, 0)).resolves.toBe(0)
   })
-
-
-
 })
 
+describe('budget-manager-helper categories', () => {
+  beforeEach(async () => {
+    setActivePinia(createPinia())
+    pouchdbStore = usePouchDBStore()
+    budgetmanager = useBudgetManagerStore()
+    budgetHelper = useBudgetHelperStore()
+
+    await new PouchDB(new Date().toDateString()).destroy()
+    pouchdbStore.localdb = new PouchDB(new Date().toDateString())
+
+    await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
+  })
+
+  it('reorder master categories', async () => {
+    let originalOrder = budgetmanager.masterCategories
+
+    //swap order of two categories
+    let newOrder = originalOrder
+    newOrder[0] = originalOrder[2]
+    newOrder[2] = originalOrder[0]
+
+    const res = await budgetHelper.reorderMasterCategories(newOrder)
+
+    expect(res).toBe('Reordering complete')
+    let newCategories = budgetmanager.masterCategories
+    expect(newCategories.map((cat) => cat._rev = '')).toStrictEqual(newOrder.map((cat) => cat._rev = ''))
+  })
+})
 
 // TODO need to rewrite
 // describe('budget-manager putBulkDocuments', () => {
@@ -196,7 +218,7 @@ describe('budget-manager-helper reconcile', () => {
 
 //     const num_of_trans = budgetmanager.transactions.length
 //     const num_of_docs = budgetmanager.budgetData.length
-    
+
 //     const bulk = [{
 //       account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
 //       category: null,
@@ -226,9 +248,9 @@ describe('budget-manager-helper reconcile', () => {
 //       splits: [],
 //       _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed0zzzz'
 //       }]
-    
+
 //     let resp = await budgetmanager.putBulkDocuments(bulk)
-    
+
 //     // Number of data shouldn't change for a modification
 //     expect(budgetmanager.transactions.length).toBe(num_of_trans + bulk.length)
 //     expect(budgetmanager.budgetData.length).toBe(num_of_docs + bulk.length)
