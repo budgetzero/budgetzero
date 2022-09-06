@@ -132,7 +132,56 @@ describe('budget-manager-helper accounts', () => {
 
     expect(budgetmanager.accounts.length).toBe(num_of_accounts)
   })
+
+  
 })
+
+describe('budget-manager-helper reconcile', () => {
+  beforeEach(async () => {
+    setActivePinia(createPinia())
+    pouchdbStore = usePouchDBStore()
+    budgetmanager = useBudgetManagerStore()
+    budgetHelper = useBudgetHelperStore()
+
+    await new PouchDB(new Date().toDateString()).destroy()
+    pouchdbStore.localdb = new PouchDB(new Date().toDateString())
+
+    await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
+  })
+
+  it('complete with adjustment', async () => {
+    const account_id = budgetmanager.accounts[0]._id.slice(-36)
+    const adjAmount = 50000
+    const num_of_transactions = budgetmanager.transactions.length
+
+    const res = await budgetHelper.completeReconciliation(account_id, adjAmount)
+    
+    expect(res[0]).toBe(3)
+    expect(res[1].value).toBe(-parseInt(adjAmount * 100))
+
+    const reconciled = budgetmanager.transactionsGroupedByAccount[account_id].filter((trans) => trans.reconciled).length
+    expect(reconciled).toBe(4)
+
+    expect(budgetmanager.transactions.length).toBe(num_of_transactions + 1)
+  })
+
+  it('complete without adjustment', async () => {
+    const account_id = budgetmanager.accounts[0]._id.slice(-36)
+    const adjAmount = null
+    const num_of_transactions = budgetmanager.transactions.length
+    
+    await expect(budgetHelper.completeReconciliation(account_id, adjAmount)).resolves.toBe(3)
+
+    const reconciled = budgetmanager.transactionsGroupedByAccount[account_id].filter((trans) => trans.reconciled).length
+    expect(reconciled).toBe(3)
+
+    expect(budgetmanager.transactions.length).toBe(num_of_transactions)
+  })
+
+
+
+})
+
 
 // TODO need to rewrite
 // describe('budget-manager putBulkDocuments', () => {

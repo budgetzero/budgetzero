@@ -302,8 +302,53 @@ export const useBudgetHelperStore = defineStore('budgetHelper', {
         // Dispatch account for deletion
         accountDoc._deleted = true
         budgetManagerStore.putDocument(accountDoc)
-        return('account deleted')
+        return 'account deleted'
       }
+    },
+
+    /**
+     * Complete reconciliation
+     * @param accountID 
+     * @param adjustmentAmount 
+     */
+    async completeReconciliation(accountID, adjustmentAmount) {
+      const budgetManagerStore = useBudgetManagerStore()
+      let payload 
+
+      if (adjustmentAmount) {
+        payload = {
+          account: accountID,
+          category: 'income',
+          cleared: true,
+          approved: true,
+          value: -parseInt(adjustmentAmount * 100),
+          date: new Date().toISOString().substr(0, 10),
+          memo: '',
+          reconciled: true,
+          flag: '#ffffff',
+          payee: 'Reconcile adjustment',
+          transfer: null,
+          splits: [],
+          _id: `b_${budgetManagerStore.budgetID}_transaction_${uuidv4()}`,
+        }
+        await this.putTransaction(payload)
+      }
+
+      //Search for transactions to lock
+      let transactionsToLock = budgetManagerStore.transactionsGroupedByAccount[accountID]
+        .filter((trans) => !trans.reconciled)
+        .filter((trans) => trans.cleared)
+
+      //Update reconciled field
+      transactionsToLock.map((trans) => (trans.reconciled = true))
+
+      //Commit to pouchdb
+      await budgetManagerStore.putBulkDocuments(transactionsToLock)
+
+      if (adjustmentAmount) {
+        return [transactionsToLock.length, payload]
+      }
+      return transactionsToLock.length
     }
   }
 })

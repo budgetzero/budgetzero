@@ -72,26 +72,20 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import { mapGetters } from 'vuex'
-import BaseDialogModalComponent from '../Modals/BaseDialogModalComponent.vue'
+import { mapStores } from 'pinia'
+import { useBudgetManagerStore } from '../../store/budgetManager'
 
 export default {
-  components: {
-    BaseDialogModalComponent
-  },
   props: {
-    reconcileAmount: String
+    reconcileAmount: Number
   },
   data() {
-    return {
-      isModalVisibleForReconcileConfirmation: false
-    }
+    return {}
   },
   computed: {
-    ...mapGetters(['selectedBudgetID']),
+    ...mapStores(useBudgetManagerStore),
     selected_account_balance() {
-      return this.$store.getters.account_balances[this.$route.params.account_id]
+      return this.budgetManagerStore.accountBalances[this.$route.params.account_id]
     },
     differenceAmount() {
       return this.selected_account_balance.cleared / 100 - this.reconcileAmount
@@ -116,22 +110,7 @@ export default {
         account: this.$route.params.account_id
       }
 
-      payload.adjustmentTransaction = {
-        account: this.$route.params.account_id,
-        category: 'income',
-        cleared: true,
-        approved: true,
-        value: -parseInt(this.differenceAmount * 100),
-        date: new Date().toISOString().substr(0, 10),
-        memo: '',
-        reconciled: true,
-        flag: '#ffffff',
-        payee: 'Reconcile adjustment',
-        transfer: null,
-        splits: [],
-        _id: `b_${this.selectedBudgetID}_transaction_${Vue.prototype.$vm.$uuid.v4()}`,
-        _rev: ''
-      }
+
 
       this.$store.dispatch('completeReconciliation', payload)
       this.$emit('reconcileComplete')

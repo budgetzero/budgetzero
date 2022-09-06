@@ -20,7 +20,11 @@
       </template>
     </BaseDialogModalComponent>
 
-    <TransactionHeader :selected_account="selected_account" :accountBalance="accountBalance" @showReconcileModal="showReconcileModal" />
+    <TransactionHeader
+      :selected_account="selected_account"
+      :accountBalance="accountBalance"
+      @showReconcileModal="startReconcile"
+    />
     <ReconcileHeader v-if="isReconciling" :reconcile-amount="reconcileAmount" @reconcileComplete="reconcileComplete" />
 
     <v-divider />
@@ -82,7 +86,6 @@
           </template>
           <span>Delete</span>
         </v-tooltip>
-        
       </v-col>
       <v-col class="pt-2 pb-0">
         <v-btn small class="mb-2 ml-2" color="grey lighten-2" elevation="0" @click.stop="importModalVisible = true">
@@ -729,47 +732,41 @@ export default {
       this.creatingNewTransaction = true
       this.expanded.push(this.defaultItem)
     },
-    editItem(item) {
+    async editItem(item) {
       if (item.reconciled) {
-        this.$swal({
-          title: 'Edit This Transaction?',
-          text: 'This transaction has been reconciled and is locked. Are you sure you want to edit?',
-          icon: 'warning',
-          showCancelButton: true,
-          cancelButtonText: 'Cancel',
-          confirmButtonText: 'Edit Anyway',
-          confirmButtonColor: '#990000'
-        }).then((continueEdit) => {
-          if (continueEdit.value) {
-            this.creatingNewTransaction = false
-            this.editedIndex = this.budgetManager.transactions.indexOf(item)
-            this.editedItem = JSON.parse(JSON.stringify(this.budgetManagerStore.transactions[this.editedIndex])) // Removes reactivity to avoid mutating vuex state illegally
-          } else {
-            this.cancel()
-            return
+        const confirmEdit = await this.$root.$confirm(
+          'Edit This Transaction?',
+          'This transaction has been reconciled and is locked. Are you sure you want to edit?',
+          {
+            agreeBtnColor: 'accent',
+            cancelBtnColor: 'grey',
+            agreeBtnText: 'Delete',
+            showMessage: true,
+            showTextField: false
           }
-        })
-      } else {
-        //TODO: Repeating code here from above. Boo
-        this.creatingNewTransaction = false
-        this.editedIndex = this.budgetManagerStore.transactions.indexOf(item)
-        this.editedItem = JSON.parse(JSON.stringify(this.budgetManagerStore.transactions[this.editedIndex])) // Removes reactivity to avoid mutating vuex state illegally
+        )
+        if (!confirmEdit) {
+          return
+        }
       }
+      this.creatingNewTransaction = false
+      this.editedIndex = this.budgetManagerStore.transactions.indexOf(item)
+      this.editedItem = JSON.parse(JSON.stringify(this.budgetManagerStore.transactions[this.editedIndex]))
     },
     async deleteTransaction(item) {
       this.creatingNewTransaction = false
       let payload = JSON.parse(JSON.stringify(item))
       const confirmDelete = await this.$root.$confirm('Delete This Transaction?', `Are you sure you want to delete?`, {
-          agreeBtnColor: 'accent',
-          cancelBtnColor: 'grey',
-          agreeBtnText: 'Delete',
-          showMessage: true,
-          showTextField: false
-        })
-        if (confirmDelete) {
-          payload._deleted = true
-          this.budgetManagerStore.putDocument(payload)
-        }
+        agreeBtnColor: 'accent',
+        cancelBtnColor: 'grey',
+        agreeBtnText: 'Delete',
+        showMessage: true,
+        showTextField: false
+      })
+      if (confirmDelete) {
+        payload._deleted = true
+        this.budgetManagerStore.putDocument(payload)
+      }
     },
     save() {
       // Check if transaction is valid
@@ -823,18 +820,22 @@ export default {
     async deleteSelectedTransactions() {
       var payload = JSON.parse(JSON.stringify(this.selected))
 
-      const confirmDelete = await this.$root.$confirm('Delete This Transaction?', `Are you sure you want to delete ${payload.length} transactions?`, {
+      const confirmDelete = await this.$root.$confirm(
+        'Delete This Transaction?',
+        `Are you sure you want to delete ${payload.length} transactions?`,
+        {
           agreeBtnColor: 'accent',
           cancelBtnColor: 'grey',
           agreeBtnText: 'Delete',
           showMessage: true
-        })
-        if (confirmDelete) {
-          payload.map((trans) => (trans._deleted = true))
-
-          this.budgetManagerStore.putBulkDocuments(payload)
-          this.selected = []
         }
+      )
+      if (confirmDelete) {
+        payload.map((trans) => (trans._deleted = true))
+
+        this.budgetManagerStore.putBulkDocuments(payload)
+        this.selected = []
+      }
     },
     categorizeSelectedTransactions(category) {
       var payload = JSON.parse(JSON.stringify(this.selected))
@@ -864,10 +865,20 @@ export default {
     showReconcileModal() {
       this.isModalVisibleForReconcile = true
     },
-    startReconcile() {
-      this.reconcileAmount = sanitizeValueInput(this.reconcileAmount)
-      this.isReconciling = true
-      this.isModalVisibleForReconcile = false
+    async startReconcile() {
+      const confirmReconcile = await this.$root.$confirm('Reconcile Account', 'Enter current amount balance:', {
+        agreeBtnColor: 'primary',
+        cancelBtnColor: 'accent',
+        agreeBtnText: 'Start Reconcile',
+        showTextField: true,
+        textFieldLabel: 'Account balance',
+        textFieldValue: '',
+        showMessage: false
+      })
+      if (confirmReconcile) {
+        this.reconcileAmount = sanitizeValueInput(confirmReconcile)
+        this.isReconciling = true
+      }
     },
     reconcileComplete() {
       this.isReconciling = false
