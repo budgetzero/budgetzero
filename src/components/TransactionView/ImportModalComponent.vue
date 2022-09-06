@@ -164,11 +164,17 @@
 </template>
 
 <script>
+import { mapStores } from 'pinia'
+import { useBudgetManagerStore } from '../../store/budgetManager'
+import { useBudgetHelperStore } from '../../store/budgetManagerHelper'
+import { useMainStore } from '../../store/mainPiniaStore'
+
 import Banking from 'banking'
 import { mapGetters } from 'vuex'
 import _ from 'lodash'
 import { VueCsvImport } from 'vue-csv-import'
 import moment from 'moment'
+import { v4 as uuidv4 } from 'uuid'
 
 export default {
   name: 'ImportFile',
@@ -188,7 +194,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['accounts', 'selectedBudgetID']),
+    ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useMainStore),
     show: {
       get() {
         return this.visible
@@ -280,7 +286,7 @@ export default {
             importID: importID,
             transfer: null,
             splits: [],
-            _id: `b_${this.selectedBudgetID}_transaction_${this.$uuid.v4()}`
+            _id: `b_${this.budgetManagerStore.budgetID}_transaction_${uuidv4()}`
           }
 
           this.importCount.imported++
@@ -325,23 +331,15 @@ export default {
           payee: trn.payee,
           transfer: null,
           splits: [],
-          _id: `b_${this.selectedBudgetID}_transaction_${this.$uuid.v4()}`
+          _id: `b_${this.budgetManagerStore.budgetID}_transaction_${uuidv4()}`
         }
         this.importCount.imported++
         transactionListToImport.push(jsonData)
       })
 
-      this.$swal({
-        title: 'Loading...',
-        html: 'Importing transactions. Please wait...',
-        didOpen: () => {
-          Vue.prototype.$swal.showLoading()
-        },
-        showConfirmButton: false,
-        showCancelButton: false
-      })
-
-      await this.commitTransactions(transactionListToImport)
+      for (const transaction of transactionListToImport) {
+        await this.budgetHelperStore.putTransaction(transaction)
+      }
 
       this.parseCsv = null
       this.importComplete()
@@ -351,16 +349,18 @@ export default {
       var asyncFunctions = []
 
       for (const transaction of transactionListToImport) {
-        console.log('import transaction', transaction)
-
-        await this.$store.dispatch('createOrUpdateTransaction', transaction)
+        await this.budgetHelperStore.putTransaction(transaction)
       }
-
       return Promise.resolve()
     },
-    importComplete() {
-      const msg = `Transactions Skipped: ${this.importCount.skipped} \nTransactions Imported: ${this.importCount.imported}`
-      this.$swal('Import Complete', msg, 'success')
+    async importComplete() {
+      await this.$root.$confirm('Import Complete!', `Transactions Skipped: ${this.importCount.skipped} \nTransactions Imported: ${this.importCount.imported}`, {
+        agreeBtnColor: 'accent',
+        onlyShowAgreeBtn: true,
+        agreeBtnText: 'Ok',
+        showMessage: true,
+        showTextField: false
+      })
 
       this.resetData()
     },
