@@ -1709,7 +1709,7 @@
   {
     "account": "38e690f8-198f-4735-96fb-3a2ab15081c2",
     "category": null,
-    "cleared": false,
+    "cleared": true,
     "approved": false,
     "value": -12293,
     "date": "2021-02-04",
@@ -8504,7 +8504,7 @@
   {
     "account": "38e690f8-198f-4735-96fb-3a2ab15081c2",
     "category": null,
-    "cleared": false,
+    "cleared": true,
     "approved": false,
     "value": -4240,
     "date": "2021-02-04",
@@ -8759,8 +8759,8 @@
   {
     "account": "38e690f8-198f-4735-96fb-3a2ab15081c2",
     "category": null,
-    "cleared": false,
-    "approved": false,
+    "cleared": true,
+    "approved": true,
     "value": -5134,
     "date": "2021-02-03",
     "memo": "memo",
