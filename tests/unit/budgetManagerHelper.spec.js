@@ -341,7 +341,7 @@ describe('budget-manager-helper transactions', () => {
       reconciled: false,
       flag: '#ffffff',
       payee: '38e690f8-198f-4735-96fb-3a2ab15081c2',
-      transfer: null,
+      transfer: '31a2483b-d0e5-4daf-b1fe-f1788ed06665',
       splits: [],
     }
     resp_existing = JSON.parse(JSON.stringify(resp_existing))

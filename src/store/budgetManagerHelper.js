@@ -228,12 +228,12 @@ export const useBudgetHelperStore = defineStore('budgetHelper', {
         mirrorTransaction._rev = mirrorTransactionExisting._rev
         mirrorTransaction.transfer = originalTransaction._id.slice(-36)
         console.log('existing', mirrorTransaction)
-      } 
-      
+      }
+
       console.log('put', JSON.stringify(mirrorTransaction))
       const resp = await budgetManagerStore.putDocument(mirrorTransaction)
       mirrorTransaction._rev = resp.rev
-      
+
       return mirrorTransaction
     },
 
@@ -396,6 +396,7 @@ export const useBudgetHelperStore = defineStore('budgetHelper', {
 
       return 'Reordering complete'
     },
+
     /**
      * Reorder master categories
      * @param newMasterCategoryOrdering
@@ -410,6 +411,7 @@ export const useBudgetHelperStore = defineStore('budgetHelper', {
       await budgetManagerStore.putBulkDocuments(newMasterCategoryOrdering)
       return 'Reordering complete'
     },
+
     async exportAllBudgetsAsJSON() {
       const pouchdbStore = usePouchDBStore()
       const budgetManagerStore = useBudgetManagerStore()
