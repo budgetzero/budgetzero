@@ -204,7 +204,33 @@ describe('budget-manager-helper categories', () => {
 
     expect(res).toBe('Reordering complete')
     let newCategories = budgetmanager.masterCategories
-    expect(newCategories.map((cat) => cat._rev = '')).toStrictEqual(newOrder.map((cat) => cat._rev = ''))
+    expect(newCategories.map((cat) => (cat._rev = ''))).toStrictEqual(newOrder.map((cat) => (cat._rev = '')))
+  })
+
+  it('reorder sub category', async () => {
+    const reorderEvent = {
+      from: {
+        // old master category
+        className: '24b7dd4b-7449-4a91-932a-0ce14b54d159'
+      },
+      to: {
+        // new master category
+        className: '2b8b142a-588f-407d-a54d-88d7d30e3564'
+      },
+      oldIndex: 0,
+      newIndex: 1
+    }
+    const originalCategory = budgetmanager.categoriesGroupedByMaster[reorderEvent.from.className][reorderEvent.oldIndex]
+  
+    const res = await budgetHelper.reorderSubCategory(reorderEvent)
+    expect(res).toBe('Reordering complete')
+
+    const newCategory = budgetmanager.categories.filter((cat) => cat._id == originalCategory._id)[0]
+
+    // sub category should be in new category group
+    expect(newCategory.masterCategory).toBe(reorderEvent.to.className)
+    expect(newCategory.sort).toBe(reorderEvent.newIndex)
+
   })
 })
 

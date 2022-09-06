@@ -283,18 +283,18 @@ export default {
     ...mapStores(useBudgetManagerStore, useBudgetHelperStore),
     masterCategories: {
       get() {
-        return this.budgetManagerStore.masterCategories
+        return this.budgetManagerStore.masterCategories.sort((a,b) => a.sort - b.sort)
       },
       set(value) {
-        this.$store.dispatch('reorderMasterCategories', value)
+        this.budgetHelperStore.reorderMasterCategories(value)
       }
     },
     categoriesGroupedByMaster: {
       get() {
-        return _.groupBy(this.budgetManagerStore.categories, 'masterCategory')
+        return this.budgetManagerStore.categoriesGroupedByMaster
       },
       set(value) {
-        this.$store.dispatch('reorderMasterCategories', value)
+        this.budgetHelperStore.reorderMasterCategories(value)
       }
     },
     categories: {
@@ -335,13 +335,13 @@ export default {
       await this.budgetManagerStore.putDocument(updatedCategory)
     },
     subCategoryMoveEnd(event) {
-      // console.log(event.to.className.slice(-36)); //ID of new master category
-      // console.log(event.newIndex); //Sort index of sub category
+      console.log(event.from.className.slice(-36)); //ID of old master category
+      console.log(event.oldIndex); //Sort index of sub category
 
-      // console.log(event.from.className.slice(-36)); //ID of old master category
-      // console.log(event.oldIndex); //Sort index of sub category
-      // console.log(event);
-      this.$store.dispatch('reorderSubCategory', event)
+      console.log(event.to.className.slice(-36)); //ID of new master category
+      console.log(event.newIndex); //Sort index of sub category
+
+      this.budgetHelperStore.reorderSubCategory(event)
     },
     async createSubCategory(masterCategory) {
       try {

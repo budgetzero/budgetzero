@@ -5,6 +5,7 @@ import { usePouchDBStore } from './pouchdbStore'
 import { v4 as uuidv4 } from 'uuid'
 import validator from 'validator'
 import { sanitizeValueInput } from '../helper.js'
+import _ from 'lodash'
 
 export const useBudgetHelperStore = defineStore('budgetHelper', {
   actions: {
@@ -354,51 +355,46 @@ export const useBudgetHelperStore = defineStore('budgetHelper', {
     ///
     /// Reorder Categories
     ///
-    reorderSubCategory(reorderEvent) {
+    async reorderSubCategory(reorderEvent) {
+      const budgetManagerStore = useBudgetManagerStore()
       //Get the category that was moved
-      const item = JSON.parse(
-        JSON.stringify(context.getters.categoriesGroupedByMaster[payload.from.className][payload.oldIndex])
+
+      const originalCategory = JSON.parse(
+        JSON.stringify(budgetManagerStore.categoriesGroupedByMaster[reorderEvent.from.className][reorderEvent.oldIndex])
       )
 
       //Assign sort value and fix off-by-one errors
-      if (payload.newIndex > payload.oldIndex) {
-        item.sort = payload.newIndex + 0.5
+      if (reorderEvent.newIndex > reorderEvent.oldIndex) {
+        originalCategory.sort = reorderEvent.newIndex + 0.5
       } else {
-        item.sort = payload.newIndex - 0.5
+        originalCategory.sort = reorderEvent.newIndex - 0.5
       }
-      item.masterCategory = payload.to.className //Assign new master category
-
-      let categoriesGroupedByMaster = JSON.parse(JSON.stringify(context.getters.categoriesGroupedByMaster))
+      originalCategory.masterCategory = reorderEvent.to.className //Assign new master category
 
       //First, we update the subcategory to it's correct mastercategory
-      context.dispatch('commitDocToPouchAndVuex', item).then((result) => {
-        let categoriesGroupedByMaster = JSON.parse(JSON.stringify(context.getters.categoriesGroupedByMaster))
-        // Then iterate through them and re-set all their sort values
-        for (const [key, masterArray] of Object.entries(categoriesGroupedByMaster)) {
-          if (key !== 'undefined') {
-            //Skip undefined master categories (income, incomeNextMonth, etc)
-            masterArray.sort((a, b) => (a.sort > b.sort ? 1 : -1))
-            masterArray.forEach((category, i) => {
-              if (category.sort !== i) {
-                category.sort = i
-                context.dispatch('commitDocToPouchAndVuex', category)
-              }
-            })
-          }
-        }
+      await budgetManagerStore.putDocument(originalCategory)
+
+      // Rewrite ordering for new masterCategory
+      let subCategories = budgetManagerStore.categoriesGroupedByMaster[reorderEvent.to.className]
+
+      subCategories.forEach(function (part, index) {
+        subCategories[index].sort = index
       })
+      await budgetManagerStore.putBulkDocuments(subCategories)
+
+      return 'Reordering complete'
     },
     /**
      * Reorder master categories
-     * @param newMasterCategoryOrdering 
+     * @param newMasterCategoryOrdering
      */
     async reorderMasterCategories(newMasterCategoryOrdering) {
       const budgetManagerStore = useBudgetManagerStore()
-      
-      newMasterCategoryOrdering.forEach(function(part, index) {
+
+      newMasterCategoryOrdering.forEach(function (part, index) {
         newMasterCategoryOrdering[index].sort = index
-      });
-      
+      })
+
       await budgetManagerStore.putBulkDocuments(newMasterCategoryOrdering)
       return 'Reordering complete'
     }

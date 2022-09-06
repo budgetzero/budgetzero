@@ -83,7 +83,10 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
         }
       })
       return accountBalances
-    }
+    },
+    categoriesGroupedByMaster() {
+      return _.groupBy(this.categories, 'masterCategory')
+    },
   },
   actions: {
     initializeBudget() {
@@ -389,7 +392,7 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
 
       const t8 = performance.now()
       this.monthlyData = final_data
-      console.log('Call to getMonthlyData took ' + (t8 - t7) + ' milliseconds.')
+      // console.log('Call to getMonthlyData took ' + (t8 - t7) + ' milliseconds.')
     },
 
     /**
