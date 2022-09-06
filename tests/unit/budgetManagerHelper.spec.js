@@ -13,7 +13,7 @@ let budgetmanager
 let budgetHelper
 let pouchdbStore
 
-describe('budget-manager delete budget', () => {
+describe('budget-manager-helper delete budget', () => {
   beforeAll(async () => {
     setActivePinia(createPinia())
     pouchdbStore = usePouchDBStore()
@@ -231,6 +231,64 @@ describe('budget-manager-helper categories', () => {
     expect(newCategory.masterCategory).toBe(reorderEvent.to.className)
     expect(newCategory.sort).toBe(reorderEvent.newIndex)
 
+  })
+})
+
+describe('budget-manager-helper transactions', () => {
+  beforeAll(async () => {
+    setActivePinia(createPinia())
+    pouchdbStore = usePouchDBStore()
+    budgetmanager = useBudgetManagerStore()
+    budgetHelper = useBudgetHelperStore()
+
+    await new PouchDB(new Date().toDateString()).destroy()
+    pouchdbStore.localdb = new PouchDB(new Date().toDateString())
+
+    await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
+  })
+
+  it('add transaction', async () => {
+    const num_trans = budgetmanager.transactions.length
+
+    let resp = await budgetHelper.putTransaction({
+      account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+      category: null,
+      cleared: false,
+      approved: false,
+      value: -4444,
+      date: '2015-05-10',
+      memo: 'memo',
+      reconciled: false,
+      flag: '#ffffff',
+      payee: 'c28737d0-1519-4c47-a718-9bda6df392fc',
+      transfer: null,
+      splits: [],
+      _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed01234'
+    })
+    expect(budgetmanager.transactions.length).toBe(num_trans + 1)
+    expect(resp['ok']).toBe(true)
+  })
+
+  it('add transfer transaction', async () => {
+    const num_trans = budgetmanager.transactions.length
+
+    let resp = await budgetHelper.putTransaction({
+      account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
+      category: null,
+      cleared: false,
+      approved: false,
+      value: -4444,
+      date: '2015-05-10',
+      memo: 'memo',
+      reconciled: false,
+      flag: '#ffffff',
+      payee: 'Transfer: newaccount',
+      transfer: null,
+      splits: [],
+      _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed01234'
+    })
+    expect(budgetmanager.transactions.length).toBe(num_trans + 2)
+    expect(resp['ok']).toBe(true)
   })
 })
 

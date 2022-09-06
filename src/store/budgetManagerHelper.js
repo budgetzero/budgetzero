@@ -197,8 +197,8 @@ export const useBudgetHelperStore = defineStore('budgetHelper', {
     /**
      * Create/update the mirrored transfer transaction
      */
-    saveMirroredTransferTransaction(context, payload) {
-      var mirroredTransferTransaction = Object.assign({}, payload)
+    saveMirroredTransferTransaction(_mirroredTransferTransaction) {
+      var mirroredTransferTransaction = JSON.parse(JSON.stringify(mirroredTransferTransaction))
 
       //Check if the mirrored transaction doesn't exist then we create
       if (payload.transfer) {

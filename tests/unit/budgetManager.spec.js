@@ -60,8 +60,8 @@ describe('budgetManager', () => {
     })
   })
 
-  describe('transactions', () => {
-    it('add transaction', async () => {
+  describe('documents', () => {
+    it('add documents', async () => {
       expect(budgetmanager.transactions.length).toBe(563)
       let resp = await budgetmanager.putDocument({
         account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
@@ -82,7 +82,7 @@ describe('budgetManager', () => {
       expect(resp['ok']).toBe(true)
     })
 
-    it('add bad transaction', async () => {
+    it('add bad documents', async () => {
       expect(
         budgetmanager.putDocument({
           category: null,
@@ -101,7 +101,7 @@ describe('budgetManager', () => {
       ).rejects.toThrowError('Document failed validation')
     })
 
-    it('get and modify transaction', async () => {
+    it('get and modify documents', async () => {
       const original_transaction = await pouchdbStore.localdb.get(
         'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_2b84300c-9503-497e-be96-dfc9a683027f'
       )
@@ -125,7 +125,7 @@ describe('budgetManager', () => {
       expect(updated_transaction.name).toBe('new name')
     })
 
-    it('get and modify malformed transaction', async () => {
+    it('get and modify malformed documents', async () => {
       const original_transaction = await pouchdbStore.localdb.get(
         'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_2b84300c-9503-497e-be96-dfc9a683027f'
       )
