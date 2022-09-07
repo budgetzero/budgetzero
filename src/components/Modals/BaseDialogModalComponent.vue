@@ -3,7 +3,7 @@
     <v-form ref="form" v-model="valid" lazy-validation @submit.prevent>
       <v-card>
         <v-card-title class="primary lighten-1 white--text pb-4">
-          <span class="title"><slot name="title"/></span>
+          <span class="title"><slot name="title" /></span>
         </v-card-title>
 
         <v-divider />
@@ -16,15 +16,11 @@
 
         <v-divider />
 
-        <v-card-actions class=" white--text">
+        <v-card-actions class="white--text">
           <v-spacer />
           <slot name="actions">
-            <v-btn color="grey darken-2" text @click="close()">
-              Cancel
-            </v-btn>
-            <v-btn color="accent" @click="create(itemName)">
-              Create
-            </v-btn>
+            <v-btn color="grey darken-2" text @click="close()"> Cancel </v-btn>
+            <v-btn color="accent" @click="create(itemName)"> Create </v-btn>
           </slot>
         </v-card-actions>
       </v-card>
@@ -33,8 +29,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
   props: {
     value: Boolean
@@ -46,7 +40,6 @@ export default {
     }
   },
   computed: {
-    ...mapState(['selectedBudgetID']),
     show: {
       get() {
         return this.value

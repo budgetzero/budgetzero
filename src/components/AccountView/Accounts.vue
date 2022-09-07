@@ -34,7 +34,6 @@
   </v-card>
 </template>
 <script>
-import { mapGetters, mapState } from 'vuex'
 import AccountAddModal from './AccountAddModal'
 import { mapStores } from 'pinia'
 import { useBudgetManagerStore } from '../../store/budgetManager'

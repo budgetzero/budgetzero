@@ -170,7 +170,6 @@ import { useBudgetHelperStore } from '../../store/budgetManagerHelper'
 import { useMainStore } from '../../store/mainPiniaStore'
 
 import Banking from 'banking'
-import { mapGetters } from 'vuex'
 import _ from 'lodash'
 import { VueCsvImport } from 'vue-csv-import'
 import moment from 'moment'
