@@ -179,15 +179,18 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
       }
     },
 
-    async putDocument(doc) {
+    async putDocument(doc, validate = true) {
       const pouchdbStore = usePouchDBStore()
+
       // Validate document
-      try {
-        if (!this._isValidDocument(doc)) {
-          throw Error('Document failed validation')
+      if (validate) {
+        try {
+          if (!this._isValidDocument(doc)) {
+            throw Error('Document failed validation')
+          }
+        } catch (err) {
+          throw err
         }
-      } catch (err) {
-        throw err
       }
 
       // Check if document already exists
@@ -223,18 +226,21 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
       return response
     },
 
-    async putBulkDocuments(docs) {
+    async putBulkDocuments(docs, validate = true) {
       const pouchdbStore = usePouchDBStore()
       // Validate documents
-      try {
-        docs.forEach((doc) => {
-          if (!this._isValidDocument(doc)) {
-            throw Error('Document failed validation')
-          }
-        })
-      } catch (err) {
-        throw err
+      if (validate) {
+        try {
+          docs.forEach((doc) => {
+            if (!this._isValidDocument(doc)) {
+              throw Error('Document failed validation')
+            }
+          })
+        } catch (err) {
+          throw err
+        }
       }
+      
 
       let response
       try {

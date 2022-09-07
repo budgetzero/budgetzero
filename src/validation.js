@@ -22,6 +22,12 @@ const schema_account = {
     },
     type: {
       type: 'string'
+    },
+    _deleted: {
+      type: 'boolean'
+    },
+    _rev: {
+      type: 'string'
     }
   },
   required: ['_id', 'onBudget', 'name', 'sort', 'closed', 'type']
@@ -69,6 +75,12 @@ const schema_transaction = {
       type: 'string',
       minLength: 87,
       maxLength: 87
+    },
+    _deleted: {
+      type: 'boolean'
+    },
+    _rev: {
+      type: 'string'
     }
   },
   required: [
@@ -105,6 +117,12 @@ const schema_category = {
     },
     name: {
       type: 'string'
+    },
+    _deleted: {
+      type: 'boolean'
+    },
+    _rev: {
+      type: 'string'
     }
   },
   required: ['_id', 'sort', 'masterCategory', 'name']
@@ -126,6 +144,12 @@ const schema_m_category = {
     },
     hidden: {
       type: ['boolean', 'null']
+    },
+    _deleted: {
+      type: 'boolean'
+    },
+    _rev: {
+      type: 'string'
     }
   },
   required: ['_id', 'budget', 'overspending']
@@ -150,6 +174,12 @@ const schema_masterCategory = {
     },
     hidden: {
       type: ['boolean', 'null']
+    },
+    _deleted: {
+      type: 'boolean'
+    },
+    _rev: {
+      type: 'string'
     }
   },
   required: ['_id', 'name', 'sort', 'collapsed']
@@ -164,6 +194,12 @@ const schema_payee = {
       maxLength: 81
     },
     name: {
+      type: 'string'
+    },
+    _deleted: {
+      type: 'boolean'
+    },
+    _rev: {
       type: 'string'
     }
   },
@@ -189,6 +225,12 @@ const schema_budget = {
     },
     checkNumber: {
       type: 'boolean'
+    },
+    _deleted: {
+      type: 'boolean'
+    },
+    _rev: {
+      type: 'string'
     }
   },
   required: ['_id', 'name', 'created', 'currency', 'checkNumber']
@@ -203,6 +245,12 @@ const schema_budget_opened = {
       maxLength: 50
     },
     opened: {
+      type: 'string'
+    },
+    _deleted: {
+      type: 'boolean'
+    },
+    _rev: {
       type: 'string'
     }
   },

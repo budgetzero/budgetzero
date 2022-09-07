@@ -62,14 +62,14 @@ export const useBudgetHelperStore = defineStore('budgetHelper', {
       rowsToDelete.docs = result.rows.map((v) => ({ ...v.doc, _deleted: true }))
 
       //Bulk delete
-      await budgetManagerStore.putBulkDocuments(rowsToDelete.docs)
+      await budgetManagerStore.putBulkDocuments(rowsToDelete.docs, false)
 
       const budgetOpenedDoc = await pouchdbStore.localdb.get(`budget-opened_${budget_id}`)
       budgetOpenedDoc._deleted = true
-      await budgetManagerStore.putDocument(budgetOpenedDoc)
+      await budgetManagerStore.putDocument(budgetOpenedDoc, false)
 
       budgetDoc._deleted = true
-      await budgetManagerStore.putDocument(budgetDoc)
+      await budgetManagerStore.putDocument(budgetDoc, false)
 
       return budget_id
     },
@@ -314,7 +314,7 @@ export const useBudgetHelperStore = defineStore('budgetHelper', {
       } else {
         // Dispatch account for deletion
         accountDoc._deleted = true
-        budgetManagerStore.putDocument(accountDoc)
+        budgetManagerStore.putDocument(accountDoc, false)
         return 'account deleted'
       }
     },
