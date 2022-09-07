@@ -473,8 +473,8 @@ export default {
 .budgeted-amount >>> input {
   text-align: right !important;
 }
-.budgeted-amount-neg >>> input {
-}
+/* .budgeted-amount-neg >>> input {
+} */
 .budgeted-amount-pos >>> input {
   color: var(--v-primary-base);
 }
