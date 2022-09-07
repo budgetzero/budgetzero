@@ -1,5 +1,9 @@
-var Validator = require('jsonschema').Validator
-var validateSchema = new Validator()
+import Validator from 'json-schema'
+// var Validator = require('jsonschema').Validator
+let v = Validator
+console.log('v', Validator)
+
+var validateSchema = new Validator
 
 const schema_account = {
   type: 'object',

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import BaseDialogModalComponent from './BaseDialogModalComponent'
+import BaseDialogModalComponent from './BaseDialogModalComponent.vue'
 
 /**
   Yoinked/adapted from https://gist.github.com/eolant/ba0f8a5c9135d1a146e1db575276177d

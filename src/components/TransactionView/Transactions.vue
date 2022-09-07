@@ -437,8 +437,8 @@
 <script>
 import BaseDialogModalComponent from '../Modals/BaseDialogModalComponent.vue'
 import ImportModalComponent from './ImportModalComponent.vue'
-import ReconcileHeader from './ReconcileHeader'
-import TransactionHeader from './TransactionHeader'
+import ReconcileHeader from './ReconcileHeader.vue'
+import TransactionHeader from './TransactionHeader.vue'
 import _ from 'lodash'
 import { sanitizeValueInput } from '../../helper.js'
 import { mapStores } from 'pinia'

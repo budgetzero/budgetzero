@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import BaseModalComponent from './../Modals/BaseModalComponent'
+import BaseModalComponent from './../Modals/BaseModalComponent.vue'
 
 export default {
   name: 'AccountAddModal',

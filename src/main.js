@@ -1,11 +1,11 @@
 import Vue from 'vue'
 
 import App from './App.vue'
-import Accounts from './components/AccountView/Accounts'
-import BudgetGrid from './components/BudgetView/BudgetGrid'
+import Accounts from './components/AccountView/Accounts.vue'
+import BudgetGrid from './components/BudgetView/BudgetGrid.vue'
 import Reports from './components/Reports.vue'
-import Settings from './components/Settings'
-import Transactions from './components/TransactionView/Transactions'
+import Settings from './components/Settings.vue'
+import Transactions from './components/TransactionView/Transactions.vue'
 
 import UUID from 'vue-uuid'
 Vue.use(UUID)
