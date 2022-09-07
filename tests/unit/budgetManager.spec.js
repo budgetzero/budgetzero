@@ -20,8 +20,8 @@ describe('budgetManager', () => {
     pouchdbStore = usePouchDBStore()
     budgetmanager = useBudgetManagerStore()
 
-    await new PouchDB(new Date().toDateString()).destroy()
-    pouchdbStore.localdb = new PouchDB(new Date().toDateString())
+    await new PouchDB('unit-test-dbs/main').destroy()
+    pouchdbStore.localdb = new PouchDB('unit-test-dbs/main')
 
     await budgetmanager.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
   })
