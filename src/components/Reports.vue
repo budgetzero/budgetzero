@@ -39,9 +39,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import LineChart from './Reports/LineChart.vue'
 import _ from 'lodash'
+import { mapStores } from 'pinia'
+import { useReportsStore } from '../store/reportsStore'
+import { useBudgetManagerStore } from '../store/budgetManager'
+
 
 export default {
   name: 'Reports',
@@ -55,7 +58,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['incomeAndSpentByMonth', 'transactionsOnBudget']),
+    ...mapStores(useReportsStore, useBudgetManagerStore),
     dateRangeText() {
       return this.dateRange.join(' - ')
     },
@@ -63,7 +66,7 @@ export default {
      * Returns array of months -> accounts: sum-of-activity
      */
     accountActivityByMonth() {
-      var grouped = _.groupBy(this.transactionsOnBudget, function(item) {
+      var grouped = _.groupBy(this.budgetManagerStore.transactionsOnBudget, function(item) {
         return item.date.substring(0, 7)
       })
 
@@ -94,13 +97,13 @@ export default {
     },
     filteredChartData() {
       if (!this.dateRange || this.dateRange.length < 2) {
-        return this.incomeAndSpentByMonth
+        return this.reportsStore.incomeAndSpentByMonth
       }
 
       var startDate = new Date(this.dateRange[0])
       var endDate = new Date(this.dateRange[1])
 
-      var filteredData = this.incomeAndSpentByMonth.filter(function(month) {
+      var filteredData = this.reportsStore.incomeAndSpentByMonth.filter(function(month) {
         var d = new Date(month.month)
         return d >= startDate && d <= endDate
       })

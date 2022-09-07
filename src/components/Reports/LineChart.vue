@@ -19,7 +19,7 @@ export default {
   },
   computed: {},
   watch: {
-    chartData: function() {
+    chartData: function () {
       console.log('changed')
       this.chart.destroy()
       this.renderLineChart()
@@ -29,7 +29,7 @@ export default {
     this.renderLineChart()
   },
   methods: {
-    renderLineChart: function() {
+    renderLineChart: function () {
       var ctx = document.getElementById('chart').getContext('2d')
       this.chart = new Chart(ctx, {
         data: {
@@ -77,7 +77,7 @@ export default {
             y: {
               ticks: {
                 // Include a dollar sign in the ticks
-                callback: function(value, index, values) {
+                callback: function (value, index, values) {
                   return '$' + value
                 }
               }
@@ -86,7 +86,7 @@ export default {
           plugins: {
             tooltip: {
               callbacks: {
-                label: function(context) {
+                label: function (context) {
                   var label = context.dataset.label || ''
 
                   if (label) {
