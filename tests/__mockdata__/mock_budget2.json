@@ -8787,6 +8787,39 @@
     "_id": "b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_ff4c7110-41fc-4c36-a8a6-7cdbe5d3bcdd"
   },
   {
+    "account": "8aa582e2-e54c-4f28-a5e9-77e5c52f6231",
+    "category": "e652b7b1-6377-4b24-a22c-e6ae4ef1a981",
+    "cleared": true,
+    "approved": true,
+    "value": -50000,
+    "date": "2022-09-30",
+    "memo": "off budget transaction",
+    "reconciled": false,
+    "flag": "#ffffff",
+    "payee": "39417417-85c2-4e4b-9e69-b42d840a2d21",
+    "transfer": null,
+    "splits": [],
+    "_id": "b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_ff4c7110-41fc-4c36-a8a6-7cdbe5d37777"
+  },
+  {
+    "account": "8aa582e2-e54c-4f28-a5e9-77e5c52f6231",
+    "category": "e652b7b1-6377-4b24-a22c-e6ae4ef1a981",
+    "cleared": true,
+    "approved": true,
+    "value": -113.11,
+    "date": "2021-09-30",
+    "memo": "off budget transaction",
+    "reconciled": false,
+    "flag": "#ffffff",
+    "payee": "39417417-85c2-4e4b-9e69-b42d840a2d21",
+    "transfer": null,
+    "splits": [],
+    "_id": "b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_ff4c7110-41fc-4c36-a8a6-7cdbe5d38888"
+  },
+
+
+  
+  {
     "opened": "2020-12-29T01:30:14.886Z",
     "_id": "budget-opened_5a98dc44-7982-4ecc-aa50-146fc4dc4e16"
   },

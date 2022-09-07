@@ -39,7 +39,11 @@ describe('budgetManager', () => {
     })
 
     it('has correct number of transactions', async () => {
-      expect(budgetmanager.transactions.length).toBe(563)
+      expect(budgetmanager.transactionsOnBudget.length).toBe(563)
+    })
+
+    it('has correct number of on budget transactions', async () => {
+      expect(budgetmanager.transactions.length).toBe(565)
     })
 
     it('has correct number of accounts', async () => {
@@ -62,7 +66,7 @@ describe('budgetManager', () => {
 
   describe('documents', () => {
     it('add documents', async () => {
-      expect(budgetmanager.transactions.length).toBe(563)
+      const num_of_trans = budgetmanager.transactions.length
       let resp = await budgetmanager.putDocument({
         account: '38e690f8-198f-4735-96fb-3a2ab15081c2',
         category: null,
@@ -78,7 +82,7 @@ describe('budgetManager', () => {
         splits: [],
         _id: 'b_5a98dc44-7982-4ecc-aa50-146fc4dc4e16_transaction_31a2483b-d0e5-4daf-b1fe-f1788ed01234'
       })
-      expect(budgetmanager.transactions.length).toBe(564)
+      expect(budgetmanager.transactions.length).toBe(num_of_trans+1)
       expect(resp['ok']).toBe(true)
     })
 

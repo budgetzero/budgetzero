@@ -57,6 +57,9 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
     transactionsGroupedByAccount() {
       return _.groupBy(this.transactions, 'account')
     },
+    transactionsOnBudget() {
+      return this.transactions.filter((transaction) => this.onBudgetAccountIDs.includes(transaction.account))
+    },
     accountBalances() {
       const accountBalances = this.transactions.reduce((map, obj) => {
         const amt = obj.value ? obj.value : 0
@@ -83,6 +86,9 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
         }
       })
       return accountBalances
+    },
+    onBudgetAccountIDs() {
+      return this.accounts.filter((account) => account.onBudget == true).map((account) => account._id.slice(-36))
     },
     categoriesGroupedByMaster() {
       return _.groupBy(this.categories, 'masterCategory')
@@ -400,7 +406,7 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
      * @returns array of months
      */
     _all_months() {
-      const combined = this.monthCategoryBudgets.concat(this.transactions)
+      const combined = this.monthCategoryBudgets.concat(this.transactionsOnBudget)
       var months = [...new Set(combined.map((entry) => entry.date.slice(0, 7)))].sort()
       const [lastMonth] = months.slice(-1)
       const lastMonthPlusOne = moment(lastMonth).add(1, 'M').format('YYYY-MM')
@@ -414,7 +420,7 @@ export const useBudgetManagerStore = defineStore('budgetManager', {
      */
     _transaction_grouping() {
       // TODO filter transactions to on budget only
-      return this.transactions.reduce(function (rv, item) {
+      return this.transactionsOnBudget.reduce(function (rv, item) {
         var date_key = 'date' in item ? item.date.slice(0, 7) : 'noddd'
         ;(rv[date_key] = rv[date_key] || []).push(item)
 
