@@ -5,6 +5,8 @@ node_modules
 /cloud_functions
 docs/
 /docs
+/unit-test-dbs
+/budgetzero_localdb
 
 # local env files
 .env.local
