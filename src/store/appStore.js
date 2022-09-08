@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import moment from 'moment'
 
-export const useMainStore = defineStore('mainPinia', {
+export const useAppStore = defineStore('app', {
   state: () => {
     return {
       snackBarMessage: '',

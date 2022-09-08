@@ -1,10 +1,10 @@
 <template>
   <v-app id="inspire">
-    <v-overlay opacity="1" z-index="9" :value="mainPiniaStore.loadingOverlay">
+    <v-overlay opacity="1" z-index="9" :value="appStore.loadingOverlay">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
 
-    <v-overlay :value="mainPiniaStore.manageBudgetOverlay">
+    <v-overlay :value="appStore.manageBudgetOverlay">
       <v-row justify="center">
         <v-card>
           <v-card-title><v-list-item-title class="text-h5 mb-1">Manage Budgets</v-list-item-title></v-card-title>
@@ -90,16 +90,16 @@
       </template>
     </BaseDialogModalComponent>
 
-    <sidebar v-if="!mainPiniaStore.manageBudgetOverlay" />
+    <sidebar v-if="!appStore.manageBudgetOverlay" />
 
-    <v-main v-if="!mainPiniaStore.manageBudgetOverlay">
+    <v-main v-if="!appStore.manageBudgetOverlay">
       <router-view class="animated" />
     </v-main>
-    <v-snackbar v-model="mainPiniaStore.snackBar" :color="mainPiniaStore.snackBarColor">
-      {{ mainPiniaStore.snackBarMessage }}
+    <v-snackbar v-model="appStore.snackBar" :color="appStore.snackBarColor">
+      {{ appStore.snackBarMessage }}
 
       <template #action="{ attrs }">
-        <v-btn color="white" text v-bind="attrs" @click="mainPiniaStore.snackBar = false"> Close </v-btn>
+        <v-btn color="white" text v-bind="attrs" @click="appStore.snackBar = false"> Close </v-btn>
       </template>
     </v-snackbar>
   </v-app>
@@ -112,7 +112,7 @@ import ConfirmDialog from './components/Modals/ConfirmDialog.vue'
 
 import { mapStores } from 'pinia'
 import { useBudgetManagerStore } from './store/budgetManager'
-import { useMainStore } from './store/mainPiniaStore'
+import { useAppStore } from './store/appStore'
 import mock_budget from '@/../tests/__mockdata__/mock_budget2.json'
 import { useBudgetHelperStore } from './store/budgetManagerHelper'
 import { usePouchDBStore } from './store/pouchdbStore'
@@ -137,7 +137,7 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useMainStore, usePouchDBStore)
+    ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useAppStore, usePouchDBStore)
   },
   async mounted() {
     // await this.budgetManagerStore.loadMockDataIntoPouchDB(mock_budget, '5a98dc44-7982-4ecc-aa50-146fc4dc4e16')
@@ -145,7 +145,7 @@ export default {
     if (localStorage.budgetID) {
       this.loadBudget(localStorage.budgetID)
     } else {
-      this.mainPiniaStore.loadingOverlay = false
+      this.appStore.loadingOverlay = false
     }
     this.pouchdbStore.startSyncIfRemoteSet()
     this.$root.$confirm = this.$refs.confirm.open
@@ -153,7 +153,7 @@ export default {
   methods: {
     onFileChange() {
       if (this.backupFile) {
-        this.mainPiniaStore.loadingOverlay = true
+        this.appStore.loadingOverlay = true
 
         const reader = new FileReader()
         this.accountsForImport = []
@@ -166,14 +166,14 @@ export default {
           vm.backupFileParsed = data
         }
         reader.readAsText(this.backupFile)
-        this.mainPiniaStore.loadingOverlay = false
+        this.appStore.loadingOverlay = false
       }
     },
     async importBudget() {
-      this.mainPiniaStore.loadingOverlay = true
+      this.appStore.loadingOverlay = true
       await this.budgetManagerStore.putBulkDocuments(this.backupFileParsed)
       this.isModelVisibleImportBudgetFile = false
-      this.mainPiniaStore.loadingOverlay = false
+      this.appStore.loadingOverlay = false
     },
     async loadAvailableBudgets() {
       try {
@@ -192,8 +192,8 @@ export default {
       } catch (err) {
         console.error(err)
       }
-      this.mainPiniaStore.manageBudgetOverlay = false
-      this.mainPiniaStore.loadingOverlay = false
+      this.appStore.manageBudgetOverlay = false
+      this.appStore.loadingOverlay = false
     },
     async showCreateBudgetDialog() {
       try {
@@ -207,13 +207,13 @@ export default {
           showMessage: false
         })
         if (newBudgetName) {
-          this.mainPiniaStore.loadingOverlay = true
+          this.appStore.loadingOverlay = true
           await this.budgetHelperStore.createBudget(newBudgetName)
         }
       } catch (err) {
-        this.mainPiniaStore.setSnackbarMessage({ snackBarMessage: err, snackBarColor: 'accent' })
+        this.appStore.setSnackbarMessage({ snackBarMessage: err, snackBarColor: 'accent' })
       }
-      this.mainPiniaStore.loadingOverlay = false
+      this.appStore.loadingOverlay = false
     },
     showImportModal() {
       this.isModelVisibleImportBudgetFile = true

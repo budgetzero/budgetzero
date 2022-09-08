@@ -167,7 +167,7 @@
 import { mapStores } from 'pinia'
 import { useBudgetManagerStore } from '../../store/budgetManager'
 import { useBudgetHelperStore } from '../../store/budgetManagerHelper'
-import { useMainStore } from '../../store/mainPiniaStore'
+import { useAppStore } from '../../store/appStore'
 
 import Banking from 'banking'
 import _ from 'lodash'
@@ -193,7 +193,7 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useMainStore),
+    ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useAppStore),
     show: {
       get() {
         return this.visible

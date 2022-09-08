@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import PouchDB from 'pouchdb'
-import { useMainStore } from './mainPiniaStore'
+import { useAppStore } from './appStore'
 import { useStorage } from '@vueuse/core'
 
 
@@ -15,7 +15,7 @@ export const usePouchDBStore = defineStore('pouchdb', {
   },
   actions: {
     startRemoteSync() {
-      const mainStore = useMainStore()
+      const appStore = useAppStore()
       var self = this;
       this.syncHandler = this.localdb
         .sync(this.remoteSyncDB, {
@@ -40,12 +40,12 @@ export const usePouchDBStore = defineStore('pouchdb', {
           console.error('replication error', err)
         })
 
-        mainStore.setSnackbarMessage({ snackBarMessage: 'Sync started', snackBarColor: 'primary' })
+        appStore.setSnackbarMessage({ snackBarMessage: 'Sync started', snackBarColor: 'primary' })
 
     },
     stopRemoteSync() {
-      const mainStore = useMainStore()
-      mainStore.setSnackbarMessage({ snackBarMessage: 'Sync stopped', snackBarColor: 'dark-grey' })
+      const appStore = useAppStore()
+      appStore.setSnackbarMessage({ snackBarMessage: 'Sync stopped', snackBarColor: 'dark-grey' })
       if (this.syncHandler) {
         this.syncHandler.cancel()
       } 

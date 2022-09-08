@@ -38,7 +38,7 @@ import AccountAddModal from './AccountAddModal'
 import { mapStores } from 'pinia'
 import { useBudgetManagerStore } from '../../store/budgetManager'
 import { useBudgetHelperStore } from '../../store/budgetManagerHelper'
-import { useMainStore } from '../../store/mainPiniaStore'
+import { useAppStore } from '../../store/appStore'
 
 export default {
   name: 'AccountGrid',
@@ -81,7 +81,7 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useMainStore)
+    ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useAppStore)
   },
   mounted() {},
   created() {},

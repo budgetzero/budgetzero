@@ -45,7 +45,7 @@
         </v-list-item>
       </template>
       <v-list max-width="400" color="grey lighten-4">
-        <v-list-item @click="mainPiniaStore.manageBudgetOverlay = true">
+        <v-list-item @click="useAppStore.manageBudgetOverlay = true">
           <v-list-item-avatar>
             <v-icon left color="primary"> mdi-swap-horizontal </v-icon>
           </v-list-item-avatar>
@@ -189,7 +189,7 @@
 
 <script>
 import { useBudgetManagerStore } from '../store/budgetManager'
-import { useMainStore } from '../store/mainPiniaStore'
+import { useAppStore } from '../store/appStore'
 import { mapStores } from 'pinia'
 
 export default {
@@ -203,7 +203,7 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useBudgetManagerStore, useMainStore),
+    ...mapStores(useBudgetManagerStore, useAppStore),
     budgetDoc() {
       if (this.budgetManagerStore.budgetID && this.budgetManagerStore.budgetsAvailable) {
         const budgetDoc = this.budgetManagerStore.budgetsAvailable.find(

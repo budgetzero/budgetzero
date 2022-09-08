@@ -444,7 +444,7 @@ import { sanitizeValueInput } from '../../helper.js'
 import { mapStores } from 'pinia'
 import { useBudgetManagerStore } from '../../store/budgetManager'
 import { useBudgetHelperStore } from '../../store/budgetManagerHelper'
-import { useMainStore } from '../../store/mainPiniaStore'
+import { useAppStore } from '../../store/appStore'
 import { v4 as uuidv4 } from 'uuid'
 
 export default {
@@ -600,7 +600,7 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useMainStore),
+    ...mapStores(useBudgetManagerStore, useBudgetHelperStore, useAppStore),
     inflowAmount: {
       get() {
         return this.editedItem.value > 0 ? Math.round(this.parseInflowOutflow(this.editedItem.value)) / 100 : ''
@@ -786,7 +786,7 @@ export default {
         this.budgetHelperStore.putTransaction(this.editedItem)
         this.cancel()
       } else {
-        this.mainPiniaStore.setSnackbarMessage({ snackBarMessage: 'Transaction is not formatted correctly.', snackBarColor: 'accent' })
+        this.appStore.setSnackbarMessage({ snackBarMessage: 'Transaction is not formatted correctly.', snackBarColor: 'accent' })
       }
     },
     flipCleared(item) {
