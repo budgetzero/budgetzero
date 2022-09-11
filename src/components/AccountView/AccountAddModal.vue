@@ -3,7 +3,7 @@
     <BaseModalComponent :item="item" @confirm="deleteItem(item)">
       <template #title>
         <span v-if="editedIndex === -1">Add Account</span>
-        <span v-else>Edit Account</span>
+        <span v-else>Modifier le compte</span>
       </template>
       <template #body>
         <v-form ref="form" v-model="valid">
@@ -12,7 +12,7 @@
               <v-text-field
                 id="nameField"
                 v-model="editeditem.name"
-                label="Account Name"
+                label="Nom du compte"
                 :rules="nameRules"
                 data-cy="account-name"
               />
@@ -32,13 +32,13 @@
               <v-switch
                 id="onBudgetSwitch"
                 v-model="editeditem.onBudget"
-                label="On Budget?"
+                label="Sur le budget ?"
                 data-cy="account-on-budget"
               />
             </v-col>
             <v-col cols="4">
-              <v-switch id="balanceIsNegativeSwitch" v-model="editeditem.balanceIsNegative" label="Invert Balance" />
-              <span>(generally for credit card accounts)</span>
+              <v-switch id="balanceIsNegativeSwitch" v-model="editeditem.balanceIsNegative" label="Inverser le solde" />
+              <span>(généralement pour les comptes de carte de crédit)</span>
             </v-col>
 
             <v-col cols="12">
@@ -57,7 +57,7 @@
                 v-if="!editeditem.hasOwnProperty('_id')"
                 id="startingBalanceField"
                 v-model="editeditem.initialBalance"
-                label="Starting Balance"
+                label="Solde de départ"
                 prefix="$"
                 data-cy="account-starting-balance"
               />
@@ -67,7 +67,7 @@
       </template>
       <template #actions>
         <v-btn text id="cancelAccountBtn" @click="close()">
-          Cancel
+          Annuler
         </v-btn>
         <v-btn id="saveAccountBtn" color="accent" @click="save()">
           Save
@@ -87,16 +87,16 @@ export default {
   },
   props: ['value', 'editeditem'],
   data: () => ({
-    nameRules: [v => !!v || 'Name is required', v => (v && v.length <= 200) || 'Name must be less than 200 characters'],
-    typeRules: [v => !!v || 'Type is required'],
+    nameRules: [v => !!v || 'Le nom est requis', v => (v && v.length <= 200) || 'Le nom doit comporter moins de 200 caractères'],
+    typeRules: [v => !!v || 'Le type est requis'],
     selectTrueFalse: [
       {
         value: true,
-        text: 'Yes'
+        text: 'vrai'
       },
       {
         value: false,
-        text: 'No'
+        text: 'non'
       }
     ],
     valid: false
