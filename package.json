@@ -59,7 +59,7 @@
     "vuejs-auto-complete": "^0.9.0",
     "vuejs-datepicker": "^1.6.2",
     "vuelidate": "^0.7.6",
-    "vuetify": "^2.5.4",
+    "vuetify": "^2.6.10",
     "vuex": "^3.6.2",
     "vuex-router-sync": "^5.0.0"
   },
