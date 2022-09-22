@@ -8,7 +8,7 @@
       <template #body>
         <span class="subtitle-1"
           >There is a difference between your cleared balance and your bank balance. If you continue this will create an
-          adjustment transaction of <v-chip>{{ -parseInt(differenceAmount) | currency }}</v-chip></span
+          adjustment transaction of <v-chip>{{ -parseInt(differenceAmount) | currency(currencySymbol) }}</v-chip></span
         >
       </template>
       <template #actions>
@@ -24,7 +24,7 @@
     <v-col sm="auto" class="pa-0">
       <v-card flat class="grey lighten-1">
         <v-card-title class="title font-weight-bold primary--text">
-          {{ (selected_account_balance.cleared / 100) | currency }}<br />
+          {{ (selected_account_balance.cleared / 100) | currency(currencySymbol) }}<br />
         </v-card-title>
         <v-card-subtitle>
           <span class="subtitle-2 primary--text">CLEARED</span>
@@ -37,7 +37,7 @@
     <v-col sm="auto" class="pa-0">
       <v-card flat class="grey lighten-1">
         <v-card-title class="title font-weight-bold primary--text">
-          {{ reconcileAmount | currency }}<br />
+          {{ reconcileAmount | currency(currencySymbol) }}<br />
         </v-card-title>
         <v-card-subtitle>
           <span class="subtitle-2 primary--text">STATEMENT</span>
@@ -50,7 +50,7 @@
     <v-col class="pa-0" sm="auto">
       <v-card flat class="grey lighten-1">
         <v-card-title class="title font-weight-bold primary--text">
-          {{ differenceAmount | currency }}<br />
+          {{ differenceAmount | currency(currencySymbol) }}<br />
         </v-card-title>
         <v-card-subtitle>
           <span class="subtitle-2 primary--text">DIFFERENCE</span>
@@ -89,7 +89,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['selectedBudgetID']),
+    ...mapGetters(['selectedBudgetID', 'currencySymbol']),
     selected_account_balance() {
       return this.$store.getters.account_balances[this.$route.params.account_id]
     },

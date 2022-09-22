@@ -4,4 +4,10 @@ function sanitizeValueInput(value) {
   return parseInt(amt) / 100
 }
 
-export { sanitizeValueInput }
+var symbols = {
+  USD: '$',
+  EUR: '€',
+  GBP: '£'
+}
+
+export { sanitizeValueInput, symbols }

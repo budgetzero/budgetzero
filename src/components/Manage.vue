@@ -125,6 +125,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import BaseDialogModalComponent from './Modals/BaseDialogModalComponent.vue'
+import { symbols } from '../helper.js'
 
 export default {
   name: 'Settings',
@@ -137,10 +138,7 @@ export default {
       manageBudgetsModalVisible: false,
       dialog: false,
       item: {},
-      currencies: [
-        { value: 'USD', text: '$' }
-        // { value: "USD2", text: "$2" }
-      ]
+      currencies: symbols.map(({ key, value }) => ({ value: key, text: value }))
     }
   },
   computed: {
