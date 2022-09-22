@@ -19,7 +19,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currency'])
+    ...mapGetters(['currencySymbol', 'currencyCode'])
   },
   watch: {
     chartData: function() {
@@ -81,7 +81,7 @@ export default {
               ticks: {
                 // Include a dollar sign in the ticks
                 callback: (value, index, values) => {
-                  return this.$options.filters.currency(value, this.currency);
+                  return this.$options.filters.currency(value, this.currencySymbol);
                 }
               }
             }
@@ -89,16 +89,15 @@ export default {
           plugins: {
             tooltip: {
               callbacks: {
-                label: function(context) {
+                label: (context) => {
                   var label = context.dataset.label || ''
-
                   if (label) {
                     label += ': '
                   }
                   if (context.parsed.y !== null) {
                     label += new Intl.NumberFormat('en-US', {
                       style: 'currency',
-                      currency: this.currency
+                      currency: this.currencyCode
                     }).format(context.parsed.y)
                   }
                   return label

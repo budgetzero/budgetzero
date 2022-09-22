@@ -24,7 +24,8 @@ export default new Vuex.Store({
     sync_state: '',
     selectedBudgetID: null,
     month_selected: moment(new Date()).format('YYYY-MM'),
-    currency: 'USD'
+    currencySymbol: '$',
+    currencyCode: 'USD'
   },
   getters: {
     snackbarMessage: state => state.snackbarMessage,
@@ -33,7 +34,8 @@ export default new Vuex.Store({
     snackbar: state => state.snackbar,
     selectedBudgetID: state => state.selectedBudgetID,
     month_selected: state => state.month_selected,
-    currency: state => state.currency
+    currencySymbol: state => state.currencySymbol,
+    currencyCode: state => state.currencyCode
   },
   mutations: {
     SET_STATUS_MESSAGE(state, message) {
@@ -70,7 +72,8 @@ export default new Vuex.Store({
       this.dispatch('setCurrency', state.selectedBudgetID)
     },
     SET_CURRENCY(state, payload) {
-      state.currency = symbols[payload] !== undefined ? symbols[payload] : '$'
+      state.currencySymbol = symbols[payload] !== undefined ? symbols[payload] : '$'
+      state.currencyCode = payload
     }
   },
   actions: {
