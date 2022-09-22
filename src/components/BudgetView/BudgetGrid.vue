@@ -151,12 +151,12 @@
       <v-col sm="auto" class="px-0 py-1" />
       <v-col sm="auto" class="px-0 py-1">
         <div class="money-amount subtitle-2 pt-1">
-          {{ getSpentValue(null) | currency }}
+          {{ getSpentValue(null) | currency(currency) }}
         </div>
       </v-col>
       <v-col sm="auto" class="px-0 py-1">
         <div class="money-amount subtitle-2 red--text pt-1">
-          {{ getBalanceValue(null) | currency }}
+          {{ getBalanceValue(null) | currency(currency) }}
         </div>
       </v-col>
     </v-row>
@@ -285,7 +285,7 @@
                   'budgeted-amount-zero': getBudgetedValue(item._id) == 0
                 }"
                 :value="getBudgetedValue(item._id)"
-                prefix="$"
+                :prefix=currency
                 hide-details
                 @change="budgetValueChanged(item, $event)"
                 @focus="onFocus"
@@ -306,7 +306,7 @@
                   'grey--text': getSpentValue(item._id) == 0
                 }"
               >
-                {{ getSpentValue(item._id) | currency }}
+                {{ getSpentValue(item._id) | currency(currency) }}
               </div>
             </v-col>
 
@@ -319,7 +319,7 @@
                 }"
                 :category_uid="item._id"
               >
-                {{ getBalanceValue(item._id) | currency }}
+                {{ getBalanceValue(item._id) | currency(currency) }}
                 <v-btn icon x-small tabindex="-1" @click.stop="flipOverspending(item)">
                   <v-icon v-if="getOverspendingProperty(item)" color="red" tabindex="-1">
                     mdi-arrow-right
@@ -378,7 +378,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['selectedBudgetID', 'monthlyData', 'month_selected', 'month_category_lookup']),
+    ...mapGetters(['selectedBudgetID', 'monthlyData', 'month_selected', 'month_category_lookup', 'currency']),
     masterCategories: {
       get() {
         return this.$store.getters.masterCategories

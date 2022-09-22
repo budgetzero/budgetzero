@@ -17,7 +17,7 @@
                 {{
                   monthlyData[month_selected]
                     ? monthlyData[month_selected].summaryData.available_to_budget_last_month / 100
-                    : 0 | currency
+                    : 0 | currency(currency)
                 }}
               </span>
             </p>
@@ -27,7 +27,7 @@
                 {{
                   monthlyData[month_selected]
                     ? monthlyData[month_selected].summaryData.income_this_month / 100
-                    : 0 | currency
+                    : 0 | currency(currency)
                 }}
               </span>
             </p>
@@ -37,7 +37,7 @@
                 {{
                   monthlyData[month_selected]
                     ? monthlyData[month_selected].summaryData.last_month_overspent / 100
-                    : 0 | currency
+                    : 0 | currency(currency)
                 }}
               </span>
             </p>
@@ -47,7 +47,7 @@
                 {{
                   monthlyData[month_selected]
                     ? monthlyData[month_selected].summaryData.budgeted_this_month / 100
-                    : 0 | currency
+                    : 0 | currency(currency)
                 }}
               </span>
             </p>
@@ -62,7 +62,7 @@
             {{
               monthlyData[month_selected]
                 ? monthlyData[month_selected].summaryData.available_to_budget_this_month / 100
-                : 0 | currency
+                : 0 | currency(currency)
             }}
           </div>
         </v-card-text>
@@ -80,13 +80,9 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters(['monthlyData', 'month_selected']),
+    ...mapGetters(['monthlyData', 'month_selected', 'currency']),
     doesMonthDataExist() {
-      if (this.monthlyData.hasOwnProperty(`${this.month_selected}`)) {
-        return true
-      } else {
-        return false
-      }
+      return this.monthlyData.hasOwnProperty(`${this.month_selected}`)
     }
   },
   methods: {}
