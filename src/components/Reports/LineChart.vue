@@ -8,6 +8,7 @@
 
 <script>
 import Chart from 'chart.js/auto'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'LineChart',
@@ -17,7 +18,9 @@ export default {
       chart: null
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['currency'])
+  },
   watch: {
     chartData: function() {
       console.log('changed')
@@ -77,8 +80,8 @@ export default {
             y: {
               ticks: {
                 // Include a dollar sign in the ticks
-                callback: function(value, index, values) {
-                  return '$' + value
+                callback: (value, index, values) => {
+                  return this.$options.filters.currency(value, this.currency);
                 }
               }
             }
@@ -95,7 +98,7 @@ export default {
                   if (context.parsed.y !== null) {
                     label += new Intl.NumberFormat('en-US', {
                       style: 'currency',
-                      currency: 'USD'
+                      currency: this.currency
                     }).format(context.parsed.y)
                   }
                   return label
