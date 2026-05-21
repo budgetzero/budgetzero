@@ -14,7 +14,7 @@
     <v-col sm="auto" class="pa-0">
       <v-card flat class="header_background">
         <v-card-title class="title font-weight-bold primary--text">
-          {{ (selected_account_balance.cleared / 100) | currency }}<br />
+          {{ (selected_account_balance.cleared / 100) | currency(currencySymbol) }}<br />
         </v-card-title>
         <v-card-subtitle>
           <span class="subtitle-2 grey--text text--darken-2">CLEARED</span>
@@ -29,7 +29,7 @@
     <v-col sm="auto" class="pa-0">
       <v-card flat class="header_background">
         <v-card-title class="title font-weight-bold primary--text">
-          {{ (selected_account_balance.uncleared / 100) | currency }}<br />
+          {{ (selected_account_balance.uncleared / 100) | currency(currencySymbol) }}<br />
         </v-card-title>
         <v-card-subtitle>
           <span class="subtitle-2">UNCLEARED</span>
@@ -44,7 +44,7 @@
     <v-col sm="auto" class="pa-0">
       <v-card flat class="header_background">
         <v-card-title class="headline-5 font-weight-bold primary--text">
-          {{ (selected_account_balance.cleared / 100 + selected_account_balance.uncleared / 100) | currency }}<br />
+          {{ (selected_account_balance.cleared / 100 + selected_account_balance.uncleared / 100) | currency(currencySymbol) }}<br />
         </v-card-title>
         <v-card-subtitle>
           <span class="subtitle-2 grey--text text--darken-2">WORKING BALANCE</span>
@@ -76,6 +76,7 @@
 
 <script>
 import Vue from 'vue'
+import { mapGetters } from 'vuex'
 
 export default {
   props: ['selected_account'],
@@ -83,6 +84,7 @@ export default {
     return {}
   },
   computed: {
+    ...mapGetters(['currencySymbol']),
     selected_account_balance() {
       return this.$store.getters.account_balances[this.$store.state.route.params.account_id]
     }

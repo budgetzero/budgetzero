@@ -58,7 +58,7 @@
                 id="startingBalanceField"
                 v-model="editeditem.initialBalance"
                 label="Starting Balance"
-                prefix="$"
+                :prefix=currencySymbol
                 data-cy="account-starting-balance"
               />
             </v-col>
@@ -79,6 +79,7 @@
 
 <script>
 import BaseModalComponent from './../Modals/BaseModalComponent'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'AccountAddModal',
@@ -102,6 +103,7 @@ export default {
     valid: false
   }),
   computed: {
+    ...mapGetters(['currencySymbol']),
     show: {
       get() {
         return this.value
@@ -111,7 +113,6 @@ export default {
       }
     }
   },
-
   methods: {
     accountTypeChanged() {
       if (this.editeditem.type == 'CREDIT') {

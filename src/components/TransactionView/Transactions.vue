@@ -364,7 +364,7 @@
                         <v-list-item-action>
                           <!-- TODO: 'month_selected' should probably be the transaction month -->
                           <v-list-item-action-text>
-                            {{ (getBalance(item) / 100) | currency }}
+                            {{ (getBalance(item) / 100) | currency(currencySymbol) }}
                           </v-list-item-action-text>
                         </v-list-item-action>
                       </template>
@@ -412,7 +412,7 @@
                   <div class="editing-cell-container">
                     <v-text-field
                       v-model="inflowAmount"
-                      prefix="$"
+                      :prefix=currencySymbol
                       class="pa-0 pb-1 editing-cell-element"
                       color="green"
                       id="inflow-input"
@@ -422,7 +422,7 @@
                 </td>
                 <td v-else align="right" id="inflow">
                   <div>
-                    {{ item.value > 0 ? item.value / 100 : '' | currency }}
+                    {{ item.value > 0 ? item.value / 100 : '' | currency(currencySymbol) }}
                   </div>
                 </td>
 
@@ -431,7 +431,7 @@
                   <div class="editing-cell-container">
                     <v-text-field
                       v-model="outflowAmount"
-                      prefix="$"
+                      :prefix=currencySymbol
                       class="pa-0 pb-1 editing-cell-element"
                       color="red"
                       id="outflow-input"
@@ -441,7 +441,7 @@
                 </td>
                 <td v-else align="right" id="outflow">
                   <div>
-                    {{ item.value < 0 ? -(item.value / 100) : '' | currency }}
+                    {{ item.value < 0 ? -(item.value / 100) : '' | currency(currencySymbol) }}
                   </div>
                 </td>
 
@@ -689,7 +689,8 @@ export default {
       'selectedBudgetID',
       'transactions',
       'monthlyData',
-      'month_selected'
+      'month_selected',
+      'currencySymbol'
     ]),
     inflowAmount: {
       get() {

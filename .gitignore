@@ -27,6 +27,9 @@ yarn-error.log*
 *.sln
 *.sw?
 
+budgetzero_data/
+budgetzero_local_db/
+
 #Electron-builder output
 /dist_electron
 tests/e2e/screenshots/test.js/Test transactions -- enter text into memo field (failed).png

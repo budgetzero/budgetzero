@@ -140,7 +140,7 @@
       <!-- <v-list-group value="true">
         <template v-slot:activator> -->
       <v-list-item-title class="pl-2 pt-1 pb-1 font-weight-medium subtitle-2 blue-grey--text text--lighten-3">
-        ON BUDGET <span class="float-right pr-4">{{ sumOfOnBudgetAccounts | currency }}</span>
+        ON BUDGET <span class="float-right pr-4">{{ sumOfOnBudgetAccounts | currency(currencySymbol) }}</span>
       </v-list-item-title>
 
       <!-- </template> -->
@@ -159,7 +159,7 @@
           </v-list-item-title>
         </v-list-item-content>
         <v-list-item-icon class="subtitle-2">
-          {{ (account_balances[item._id.slice(-36)].working / 100) | currency }}
+          {{ (account_balances[item._id.slice(-36)].working / 100) | currency(currencySymbol) }}
         </v-list-item-icon>
       </v-list-item>
 
@@ -168,7 +168,7 @@
       <!-- <v-list-group value="true">
         <template v-slot:activator> -->
       <v-list-item-title class="pl-2 pt-1 pb-1 font-weight-medium subtitle-2 blue-grey--text text--lighten-3">
-        OFF BUDGET <span class="float-right pr-4">{{ sumOfOffBudgetAccounts | currency }}</span>
+        OFF BUDGET <span class="float-right pr-4">{{ sumOfOffBudgetAccounts | currency(currencySymbol) }}</span>
       </v-list-item-title>
       <!-- </template> -->
 
@@ -185,7 +185,7 @@
           </v-list-item-title>
         </v-list-item-content>
         <v-list-item-icon class="subtitle-2">
-          {{ (account_balances[item._id.slice(-36)].working / 100) | currency }}
+          {{ (account_balances[item._id.slice(-36)].working / 100) | currency(currencySymbol) }}
         </v-list-item-icon>
       </v-list-item>
 
@@ -305,7 +305,8 @@ export default {
       'selectedBudgetID',
       'budgetRoots',
       'budgetRootsMap',
-      'user'
+      'user',
+      'currencySymbol'
     ]),
     budgetName() {
       if (this.selectedBudget) {

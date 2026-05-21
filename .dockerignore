@@ -1,0 +1,4 @@
+dist/
+dist_electron/
+node_modules/
+budgetzero_local_db
