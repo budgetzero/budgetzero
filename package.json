@@ -43,7 +43,7 @@
     "sortablejs": "^1.13.0",
     "sweetalert": "^2.1.2",
     "validator": "^13.6.0",
-    "vue": "^2.6.14",
+    "vue": "^3.0.0",
     "vue-csv-import": "^3.3.7",
     "vue-json-tree-view": "^2.1.6",
     "vue-lodash": "^2.1.2",
