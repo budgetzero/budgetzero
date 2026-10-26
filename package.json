@@ -23,7 +23,7 @@
     "banking": "^1.2.0",
     "chart.js": "^3.3.2",
     "core-js": "^3.14.0",
-    "electron-updater": "^4.3.9",
+    "electron-updater": "^6.0.0",
     "file-saver": "^2.0.5",
     "firebase": "^8.6.8",
     "firebaseui": "^4.8.0",
